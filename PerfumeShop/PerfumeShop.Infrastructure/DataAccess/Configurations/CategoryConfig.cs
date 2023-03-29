@@ -8,7 +8,8 @@ public sealed class CategoryConfig : IEntityTypeConfiguration<CatalogCategory>
 
         builder.Property(p => p.Id)
            .UseHiLo("category_hilo")
-           .IsRequired();
+           .ValueGeneratedNever();
+
 
         builder.Property(p => p.Category)
             .IsRequired()

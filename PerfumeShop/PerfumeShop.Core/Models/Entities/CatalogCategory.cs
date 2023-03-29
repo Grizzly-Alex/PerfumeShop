@@ -6,6 +6,9 @@ public sealed class CatalogCategory : Entity
     public CatalogCategory(Category category)
     {
         Id = (int)category;
-
+        Category = category.GetDisplayName();
     }
+
+    public static implicit operator CatalogCategory(Category enumGuitar) => new CatalogCategory(enumGuitar);
+    public static implicit operator Category(CatalogCategory classGuitar) => (Category)classGuitar.Id;
 }
