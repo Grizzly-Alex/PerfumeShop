@@ -10,4 +10,8 @@
     <ProjectReference Include="..\PerfumeShop.Core\PerfumeShop.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataAccess\Migrations\" />
+  </ItemGroup>
+
 </Project>
