@@ -1,6 +1,6 @@
-﻿namespace PerfumeShop.Infrastructure;
+﻿namespace PerfumeShop.Infrastructure.DataAccess;
 
-public static class InfrastructureDependencies
+public static class DbConfiguration
 {
     public static void SetDbContext(IConfiguration configuration, IServiceCollection services)
     {

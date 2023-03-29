@@ -2,6 +2,11 @@
 
 public static class WebDependencies
 {
+    public static void SetServices(IServiceCollection services)
+    {
+        services.AddControllersWithViews();
+    }
+
     public static void SetMiddleware(WebApplication app)
     {
         if (!app.Environment.IsDevelopment())

@@ -1,9 +1,7 @@
-using PerfumeShop.Web.Configurations;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+DbConfiguration.SetDbContext(builder.Configuration, builder.Services);
+WebDependencies.SetServices(builder.Services);
 
 var app = builder.Build();
 
