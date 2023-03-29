@@ -2,7 +2,7 @@
 
 public interface IRepository<TDbContext, TEntity>
     where TDbContext : DbContext
-    where TEntity : class
+    where TEntity : Entity
 {
     void Remove(TEntity entity);
 

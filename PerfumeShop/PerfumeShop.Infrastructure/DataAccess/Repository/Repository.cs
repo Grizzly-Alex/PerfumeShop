@@ -2,7 +2,7 @@
 
 public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
     where TDbContext : DbContext
-    where TEntity : class
+    where TEntity : Entity
 {
     private readonly TDbContext _dbContext;
     private readonly DbSet<TEntity> _dbSet;
