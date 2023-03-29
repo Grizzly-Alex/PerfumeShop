@@ -5,6 +5,10 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerfumeShop.Web", "PerfumeShop.Web\PerfumeShop.Web.csproj", "{83FCAD5D-D115-48F2-9B5E-65E6622F3960}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfumeShop.Core", "PerfumeShop.Core\PerfumeShop.Core.csproj", "{EB4E151E-F81A-409E-90DB-157A7406EA67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfumeShop.Infrastructure", "PerfumeShop.Infrastructure\PerfumeShop.Infrastructure.csproj", "{16FCE1EB-DAFA-4249-8EE5-BC1B3A731789}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{83FCAD5D-D115-48F2-9B5E-65E6622F3960}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83FCAD5D-D115-48F2-9B5E-65E6622F3960}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83FCAD5D-D115-48F2-9B5E-65E6622F3960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB4E151E-F81A-409E-90DB-157A7406EA67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4E151E-F81A-409E-90DB-157A7406EA67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB4E151E-F81A-409E-90DB-157A7406EA67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4E151E-F81A-409E-90DB-157A7406EA67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16FCE1EB-DAFA-4249-8EE5-BC1B3A731789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16FCE1EB-DAFA-4249-8EE5-BC1B3A731789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16FCE1EB-DAFA-4249-8EE5-BC1B3A731789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16FCE1EB-DAFA-4249-8EE5-BC1B3A731789}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
