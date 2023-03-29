@@ -6,3 +6,4 @@ global using PerfumeShop.Core.Interfaces;
 global using Microsoft.EntityFrameworkCore.Query;
 global using System.Linq.Expressions;
 global using PerfumeShop.Core.Models.Entities;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
