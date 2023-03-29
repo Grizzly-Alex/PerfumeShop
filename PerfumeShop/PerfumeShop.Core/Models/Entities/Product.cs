@@ -20,22 +20,14 @@ public sealed class Product : Entity
     public Product(
         string name,
         string description,
-        string pictureUri,
-        decimal price,
-        int brandId,
-        int genderId,
-        int typeId,
-        int releaseFormId,
-        int categoryId)
+        decimal price)
     {
+        Guard.Against.NullOrEmpty(name, nameof(name));
+        Guard.Against.NullOrEmpty(description, nameof(description));
+        Guard.Against.NegativeOrZero(price, nameof(price));
+
         Name = name;
         Description = description;
-        PictureUri = pictureUri;
         Price = price;
-        BrandId = brandId;
-        GenderId = genderId;
-        TypeId = typeId;
-        ReleaseFormId = releaseFormId;
-        CategoryId = categoryId;
     }
 }
