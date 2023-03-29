@@ -5,6 +5,7 @@ public static class WebDependencies
     public static void SetServices(IServiceCollection services)
     {
         services.AddControllersWithViews();
+        services.AddCoreServices();
     }
 
     public static void SetMiddleware(WebApplication app)
