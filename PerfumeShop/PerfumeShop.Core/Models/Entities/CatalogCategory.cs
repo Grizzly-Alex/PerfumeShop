@@ -3,8 +3,9 @@
 public sealed class CatalogCategory : Entity
 {
     public string Category { get; private set; }
-    public CatalogCategory(string category)
+    public CatalogCategory(Category category)
     {
-        Category = category;
+        Id = (int)category;
+
     }
 }
