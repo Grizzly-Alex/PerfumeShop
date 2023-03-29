@@ -1,0 +1,24 @@
+﻿namespace PerfumeShop.Web.Configurations;
+
+public static class WebDependencies
+{
+    public static void SetMiddleware(WebApplication app)
+    {
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
+
+        app.UseRequestLocalization("en-US", "en-US");
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+    }
+}
