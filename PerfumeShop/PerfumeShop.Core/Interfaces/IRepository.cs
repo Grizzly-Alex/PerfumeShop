@@ -4,7 +4,7 @@ public interface IRepository<TDbContext, TEntity>
     where TDbContext : DbContext
     where TEntity : class
 {
-    void Remove(int id);
+    void Remove(TEntity entity);
 
     void Add(TEntity entity);
 
@@ -50,7 +50,7 @@ public interface IRepository<TDbContext, TEntity>
         Expression<Func<TEntity, bool>>? predicate = null,
         CancellationToken cancellationToken = default);
 
-    public Task<int> SumAsync(
+    Task<int> SumAsync(
        Expression<Func<TEntity, int>> selector,
        Expression<Func<TEntity, bool>>? predicate = null,
        CancellationToken cancellationToken = default);
