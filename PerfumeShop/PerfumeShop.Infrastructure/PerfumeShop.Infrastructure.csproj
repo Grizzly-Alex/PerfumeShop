@@ -7,13 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DataAccess\Migrations\**" />
-    <EmbeddedResource Remove="DataAccess\Migrations\**" />
-    <None Remove="DataAccess\Migrations\**" />
+    <ProjectReference Include="..\PerfumeShop.Core\PerfumeShop.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PerfumeShop.Core\PerfumeShop.Core.csproj" />
+    <Folder Include="DataAccess\Migrations\Catalog\" />
   </ItemGroup>
 
 </Project>

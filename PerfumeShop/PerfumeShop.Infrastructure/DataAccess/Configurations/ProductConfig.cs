@@ -16,7 +16,8 @@ public sealed class ProductConfig : IEntityTypeConfiguration<CatalogProduct>
 
         builder.Property(p => p.Price)
             .IsRequired(true)
-            .HasColumnType("depmal(18,2)");
+            .HasColumnType("decimal")
+            .HasPrecision(10, 2);
 
         builder.Property(p => p.Stock)
             .IsRequired(true);
