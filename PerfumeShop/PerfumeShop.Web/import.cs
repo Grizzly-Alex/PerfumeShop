@@ -15,3 +15,5 @@ global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+global using PerfumeShop.Web.Services;
+global using PerfumeShop.ViewModels;

@@ -21,6 +21,7 @@ public static class WebDependencies
     {
         services.AddControllersWithViews();
         services.AddCoreServices();
+        services.AddWebServices();
     }
 
     public static void SetMiddleware(WebApplication app)

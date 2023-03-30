@@ -25,7 +25,7 @@ public sealed class CatalogProductViewModel : EntityViewModel
     [Required(ErrorMessage = "Value {0} must not be empty!")]
     public int Volume { get; private set; }
 
-    public DateTime DateDelivery { get; private set; }
+    public DateTime DateDelivery { get; set; }
 
     [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     [DisplayName("Category")]
