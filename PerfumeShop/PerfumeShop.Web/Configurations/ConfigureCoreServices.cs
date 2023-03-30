@@ -6,7 +6,6 @@ public static class ConfigureCoreServices
     {
         services.AddTransient(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
-
         return services;
     }
 }
