@@ -1,7 +1,22 @@
-﻿namespace PerfumeShop.Web.Configurations;
+﻿using ILogger = Serilog.ILogger;
+
+namespace PerfumeShop.Web.Configurations;
+
 
 public static class WebDependencies
 {
+    public static ILogger SetLogger(IConfiguration configuration, ILoggingBuilder logging)
+    {
+        var logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
+
+        logging.ClearProviders();
+        logging.AddSerilog(logger);
+
+        return logger;
+    }
+
     public static void SetServices(IServiceCollection services)
     {
         services.AddControllersWithViews();
