@@ -11,3 +11,7 @@ global using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 global using PerfumeShop.Web.Interfaces;
 global using PerfumeShop.Core.Exceptions;
 global using AutoMapper;
+global using System.ComponentModel;
+global using System.ComponentModel.DataAnnotations;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
