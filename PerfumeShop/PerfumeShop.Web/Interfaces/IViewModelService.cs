@@ -1,6 +1,4 @@
-﻿using PerfumeShop.Web.Models;
-
-namespace PerfumeShop.Web.Interfaces
+﻿namespace PerfumeShop.Web.Interfaces
 {
     public interface IViewModelService<TModel, TViewModel>
         where TModel : Entity

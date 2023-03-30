@@ -1,5 +1,4 @@
 ﻿global using Microsoft.AspNetCore.Mvc;
-global using PerfumeShop.Models;
 global using System.Diagnostics;
 global using PerfumeShop.Web.Configurations;
 global using PerfumeShop.Infrastructure.DataAccess;
@@ -7,3 +6,8 @@ global using PerfumeShop.Core.Interfaces;
 global using PerfumeShop.Infrastructure.DataAccess.Repository;
 global using Serilog;
 global using PerfumeShop.Core.Models.Entities;
+global using PerfumeShop.Web.ViewModels;
+global using PerfumeShop.Infrastructure.DataAccess.DbContexts;
+global using PerfumeShop.Web.Interfaces;
+global using PerfumeShop.Core.Exceptions;
+global using AutoMapper;

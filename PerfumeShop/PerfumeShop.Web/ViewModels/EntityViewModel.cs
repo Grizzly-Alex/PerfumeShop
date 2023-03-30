@@ -1,4 +1,4 @@
-﻿namespace PerfumeShop.Web.Models;
+﻿namespace PerfumeShop.Web.ViewModels;
 
 public abstract class EntityViewModel
 {
