@@ -18,3 +18,4 @@ global using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 global using PerfumeShop.Web.Services;
 global using PerfumeShop.ViewModels;
 global using Microsoft.AspNetCore.Mvc.Rendering;
+global using PerfumeShop.Web.Extensions;

@@ -3,54 +3,54 @@
 public sealed class CatalogProductViewModel : EntityViewModel
 {
     [Required(ErrorMessage = "Value {0} must not be empty!")]
-    public string Name { get; private set; }
+    public string Name { get; set; }
 
     [Required(ErrorMessage = "Value {0} must not be empty!")]
-    public string Description { get; private set; }
+    public string Description { get; set; }
 
     [ValidateNever]
     [DisplayName("Picture Uri")]
-    public string PictureUri { get; private set; }
+    public string PictureUri { get; set; }
 
     [Precision(10, 2)]
     [Range(1, 99999999, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
     [Required(ErrorMessage = "Value {0} must not be empty!")]
-    public decimal Price { get; private set; }
+    public decimal Price { get; set; }
 
     [Range(0, int.MaxValue, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
     [Required(ErrorMessage = "Value {0} must not be empty!")]
-    public int Stock { get; private set; }
+    public int Stock { get; set; }
 
     [Range(0, int.MaxValue, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
     [Required(ErrorMessage = "Value {0} must not be empty!")]
-    public int Volume { get; private set; }
+    public int Volume { get; set; }
 
     public DateTime DateDelivery { get; set; }
 
     [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     [DisplayName("Category")]
-    public int BrandId { get; private set; }
+    public int BrandId { get; set; }
     [ValidateNever]
-    public string Brand { get; private set; }
+    public string Brand { get; set; }
 
     [DisplayName("Gender")]
-    public int GenderId { get; private set; }
+    public int GenderId { get; set; }
     [ValidateNever]
-    public string Gender { get; private set; }
+    public string Gender { get; set; }
 
     [DisplayName("Type")]
-    public int TypeId { get; private set; }
+    public int TypeId { get; set; }
     [ValidateNever]
-    public string Type { get; private set; }
+    public string Type { get; set; }
 
     [DisplayName("ReleaseForm")]
-    public int ReleaseFormId { get; private set; }
+    public int ReleaseFormId { get; set; }
     [ValidateNever]
-    public string ReleaseForm { get; private set; }
+    public string ReleaseForm { get; set; }
 
     [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     [DisplayName("Category")]
-    public int CategoryId { get; private set; }
+    public int CategoryId { get; set; }
     [ValidateNever]
-    public string Category { get; private set; }
+    public string Category { get; set; }
 }
