@@ -10,7 +10,7 @@ public sealed class GenderConfig : IEntityTypeConfiguration<CatalogGender>
            .UseHiLo("gender_hilo")
            .IsRequired();
 
-        builder.Property(p => p.Gender)
+        builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(100);
     }

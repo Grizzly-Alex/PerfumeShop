@@ -10,7 +10,7 @@ public sealed class BrandConfig : IEntityTypeConfiguration<CatalogBrand>
            .UseHiLo("brand_hilo")
            .IsRequired();
 
-        builder.Property(p => p.Brand)
+        builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(100);
     }

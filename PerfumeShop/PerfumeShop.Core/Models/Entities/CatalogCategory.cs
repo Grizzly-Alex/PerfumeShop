@@ -2,11 +2,11 @@
 
 public sealed class CatalogCategory : Entity
 {
-    public string Category { get; private set; }
+    public string Name { get; private set; }
     public CatalogCategory(Category category)
     {
         Id = (int)category;
-        Category = category.GetDisplayName();
+        Name = category.GetDisplayName();
     }
 
     private CatalogCategory()

@@ -10,7 +10,7 @@ public sealed class ReleaseFormConfig : IEntityTypeConfiguration<CatalogReleaseF
            .UseHiLo("release_form_hilo")
            .IsRequired();
 
-        builder.Property(p => p.ReleaseForm)
+        builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(100);
     }

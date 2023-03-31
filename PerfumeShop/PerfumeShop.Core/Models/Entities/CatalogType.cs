@@ -2,9 +2,9 @@
 
 public sealed class CatalogType : Entity
 {
-    public string Type { get; private set; }
-    public CatalogType(string type)
+    public string Name { get; private set; }
+    public CatalogType(string name)
     {
-        Type = type;
+        Name = name;
     }
 }

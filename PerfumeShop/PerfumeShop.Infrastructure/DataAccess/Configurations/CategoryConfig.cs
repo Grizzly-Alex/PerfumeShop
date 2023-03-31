@@ -13,7 +13,7 @@ public sealed class CategoryConfig : IEntityTypeConfiguration<CatalogCategory>
            .ValueGeneratedNever();
 
 
-        builder.Property(p => p.Category)
+        builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(100);
     }

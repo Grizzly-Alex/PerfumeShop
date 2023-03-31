@@ -10,7 +10,7 @@ public sealed class TypeConfig : IEntityTypeConfiguration<CatalogType>
            .UseHiLo("type_hilo")
            .IsRequired();
 
-        builder.Property(p => p.Type)
+        builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(100);
     }

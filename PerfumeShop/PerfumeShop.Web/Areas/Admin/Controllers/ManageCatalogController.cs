@@ -4,7 +4,7 @@ public class ManageCatalogController : Controller
 {
     private readonly IContentManager _contentManager;
     private readonly IViewModelService<CatalogProduct, CatalogProductViewModel> _catalogService;
-    private readonly IViewModelService<CatalogBrand, CatalogBrandViewModel> _brandService;
+    private readonly IViewModelService<CatalogBrand, CatalogItemViewModel> _brandService;
     private readonly IViewModelService<CatalogCategory, CatalogCategoryViewModel> _categoryService;
     private readonly IViewModelService<CatalogGender, CatalogGenderViewModel> _genderService;
     private readonly IViewModelService<CatalogType, CatalogTypeViewModel> _typeService;
@@ -14,7 +14,7 @@ public class ManageCatalogController : Controller
     public ManageCatalogController(
         IContentManager contentManager,
         IViewModelService<CatalogProduct, CatalogProductViewModel> catalogService,
-        IViewModelService<CatalogBrand, CatalogBrandViewModel> brandService,
+        IViewModelService<CatalogBrand, CatalogItemViewModel> brandService,
         IViewModelService<CatalogCategory, CatalogCategoryViewModel> categoryService,
         IViewModelService<CatalogGender, CatalogGenderViewModel> genderService,
         IViewModelService<CatalogType, CatalogTypeViewModel> typeService,
