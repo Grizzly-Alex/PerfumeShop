@@ -30,19 +30,27 @@ public sealed class CatalogProductViewModel : EntityViewModel
     [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     [DisplayName("Category")]
     public int BrandId { get; private set; }
-    public CatalogBrand Brand { get; private set; }
+    [ValidateNever]
+    public string Brand { get; private set; }
 
+    [DisplayName("Gender")]
     public int GenderId { get; private set; }
-    public CatalogGender Gender { get; private set; }
+    [ValidateNever]
+    public string Gender { get; private set; }
 
+    [DisplayName("Type")]
     public int TypeId { get; private set; }
-    public CatalogType Type { get; private set; }
+    [ValidateNever]
+    public string Type { get; private set; }
 
+    [DisplayName("ReleaseForm")]
     public int ReleaseFormId { get; private set; }
-    public CatalogReleaseForm ReleaseForm { get; private set; }
+    [ValidateNever]
+    public string ReleaseForm { get; private set; }
 
     [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     [DisplayName("Category")]
     public int CategoryId { get; private set; }
-    public CatalogCategory Category { get; private set; }
+    [ValidateNever]
+    public string Category { get; private set; }
 }

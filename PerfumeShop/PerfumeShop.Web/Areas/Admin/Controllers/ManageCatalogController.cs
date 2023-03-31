@@ -2,15 +2,31 @@
 
 public class ManageCatalogController : Controller
 {
+    private readonly IContentManager _contentManager;
     private readonly IViewModelService<CatalogProduct, CatalogProductViewModel> _catalogService;
-    private readonly IUnitOfWork<CatalogDbContext> _unitOfWork;
+    private readonly IViewModelService<CatalogBrand, CatalogBrandViewModel> _brandService;
+    private readonly IViewModelService<CatalogCategory, CatalogCategoryViewModel> _categoryService;
+    private readonly IViewModelService<CatalogGender, CatalogGenderViewModel> _genderService;
+    private readonly IViewModelService<CatalogType, CatalogTypeViewModel> _typeService;
+    private readonly IViewModelService<CatalogReleaseForm, CatalogReleaseFormViewModel> _releaseFormService;
+
 
     public ManageCatalogController(
-        IUnitOfWork<CatalogDbContext> unitOfWork,
-        IViewModelService<CatalogProduct, CatalogProductViewModel> catalogService)      
+        IContentManager contentManager,
+        IViewModelService<CatalogProduct, CatalogProductViewModel> catalogService,
+        IViewModelService<CatalogBrand, CatalogBrandViewModel> brandService,
+        IViewModelService<CatalogCategory, CatalogCategoryViewModel> categoryService,
+        IViewModelService<CatalogGender, CatalogGenderViewModel> genderService,
+        IViewModelService<CatalogType, CatalogTypeViewModel> typeService,
+        IViewModelService<CatalogReleaseForm, CatalogReleaseFormViewModel> releaseFormService)      
     {
+        _contentManager = contentManager;
         _catalogService = catalogService;
-        _unitOfWork = unitOfWork;
+        _brandService = brandService;
+        _categoryService = categoryService;
+        _genderService = genderService;
+        _typeService = typeService;
+        _releaseFormService = releaseFormService;
     }
 
     [HttpGet]
@@ -20,14 +36,18 @@ public class ManageCatalogController : Controller
         return View(products);
     }
 
-    //[HttpGet]
-    //public async Task<IActionResult> Create()
-    //{
-    //    var categories = await _unitOfWork.GetRepository<CatalogCategory>().GetAllAsync();
-    //    var brands = await _unitOfWork.GetRepository<CatalogBrand>().GetAllAsync();
-    //    var genders = await _unitOfWork.GetRepository<CatalogGender>().GetAllAsync();
-    //    var releaseForms = await _unitOfWork.GetRepository<CatalogReleaseForm>().GetAllAsync();
-    //    var types = await _unitOfWork.GetRepository<CatalogType>().GetAllAsync();
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
+        var categories = await _categoryService.GetViewModelsAsync();
+        var brands = await _brandService.GetViewModelsAsync();
+        var genders = await _genderService.GetViewModelsAsync();
+        var releaseForms = await _releaseFormService.GetViewModelsAsync();
+        var types = await _typeService.GetViewModelsAsync();
 
-    //}
+        ManageProductViewModel manageProduct = new(
+            new CatalogProductViewModel(),
+            )
+
+    }
 }
