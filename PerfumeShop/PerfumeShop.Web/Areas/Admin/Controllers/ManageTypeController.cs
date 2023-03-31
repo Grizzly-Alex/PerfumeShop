@@ -1,10 +1,10 @@
 ﻿namespace PerfumeShop.Web.Areas.Admin.Controllers;
 
-public class ManageBrandController : Controller
+public class ManageTypeController : Controller
 {
-    private readonly IViewModelService<CatalogBrand, CatalogItemViewModel> _viewModelService;
+    private readonly IViewModelService<CatalogType, CatalogItemViewModel> _viewModelService;
 
-    public ManageBrandController(IViewModelService<CatalogBrand, CatalogItemViewModel> viewModelService)
+    public ManageTypeController(IViewModelService<CatalogType, CatalogItemViewModel> viewModelService)
     {
         _viewModelService = viewModelService;
     }
