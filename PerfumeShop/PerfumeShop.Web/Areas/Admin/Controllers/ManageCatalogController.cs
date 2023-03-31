@@ -1,5 +1,6 @@
 ﻿namespace PerfumeShop.Web.Areas.Admin.Controllers;
 
+[Area("Admin")]
 public class ManageCatalogController : Controller
 {
     private readonly IContentManager _contentManager;

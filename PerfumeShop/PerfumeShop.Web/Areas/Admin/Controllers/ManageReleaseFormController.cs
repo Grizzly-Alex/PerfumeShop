@@ -1,5 +1,6 @@
 ﻿namespace PerfumeShop.Web.Areas.Admin.Controllers;
 
+[Area("Admin")]
 public class ManageReleaseFormController : Controller
 {
     private readonly IViewModelService<CatalogReleaseForm, CatalogItemViewModel> _viewModelService;

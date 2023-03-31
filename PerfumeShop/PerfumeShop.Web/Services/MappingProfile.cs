@@ -10,10 +10,10 @@ public sealed class MappingProfile : Profile
         CreateMap<CatalogReleaseForm, CatalogItemViewModel>().ReverseMap();
         CreateMap<CatalogType, CatalogItemViewModel>().ReverseMap();
         CreateMap<CatalogProduct, CatalogProductViewModel>().ReverseMap()
-            .ForMember(model => model.Brand.Name, opt => opt.MapFrom(view => view.Brand))
-            .ForMember(model => model.Category.Name, opt => opt.MapFrom(view => view.Category))
-            .ForMember(model => model.Type.Name, opt => opt.MapFrom(view => view.Type))
-            .ForMember(model => model.Gender.Name, opt => opt.MapFrom(view => view.Gender))
-            .ForMember(model => model.ReleaseForm.Name, opt => opt.MapFrom(view => view.ReleaseForm));
+            .ForPath(model => model.Brand.Name, opt => opt.MapFrom(view => view.Brand))
+            .ForPath(model => model.Category.Name, opt => opt.MapFrom(view => view.Category))
+            .ForPath(model => model.Type.Name, opt => opt.MapFrom(view => view.Type))
+            .ForPath(model => model.Gender.Name, opt => opt.MapFrom(view => view.Gender))
+            .ForPath(model => model.ReleaseForm.Name, opt => opt.MapFrom(view => view.ReleaseForm));
     }
 }
