@@ -1,5 +1,6 @@
 ﻿namespace PerfumeShop.Web.ViewModels;
 
+[Area("Admin")]
 public sealed class ManageProductViewModel
 {
     public CatalogProductViewModel? ProductViewModel { get; set; }
