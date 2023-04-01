@@ -53,12 +53,27 @@ public class ManageBrandController : Controller
         return View(obj);
     }
 
+    #region API CALLS
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+		var viewModels = await _viewModelService.GetViewModelsAsync();
+        return Json(new { data = viewModels });
+	}
 
-    [HttpPost]
+    [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
         var viewModel = await _viewModelService.GetViewModelByIdAsync(id);
+
+        if (viewModel is null)
+        {
+            return Json(new { success = false, message = "Error while deleting" });
+        }
+
         await _viewModelService.DeleteViewModelAsync(viewModel);
-        return RedirectToAction(nameof(Index));
+
+        return Json(new { success = true, message = "Delete Successful" });
     }
+    #endregion
 }
