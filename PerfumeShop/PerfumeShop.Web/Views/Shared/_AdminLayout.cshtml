@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/sidebars.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" /></link>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"></link>
 </head>
 
 @*Navbar*@
@@ -73,6 +74,7 @@
                             <div class="collapse" id="data">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
                                     <li><a class="link-dark d-inline-flex text-decoration-none rounded" asp-area="Admin" asp-controller="ManageBrand" asp-action="Index">Brands</a></li>
+                                    <li><a class="link-dark d-inline-flex text-decoration-none rounded" asp-area="Admin" asp-controller="ManageGender" asp-action="Index">Genders</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -91,6 +93,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
     <script src="https://cdn.tiny.cloud/1/ia0sr3vihwibbslg5o7ktdm2v362cz4mazddl49ekljeta4b/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

@@ -30,6 +30,7 @@ public class ManageGenderController : Controller
         if (ModelState.IsValid)
         {
             await _viewModelService.CreateViewModelAsync(obj);
+            TempData["success"] = $"{obj.Name} was created successfully";
             return RedirectToAction(nameof(Index));
         }
         else return View(obj);
@@ -48,6 +49,7 @@ public class ManageGenderController : Controller
         if (ModelState.IsValid)
         {
             await _viewModelService.UpdateViewModelAsync(obj);
+            TempData["success"] = $"{obj.Name} was updated successfully";
             return RedirectToAction(nameof(Index));
         }
         return View(obj);
@@ -59,6 +61,7 @@ public class ManageGenderController : Controller
     {
         var viewModel = await _viewModelService.GetViewModelByIdAsync(id);
         await _viewModelService.DeleteViewModelAsync(viewModel);
+        TempData["success"] = $"{viewModel.Name} was deleted successfully";
         return RedirectToAction(nameof(Index));
     }
 }
