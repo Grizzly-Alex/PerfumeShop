@@ -5,9 +5,9 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#brandData').DataTable({
+    dataTable = $('#releaseFormData').DataTable({
         "ajax": {
-            "url": "/admin/managebrand/getall"
+            "url": "/admin/managereleaseform/getall"
         },
         "columns": [
             { data: "name", "width": "95%" },
@@ -15,9 +15,9 @@ function loadDataTable() {
                 data: "id",
                 "render": function (data) {
                     return `<div class="btn-toolbar justify-content-between" role="toolbar">
-                    <a href="/admin/managebrand/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
+                    <a href="/admin/managereleaseform/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
                     <i class="bi bi-wrench"></i> </a>
-                    <a onClick=Delete('/admin/managebrand/delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
+                    <a onClick=Delete('/admin/managereleaseform/delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
                     <i class="bi bi-trash3"></i> </a>
 					</div>`
                 },

@@ -3,8 +3,15 @@
 public sealed class CatalogGender : Entity
 {
     public string Name { get; private set; }
-    public CatalogGender(string name)
+
+    public CatalogGender(Gender gender)
     {
-        Name = name;
+        Id = (int)gender;
+        Name = gender.GetDisplayName();
     }
+
+    private CatalogGender() { }
+
+    public static implicit operator CatalogGender(Gender enumGender) => new CatalogGender(enumGender);
+    public static implicit operator Gender(CatalogGender classGuitar) => (Gender)classGuitar.Id;
 }

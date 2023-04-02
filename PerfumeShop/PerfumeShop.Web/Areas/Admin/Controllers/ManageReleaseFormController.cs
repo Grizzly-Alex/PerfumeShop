@@ -11,18 +11,10 @@ public class ManageReleaseFormController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        var viewModels = await _viewModelService.GetViewModelsAsync();
-        return View(viewModels);
-    }
-
+    public IActionResult Index() => View();
 
     [HttpGet]
-    public IActionResult Create()
-    {
-        return View();
-    }
+    public IActionResult Create() => View();
 
     [HttpPost]
     public async Task<IActionResult> Create(CatalogItemViewModel obj)
@@ -30,6 +22,7 @@ public class ManageReleaseFormController : Controller
         if (ModelState.IsValid)
         {
             await _viewModelService.CreateViewModelAsync(obj);
+            TempData["success"] = $"{obj.Name} was created successfully";
             return RedirectToAction(nameof(Index));
         }
         else return View(obj);
@@ -48,17 +41,33 @@ public class ManageReleaseFormController : Controller
         if (ModelState.IsValid)
         {
             await _viewModelService.UpdateViewModelAsync(obj);
+            TempData["success"] = $"{obj.Name} was updated successfully";
             return RedirectToAction(nameof(Index));
         }
         return View(obj);
     }
 
+    #region API CALLS
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var viewModels = await _viewModelService.GetViewModelsAsync();
+        return Json(new { data = viewModels });
+    }
 
-    [HttpPost]
+    [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
         var viewModel = await _viewModelService.GetViewModelByIdAsync(id);
+
+        if (viewModel is null)
+        {
+            return Json(new { success = false, message = "Error while deleting" });
+        }
+
         await _viewModelService.DeleteViewModelAsync(viewModel);
-        return RedirectToAction(nameof(Index));
+
+        return Json(new { success = true, message = $"{viewModel.Name} was deleted successfully" });
     }
+    #endregion
 }

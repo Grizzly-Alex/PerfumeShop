@@ -1,9 +1,9 @@
 ﻿namespace PerfumeShop.Core.Models.Entities;
 
-public sealed class CatalogType : Entity
+public sealed class CatalogAromaType : Entity
 {
     public string Name { get; private set; }
-    public CatalogType(string name)
+    public CatalogAromaType(string name)
     {
         Name = name;
     }

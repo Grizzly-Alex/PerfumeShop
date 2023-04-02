@@ -5,12 +5,20 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#brandData').DataTable({
+    dataTable = $('#productData').DataTable({
         "ajax": {
-            "url": "/admin/managebrand/getall"
+            "url": "/admin/manageproduct/getall"
         },
         "columns": [
-            { data: "name", "width": "95%" },
+            { data: "name", "width": "15%" },
+            { data: "brand", "width": "10%" },
+            { data: "gender", "width": "10%" },
+            { data: "aroma type", "width": "10%" },
+            { data: "release form", "width": "10%" },
+            { data: "price", "width": "10%" },
+            { data: "volume", "width": "10%" },
+            { data: "stock", "width": "10%" },
+            { data: "date delivery", "width": "10%" },
             {
                 data: "id",
                 "render": function (data) {

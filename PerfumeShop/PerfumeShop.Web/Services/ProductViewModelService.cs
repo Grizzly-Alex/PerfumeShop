@@ -14,11 +14,10 @@ public sealed class ProductViewModelService : ViewModelService<CatalogProduct, C
     {
         var models = await _unitOfWork.GetRepository<CatalogProduct>()
             .GetAllAsync(
-                include: query => query
-                    .Include(product => product.Category)
+                include: query => query           
                     .Include(product => product.Brand)
                     .Include(product => product.Gender)
-                    .Include(product => product.Type)
+                    .Include(product => product.AromaType)
                     .Include(product => product.ReleaseForm),
                 isTracking: false);
 
@@ -38,10 +37,9 @@ public sealed class ProductViewModelService : ViewModelService<CatalogProduct, C
             .GetFirstOrDefaultAsync(
                 predicate: i => i.Id == id,
                 include: query => query
-                    .Include(product => product.Category)
                     .Include(product => product.Brand)
                     .Include(product => product.Gender)
-                    .Include(product => product.Type)
+                    .Include(product => product.AromaType)
                     .Include(product => product.ReleaseForm),
                 isTracking: false);
 

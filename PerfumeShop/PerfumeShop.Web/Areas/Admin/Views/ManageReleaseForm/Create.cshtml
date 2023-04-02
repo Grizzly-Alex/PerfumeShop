@@ -1,19 +1,17 @@
 ﻿@model CatalogItemViewModel
 
-<form method="post" asp-controller="ManageGender" asp-action="Edit" class="row g-3 needs-validation" novalidate>
-
-	<input asp-for="@Model.Id" hidden />
+<form method="post" asp-controller="ManageReleaseForm" asp-action="Create" class="row g-3 needs-validation" novalidate>
 
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2 class="text-muted">Edit Brand</h2>
+		<h2 class="text-muted">Create Brand</h2>
 		<div class="btn-toolbar mb-2 mb-md-0">
 			<div class="text-end">
 
 				<button type="submit" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
-					<span class="bi bi-check-lg">Save</span>
+					<span class="bi bi-check-lg">Create</span>
 				</button>
 
-				<a asp-controller="ManageGender" asp-action="index" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+				<a asp-controller="ManageReleaseForm" asp-action="Index" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
 					<span class="bi bi-reply"> Back</span>
 				</a>
 			</div>
@@ -34,5 +32,4 @@
 
 @section Scripts{
 	<partial name="_ValidationScriptsPartial" />
-
 }

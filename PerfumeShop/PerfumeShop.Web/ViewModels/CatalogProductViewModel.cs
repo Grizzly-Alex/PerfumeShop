@@ -38,19 +38,13 @@ public sealed class CatalogProductViewModel : EntityViewModel
     [ValidateNever]
     public string Gender { get; set; }
 
-    [DisplayName("Type")]
-    public int TypeId { get; set; }
+    [DisplayName("AromaType")]
+    public int AromaTypeId { get; set; }
     [ValidateNever]
-    public string Type { get; set; }
+    public string AromaType { get; set; }
 
     [DisplayName("ReleaseForm")]
     public int ReleaseFormId { get; set; }
     [ValidateNever]
     public string ReleaseForm { get; set; }
-
-    [Required(ErrorMessage = "Value {0} from the list must be selected!")]
-    [DisplayName("Category")]
-    public int CategoryId { get; set; }
-    [ValidateNever]
-    public string Category { get; set; }
 }

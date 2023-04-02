@@ -4,10 +4,8 @@ public sealed class ProductConfig : IEntityTypeConfiguration<CatalogProduct>
 {
     public void Configure(EntityTypeBuilder<CatalogProduct> builder)
     {
-        builder.ToTable("Catalog");
-
         builder.Property(p => p.Id)
-            .UseHiLo("catalog_hilo")
+            .UseHiLo("product_hilo")
             .IsRequired();
 
         builder.Property(p => p.Name)
@@ -28,17 +26,13 @@ public sealed class ProductConfig : IEntityTypeConfiguration<CatalogProduct>
         builder.Property(p => p.PictureUri)
             .IsRequired(false);
 
-        builder.HasOne(p => p.Category)
-            .WithMany()
-            .HasForeignKey(p => p.CategoryId);
-
         builder.HasOne(p => p.Brand)
             .WithMany()
             .HasForeignKey(p => p.BrandId);
 
-        builder.HasOne(p => p.Type)
+        builder.HasOne(p => p.AromaType)
             .WithMany()
-            .HasForeignKey(p => p.TypeId);
+            .HasForeignKey(p => p.AromaTypeId);
 
         builder.HasOne(p => p.Gender)
             .WithMany()

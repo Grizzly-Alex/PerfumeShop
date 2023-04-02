@@ -1,8 +1,8 @@
 ﻿namespace PerfumeShop.Core.Constants;
 
-public enum Category
+public enum Gender
 {
-    [Display(Name = "Perfume")] Perfumery = 1,
-    [Display(Name = "Interior Fragrances")] InteriorFragrances = 2,
-    [Display(Name = "Sets")] Sets = 3,
+    [Display(Name = "Unisex")] Unisex = 1,
+    [Display(Name = "Man")] Man = 2,
+    [Display(Name = "Woman")] Woman = 3,
 }

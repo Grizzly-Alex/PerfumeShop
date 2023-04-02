@@ -13,12 +13,11 @@ public sealed class CatalogProduct : Entity
     public CatalogBrand Brand { get; private set; }
     public int GenderId { get; private set; }
     public CatalogGender Gender { get; private set; }
-    public int TypeId { get; private set; }
-    public CatalogType Type { get; private set; }
+    public int AromaTypeId { get; private set; }
+    public CatalogAromaType AromaType { get; private set; }
     public int ReleaseFormId { get; private set; }
     public CatalogReleaseForm ReleaseForm { get; private set; }
     public int CategoryId { get; private set; }
-    public CatalogCategory Category { get; private set; }
 
     public CatalogProduct(string name, string description, decimal price, int volume, int stock)
     {

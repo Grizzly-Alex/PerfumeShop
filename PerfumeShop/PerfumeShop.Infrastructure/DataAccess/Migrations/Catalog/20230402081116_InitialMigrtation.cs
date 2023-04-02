@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
 {
     /// <inheritdoc />
-    public partial class FirstMigrtation : Migration
+    public partial class InitialMigrtation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,15 +18,11 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 incrementBy: 10);
 
             migrationBuilder.CreateSequence(
-                name: "catalog_hilo",
-                incrementBy: 10);
-
-            migrationBuilder.CreateSequence(
-                name: "category_hilo",
-                incrementBy: 10);
-
-            migrationBuilder.CreateSequence(
                 name: "gender_hilo",
+                incrementBy: 10);
+
+            migrationBuilder.CreateSequence(
+                name: "product_hilo",
                 incrementBy: 10);
 
             migrationBuilder.CreateSequence(
@@ -38,6 +34,18 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 incrementBy: 10);
 
             migrationBuilder.CreateTable(
+                name: "AromaTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AromaTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Brands",
                 columns: table => new
                 {
@@ -47,18 +55,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Brands", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,19 +82,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 });
 
             migrationBuilder.CreateTable(
-                name: "Types",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Types", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Catalog",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -111,92 +95,81 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                     DateDelivery = table.Column<DateTime>(type: "datetime2(7)", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false),
                     GenderId = table.Column<int>(type: "int", nullable: false),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
+                    AromaTypeId = table.Column<int>(type: "int", nullable: false),
                     ReleaseFormId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Catalog", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Catalog_Brands_BrandId",
+                        name: "FK_Products_AromaTypes_AromaTypeId",
+                        column: x => x.AromaTypeId,
+                        principalTable: "AromaTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Brands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Catalog_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Catalog_Genders_GenderId",
+                        name: "FK_Products_Genders_GenderId",
                         column: x => x.GenderId,
                         principalTable: "Genders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Catalog_ReleaseForms_ReleaseFormId",
+                        name: "FK_Products_ReleaseForms_ReleaseFormId",
                         column: x => x.ReleaseFormId,
                         principalTable: "ReleaseForms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Catalog_Types_TypeId",
-                        column: x => x.TypeId,
-                        principalTable: "Types",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Categories",
+                table: "Genders",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Perfume" },
-                    { 2, "Interior Fragrances" },
-                    { 3, "Sets" }
+                    { 1, "Unisex" },
+                    { 2, "Man" },
+                    { 3, "Woman" }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Catalog_BrandId",
-                table: "Catalog",
+                name: "IX_Products_AromaTypeId",
+                table: "Products",
+                column: "AromaTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_BrandId",
+                table: "Products",
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Catalog_CategoryId",
-                table: "Catalog",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Catalog_GenderId",
-                table: "Catalog",
+                name: "IX_Products_GenderId",
+                table: "Products",
                 column: "GenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Catalog_ReleaseFormId",
-                table: "Catalog",
+                name: "IX_Products_ReleaseFormId",
+                table: "Products",
                 column: "ReleaseFormId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Catalog_TypeId",
-                table: "Catalog",
-                column: "TypeId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Catalog");
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "AromaTypes");
 
             migrationBuilder.DropTable(
                 name: "Brands");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Genders");
@@ -204,20 +177,14 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
             migrationBuilder.DropTable(
                 name: "ReleaseForms");
 
-            migrationBuilder.DropTable(
-                name: "Types");
-
             migrationBuilder.DropSequence(
                 name: "brand_hilo");
 
             migrationBuilder.DropSequence(
-                name: "catalog_hilo");
-
-            migrationBuilder.DropSequence(
-                name: "category_hilo");
-
-            migrationBuilder.DropSequence(
                 name: "gender_hilo");
+
+            migrationBuilder.DropSequence(
+                name: "product_hilo");
 
             migrationBuilder.DropSequence(
                 name: "release_form_hilo");

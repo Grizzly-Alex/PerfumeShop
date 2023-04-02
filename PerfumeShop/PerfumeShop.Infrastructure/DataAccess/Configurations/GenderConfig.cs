@@ -8,7 +8,7 @@ public sealed class GenderConfig : IEntityTypeConfiguration<CatalogGender>
 
         builder.Property(p => p.Id)
            .UseHiLo("gender_hilo")
-           .IsRequired();
+           .ValueGeneratedNever();
 
         builder.Property(p => p.Name)
             .IsRequired()

@@ -1,141 +1,143 @@
 ﻿namespace PerfumeShop.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class ManageCatalogController : Controller
+public class ManageProductController : Controller
 {
     private readonly IContentManager _contentManager;
-    private readonly IViewModelService<CatalogProduct, CatalogProductViewModel> _catalogService;
+    private readonly IViewModelService<CatalogProduct, CatalogProductViewModel> _productService;
     private readonly IViewModelService<CatalogBrand, CatalogItemViewModel> _brandService;
-    private readonly IViewModelService<CatalogCategory, CatalogItemViewModel> _categoryService;
     private readonly IViewModelService<CatalogGender, CatalogItemViewModel> _genderService;
-    private readonly IViewModelService<CatalogType, CatalogItemViewModel> _typeService;
+    private readonly IViewModelService<CatalogAromaType, CatalogItemViewModel> _aromaTypeService;
     private readonly IViewModelService<CatalogReleaseForm, CatalogItemViewModel> _releaseFormService;
 
 
-    public ManageCatalogController(
+    public ManageProductController(
         IContentManager contentManager,
         IViewModelService<CatalogProduct, CatalogProductViewModel> catalogService,
         IViewModelService<CatalogBrand, CatalogItemViewModel> brandService,
-        IViewModelService<CatalogCategory, CatalogItemViewModel> categoryService,
         IViewModelService<CatalogGender, CatalogItemViewModel> genderService,
-        IViewModelService<CatalogType, CatalogItemViewModel> typeService,
+        IViewModelService<CatalogAromaType, CatalogItemViewModel> typeService,
         IViewModelService<CatalogReleaseForm, CatalogItemViewModel> releaseFormService)      
     {
         _contentManager = contentManager;
-        _catalogService = catalogService;
+        _productService = catalogService;
         _brandService = brandService;
-        _categoryService = categoryService;
         _genderService = genderService;
-        _typeService = typeService;
+        _aromaTypeService = typeService;
         _releaseFormService = releaseFormService;
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        var products = await _catalogService.GetViewModelsAsync();       
-        return View(products);
-    }
+    public IActionResult Index() => View();
 
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var categories = await _categoryService.GetViewModelsAsync();
         var brands = await _brandService.GetViewModelsAsync();
-        var types = await _typeService.GetViewModelsAsync();
+        var types = await _aromaTypeService.GetViewModelsAsync();
         var genders = await _genderService.GetViewModelsAsync();
         var releaseForms = await _releaseFormService.GetViewModelsAsync();
 
-        ManageProductViewModel manageProduct = new(
+        ManageProductViewModel manageViewModel = new(
             new CatalogProductViewModel(),
-            categories.ToSelectListItems(),
             brands.ToSelectListItems(),
             types.ToSelectListItems(),
             genders.ToSelectListItems(),
             releaseForms.ToSelectListItems());
 
-        return View(manageProduct);
+        return View(manageViewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(ManageProductViewModel manageProductViewModel)
+    public async Task<IActionResult> Create(ManageProductViewModel manageViewModel)
     {
         var files = HttpContext.Request.Form.Files;
 
         if (files.Count > 0)
         {
             _contentManager.UploadFiles(HttpContext.Request.Form.Files, Constants.CatalogImagePath);
-            manageProductViewModel.ProductViewModel!.PictureUri = _contentManager.NameFiles.FirstOrDefault();
+            manageViewModel.ProductViewModel!.PictureUri = _contentManager.NameFiles.FirstOrDefault();
         }
 
         if (ModelState.IsValid)
         {
-            await _catalogService!.CreateViewModelAsync(manageProductViewModel.ProductViewModel!);
+            await _productService!.CreateViewModelAsync(manageViewModel.ProductViewModel!);
             return RedirectToAction(nameof(Index));
         }
-        else return View(manageProductViewModel);
+        else return View(manageViewModel);
     }
 
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var product = await _catalogService!.GetViewModelByIdAsync(id);
-        var categories = await _categoryService.GetViewModelsAsync();
+        var product = await _productService!.GetViewModelByIdAsync(id);
         var brands = await _brandService.GetViewModelsAsync();
-        var types = await _typeService.GetViewModelsAsync();
+        var types = await _aromaTypeService.GetViewModelsAsync();
         var genders = await _genderService.GetViewModelsAsync();
         var releaseForms = await _releaseFormService.GetViewModelsAsync();
 
-        ManageProductViewModel manageProductViewModel = new(
+        ManageProductViewModel manageViewModel = new(
             product,
-            categories.ToSelectListItems(),
             brands.ToSelectListItems(),
             types.ToSelectListItems(),
             genders.ToSelectListItems(),
             releaseForms.ToSelectListItems());
 
-        return View(manageProductViewModel);
+        return View(manageViewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(ManageProductViewModel manageProductViewModel)
+    public async Task<IActionResult> Edit(ManageProductViewModel manageViewModel)
     {
         var files = HttpContext.Request.Form.Files;
 
         if (files.Count > 0)
         {
-            _contentManager.RemoveFile(Constants.CatalogImagePath, manageProductViewModel.ProductViewModel.PictureUri);
+            _contentManager.RemoveFile(Constants.CatalogImagePath, manageViewModel.ProductViewModel.PictureUri);
             _contentManager.UploadFiles(files, Constants.CatalogImagePath);
-            manageProductViewModel.ProductViewModel.PictureUri = _contentManager.NameFiles.FirstOrDefault();
+            manageViewModel.ProductViewModel.PictureUri = _contentManager.NameFiles.FirstOrDefault();
         }
 
         if (ModelState.IsValid)
         {
-            var viewModel = manageProductViewModel.ProductViewModel;
-            await _catalogService!.UpdateViewModelAsync(viewModel!);
+            var viewModel = manageViewModel.ProductViewModel;
+            await _productService!.UpdateViewModelAsync(viewModel!);
 
             return RedirectToAction(nameof(Details), new { id = viewModel!.Id });
         }
         else return RedirectToAction();
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var productViewModel = await _catalogService!.GetViewModelByIdAsync(id);
-
-        _contentManager.RemoveFile(Constants.CatalogImagePath, productViewModel.PictureUri);
-
-        await _catalogService.DeleteViewModelAsync(productViewModel);
-        return RedirectToAction(nameof(Index));
-    }
-
     [HttpGet]
     public async Task<IActionResult> Details(int id)
     {
-        var productViewModel = await _catalogService!.GetViewModelByIdAsync(id);
-        return View(productViewModel);
+        var viewModel = await _productService!.GetViewModelByIdAsync(id);
+        return View(viewModel);
     }
+
+    #region API CALLS
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var viewModels = await _productService.GetViewModelsAsync();
+        return Json(new { data = viewModels });
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var viewModel = await _productService.GetViewModelByIdAsync(id);
+
+        if (viewModel is null)
+        {
+            return Json(new { success = false, message = "Error while deleting" });
+        }
+        _contentManager.RemoveFile(Constants.CatalogImagePath, viewModel.PictureUri);
+        await _productService.DeleteViewModelAsync(viewModel);
+
+        return Json(new { success = true, message = $"{viewModel.Name} was deleted successfully" });
+    }
+    #endregion
 }

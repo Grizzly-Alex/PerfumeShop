@@ -42,7 +42,7 @@ public static class WebDependencies
         app.MapAreaControllerRoute(
             name: "AdminDefault",
             areaName: "Admin",
-            pattern: "{area=Admin}/{controller=ManageCatalog}/{action=Index}/{id?}");
+            pattern: "{area=Admin}/{controller=ManageProduct}/{action=Index}/{id?}");
         app.MapAreaControllerRoute(
             name: "UserDefault",
             areaName: "User",

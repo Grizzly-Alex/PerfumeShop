@@ -1,8 +1,8 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess.Configurations;
 
-public sealed class TypeConfig : IEntityTypeConfiguration<CatalogType>
+public sealed class AromaTypeConfig : IEntityTypeConfiguration<CatalogAromaType>
 {
-    public void Configure(EntityTypeBuilder<CatalogType> builder)
+    public void Configure(EntityTypeBuilder<CatalogAromaType> builder)
     {
         builder.HasKey(p => p.Id);
 

@@ -11,18 +11,10 @@ public class ManageBrandController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        var viewModels = await _viewModelService.GetViewModelsAsync();
-        return View(viewModels);
-    }
-
+    public IActionResult Index() => View();
 
     [HttpGet]
-    public IActionResult Create()
-    {
-        return View();
-    }
+    public IActionResult Create() => View();
 
     [HttpPost]
     public async Task<IActionResult> Create(CatalogItemViewModel obj)
@@ -30,6 +22,7 @@ public class ManageBrandController : Controller
         if (ModelState.IsValid)
         {
             await _viewModelService.CreateViewModelAsync(obj);
+            TempData["success"] = $"{obj.Name} was created successfully";
             return RedirectToAction(nameof(Index));
         }
         else return View(obj);
@@ -48,6 +41,7 @@ public class ManageBrandController : Controller
         if (ModelState.IsValid)
         {
             await _viewModelService.UpdateViewModelAsync(obj);
+            TempData["success"] = $"{obj.Name} was updated successfully";
             return RedirectToAction(nameof(Index));
         }
         return View(obj);
@@ -73,7 +67,7 @@ public class ManageBrandController : Controller
 
         await _viewModelService.DeleteViewModelAsync(viewModel);
 
-        return Json(new { success = true, message = "Delete Successful" });
+        return Json(new { success = true, message = $"{viewModel.Name} was deleted successfully" });
     }
     #endregion
 }

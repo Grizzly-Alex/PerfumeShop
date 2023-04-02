@@ -1,15 +1,15 @@
 ﻿<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h2 class="text-muted">Brands</h2>
+    <h2 class="text-muted">Release Forms</h2>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="text-end">
-            <a asp-controller="ManageBrand" asp-action="Create" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+            <a asp-controller="ManageReleaseForm" asp-action="Create" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
                 <span class="bi bi-pen">Add</span>
             </a>
         </div>
     </div>
 </div>
 
-<table id="brandData" class="table table-bordered table-striped table-sm">
+<table id="releaseFormData" class="table table-bordered table-striped table-sm">
     <thead>
         <tr>
             <th>Name</th>
@@ -19,5 +19,5 @@
 </table>
 
 @section Scripts{
-    <script src="~/js/brand-table.js"></script>
+    <script src="~/js/releaseForm-table.js"></script>
 }

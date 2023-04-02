@@ -12,8 +12,8 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20230331181326_FirstMigrtation")]
-    partial class FirstMigrtation
+    [Migration("20230402081116_InitialMigrtation")]
+    partial class InitialMigrtation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,13 +28,10 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
             modelBuilder.HasSequence("brand_hilo")
                 .IncrementsBy(10);
 
-            modelBuilder.HasSequence("catalog_hilo")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("category_hilo")
-                .IncrementsBy(10);
-
             modelBuilder.HasSequence("gender_hilo")
+                .IncrementsBy(10);
+
+            modelBuilder.HasSequence("product_hilo")
                 .IncrementsBy(10);
 
             modelBuilder.HasSequence("release_form_hilo")
@@ -42,6 +39,24 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
 
             modelBuilder.HasSequence("type_hilo")
                 .IncrementsBy(10);
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.CatalogAromaType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "type_hilo");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AromaTypes");
+                });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.CatalogBrand", b =>
                 {
@@ -61,44 +76,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.CatalogCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "category_hilo");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Perfume"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Interior Fragrances"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Sets"
-                        });
-                });
-
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.CatalogGender", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "gender_hilo");
@@ -111,6 +91,23 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Unisex"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Man"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Woman"
+                        });
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.CatalogProduct", b =>
@@ -119,7 +116,10 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "catalog_hilo");
+                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "product_hilo");
+
+                    b.Property<int>("AromaTypeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
@@ -155,25 +155,20 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Volume")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("AromaTypeId");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("GenderId");
 
                     b.HasIndex("ReleaseFormId");
 
-                    b.HasIndex("TypeId");
-
-                    b.ToTable("Catalog", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.CatalogReleaseForm", b =>
@@ -194,35 +189,17 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                     b.ToTable("ReleaseForms");
                 });
 
-            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.CatalogType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "type_hilo");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Types");
-                });
-
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.CatalogProduct", b =>
                 {
-                    b.HasOne("PerfumeShop.Core.Models.Entities.CatalogBrand", "Brand")
+                    b.HasOne("PerfumeShop.Core.Models.Entities.CatalogAromaType", "AromaType")
                         .WithMany()
-                        .HasForeignKey("BrandId")
+                        .HasForeignKey("AromaTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PerfumeShop.Core.Models.Entities.CatalogCategory", "Category")
+                    b.HasOne("PerfumeShop.Core.Models.Entities.CatalogBrand", "Brand")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -238,21 +215,13 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PerfumeShop.Core.Models.Entities.CatalogType", "Type")
-                        .WithMany()
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("AromaType");
 
                     b.Navigation("Brand");
-
-                    b.Navigation("Category");
 
                     b.Navigation("Gender");
 
                     b.Navigation("ReleaseForm");
-
-                    b.Navigation("Type");
                 });
 #pragma warning restore 612, 618
         }
