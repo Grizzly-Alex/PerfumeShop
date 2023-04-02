@@ -55,7 +55,7 @@ public sealed class ProductViewModelService : ViewModelService<CatalogProduct, C
 
     public override async Task<CatalogProductViewModel> CreateViewModelAsync(CatalogProductViewModel viewModel)
     {
-        viewModel.DateDelivery = DateTime.Now;
+        viewModel.DateDelivery = DateTime.UtcNow;
         var model = _mapper.Map<CatalogProduct>(viewModel);
         _unitOfWork.GetRepository<CatalogProduct>().Add(model);
         await _unitOfWork.SaveChangesAsync();

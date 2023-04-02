@@ -7,7 +7,6 @@ public sealed class GenderConfig : IEntityTypeConfiguration<CatalogGender>
         builder.HasKey(p => p.Id);
 
         builder.Property(p => p.Id)
-           .UseHiLo("gender_hilo")
            .ValueGeneratedNever();
 
         builder.Property(p => p.Name)

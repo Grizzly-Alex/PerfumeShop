@@ -5,7 +5,6 @@ public sealed class ProductConfig : IEntityTypeConfiguration<CatalogProduct>
     public void Configure(EntityTypeBuilder<CatalogProduct> builder)
     {
         builder.Property(p => p.Id)
-            .UseHiLo("product_hilo")
             .IsRequired();
 
         builder.Property(p => p.Name)
@@ -43,6 +42,7 @@ public sealed class ProductConfig : IEntityTypeConfiguration<CatalogProduct>
             .HasForeignKey(p => p.ReleaseFormId);
 
         builder.Property(p => p.DateDelivery)
-            .HasColumnType("datetime2(7)");
+            .HasColumnType("datetime2")
+            .HasPrecision(0);
     }
 }

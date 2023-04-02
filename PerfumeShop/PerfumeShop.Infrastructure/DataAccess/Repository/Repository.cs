@@ -15,17 +15,17 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
 
     public void Add(TEntity entity)
     {
-        _dbSet.Add(entity).State = EntityState.Added;
-    }
+        _dbSet.Add(entity);
+	}
 
     public void Remove(TEntity entity)
     {
-        _dbSet.Remove(entity).State = EntityState.Deleted;
+        _dbSet.Remove(entity);
     }
 
     public void Update(TEntity entity)
     {
-        _dbSet.Update(entity).State = EntityState.Modified;
+        _dbSet.Update(entity);
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(

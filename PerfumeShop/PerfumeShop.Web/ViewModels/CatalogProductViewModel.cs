@@ -28,23 +28,22 @@ public sealed class CatalogProductViewModel : EntityViewModel
     public DateTime DateDelivery { get; set; }
 
     [Required(ErrorMessage = "Value {0} from the list must be selected!")]
-    [DisplayName("Category")]
     public int BrandId { get; set; }
     [ValidateNever]
-    public string Brand { get; set; }
+    public CatalogBrand Brand { get; set; }
 
-    [DisplayName("Gender")]
+    [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     public int GenderId { get; set; }
     [ValidateNever]
-    public string Gender { get; set; }
+    public CatalogGender Gender { get; set; }
 
-    [DisplayName("AromaType")]
+    [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     public int AromaTypeId { get; set; }
     [ValidateNever]
-    public string AromaType { get; set; }
+    public CatalogAromaType AromaType { get; set; }
 
-    [DisplayName("ReleaseForm")]
+    [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     public int ReleaseFormId { get; set; }
     [ValidateNever]
-    public string ReleaseForm { get; set; }
+    public CatalogReleaseForm ReleaseForm { get; set; }
 }

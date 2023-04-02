@@ -1,6 +1,6 @@
 ﻿namespace PerfumeShop.Web.ViewModels;
 
-[Area("Admin")]
+
 public sealed class ManageProductViewModel
 {
     public CatalogProductViewModel? ProductViewModel { get; set; }
@@ -9,7 +9,11 @@ public sealed class ManageProductViewModel
     public IEnumerable<SelectListItem>? Genders { get; set; }
     public IEnumerable<SelectListItem>? ReleaseForms { get; set; }
 
-    public ManageProductViewModel(
+	public ManageProductViewModel()
+	{
+	}
+
+	public ManageProductViewModel(
         CatalogProductViewModel? productViewModel,
         IEnumerable<SelectListItem>? brands,
         IEnumerable<SelectListItem>? aromaTypes,

@@ -3,6 +3,11 @@
 public sealed class CatalogAromaType : Entity
 {
     public string Name { get; private set; }
+
+    public CatalogAromaType()
+    {
+    }
+
     public CatalogAromaType(string name)
     {
         Name = name;

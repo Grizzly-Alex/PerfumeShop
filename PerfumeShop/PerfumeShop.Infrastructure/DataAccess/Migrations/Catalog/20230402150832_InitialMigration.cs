@@ -8,36 +8,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
 {
     /// <inheritdoc />
-    public partial class InitialMigrtation : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateSequence(
-                name: "brand_hilo",
-                incrementBy: 10);
-
-            migrationBuilder.CreateSequence(
-                name: "gender_hilo",
-                incrementBy: 10);
-
-            migrationBuilder.CreateSequence(
-                name: "product_hilo",
-                incrementBy: 10);
-
-            migrationBuilder.CreateSequence(
-                name: "release_form_hilo",
-                incrementBy: 10);
-
-            migrationBuilder.CreateSequence(
-                name: "type_hilo",
-                incrementBy: 10);
-
             migrationBuilder.CreateTable(
                 name: "AromaTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -49,7 +30,8 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 name: "Brands",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -73,7 +55,8 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 name: "ReleaseForms",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -85,19 +68,19 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PictureUri = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
                     Volume = table.Column<int>(type: "int", nullable: false),
-                    DateDelivery = table.Column<DateTime>(type: "datetime2(7)", nullable: false),
+                    DateDelivery = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false),
                     GenderId = table.Column<int>(type: "int", nullable: false),
                     AromaTypeId = table.Column<int>(type: "int", nullable: false),
-                    ReleaseFormId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    ReleaseFormId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -176,21 +159,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
 
             migrationBuilder.DropTable(
                 name: "ReleaseForms");
-
-            migrationBuilder.DropSequence(
-                name: "brand_hilo");
-
-            migrationBuilder.DropSequence(
-                name: "gender_hilo");
-
-            migrationBuilder.DropSequence(
-                name: "product_hilo");
-
-            migrationBuilder.DropSequence(
-                name: "release_form_hilo");
-
-            migrationBuilder.DropSequence(
-                name: "type_hilo");
         }
     }
 }

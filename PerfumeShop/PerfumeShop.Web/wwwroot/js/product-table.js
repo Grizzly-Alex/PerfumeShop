@@ -11,18 +11,20 @@ function loadDataTable() {
         },
         "columns": [
             { data: "name", "width": "15%" },
-            { data: "brand", "width": "10%" },
-            { data: "gender", "width": "10%" },
-            { data: "aroma type", "width": "10%" },
-            { data: "release form", "width": "10%" },
             { data: "price", "width": "10%" },
             { data: "volume", "width": "10%" },
-            { data: "stock", "width": "10%" },
-            { data: "date delivery", "width": "10%" },
+            { data: "stock", "width": "10%" },      
+            { data: "brand.name", "width": "10%" },
+            { data: "gender.name", "width": "10%" },
+            { data: "aromaType.name", "width": "10%" },
+            { data: "releaseForm.name", "width": "10%" },
+            { data: "dateDelivery", "width": "10%" },
             {
                 data: "id",
                 "render": function (data) {
-                    return `<div class="btn-toolbar justify-content-between" role="toolbar">
+                    return `<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <a href="/admin/managebrand/details?id=${data}" class="btn btn-outline-success btn-sm shadow-none">
+                    <i class="bi bi-info-lg"></i> </a>
                     <a href="/admin/managebrand/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
                     <i class="bi bi-wrench"></i> </a>
                     <a onClick=Delete('/admin/managebrand/delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 

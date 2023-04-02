@@ -22,28 +22,13 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.HasSequence("brand_hilo")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("gender_hilo")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("product_hilo")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("release_form_hilo")
-                .IncrementsBy(10);
-
-            modelBuilder.HasSequence("type_hilo")
-                .IncrementsBy(10);
-
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.CatalogAromaType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "type_hilo");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -61,7 +46,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "brand_hilo");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -77,8 +62,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "gender_hilo");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -113,7 +96,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "product_hilo");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AromaTypeId")
                         .HasColumnType("int");
@@ -121,11 +104,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateDelivery")
-                        .HasColumnType("datetime2(7)");
+                        .HasPrecision(0)
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -174,7 +155,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "release_form_hilo");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()

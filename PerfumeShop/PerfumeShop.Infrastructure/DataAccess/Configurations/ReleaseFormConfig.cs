@@ -7,7 +7,6 @@ public sealed class ReleaseFormConfig : IEntityTypeConfiguration<CatalogReleaseF
         builder.HasKey(p => p.Id);
 
         builder.Property(p => p.Id)
-           .UseHiLo("release_form_hilo")
            .IsRequired();
 
         builder.Property(p => p.Name)
