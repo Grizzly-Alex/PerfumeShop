@@ -67,7 +67,8 @@ public sealed class ProductViewModelService : ViewModelService<CatalogProduct, C
         viewModel.DateDelivery = await _unitOfWork.GetRepository<CatalogProduct>()
             .GetFirstOrDefaultAsync(
             selector: i => i.DateDelivery,
-            predicate: i => i.Id == viewModel.Id);
+            predicate: i => i.Id == viewModel.Id,
+            isTracking: false);
 
         var model = _mapper.Map<CatalogProduct>(viewModel);
         _unitOfWork.GetRepository<CatalogProduct>().Update(model);

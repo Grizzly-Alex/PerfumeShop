@@ -5,9 +5,9 @@ public sealed class ProductConfig : IEntityTypeConfiguration<CatalogProduct>
     public void Configure(EntityTypeBuilder<CatalogProduct> builder)
     {
         builder.Property(p => p.Id)
-            .IsRequired();
+			.IsRequired();
 
-        builder.Property(p => p.Name)
+		builder.Property(p => p.Name)
             .IsRequired(true)
             .HasMaxLength(100);
 
@@ -39,7 +39,8 @@ public sealed class ProductConfig : IEntityTypeConfiguration<CatalogProduct>
 
         builder.HasOne(p => p.ReleaseForm)
             .WithMany()
-            .HasForeignKey(p => p.ReleaseFormId);
+            .HasForeignKey(p => p.ReleaseFormId)
+			.OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(p => p.DateDelivery)
             .HasColumnType("datetime2")

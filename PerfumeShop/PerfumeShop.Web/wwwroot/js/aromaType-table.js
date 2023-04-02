@@ -7,14 +7,14 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#aromaTypeData').DataTable({
         "ajax": {
-            "url": "/admin/managearomatype/getall"
+            "url": "/admin/manageAromaType/getAll"
         },
         "columns": [
             { data: "name", "width": "95%" },
             {
                 data: "id",
                 "render": function (data) {
-                    return `<div class="btn-toolbar justify-content-between" role="toolbar">
+                    return `<div class="btn-group" role="group" aria-label="Basic mixed styles example">
                     <a href="/admin/managearomatype/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
                     <i class="bi bi-wrench"></i> </a>
                     <a onClick=Delete('/admin/managearomatype/delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 

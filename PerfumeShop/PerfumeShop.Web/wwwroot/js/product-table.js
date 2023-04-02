@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#productData').DataTable({
         "ajax": {
-            "url": "/admin/manageproduct/getall"
+            "url": "/Admin/ManageProduct/GetAll"
         },
         "columns": [
             { data: "name", "width": "15%" },
@@ -23,11 +23,11 @@ function loadDataTable() {
                 data: "id",
                 "render": function (data) {
                     return `<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <a href="/admin/managebrand/details?id=${data}" class="btn btn-outline-success btn-sm shadow-none">
+                    <a href="/Admin/ManageProduct/Details?id=${data}" class="btn btn-outline-success btn-sm shadow-none">
                     <i class="bi bi-info-lg"></i> </a>
-                    <a href="/admin/managebrand/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
+                    <a href="/Admin/ManageProduct/Edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
                     <i class="bi bi-wrench"></i> </a>
-                    <a onClick=Delete('/admin/managebrand/delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
+                    <a onClick=Delete('/Admin/ManageProduct/Delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
                     <i class="bi bi-trash3"></i> </a>
 					</div>`
                 },

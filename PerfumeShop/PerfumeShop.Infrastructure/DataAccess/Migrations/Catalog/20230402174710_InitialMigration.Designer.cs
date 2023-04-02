@@ -12,7 +12,7 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20230402150832_InitialMigration")]
+    [Migration("20230402174710_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

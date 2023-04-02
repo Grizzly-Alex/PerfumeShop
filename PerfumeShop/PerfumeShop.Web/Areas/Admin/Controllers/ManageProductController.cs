@@ -135,6 +135,7 @@ public class ManageProductController : Controller
             return Json(new { success = false, message = "Error while deleting" });
         }
         _contentManager.RemoveFile(Constants.CatalogImagePath, viewModel.PictureUri);
+
         await _productService.DeleteViewModelAsync(viewModel);
 
         return Json(new { success = true, message = $"{viewModel.Name} was deleted successfully" });

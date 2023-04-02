@@ -7,7 +7,7 @@ public sealed class GenderConfig : IEntityTypeConfiguration<CatalogGender>
         builder.HasKey(p => p.Id);
 
         builder.Property(p => p.Id)
-           .ValueGeneratedNever();
+		   .ValueGeneratedNever();
 
         builder.Property(p => p.Name)
             .IsRequired()

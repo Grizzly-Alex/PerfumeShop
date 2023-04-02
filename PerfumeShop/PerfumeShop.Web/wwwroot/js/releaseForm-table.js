@@ -7,17 +7,17 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#releaseFormData').DataTable({
         "ajax": {
-            "url": "/admin/managereleaseform/getall"
+            "url": "/admin/ManageReleaseForm/GetAll"
         },
         "columns": [
             { data: "name", "width": "95%" },
             {
                 data: "id",
                 "render": function (data) {
-                    return `<div class="btn-toolbar justify-content-between" role="toolbar">
-                    <a href="/admin/managereleaseform/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
+                    return `<div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <a href="/Admin/ManageReleaseForm/Edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
                     <i class="bi bi-wrench"></i> </a>
-                    <a onClick=Delete('/admin/managereleaseform/delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
+                    <a onClick=Delete('/Admin/ManageReleaseForm/Delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
                     <i class="bi bi-trash3"></i> </a>
 					</div>`
                 },
