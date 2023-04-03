@@ -40,12 +40,12 @@ public static class WebDependencies
         app.UseAuthorization();
 
         app.MapAreaControllerRoute(
-            name: "AdminDefault",
-            areaName: "Admin",
-            pattern: "{area=Admin}/{controller=ManageProduct}/{action=Index}/{id?}");
-        app.MapAreaControllerRoute(
             name: "UserDefault",
             areaName: "User",
             pattern: "{controller=Home}/{action=Index}/{id?}");
+        app.MapAreaControllerRoute(
+            name: "AdminDefault",
+            areaName: "Admin",
+            pattern: "{area=Admin}/{controller=ManageProduct}/{action=Index}/{id?}");
     }
 }

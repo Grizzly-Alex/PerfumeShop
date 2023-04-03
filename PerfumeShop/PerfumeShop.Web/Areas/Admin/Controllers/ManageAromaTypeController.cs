@@ -3,9 +3,9 @@
 [Area("Admin")]
 public class ManageAromaTypeController : Controller
 {
-    private readonly IViewModelService<CatalogAromaType, CatalogItemViewModel> _viewModelService;
+    private readonly IViewModelService<CatalogAromaType, ItemViewModel> _viewModelService;
 
-    public ManageAromaTypeController(IViewModelService<CatalogAromaType, CatalogItemViewModel> viewModelService)
+    public ManageAromaTypeController(IViewModelService<CatalogAromaType, ItemViewModel> viewModelService)
     {
         _viewModelService = viewModelService;
     }
@@ -17,7 +17,7 @@ public class ManageAromaTypeController : Controller
     public IActionResult Create() => View();
 
     [HttpPost]
-    public async Task<IActionResult> Create(CatalogItemViewModel obj)
+    public async Task<IActionResult> Create(ItemViewModel obj)
     {
         if (ModelState.IsValid)
         {
@@ -36,7 +36,7 @@ public class ManageAromaTypeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(CatalogItemViewModel obj)
+    public async Task<IActionResult> Edit(ItemViewModel obj)
     {
         if (ModelState.IsValid)
         {

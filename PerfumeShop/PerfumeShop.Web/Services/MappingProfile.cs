@@ -4,10 +4,10 @@ public sealed class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<CatalogBrand, CatalogItemViewModel>().ReverseMap();
-        CreateMap<CatalogGender, CatalogItemViewModel>().ReverseMap();
-        CreateMap<CatalogReleaseForm, CatalogItemViewModel>().ReverseMap();
-        CreateMap<CatalogAromaType, CatalogItemViewModel>().ReverseMap();
-        CreateMap<CatalogProduct, CatalogProductViewModel>().ReverseMap();           
+        CreateMap<CatalogBrand, ItemViewModel>().ReverseMap();
+        CreateMap<CatalogGender, ItemViewModel>().ReverseMap();
+        CreateMap<CatalogReleaseForm, ItemViewModel>().ReverseMap();
+        CreateMap<CatalogAromaType, ItemViewModel>().ReverseMap();
+        CreateMap<CatalogProduct, ProductViewModel>().ReverseMap();           
 	}
 }

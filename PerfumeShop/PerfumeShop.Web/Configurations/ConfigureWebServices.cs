@@ -7,7 +7,7 @@ public static class ConfigureWebServices
         services.AddControllersWithViews();
         services.AddScoped<IContentManager, ContentManager>();
         services.AddTransient(typeof(IViewModelService<,>), typeof(ViewModelService<,>));
-        services.AddTransient<IViewModelService<CatalogProduct, CatalogProductViewModel>, ProductViewModelService>();
+        services.AddTransient<IViewModelService<CatalogProduct, ProductViewModel>, ProductViewModelService>();
         services.AddAutoMapper(typeof(MappingProfile));
 
         return services;

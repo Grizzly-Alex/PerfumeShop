@@ -4,20 +4,20 @@
 public class ManageProductController : Controller
 {
     private readonly IContentManager _contentManager;
-    private readonly IViewModelService<CatalogProduct, CatalogProductViewModel> _productService;
-    private readonly IViewModelService<CatalogBrand, CatalogItemViewModel> _brandService;
-    private readonly IViewModelService<CatalogGender, CatalogItemViewModel> _genderService;
-    private readonly IViewModelService<CatalogAromaType, CatalogItemViewModel> _aromaTypeService;
-    private readonly IViewModelService<CatalogReleaseForm, CatalogItemViewModel> _releaseFormService;
+    private readonly IViewModelService<CatalogProduct, ProductViewModel> _productService;
+    private readonly IViewModelService<CatalogBrand, ItemViewModel> _brandService;
+    private readonly IViewModelService<CatalogGender, ItemViewModel> _genderService;
+    private readonly IViewModelService<CatalogAromaType, ItemViewModel> _aromaTypeService;
+    private readonly IViewModelService<CatalogReleaseForm, ItemViewModel> _releaseFormService;
 
 
     public ManageProductController(
         IContentManager contentManager,
-        IViewModelService<CatalogProduct, CatalogProductViewModel> catalogService,
-        IViewModelService<CatalogBrand, CatalogItemViewModel> brandService,
-        IViewModelService<CatalogGender, CatalogItemViewModel> genderService,
-        IViewModelService<CatalogAromaType, CatalogItemViewModel> typeService,
-        IViewModelService<CatalogReleaseForm, CatalogItemViewModel> releaseFormService)      
+        IViewModelService<CatalogProduct, ProductViewModel> catalogService,
+        IViewModelService<CatalogBrand, ItemViewModel> brandService,
+        IViewModelService<CatalogGender, ItemViewModel> genderService,
+        IViewModelService<CatalogAromaType, ItemViewModel> typeService,
+        IViewModelService<CatalogReleaseForm, ItemViewModel> releaseFormService)      
     {
         _contentManager = contentManager;
         _productService = catalogService;
@@ -39,7 +39,7 @@ public class ManageProductController : Controller
         var releaseForms = await _releaseFormService.GetViewModelsAsync();
 
         ManageProductViewModel manageViewModel = new(
-            new CatalogProductViewModel(),
+            new ProductViewModel(),
             brands.ToSelectListItems(),
             types.ToSelectListItems(),
             genders.ToSelectListItems(),
