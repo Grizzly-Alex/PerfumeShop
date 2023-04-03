@@ -2,7 +2,8 @@
 
 public sealed class CatalogFilterViewModel
 {
-    public decimal? MaxPrice { get; set; }
+	public decimal? MinPrice { get; set; }
+	public decimal? MaxPrice { get; set; }
     public int? BrandId { get; set; }   
     public int? GenderId { get; set;}
     public int? AromaTypeId { get; set; }
@@ -20,13 +21,20 @@ public sealed class CatalogFilterViewModel
     [Display(Name = "Release Form")]
     public IEnumerable<SelectListItem>? ReleaseForms { get; set; }
 
+
+    public CatalogFilterViewModel()
+    {       
+    }
+
     public CatalogFilterViewModel(
+        decimal? minPrice,
         decimal? maxPrice,
         IEnumerable<SelectListItem>? brands,
         IEnumerable<SelectListItem>? genders,
         IEnumerable<SelectListItem>? aromaTypes,
         IEnumerable<SelectListItem>? releaseForms)
     {
+        MinPrice = minPrice;
         MaxPrice = maxPrice;
         Brands = brands;
         Genders = genders;

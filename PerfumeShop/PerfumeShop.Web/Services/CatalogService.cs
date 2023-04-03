@@ -4,25 +4,13 @@ public sealed class CatalogService : ICatalogService
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork<CatalogDbContext> _unitOfWork;
-    private readonly IViewModelService<CatalogBrand, ItemViewModel> _brandService;
-    private readonly IViewModelService<CatalogGender, ItemViewModel> _genderService;
-    private readonly IViewModelService<CatalogAromaType, ItemViewModel> _aromaTypeService;
-    private readonly IViewModelService<CatalogReleaseForm, ItemViewModel> _releaseFormService;
 
     public CatalogService(
         IMapper mapper,
-        IUnitOfWork<CatalogDbContext> unitOfWork,
-        IViewModelService<CatalogBrand, ItemViewModel> brandService,
-        IViewModelService<CatalogGender, ItemViewModel> genderService,
-        IViewModelService<CatalogAromaType, ItemViewModel> typeService,
-        IViewModelService<CatalogReleaseForm, ItemViewModel> releaseFormService)
+        IUnitOfWork<CatalogDbContext> unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _brandService = brandService;
-        _genderService = genderService;
-        _aromaTypeService = typeService;
-        _releaseFormService = releaseFormService;
     }
 
     public async Task<decimal?> DefineMaxPrice(decimal? price)
@@ -39,7 +27,8 @@ public sealed class CatalogService : ICatalogService
             pageIndex: pageIndex,
             itemsPerPage: itemsPerPage,
             predicate: i => (filter.MaxPrice.HasValue || i.Price <= filter.MaxPrice)
-                && (!filter.BrandId.HasValue || i.BrandId == filter.BrandId)
+                && (!filter.MinPrice.HasValue || i.Price >= filter.MinPrice)
+				&& (!filter.BrandId.HasValue || i.BrandId == filter.BrandId)
                 && (!filter.GenderId.HasValue || i.GenderId == filter.GenderId)
                 && (!filter.AromaTypeId.HasValue || i.AromaTypeId == filter.AromaTypeId)
                 && (!filter.ReleaseFormId.HasValue || i.ReleaseFormId == filter.ReleaseFormId),
@@ -56,20 +45,19 @@ public sealed class CatalogService : ICatalogService
         return pagedListView;
     }
 
-    public async Task<CatalogFilterViewModel> GetCatalogFilterAsync(decimal maxPrice)
+    public async Task<CatalogFilterViewModel> GetCatalogFilterAsync(decimal? minPrice, decimal? maxPrice)
     {
-        var brands = await _brandService.GetViewModelsAsync();
-        var genders = await _genderService.GetViewModelsAsync();
-        var aromaType = await _aromaTypeService.GetViewModelsAsync();
-        var releaseForm = await _releaseFormService.GetViewModelsAsync();
+        var brandsFromDb = await _unitOfWork.GetRepository<CatalogBrand>().GetAllAsync();
+        var gendersFromDb = await _unitOfWork.GetRepository<CatalogGender>().GetAllAsync();
+		var aromaTypesFromDb = await _unitOfWork.GetRepository<CatalogAromaType>().GetAllAsync();
+		var releaseFormsFromDb = await _unitOfWork.GetRepository<CatalogReleaseForm>().GetAllAsync();
 
-        var allSelect = new SelectListItem { Text = "All" };
+		var allSelect = new SelectListItem { Text = "All" };
 
-        return new CatalogFilterViewModel(
-            maxPrice,
-            brands.ToSelectListItems(allSelect),
-            genders.ToSelectListItems(allSelect),
-            aromaType.ToSelectListItems(allSelect),
-            releaseForm.ToSelectListItems(allSelect));
+        return new CatalogFilterViewModel(minPrice, maxPrice,
+			_mapper.Map<IEnumerable<ItemViewModel>>(brandsFromDb).ToSelectListItems(allSelect),
+			_mapper.Map<IEnumerable<ItemViewModel>>(gendersFromDb).ToSelectListItems(allSelect),
+			_mapper.Map<IEnumerable<ItemViewModel>>(aromaTypesFromDb).ToSelectListItems(allSelect),
+			_mapper.Map<IEnumerable<ItemViewModel>>(releaseFormsFromDb).ToSelectListItems(allSelect));
     }
 }
