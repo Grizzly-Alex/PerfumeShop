@@ -36,6 +36,16 @@ public interface IRepository<TDbContext, TEntity>
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         bool isTracking = false);
 
+    Task<IPagedList<TResult>> GetPagedListAsync<TResult>(
+        Expression<Func<TEntity, TResult>> selector,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        int pageIndex = default,
+        int itemsPerPage = int.MinValue,
+        bool isTracking = true,
+        CancellationToken cancellationToken = default);
+
     Task<int> CountAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         CancellationToken cancellationToken = default);

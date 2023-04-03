@@ -97,6 +97,27 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
             : await query.Select(selector).ToListAsync();
     }
 
+    public async Task<IPagedList<TResult>> GetPagedListAsync<TResult>(
+        Expression<Func<TEntity, TResult>> selector,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        int pageIndex = default,
+        int itemsPerPage = int.MaxValue,
+        bool isTracking = true,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<TEntity> query = _dbSet;
+
+        if (!isTracking) { query = query.AsNoTracking(); }
+        if (predicate is not null) { query = query.Where(predicate); }
+        if (include is not null) { query = include(query); }
+
+        return orderBy is not null
+            ? await orderBy(query).Select(selector).ToPagedListAsync(pageIndex, itemsPerPage, cancellationToken)
+            : await query.Select(selector).ToPagedListAsync(pageIndex, itemsPerPage, cancellationToken);
+    }
+
     public async Task<TResult> MaxAsync<TResult>(
         Expression<Func<TEntity, TResult>> selector,
         Expression<Func<TEntity, bool>>? predicate = null,
