@@ -1,0 +1,77 @@
+﻿@model PagedInfoViewModel
+
+@{
+    var actualPage = nameof(Model.PageId);
+    var sourceRouteData = Context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
+
+    if (sourceRouteData.ContainsKey(actualPage))
+        sourceRouteData.Remove(actualPage);
+}
+
+@if (Model.TotalPages > 0)
+{
+    <nav ari a-label="Page navigation example">
+        <div class="esh-pager"></div>
+        <ul class="pagination pagination-sm justify-content-end">
+
+            @if (Model.HasPreviousPage)
+            {
+                var prevRouteData = new Dictionary<string, string>(sourceRouteData);
+                prevRouteData.Add(actualPage, (Model.PageId - 1).ToString());
+
+                <li class="page-item">
+                    <a class="page-link" asp-all-route-data="prevRouteData">
+                        <i class="bi bi-chevron-double-left"></i>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link disabled">
+                        <i class="bi bi-chevron-double-left"></i>
+                    </a>
+                </li>
+            }
+
+            @for (int i = 0; i < Model.TotalPages; i++)
+            {
+                var routeData = new Dictionary<string, string>(sourceRouteData);
+                routeData.Add(actualPage, (i).ToString());
+
+                if (Model.PageId == i)
+                {
+                    <li class="page-item active">
+                        <span class="page-link">@(i + 1)</span>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-all-route-data="routeData">@(i + 1)</a>
+                    </li>
+                }
+            }
+
+            @if (Model.HasNextPage)
+            {
+                var nextRouteData = new Dictionary<string, string>(sourceRouteData);
+                nextRouteData.Add(actualPage, (Model.PageId + 1).ToString());
+
+                <li class="page-item">
+                    <a class="page-link" asp-all-route-data="nextRouteData">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link disabled">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

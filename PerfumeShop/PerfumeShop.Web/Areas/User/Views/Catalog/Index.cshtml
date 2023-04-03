@@ -1,1 +1,69 @@
-﻿
+﻿@model CatalogViewModel
+
+<div class="container-fluid">
+
+        <div class="row mt-3 pb-0">
+            <div class="col-6 text-start">
+                <p class="bi bi-sliders text-muted" style="font-size: 1.2rem;"> Filter</p>
+            </div>
+            <div class="col-6 text-end">
+                <p class="text-muted">Total found: @Model.PagedList.TotalItems</p>
+            </div>
+            <hr class="featurette-divider">
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <form method="get">
+
+                    <div class="mb-3">
+                        <label asp-for="@Model.CatalogFilter.Brands"></label>
+                        <select asp-for="@Model.CatalogFilter.BrandId" asp-items="@Model.CatalogFilter.Brands" class="form-select shadow-none"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@Model.CatalogFilter.Genders"></label>
+                        <select asp-for="@Model.CatalogFilter.GenderId" asp-items="@Model.CatalogFilter.Genders" class="form-select shadow-none"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@Model.CatalogFilter.AromaTypes"></label>
+                        <select asp-for="@Model.CatalogFilter.AromaTypeId" asp-items="@Model.CatalogFilter.AromaTypes" class="form-select shadow-none"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@Model.CatalogFilter.ReleaseForms"></label>
+                        <select asp-for="@Model.CatalogFilter.ReleaseFormId" asp-items="@Model.CatalogFilter.ReleaseForms" class="form-select shadow-none"></select>
+                    </div>
+
+                    <hr class="featurette-divider">
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="w-100 btn btn-success btn-sm shadow-none">
+                            <i class="bi bi-check-lg"></i>
+                            Apply Filter
+                        </button>
+
+                        <a asp-controller="Catalog" asp-action="ResetFilter" class="w-100 btn btn-primary btn-sm shadow-none">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                            Reset Filter
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-9">
+                <partial name="~/Areas/User/Views/Shared/_ProductCards.cshtml" model="Model.PagedList.Items" view-data="ViewData">
+            </div>
+            <div class="col-12 text-end">
+                @if (Model.PagedList.TotalPages == 0)
+                {
+                    <p class="p-2"></p>
+                }
+                else
+                {
+                <p class="text-muted">Page @(Model.PagedList.PageId + 1) - @Model.PagedList.TotalPages</p>
+                }
+            </div>
+            <hr class="featurette-divider">
+            <partial name="~/Views/Shared/Components/_Pagination.cshtml" model="Model.PagedList">
+        </div>
+</div>

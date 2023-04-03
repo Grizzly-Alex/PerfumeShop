@@ -1,0 +1,38 @@
+﻿@model List<CatalogItemViewModel>
+
+
+@if (Model.Any())
+{
+    <p class="pb-2"></p>
+    <div class="row row-cols-1 row-cols-md-4 g-3">
+
+        @foreach (var obj in Model)
+        {
+            <div class="col aim">
+                <div class="card h-100 shadow target">
+                    <a asp-area="Customer" asp-controller="GuitarCatalog" asp-action="Details" asp-route-id="@obj.Id" class="link-secondary">
+                        <div class="card-body p-sm-2">
+                            <h5 class="card-title float-sm-end">@obj.Price</h5>
+                        </div>
+                        <img src="@Constants.CatalogImagePath@obj.PictureUri" class="card-img-top p-3" alt="...">
+                    </a>
+                    <div class="card-footer h-100 pb-3 text-bg-dark">
+
+                        <form method="post" asp-action="AddToBasket" asp-route-productId="@obj.Id">
+                            <button type="submit" class="btn btn-dark btn-sm bi bi-cart-plus float-sm-end shadow-none" style="font-size: 1.2rem;"></button>
+                        </form>
+
+                        <h6 class="card-title small">@obj.Name</h6>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="pb-2"></p>
+    <div>
+        <h3>Oops! We do not have such products <i class="bi bi-emoji-frown"></i></h3>
+    </div>
+}
