@@ -5,7 +5,7 @@ public sealed class CatalogFilterViewModel
     public decimal? MaxPrice { get; set; }
     public int? BrandId { get; set; }   
     public int? GenderId { get; set;}
-    public int? AromaType { get; set; }
+    public int? AromaTypeId { get; set; }
     public int? ReleaseFormId { get; set; }
 
     [Display(Name = "Brand")]
