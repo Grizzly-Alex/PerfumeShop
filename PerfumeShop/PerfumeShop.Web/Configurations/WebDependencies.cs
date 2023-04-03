@@ -21,6 +21,7 @@ public static class WebDependencies
     {
         services.AddControllersWithViews();
         services.AddCoreServices();
+        services.AddWebServices();
     }
 
     public static void SetMiddleware(WebApplication app)
@@ -38,8 +39,13 @@ public static class WebDependencies
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.MapControllerRoute(
-            name: "default",
+        app.MapAreaControllerRoute(
+            name: "AdminDefault",
+            areaName: "Admin",
+            pattern: "{area=Admin}/{controller=ManageProduct}/{action=Index}/{id?}");
+        app.MapAreaControllerRoute(
+            name: "UserDefault",
+            areaName: "User",
             pattern: "{controller=Home}/{action=Index}/{id?}");
     }
 }

@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Parfumer</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PerfumeShop.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sidebars.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" /></link>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"></link>
+</head>
+
+@*Navbar*@
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6">
+        <i class="bi bi-gear"></i>
+        Managment
+    </a>
+
+    <div class="navbar-nav">
+        <div class="nav-item text-nowrap text-end">
+
+            <div class="nav-link text-light px-3">
+                Admin Name
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-2 d-md-block bg-light sidebar collapse">
+                <div class="d-flex flex-column flex-shrink-0 p-3">
+
+                    <div class="px-2">
+                        <a asp-area="Admin" asp-controller="Home" asp-action="Index"
+                           class="link-dark text-decoration-none rounded shadow-none">
+                            <h5 class="bi bi-house"> Home</h5>
+                        </a>
+                    </div>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <button class="btn btn-toggle d-inline-flex align-items-center border-0 rounded shadow-none" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false">
+                                <h6 class="bi bi-people"> Users</h6>
+                            </button>
+                            <div class="collapse" id="users">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Test</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-toggle d-inline-flex align-items-center border-0 rounded shadow-none" data-bs-toggle="collapse" data-bs-target="#orders" aria-expanded="false">
+                                <h6 class="bi bi-journal-check"> Orders</h6>
+                            </button>
+                            <div class="collapse" id="orders">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Test</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-toggle d-inline-flex align-items-center border-0 rounded shadow-none" data-bs-toggle="collapse" data-bs-target="#data" aria-expanded="false">
+                                <h6 class="bi bi-database-gear"> Data</h6>
+                            </button>
+                            <div class="collapse" id="data">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                                    <li><a class="link-dark d-inline-flex text-decoration-none rounded" asp-area="Admin" asp-controller="ManageProduct" asp-action="Index">Products</a></li>
+                                    <li><a class="link-dark d-inline-flex text-decoration-none rounded" asp-area="Admin" asp-controller="ManageBrand" asp-action="Index">Brands</a></li>
+                                    <li><a class="link-dark d-inline-flex text-decoration-none rounded" asp-area="Admin" asp-controller="ManageReleaseForm" asp-action="Index">Release Forms</a></li>
+                                    <li><a class="link-dark d-inline-flex text-decoration-none rounded" asp-area="Admin" asp-controller="ManageAromaType" asp-action="Index">Aroma Types</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <partial name="_Notification" />
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/ia0sr3vihwibbslg5o7ktdm2v362cz4mazddl49ekljeta4b/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-namespace PerfumeShop.Models
+namespace PerfumeShop.ViewModels
 {
     public class ErrorViewModel
     {

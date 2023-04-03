@@ -2,9 +2,15 @@
 
 public sealed class CatalogBrand : Entity
 {
-    public string Brand { get; private set; }
-    public CatalogBrand(string brand)
+    public string Name { get; private set; }
+
+    public CatalogBrand()
     {
-        Brand = brand;
+        
+    }
+
+    public CatalogBrand(string name)
+    {
+        Name = name;
     }
 }

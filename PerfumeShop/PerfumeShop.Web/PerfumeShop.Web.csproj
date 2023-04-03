@@ -7,10 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Compile Remove="Areas\User\Models\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\User\Models\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\User\Models\**" />
+    <None Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\User\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Areas\Admin\Views\ManageBrand\Create.cshtml~RF4df0d3a5.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.5" />
   </ItemGroup>
 
   <ItemGroup>

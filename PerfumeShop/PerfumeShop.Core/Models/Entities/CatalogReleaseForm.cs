@@ -2,9 +2,14 @@
 
 public sealed class CatalogReleaseForm : Entity
 {
-    public string ReleaseForm { get; private set; }
-    public CatalogReleaseForm(string releaseForm)
+    public string Name { get; private set; }
+
+    public CatalogReleaseForm()
+    {        
+    }
+
+    public CatalogReleaseForm(string name)
     {
-        ReleaseForm = releaseForm;
+        Name = name;
     }
 }

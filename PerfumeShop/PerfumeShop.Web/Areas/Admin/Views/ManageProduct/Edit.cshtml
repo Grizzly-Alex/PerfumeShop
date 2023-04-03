@@ -1,0 +1,137 @@
+﻿@model ManageProductViewModel
+
+<form method="post" asp-controller="ManageProduct" asp-action="Edit" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+
+	<input asp-for="ProductViewModel!.Id" hidden />
+	<input asp-for="ProductViewModel!.PictureUri" hidden />
+
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h2 class="text-muted">Edit Product</h2>
+		<div class="btn-toolbar mb-2 mb-md-0">
+			<div class="text-end">
+
+				<button type="submit" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+					<span class="bi bi-check-lg">Save</span>
+				</button>
+
+				<a asp-controller="ManageProduct" asp-action="Details" asp-route-id="@Model.ProductViewModel!.Id" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+					<span class="bi bi-reply"> Back</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="mb-3">
+			<label asp-for="ProductViewModel!.Name"></label>
+			<input asp-for="ProductViewModel!.Name" class="form-control" required>
+			<span asp-validation-for="ProductViewModel!.Name" class="text-danger"></span>
+			<div class="valid-feedback">
+				Valid!
+			</div>
+		</div>
+		<div class="mb-3">
+			<label asp-for="ProductViewModel!.Description"></label>
+			<textarea asp-for="ProductViewModel!.Description" id="tinytextarea" rows="3" class="form-control"
+					  required placeholder="Text area must be required"></textarea>
+			<span asp-validation-for="ProductViewModel!.Description" class="text-danger"></span>
+		</div>
+		<div class="mb-3 col-4">
+			<label asp-for="ProductViewModel!.Price"></label>
+			<div class="input-group">
+				<span class="input-group-text">$</span>
+				<input asp-for="ProductViewModel!.Price" type="number"
+					class="form-control" placeholder="0.00" step="0.01" min="1" max="999999" required>
+				<span asp-validation-for="ProductViewModel!.Price" class="text-danger"></span>
+				<div class="valid-feedback">
+					Valid!
+				</div>
+			</div>
+		</div>
+		<div class="mb-3 col-4">
+			<label asp-for="ProductViewModel!.Stock"></label>
+			<div class="input-group">
+				<span class="input-group-text">qty.</span>
+				<input asp-for="ProductViewModel!.Stock" placeholder="1" class="form-control" min="1" max="@int.MaxValue" required>
+			</div>
+			<span asp-validation-for="ProductViewModel!.Stock" class="text-danger"></span>
+			<div class="valid-feedback">
+				Valid!
+			</div>
+		</div>
+		<div class="mb-3 col-4">
+			<label asp-for="ProductViewModel!.Volume"></label>
+			<div class="input-group">
+				<span class="input-group-text">ml.</span>
+				<input asp-for="ProductViewModel!.Volume" placeholder="1" class="form-control" min="1" max="@int.MaxValue" required>
+			</div>
+			<span asp-validation-for="ProductViewModel!.Volume" class="text-danger"></span>
+			<div class="valid-feedback">
+				Valid!
+			</div>
+		</div>
+		<div class="mb-3 col-3">
+			<label asp-for="ProductViewModel!.Brand"></label>
+			<select asp-for="ProductViewModel!.BrandId" asp-items="@Model.Brands" class="form-select" required>
+				<option selected disabled value="">--Select Brand--</option>
+			</select>
+			<span asp-validation-for="ProductViewModel!.BrandId" class="text-danger"></span>
+			<div class="valid-feedback">
+				Valid!
+			</div>
+		</div>
+		<div class="mb-3 col-3">
+			<label asp-for="ProductViewModel!.Gender"></label>
+			<select asp-for="ProductViewModel!.GenderId" asp-items="@Model.Genders" class="form-select" required>
+				<option selected disabled value="">--Select Gender--</option>
+			</select>
+			<span asp-validation-for="ProductViewModel!.GenderId" class="text-danger"></span>
+			<div class="valid-feedback">
+				Valid!
+			</div>
+		</div>
+		<div class="mb-3 col-3">
+			<label asp-for="ProductViewModel!.AromaType"></label>
+			<select asp-for="ProductViewModel!.AromaTypeId" asp-items="@Model.AromaTypes" class="form-select" required>
+				<option selected disabled value="">--Select Aroma Type--</option>
+			</select>
+			<span asp-validation-for="ProductViewModel!.AromaTypeId" class="text-danger"></span>
+			<div class="valid-feedback">
+				Valid!
+			</div>
+		</div>
+		<div class="mb-3 col-3">
+			<label asp-for="ProductViewModel!.ReleaseForm"></label>
+			<select asp-for="ProductViewModel!.ReleaseFormId" asp-items="@Model.ReleaseForms" class="form-select" required>
+				<option selected disabled value="">--Select Release Form--</option>
+			</select>
+			<span asp-validation-for="ProductViewModel!.ReleaseFormId" class="text-danger"></span>
+			<div class="valid-feedback">
+				Valid!
+			</div>
+		</div>
+		<div class="mb-3 col-12">
+			<div class="form-group row">
+				<span>
+					New <label asp-for="@Model.ProductViewModel!.PictureUri"></label>
+				</span>
+				<div class="mb-3">
+					<input type="file" name="files" id="uploadBox" class="form-control" />
+				</div>
+			</div>
+			<div class="mb-3 col-3">
+				<div class="mb-3">
+					<span>Current Picture</span>
+					<img src="@Constants.CatalogImagePath@Model.ProductViewModel!.PictureUri"
+						 style="width:100%; border-radius:10px; border:2px solid #D6D6D8" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+	<script src="~/js/textareaTinyMCE.js"></script>
+}

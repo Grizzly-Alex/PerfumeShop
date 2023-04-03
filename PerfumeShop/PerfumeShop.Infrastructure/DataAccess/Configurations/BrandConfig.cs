@@ -6,11 +6,10 @@ public sealed class BrandConfig : IEntityTypeConfiguration<CatalogBrand>
     {
         builder.HasKey(p => p.Id);
 
-        builder.Property(p => p.Id)
-           .UseHiLo("brand_hilo")
-           .IsRequired();
+		builder.Property(p => p.Id)
+	        .IsRequired();
 
-        builder.Property(p => p.Brand)
+		builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(100);
     }
