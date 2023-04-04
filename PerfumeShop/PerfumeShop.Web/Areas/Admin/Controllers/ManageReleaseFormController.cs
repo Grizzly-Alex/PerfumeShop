@@ -3,9 +3,9 @@
 [Area("Admin")]
 public class ManageReleaseFormController : Controller
 {
-    private readonly IViewModelService<CatalogReleaseForm, CatalogItemViewModel> _viewModelService;
+    private readonly IViewModelService<CatalogReleaseForm, ItemViewModel> _viewModelService;
 
-    public ManageReleaseFormController(IViewModelService<CatalogReleaseForm, CatalogItemViewModel> viewModelService)
+    public ManageReleaseFormController(IViewModelService<CatalogReleaseForm, ItemViewModel> viewModelService)
     {
         _viewModelService = viewModelService;
     }
@@ -17,7 +17,7 @@ public class ManageReleaseFormController : Controller
     public IActionResult Create() => View();
 
     [HttpPost]
-    public async Task<IActionResult> Create(CatalogItemViewModel obj)
+    public async Task<IActionResult> Create(ItemViewModel obj)
     {
         if (ModelState.IsValid)
         {
@@ -36,7 +36,7 @@ public class ManageReleaseFormController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(CatalogItemViewModel obj)
+    public async Task<IActionResult> Edit(ItemViewModel obj)
     {
         if (ModelState.IsValid)
         {

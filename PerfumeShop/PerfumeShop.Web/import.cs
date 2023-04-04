@@ -19,3 +19,4 @@ global using PerfumeShop.Web.Services;
 global using PerfumeShop.ViewModels;
 global using Microsoft.AspNetCore.Mvc.Rendering;
 global using PerfumeShop.Web.Extensions;
+global using PerfumeShop.Core.Models;

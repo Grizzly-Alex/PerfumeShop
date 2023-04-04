@@ -3,7 +3,7 @@
 
 public sealed class ManageProductViewModel
 {
-    public CatalogProductViewModel? ProductViewModel { get; set; }
+    public ProductViewModel? ProductViewModel { get; set; }
     public IEnumerable<SelectListItem>? Brands { get; set; }
     public IEnumerable<SelectListItem>? AromaTypes { get; set; }
     public IEnumerable<SelectListItem>? Genders { get; set; }
@@ -14,7 +14,7 @@ public sealed class ManageProductViewModel
 	}
 
 	public ManageProductViewModel(
-        CatalogProductViewModel? productViewModel,
+        ProductViewModel? productViewModel,
         IEnumerable<SelectListItem>? brands,
         IEnumerable<SelectListItem>? aromaTypes,
         IEnumerable<SelectListItem>? genders,

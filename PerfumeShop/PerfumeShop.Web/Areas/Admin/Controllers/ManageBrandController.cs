@@ -3,9 +3,9 @@
 [Area("Admin")]
 public class ManageBrandController : Controller
 {
-    private readonly IViewModelService<CatalogBrand, CatalogItemViewModel> _viewModelService;
+    private readonly IViewModelService<CatalogBrand, ItemViewModel> _viewModelService;
 
-    public ManageBrandController(IViewModelService<CatalogBrand, CatalogItemViewModel> viewModelService)
+    public ManageBrandController(IViewModelService<CatalogBrand, ItemViewModel> viewModelService)
     {
         _viewModelService = viewModelService;
     }
@@ -17,7 +17,7 @@ public class ManageBrandController : Controller
     public IActionResult Create() => View();
 
     [HttpPost]
-    public async Task<IActionResult> Create(CatalogItemViewModel obj)
+    public async Task<IActionResult> Create(ItemViewModel obj)
     {
         if (ModelState.IsValid)
         {
@@ -36,7 +36,7 @@ public class ManageBrandController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(CatalogItemViewModel obj)
+    public async Task<IActionResult> Edit(ItemViewModel obj)
     {
         if (ModelState.IsValid)
         {

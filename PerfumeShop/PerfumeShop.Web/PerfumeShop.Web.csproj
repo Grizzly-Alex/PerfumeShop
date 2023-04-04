@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <None Remove="Areas\Admin\Views\ManageBrand\Create.cshtml~RF4df0d3a5.TMP" />
+    <None Remove="Views\Shared\Components\_Pagination.cshtml~RF5da70587.TMP" />
   </ItemGroup>
 
   <ItemGroup>

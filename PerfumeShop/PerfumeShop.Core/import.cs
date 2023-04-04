@@ -8,3 +8,4 @@ global using PerfumeShop.Core.Constants;
 global using System.Reflection;
 global using PerfumeShop.Core.Extensions;
 global using PerfumeShop.Core.Interfaces;
+global using PerfumeShop.Core.Models;
