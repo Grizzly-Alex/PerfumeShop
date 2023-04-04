@@ -103,8 +103,8 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int pageIndex = default,
-        int itemsPerPage = int.MaxValue,
-        bool isTracking = true,
+        int itemsPerPage = default,
+        bool isTracking = false,
         CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = _dbSet;

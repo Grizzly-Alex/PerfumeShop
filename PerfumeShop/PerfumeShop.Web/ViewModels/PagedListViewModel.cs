@@ -1,6 +1,6 @@
 ﻿namespace PerfumeShop.Web.ViewModels;
 
-public sealed class PagedListViewModel<TModel> : PagedInfoViewModel
+public sealed class PagedListViewModel : PagedInfoViewModel
 {
-    public List<TModel> Items { get; set; }
+    public List<CatalogItemViewModel> Items { get; set; } = new();
 }

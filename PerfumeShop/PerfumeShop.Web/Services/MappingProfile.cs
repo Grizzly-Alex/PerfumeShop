@@ -9,6 +9,6 @@ public sealed class MappingProfile : Profile
         CreateMap<CatalogReleaseForm, ItemViewModel>().ReverseMap();
         CreateMap<CatalogAromaType, ItemViewModel>().ReverseMap();
         CreateMap<CatalogProduct, ProductViewModel>().ReverseMap();  
-        CreateMap(typeof(PagedList<>), typeof(PagedListViewModel<>));
+        CreateMap(typeof(PagedList<>), typeof(PagedListViewModel));
 	}
 }

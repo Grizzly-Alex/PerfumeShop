@@ -1,11 +1,12 @@
 ﻿namespace PerfumeShop.Web.ViewModels;
 
-public sealed class CatalogFilterViewModel
+public sealed class CatalogIndexViewModel
 {
-	public decimal? MinPrice { get; set; }
-	public decimal? MaxPrice { get; set; }
-    public int? BrandId { get; set; }   
-    public int? GenderId { get; set;}
+    public PagedListViewModel PagedList { get; set; }
+    public decimal? MinPrice { get; set; }
+    public decimal? MaxPrice { get; set; }
+    public int? BrandId { get; set; }
+    public int? GenderId { get; set; }
     public int? AromaTypeId { get; set; }
     public int? ReleaseFormId { get; set; }
 
@@ -21,12 +22,12 @@ public sealed class CatalogFilterViewModel
     [Display(Name = "Release Form")]
     public IEnumerable<SelectListItem>? ReleaseForms { get; set; }
 
-
-    public CatalogFilterViewModel()
-    {       
+    public CatalogIndexViewModel()
+    {
     }
 
-    public CatalogFilterViewModel(
+    public CatalogIndexViewModel(
+        PagedListViewModel pagedList,
         decimal? minPrice,
         decimal? maxPrice,
         IEnumerable<SelectListItem>? brands,
@@ -34,6 +35,7 @@ public sealed class CatalogFilterViewModel
         IEnumerable<SelectListItem>? aromaTypes,
         IEnumerable<SelectListItem>? releaseForms)
     {
+        PagedList = pagedList;
         MinPrice = minPrice;
         MaxPrice = maxPrice;
         Brands = brands;

@@ -1,7 +1,7 @@
 ﻿@model PagedInfoViewModel
 
 @{
-    var actualPage = nameof(Model.PageId);
+    var actualPage = nameof(Model.PageIndex);
     var sourceRouteData = Context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
 
     if (sourceRouteData.ContainsKey(actualPage))
@@ -17,7 +17,7 @@
             @if (Model.HasPreviousPage)
             {
                 var prevRouteData = new Dictionary<string, string>(sourceRouteData);
-                prevRouteData.Add(actualPage, (Model.PageId - 1).ToString());
+                prevRouteData.Add(actualPage, (Model.PageIndex - 1).ToString());
 
                 <li class="page-item">
                     <a class="page-link" asp-all-route-data="prevRouteData">
@@ -39,7 +39,7 @@
                 var routeData = new Dictionary<string, string>(sourceRouteData);
                 routeData.Add(actualPage, (i).ToString());
 
-                if (Model.PageId == i)
+                if (Model.PageIndex == i)
                 {
                     <li class="page-item active">
                         <span class="page-link">@(i + 1)</span>
@@ -56,7 +56,7 @@
             @if (Model.HasNextPage)
             {
                 var nextRouteData = new Dictionary<string, string>(sourceRouteData);
-                nextRouteData.Add(actualPage, (Model.PageId + 1).ToString());
+                nextRouteData.Add(actualPage, (Model.PageIndex + 1).ToString());
 
                 <li class="page-item">
                     <a class="page-link" asp-all-route-data="nextRouteData">
