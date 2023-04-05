@@ -1,6 +1,6 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
 
-public class IdentityAppDbContext : IdentityDbContext
+public sealed class IdentityAppDbContext : IdentityDbContext
 {
     public DbSet<AppUser> AppUsers { get; set; }
 

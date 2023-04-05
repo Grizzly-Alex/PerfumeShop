@@ -1,6 +1,6 @@
 ﻿namespace PerfumeShop.Core.Models;
 
-public class AppUser : IdentityUser
+public sealed class AppUser : IdentityUser
 {
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
