@@ -6,22 +6,26 @@ public sealed class AppUserConfig : IEntityTypeConfiguration<AppUser>
     {
         builder.Property(p => p.FirstName)
             .HasColumnType("varchar(max)")
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property(p => p.LastName)
             .HasColumnType("varchar(max)")
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property(p => p.StreetAddress)
-            .HasColumnType("varchar(max)");
+            .HasColumnType("varchar(max)")
+            .IsRequired(false);
 
         builder.Property(p => p.City)
-            .HasColumnType("varchar(max)");
+            .HasColumnType("varchar(max)")
+            .IsRequired(false);
 
         builder.Property(p => p.State)
-            .HasColumnType("varchar(max)");
+            .HasColumnType("varchar(max)")
+            .IsRequired(false);
 
         builder.Property(p => p.PostalCode)
-            .HasColumnType("varchar(max)");
+            .HasColumnType("varchar(max)")
+            .IsRequired(false);
     }
 }

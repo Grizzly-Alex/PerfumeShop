@@ -12,7 +12,7 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Identity
 {
     [DbContext(typeof(IdentityAppDbContext))]
-    [Migration("20230405110211_InitialMigration")]
+    [Migration("20230405122459_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -239,11 +239,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Identity
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("PostalCode")

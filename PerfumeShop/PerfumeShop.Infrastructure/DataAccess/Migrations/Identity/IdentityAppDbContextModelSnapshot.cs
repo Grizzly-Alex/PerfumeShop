@@ -236,11 +236,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Identity
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("PostalCode")
