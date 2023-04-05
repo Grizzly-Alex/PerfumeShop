@@ -20,3 +20,40 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.scale {
+    transition: 1s;
+}
+
+.scale:hover {
+    transform: scale(1.2);
+}
+
+.scale-overflow {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.scale-overflow img {
+    transition: 1s;
+    display: block;
+}
+
+.scale-overflow img:hover {
+    transform: scale(1.2);
+}
+
+.catside a {
+    color: #868686;
+}
+
+
+.aim .target {
+    background: #FDFEFE;
+    transition: 0.3s;
+}
+
+.aim .target:hover {
+    background: #EAECEE;
+    transform: scale(0.97);
+}
