@@ -32,7 +32,7 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
     {
         _logger.LogInformation("GetCatalogPagedList called.");
 
-        minPrice ??= 0;
+        minPrice ??= (decimal)0.00;
 
         var pagedList = await _unitOfWork.GetRepository<CatalogProduct>()
             .GetPagedListAsync(
@@ -66,7 +66,7 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
 
         var allSelect = new SelectListItem { Text = "All" };
 
-        return new CatalogIndexViewModel(pagedList, minPrice ?? 0, maxPrice,
+        return new CatalogIndexViewModel(pagedList, minPrice ?? (decimal)0.00, maxPrice,
             _mapper.Map<IEnumerable<ItemViewModel>>(brandsFromDb).ToSelectListItems(allSelect),
             _mapper.Map<IEnumerable<ItemViewModel>>(gendersFromDb).ToSelectListItems(allSelect),
             _mapper.Map<IEnumerable<ItemViewModel>>(aromaTypesFromDb).ToSelectListItems(allSelect),

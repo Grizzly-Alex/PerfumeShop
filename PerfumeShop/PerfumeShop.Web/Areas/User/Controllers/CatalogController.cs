@@ -15,13 +15,8 @@ public class CatalogController : Controller
 		_viewModelService = viewModelService;
     }
 
-	public async Task<IActionResult> Reset()
-	{
-        var maxPrice = await _catalogService.DefineMaxPrice(null);
-        var catalogIndex = await _catalogService.GetCatalogIndexAsync(new PagedListViewModel(), 0, maxPrice);
 
-        return RedirectToAction(nameof(Index), catalogIndex);
-    }
+	public IActionResult Reset() => RedirectToAction(nameof(Index));
 
 	[HttpGet]
 	public async Task<IActionResult> Index(
