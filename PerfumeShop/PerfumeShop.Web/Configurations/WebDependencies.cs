@@ -21,7 +21,7 @@ public static class WebDependencies
     {
         services.AddControllersWithViews();
         services.AddCoreServices();
-        services.AddWebServices();
+        services.AddWebServices();       
     }
 
     public static void SetMiddleware(WebApplication app)
@@ -38,6 +38,7 @@ public static class WebDependencies
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.MapRazorPages();
 
         app.MapAreaControllerRoute(
             name: "UserDefault",
