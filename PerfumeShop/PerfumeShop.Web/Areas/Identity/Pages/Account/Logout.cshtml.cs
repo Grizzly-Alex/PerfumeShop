@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
 
-//TODO : replace IMemoryCache by distributed cache if you are in multi-host scenario
 public class LogoutModel : PageModel
 {
     private readonly SignInManager<AppUser> _signInManager;
