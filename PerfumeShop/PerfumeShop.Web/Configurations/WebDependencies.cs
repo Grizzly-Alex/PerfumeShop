@@ -19,6 +19,7 @@ public static class WebDependencies
 
     public static void SetServices(IServiceCollection services)
     {
+        services.AddCookieSettings();
         services.AddControllersWithViews();
         services.AddCoreServices();
         services.AddWebServices();       
