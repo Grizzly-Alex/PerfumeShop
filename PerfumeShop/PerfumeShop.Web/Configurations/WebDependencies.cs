@@ -20,15 +20,7 @@ public static class WebDependencies
     public static void SetServices(IServiceCollection services)
     {
         services.AddCookieSettings();
-
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options =>
-            {
-                options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                options.Cookie.SameSite = SameSiteMode.Lax;
-            });
-
+        services.AddAuthenticationSettings();        
         services.AddControllersWithViews();
         services.AddCoreServices();
         services.AddWebServices();       

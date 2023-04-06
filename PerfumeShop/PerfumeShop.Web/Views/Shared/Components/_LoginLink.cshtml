@@ -1,11 +1,29 @@
 ﻿@if (Context.User.Identity.IsAuthenticated)
 {
-    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-link text-white position-relative shadow-none scale text-decoration-none">
+@*    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-link text-white position-relative shadow-none scale text-decoration-none">
         <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
         <span class="position-absolute top-0 start-50 translate-middle">
             <small class="text-white">Autorized</small>
         </span>
-    </a>
+    </a>*@
+
+@*    <div class="btn-group dropdown-center">
+        <button type="button" class="btn btn-link text-white position-relative shadow-none scale" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+            <span class="position-absolute top-0 start-50 translate-middle">
+                <small class="text-white">Autorized</small>
+            </span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" id="manage" href="#">Orders</a></li>
+            <li><a class="dropdown-item" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index">Manage</a></li>
+            <li>
+                <form class="dropdown-item" id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Home/Index">
+                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>*@
 }
 else
 {
