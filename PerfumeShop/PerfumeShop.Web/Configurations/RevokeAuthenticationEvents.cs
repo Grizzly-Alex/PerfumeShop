@@ -3,11 +3,9 @@
 public class RevokeAuthenticationEvents : CookieAuthenticationEvents
 {
     private readonly IMemoryCache _cache;
-    private readonly ILogger _logger;
+    private readonly ILogger<RevokeAuthenticationEvents> _logger;
 
-    public RevokeAuthenticationEvents(
-        IMemoryCache cache,
-        ILogger<RevokeAuthenticationEvents> logger)
+    public RevokeAuthenticationEvents(IMemoryCache cache, ILogger<RevokeAuthenticationEvents> logger)
     {
         _cache = cache;
         _logger = logger;
