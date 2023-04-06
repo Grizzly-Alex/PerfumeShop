@@ -8,13 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Admin\Models\**" />
-    <Compile Remove="Areas\User\Models\**" />
+    <Compile Remove="Areas\Shop\Models\**" />
     <Content Remove="Areas\Admin\Models\**" />
-    <Content Remove="Areas\User\Models\**" />
+    <Content Remove="Areas\Shop\Models\**" />
     <EmbeddedResource Remove="Areas\Admin\Models\**" />
-    <EmbeddedResource Remove="Areas\User\Models\**" />
+    <EmbeddedResource Remove="Areas\Shop\Models\**" />
     <None Remove="Areas\Admin\Models\**" />
-    <None Remove="Areas\User\Models\**" />
+    <None Remove="Areas\Shop\Models\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Shop\Views\Shared\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 

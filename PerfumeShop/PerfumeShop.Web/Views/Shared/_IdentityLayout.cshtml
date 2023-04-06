@@ -17,7 +17,7 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li>
-                        <a asp-area="user" asp-controller="Home" asp-action="Index" class="btn btn-link shadow-none text-white scale">
+                        <a asp-area="Shop" asp-controller="Home" asp-action="Index" class="btn btn-link shadow-none text-white scale">
                             <i class="bi bi-house" style="font-size: 2rem;"></i>
                         </a>
                     </li>
@@ -30,7 +30,11 @@
         </div>
     </header>
 
-    @RenderBody()
+    <div class="container">
+        <main role="main" class="py-5">
+            @RenderBody()
+        </main>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

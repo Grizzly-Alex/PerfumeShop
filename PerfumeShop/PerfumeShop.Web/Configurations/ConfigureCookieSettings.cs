@@ -3,7 +3,7 @@
 public static class ConfigureCookieSettings
 {
     public const int ValidityMinutesPeriod = 60;
-    public const string IdentifierCookieName = "PerfumeShomIdentifier";
+    public const string IdentifierCookieName = "PerfumeShopIdentifier";
 
     public static IServiceCollection AddCookieSettings(this IServiceCollection services)
     {

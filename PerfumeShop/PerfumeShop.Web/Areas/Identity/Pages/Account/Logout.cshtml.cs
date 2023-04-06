@@ -1,7 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 
@@ -31,7 +28,7 @@ public class LogoutModel : PageModel
         var userId = _signInManager.Context.User.Claims.First(c => c.Type == ClaimTypes.Name);
 
         _logger.LogInformation("User logged out.");
-        if (returnUrl != null)
+        if (returnUrl is not null)
         {
             return LocalRedirect(returnUrl);
         }

@@ -20,6 +20,15 @@ public static class WebDependencies
     public static void SetServices(IServiceCollection services)
     {
         services.AddCookieSettings();
+
+        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Lax;
+            });
+
         services.AddControllersWithViews();
         services.AddCoreServices();
         services.AddWebServices();       
@@ -42,8 +51,8 @@ public static class WebDependencies
         app.MapRazorPages();
 
         app.MapAreaControllerRoute(
-            name: "UserDefault",
-            areaName: "User",
+            name: "ShopDefault",
+            areaName: "Shop",
             pattern: "{controller=Home}/{action=Index}/{id?}");
         app.MapAreaControllerRoute(
             name: "AdminDefault",

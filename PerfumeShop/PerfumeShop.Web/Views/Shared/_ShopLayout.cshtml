@@ -11,23 +11,25 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 <body>
-    <header class="p-0 text-bg-dark">
+    <header class="p-1 text-bg-dark">
         <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a asp-area="user" asp-controller="Home" asp-action="Index" class="btn btn-link shadow-none text-white scale">
+            <div class="d-flex flex-wrap align-items-end justify-content-center justify-content-lg-start">
+                <a asp-area="Shop" asp-controller="Home" asp-action="Index" class="btn btn-link shadow-none text-white scale">
                     <i class="bi bi-house" style="font-size: 2rem;"></i>
                 </a>
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a asp-area="user" asp-controller="Catalog" asp-action="Index" class="nav-link px-3 fs-5 text-white scale">Catalog</a></li>
-                    <li><a asp-area="user" asp-controller="Brand" asp-action="Index" class="nav-link px-3 fs-5 text-white scale">Brands</a></li>
+                    <li><a asp-area="Shop" asp-controller="Catalog" asp-action="Index" class="nav-link px-3 fs-4 text-white scale">Catalog</a></li>
+                    <li><a asp-area="Shop" asp-controller="Brand" asp-action="Index" class="nav-link px-3 fs-4 text-white scale">Brands</a></li>
                 </ul>
                 <div class="text-end">
-                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-link shadow-none text-white scale">
-                        <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                    <partial name="~/Views/Shared/Components/_LoginLink.cshtml" />
+                    
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-link text-white position-relative shadow-none scale">
+                        <i class="bi bi-bag-check" style="font-size: 1.5rem;"></i>
+                        <span class="position-absolute top-0 start-70 translate-middle  badge rounded-pill bg-danger">
+                            3
+                        </span>
                     </a>
-                    <button type="button" class="btn btn-link shadow-none text-white">
-                        <i class="bi bi-bag" style="font-size: 1.5rem;"></i>
-                    </button>
                 </div>
             </div>
         </div>
