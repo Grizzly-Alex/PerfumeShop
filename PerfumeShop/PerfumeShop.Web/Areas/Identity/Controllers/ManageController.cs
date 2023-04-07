@@ -17,6 +17,7 @@ public class ManageController : Controller
 
     private readonly ILogger<ManageController> _logger;
     private readonly IEmailSender _emailSender;
+    private readonly IMapper _mapper;
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
     private readonly UrlEncoder _urlEncoder;
@@ -27,12 +28,14 @@ public class ManageController : Controller
     public ManageController(
         ILogger<ManageController> logger,
         IEmailSender emailSender,
+        IMapper mapper,
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager,
         UrlEncoder urlEncoder)
     {
         _logger = logger;
         _emailSender = emailSender;
+        _mapper = mapper;
         _userManager = userManager;
         _signInManager = signInManager;
         _urlEncoder = urlEncoder;
@@ -72,6 +75,7 @@ public class ManageController : Controller
         var user = await _userManager.GetUserAsync(User)
             ?? throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
 
+        #region Set Properties
         if (userViewModel.Email != user.Email)
         {
             var setEmailResult = await _userManager.SetEmailAsync(user, userViewModel.Email);
@@ -88,6 +92,7 @@ public class ManageController : Controller
 
         if (userViewModel.FirstName != user.FirstName)
         {
+            user.FirstName = userViewModel.FirstName;
             var setFirstNameResult = await _userManager.UpdateAsync(user);
             if (!setFirstNameResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting first name for user with ID '{user.Id}'.");
@@ -95,6 +100,7 @@ public class ManageController : Controller
 
         if (userViewModel.LastName != user.LastName)
         {
+            user.LastName = userViewModel.LastName;
             var setLastNameResult = await _userManager.UpdateAsync(user);
             if (!setLastNameResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting last name for user with ID '{user.Id}'.");
@@ -102,6 +108,7 @@ public class ManageController : Controller
 
         if (userViewModel.State != user.State)
         {
+            user.State = userViewModel.State;
             var setStateResult = await _userManager.UpdateAsync(user);
             if (!setStateResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting city for user with ID '{user.Id}'.");
@@ -109,6 +116,7 @@ public class ManageController : Controller
 
         if (userViewModel.City != user.City)
         {
+            user.City = userViewModel.City;
             var setCityResult = await _userManager.UpdateAsync(user);
             if (!setCityResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting city for user with ID '{user.Id}'.");
@@ -116,6 +124,7 @@ public class ManageController : Controller
 
         if (userViewModel.StreetAddress != user.StreetAddress)
         {
+            user.StreetAddress = userViewModel.StreetAddress;
             var setStreetAddressResult = await _userManager.UpdateAsync(user);
             if (!setStreetAddressResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting street address for user with ID '{user.Id}'.");
@@ -123,10 +132,12 @@ public class ManageController : Controller
 
         if (userViewModel.PostalCode != user.PostalCode)
         {
+            user.PostalCode = userViewModel.PostalCode;
             var setPostalCodeResult = await _userManager.UpdateAsync(user);
             if (!setPostalCodeResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting postal code for user with ID '{user.Id}'.");
         }
+        #endregion
 
         StatusMessage = "Your profile has been updated";
         return RedirectToAction(nameof(MyAccount));
