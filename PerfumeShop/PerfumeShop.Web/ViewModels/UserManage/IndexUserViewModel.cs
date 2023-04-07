@@ -1,4 +1,4 @@
-﻿namespace PerfumeShop.Web.ViewModels;
+﻿namespace PerfumeShop.Web.ViewModels.UserManage;
 
 public class IndexUserViewModel
 {

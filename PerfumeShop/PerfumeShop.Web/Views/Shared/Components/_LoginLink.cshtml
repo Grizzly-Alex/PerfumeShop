@@ -9,7 +9,7 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-dark">
             <li><a class="dropdown-item" id="orders" href="#">Orders</a></li>
-            <li><a class="dropdown-item" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index">Manage</a></li>
+            <li><a class="dropdown-item" id="manage" asp-area="Identity" asp-controller="Manage" asp-action="MyAccount">Manage</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
                 <form class="dropdown-item" id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Home/Index">
