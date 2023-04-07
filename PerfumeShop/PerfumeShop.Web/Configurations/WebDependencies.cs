@@ -19,9 +19,11 @@ public static class WebDependencies
 
     public static void SetServices(IServiceCollection services)
     {
+        services.AddCookieSettings();
+        services.AddAuthenticationSettings();        
         services.AddControllersWithViews();
         services.AddCoreServices();
-        services.AddWebServices();
+        services.AddWebServices();       
     }
 
     public static void SetMiddleware(WebApplication app)
@@ -38,10 +40,11 @@ public static class WebDependencies
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.MapRazorPages();
 
         app.MapAreaControllerRoute(
-            name: "UserDefault",
-            areaName: "User",
+            name: "ShopDefault",
+            areaName: "Shop",
             pattern: "{controller=Home}/{action=Index}/{id?}");
         app.MapAreaControllerRoute(
             name: "AdminDefault",

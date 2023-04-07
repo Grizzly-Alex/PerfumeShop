@@ -9,5 +9,13 @@ public static class DbConfiguration
             options.UseSqlServer(configuration.GetConnectionString("CatalogConnection"));
             options.EnableSensitiveDataLogging();
         });
+
+        services.AddDbContext<IdentityAppDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
+
+        services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            .AddDefaultTokenProviders()
+            .AddDefaultUI()
+            .AddEntityFrameworkStores<IdentityAppDbContext>();
     }
 }

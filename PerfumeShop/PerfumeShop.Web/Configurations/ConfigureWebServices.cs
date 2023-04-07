@@ -10,6 +10,7 @@ public static class ConfigureWebServices
         services.AddTransient<IViewModelService<CatalogProduct, ProductViewModel>, ProductViewModelService>();
         services.AddTransient<ICatalogViewModelService, CatalogViewModelService>();
         services.AddAutoMapper(typeof(MappingProfile));
+        services.AddRazorPages();
 
         return services;
     }

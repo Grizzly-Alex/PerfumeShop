@@ -20,3 +20,7 @@ global using PerfumeShop.ViewModels;
 global using Microsoft.AspNetCore.Mvc.Rendering;
 global using PerfumeShop.Web.Extensions;
 global using PerfumeShop.Core.Models;
+global using Microsoft.AspNetCore.Authentication.Cookies;
+global using Microsoft.Extensions.Caching.Memory;
+global using Microsoft.AspNetCore.Authentication;
+global using System.Security.Claims;
