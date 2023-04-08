@@ -1,4 +1,5 @@
-﻿using ILogger = Serilog.ILogger;
+﻿using PerfumeShop.Infrastructure.DataAccess.SeedsDb;
+using ILogger = Serilog.ILogger;
 
 namespace PerfumeShop.Web.Configurations;
 
@@ -15,6 +16,27 @@ public static class WebDependencies
         logging.AddSerilog(logger);
 
         return logger;
+    }
+
+    public static async Task SetSeedsAsync(IServiceProvider serviceProvider, ILogger logger)
+    {
+        logger.Information("Seeding Database...");
+
+        using (var scope = serviceProvider.CreateScope())
+        {
+            var scopedProvider = scope.ServiceProvider;
+            try
+            {
+                var userManager = scopedProvider.GetRequiredService<UserManager<AppUser>>();
+                var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var identityContext = scopedProvider.GetRequiredService<IdentityAppDbContext>();
+                await IdentitySeedDb.SeedAsync(identityContext, userManager, roleManager);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "An error occurred seeding the DB.");
+            }
+        }
     }
 
     public static void SetServices(IServiceCollection services)

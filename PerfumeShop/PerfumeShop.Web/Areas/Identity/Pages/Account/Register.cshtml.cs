@@ -1,28 +1,24 @@
-﻿using System.Text.Encodings.Web;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-
-namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
+﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]
 public class RegisterModel : PageModel
 {
     private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
+    private readonly RoleManager<AppUser> _roleManager;
     private readonly ILogger<RegisterModel> _logger;
     private readonly IEmailSender _emailSender;
 
     public RegisterModel(
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager,
+        RoleManager<AppUser> roleManager,
         ILogger<RegisterModel> logger,
         IEmailSender emailSender)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _roleManager = roleManager;
         _logger = logger;
         _emailSender = emailSender;
     }
@@ -107,6 +103,7 @@ public class RegisterModel : PageModel
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
+                await _userManager.AddToRoleAsync(user, Role.User.ToString());
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var callbackUrl = Url.Page(

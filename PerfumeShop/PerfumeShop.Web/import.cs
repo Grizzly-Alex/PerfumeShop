@@ -29,3 +29,5 @@ global using Microsoft.AspNetCore.Identity;
 global using System.Text.Encodings.Web;
 global using Microsoft.AspNetCore.Authorization;
 global using PerfumeShop.Web.ViewModels.UserManage;
+global using PerfumeShop.Core.Constants;
+global using Microsoft.AspNetCore.Mvc.RazorPages;
