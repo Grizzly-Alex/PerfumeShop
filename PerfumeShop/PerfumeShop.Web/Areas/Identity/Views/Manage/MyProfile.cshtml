@@ -1,7 +1,17 @@
 ﻿@model IndexUserViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+<h2 class="text-muted">@ViewData["Title"]</h2>
+<hr/>
+
+
 
 <div class="row">
     <div class="col-md-6">
+
+        <partial name="~/Views/Shared/Components/_StatusMessage.cshtml" for="StatusMessage" />
+
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -9,7 +19,7 @@
                 <label asp-for="UserName"></label>
                 <input asp-for="UserName" class="form-control" disabled />
             </div>
-            <div class="form-group">
+            <div class="form-group py-1">
                 <label asp-for="Email"></label>
                 @if (Model.IsEmailConfirmed)
                 {
@@ -21,46 +31,53 @@
                 else
                 {
                     <input asp-for="Email" class="form-control" />
-                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                    <button asp-action="SendVerificationEmail" class="btn btn-link text-decoration-none">
+                        Send verification email
+                    </button>
                 }
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <hr />
+
+            <div class="form-group py-1">
                 <label asp-for="FirstName"></label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group py-1">
                 <label asp-for="LastName"></label>
                 <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <span asp-validation-for="LastName" class="text-danger" ></span>
             </div>
-            <div class="form-group">
+            <div class="form-group py-1">
                 <label asp-for="State"></label>
                 <input asp-for="State" class="form-control" />
                 <span asp-validation-for="State" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group py-1">
                 <label asp-for="City"></label>
                 <input asp-for="City" class="form-control" />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group py-1">
                 <label asp-for="StreetAddress"></label>
-                <input asp-for="StreetAddress" class="form-control" />
+                <input asp-for="StreetAddress" class="form-control" placeholder="ex: 123 Main Street, Apartment 666" />
                 <span asp-validation-for="StreetAddress" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group py-1">
                 <label asp-for="PostalCode"></label>
-                <input asp-for="PostalCode" class="form-control" />
+                <input asp-for="PostalCode" class="form-control" placeholder="ex: 220050" />
                 <span asp-validation-for="PostalCode" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group py-1">
                 <label asp-for="PhoneNumber"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="ex: 802911122233" />
+                <span asp-validation-for="PhoneNumber" class="text-danger" ></span>
             </div>
-            <button type="submit" class="btn btn-default">Save</button>
+            <div class="col-12 py-4">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
         </form>
     </div>
 </div>

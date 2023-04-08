@@ -42,7 +42,7 @@ public class ManageController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> MyAccount()
+    public async Task<IActionResult> MyProfile()
     {
         var user = await _userManager.GetUserAsync(User)
             ?? throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -68,12 +68,14 @@ public class ManageController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> MyAccount(IndexUserViewModel userViewModel)
+    public async Task<IActionResult> MyProfile(IndexUserViewModel userViewModel)
     {
         if (!ModelState.IsValid) return View(userViewModel);
 
         var user = await _userManager.GetUserAsync(User)
             ?? throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+
+        bool isUpdated = false;
 
         #region Set Properties
         if (userViewModel.Email != user.Email)
@@ -81,6 +83,7 @@ public class ManageController : Controller
             var setEmailResult = await _userManager.SetEmailAsync(user, userViewModel.Email);
             if (!setEmailResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
+            isUpdated = true;
         }
 
         if (userViewModel.PhoneNumber != user.PhoneNumber)
@@ -88,6 +91,7 @@ public class ManageController : Controller
             var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, userViewModel.PhoneNumber);
             if (!setPhoneResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+            isUpdated = true;
         }
 
         if (userViewModel.FirstName != user.FirstName)
@@ -96,6 +100,7 @@ public class ManageController : Controller
             var setFirstNameResult = await _userManager.UpdateAsync(user);
             if (!setFirstNameResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting first name for user with ID '{user.Id}'.");
+            isUpdated = true;
         }
 
         if (userViewModel.LastName != user.LastName)
@@ -104,6 +109,7 @@ public class ManageController : Controller
             var setLastNameResult = await _userManager.UpdateAsync(user);
             if (!setLastNameResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting last name for user with ID '{user.Id}'.");
+            isUpdated = true;
         }
 
         if (userViewModel.State != user.State)
@@ -112,6 +118,7 @@ public class ManageController : Controller
             var setStateResult = await _userManager.UpdateAsync(user);
             if (!setStateResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting city for user with ID '{user.Id}'.");
+            isUpdated = true;
         }
 
         if (userViewModel.City != user.City)
@@ -120,6 +127,7 @@ public class ManageController : Controller
             var setCityResult = await _userManager.UpdateAsync(user);
             if (!setCityResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting city for user with ID '{user.Id}'.");
+            isUpdated = true;
         }
 
         if (userViewModel.StreetAddress != user.StreetAddress)
@@ -128,6 +136,7 @@ public class ManageController : Controller
             var setStreetAddressResult = await _userManager.UpdateAsync(user);
             if (!setStreetAddressResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting street address for user with ID '{user.Id}'.");
+            isUpdated = true;
         }
 
         if (userViewModel.PostalCode != user.PostalCode)
@@ -136,11 +145,13 @@ public class ManageController : Controller
             var setPostalCodeResult = await _userManager.UpdateAsync(user);
             if (!setPostalCodeResult.Succeeded)
                 throw new ApplicationException($"Unexpected error occurred setting postal code for user with ID '{user.Id}'.");
+            isUpdated = true;
         }
         #endregion
 
-        StatusMessage = "Your profile has been updated";
-        return RedirectToAction(nameof(MyAccount));
+        if (isUpdated) StatusMessage = "Your profile has been updated";
+
+        return RedirectToAction(nameof(MyProfile));
     }
 
     [HttpGet]

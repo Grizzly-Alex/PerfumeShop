@@ -2,9 +2,11 @@
 
 public class IndexUserViewModel
 {
-    public string UserName { get; set; }
     public string? StatusMessage { get; set; }
     public bool IsEmailConfirmed { get; set; }
+
+    [Display(Name = "User Name")]
+    public string UserName { get; set; }
 
     [Required]
     [EmailAddress]
