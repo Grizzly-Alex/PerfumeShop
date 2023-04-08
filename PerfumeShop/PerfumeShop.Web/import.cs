@@ -24,3 +24,8 @@ global using Microsoft.AspNetCore.Authentication.Cookies;
 global using Microsoft.Extensions.Caching.Memory;
 global using Microsoft.AspNetCore.Authentication;
 global using System.Security.Claims;
+global using Microsoft.AspNetCore.Identity.UI.Services;
+global using Microsoft.AspNetCore.Identity;
+global using System.Text.Encodings.Web;
+global using Microsoft.AspNetCore.Authorization;
+global using PerfumeShop.Web.ViewModels.UserManage;

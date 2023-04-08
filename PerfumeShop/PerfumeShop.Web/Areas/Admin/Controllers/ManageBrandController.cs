@@ -1,6 +1,8 @@
 ﻿namespace PerfumeShop.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Route("[area]/[controller]/[action]")]
+[ApiExplorerSettings(IgnoreApi = true)]
 public class ManageBrandController : Controller
 {
     private readonly IViewModelService<CatalogBrand, ItemViewModel> _viewModelService;

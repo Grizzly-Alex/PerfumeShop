@@ -34,7 +34,9 @@
 
     <div class="vertical-nav bg-white" id="sidebar">
         <div class="my-3 py-0 mr-3 mb-0 bg-white">
-            <h5 class="font-weight-light text-muted px-2">@Context.User.Identity.Name</h5>
+            <span class="d-inline-block text-truncate" style="max-width: 270px;">
+                <h5 class="font-weight-light text-muted px-2">@Context.User.Identity.Name</h5>
+            </span>
         </div>
 
         <hr />
@@ -54,12 +56,6 @@
                     <i class="px-2 text-primary"></i>
                     Password
                 </a>     
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link text-dark font-italic">
-                    <i class="fa fa-picture-o px-2 text-primary fa-fw"></i>
-                    Two Factor Authentication
-                </a>
             </li>
         </ul>
 

@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Identity;
-using System.Text.Encodings.Web;
-using Microsoft.AspNetCore.Authorization;
-using PerfumeShop.Web.ViewModels.UserManage;
-
-namespace PerfumeShop.Web.Areas.Identity.Controllers;
+﻿namespace PerfumeShop.Web.Areas.Identity.Controllers;
 
 [Authorize]
 [Area("Identity")]
@@ -16,29 +10,18 @@ public class ManageController : Controller
     public string? StatusMessage { get; set; }
 
     private readonly ILogger<ManageController> _logger;
-    private readonly IEmailSender _emailSender;
-    private readonly IMapper _mapper;
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
-    private readonly UrlEncoder _urlEncoder;
 
-    private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
-    private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
     public ManageController(
         ILogger<ManageController> logger,
-        IEmailSender emailSender,
-        IMapper mapper,
         UserManager<AppUser> userManager,
-        SignInManager<AppUser> signInManager,
-        UrlEncoder urlEncoder)
+        SignInManager<AppUser> signInManager)
     {
         _logger = logger;
-        _emailSender = emailSender;
-        _mapper = mapper;
         _userManager = userManager;
         _signInManager = signInManager;
-        _urlEncoder = urlEncoder;
     }
 
     [HttpGet]
