@@ -42,13 +42,10 @@ public static class WebDependencies
         app.UseAuthorization();
         app.MapRazorPages();
 
+
         app.MapAreaControllerRoute(
             name: "ShopDefault",
             areaName: "Shop",
             pattern: "{controller=Home}/{action=Index}/{id?}");
-        app.MapAreaControllerRoute(
-            name: "AdminDefault",
-            areaName: "Admin",
-            pattern: "{area=Admin}/{controller=ManageProduct}/{action=Index}/{id?}");
     }
 }

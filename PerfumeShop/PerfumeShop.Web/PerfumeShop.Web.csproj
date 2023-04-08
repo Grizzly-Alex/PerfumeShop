@@ -44,7 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Shop\Views\Shared\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 
