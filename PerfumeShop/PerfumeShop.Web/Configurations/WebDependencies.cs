@@ -64,6 +64,10 @@ public static class WebDependencies
         app.UseAuthorization();
         app.MapRazorPages();
 
+        //app.MapControllerRoute(
+        //    name: "default",
+        //    pattern: "{controller=Route}/{action=RoleBasedRouting}/{id?}");
+
 
         app.MapAreaControllerRoute(
             name: "ShopDefault",
