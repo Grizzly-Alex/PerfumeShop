@@ -17,18 +17,20 @@
 
 @*Navbar*@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6">
-        <i class="bi bi-gear"></i>
-        Managment
+
+    <a class="navbar-brand col-md-3 col-lg-2 me-2 px-4 fs-6" asp-area="Shop" asp-controller="Home" asp-action="Index"
+       class="link-dark text-decoration-none rounded shadow">
+        <h5 class="bi bi-house"> Home</h5>
     </a>
 
     <div class="navbar-nav">
         <div class="nav-item text-nowrap text-end">
-
-            <div class="nav-link text-light px-3">
-                Admin Name
-            </div>
-
+            <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Home/Index">
+                <button id="logout" type="submit" class="nav-link btn btn-link shadow-none px-4 fs-5">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Logout
+                </button>
+            </form>
         </div>
     </div>
 </header>
@@ -38,12 +40,11 @@
         <div class="row">
             <nav id="sidebarMenu" class="col-md-2 d-md-block bg-light sidebar collapse">
                 <div class="d-flex flex-column flex-shrink-0 p-3">
-
                     <div class="px-2">
-                        <a asp-area="Admin" asp-controller="Home" asp-action="Index"
-                           class="link-dark text-decoration-none rounded shadow-none">
-                            <h5 class="bi bi-house"> Home</h5>
-                        </a>
+                        <h5>
+                            <i class="bi bi-gear"></i>
+                            Managment
+                        </h5>
                     </div>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">

@@ -14,7 +14,7 @@
 <body>
     <header class="p-1 text-bg-dark">
         <div class="container">
-            <div class="d-flex flex-wrap align-items-end justify-content-center justify-content-lg-start">
+            <div class="d-flex flex-wrap align-items-end justify-content-center justify-content-lg-start shadow">
                 <a asp-area="Shop" asp-controller="Home" asp-action="Index" class="btn btn-link shadow-none text-white scale">
                     <i class="bi bi-house" style="font-size: 2rem;"></i>
                 </a>
@@ -24,7 +24,7 @@
                 </ul>
                 <div class="text-end">
 
-                    <partial name="~/Views/Shared/Components/_LoginLink.cshtml" />
+                    <partial name="~/Views/Shared/Components/_LoginLink.cshtml" />     
                     
                     <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-link text-white position-relative shadow-none scale">
                         <i class="bi bi-bag-check" style="font-size: 1.5rem;"></i>

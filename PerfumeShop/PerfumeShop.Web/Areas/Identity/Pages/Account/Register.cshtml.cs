@@ -101,7 +101,7 @@ public class RegisterModel : PageModel
             {
                 _logger.LogInformation("User created a new account with password.");
 
-                await _userManager.AddToRoleAsync(user, Role.User.ToString());
+                await _userManager.AddToRoleAsync(user, Role.Customer.ToString());
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var callbackUrl = Url.Page(

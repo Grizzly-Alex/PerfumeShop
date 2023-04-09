@@ -11,7 +11,8 @@ public static class IdentitySeedDb
         }
 
         await roleManager.CreateAsync(new IdentityRole(Role.Admin.GetDisplayName()));
-        await roleManager.CreateAsync(new IdentityRole(Role.User.GetDisplayName()));
+        await roleManager.CreateAsync(new IdentityRole(Role.Employee.GetDisplayName()));
+        await roleManager.CreateAsync(new IdentityRole(Role.Customer.GetDisplayName()));
 
         string defaultAdminName = "admin@default.com";
         var defaultAdmin = new AppUser { UserName = defaultAdminName, Email = defaultAdminName };
@@ -19,10 +20,16 @@ public static class IdentitySeedDb
         defaultAdmin = await userManager.FindByNameAsync(defaultAdminName);
         await userManager.AddToRoleAsync(defaultAdmin, Role.Admin.GetDisplayName());
 
-        string defaultUserName = "user@default.com";
-        var defaultUser = new AppUser { UserName = defaultUserName, Email = defaultUserName };
-        await userManager.CreateAsync(defaultUser, AuthorizationConstants.DefaultPassword);
-        defaultUser = await userManager.FindByNameAsync(defaultUserName);
-        await userManager.AddToRoleAsync(defaultUser, Role.User.GetDisplayName());
+        string defaultEmployeeName = "employee@default.com";
+        var defaultEmployee = new AppUser { UserName = defaultEmployeeName, Email = defaultEmployeeName };
+        await userManager.CreateAsync(defaultEmployee, AuthorizationConstants.DefaultPassword);
+        defaultEmployee = await userManager.FindByNameAsync(defaultEmployeeName);
+        await userManager.AddToRoleAsync(defaultEmployee, Role.Customer.GetDisplayName());
+
+        string defaultCustomerName = "customer@default.com";
+        var defaultCustomer = new AppUser { UserName = defaultCustomerName, Email = defaultCustomerName };
+        await userManager.CreateAsync(defaultCustomer, AuthorizationConstants.DefaultPassword);
+        defaultCustomer = await userManager.FindByNameAsync(defaultCustomerName);
+        await userManager.AddToRoleAsync(defaultCustomer, Role.Customer.GetDisplayName());
     }
 }
