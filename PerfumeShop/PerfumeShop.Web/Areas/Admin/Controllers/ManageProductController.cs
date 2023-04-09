@@ -3,7 +3,6 @@
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
 [Route("[area]/[controller]/[action]")]
-[ApiExplorerSettings(IgnoreApi = true)]
 public class ManageProductController : Controller
 {
     private readonly IContentManager _contentManager;

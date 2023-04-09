@@ -23,9 +23,9 @@ function loadDataTable() {
                 data: "id",
                 "render": function (data) {
                     return `<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <a href="/admin/manageUser/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
+                    <a href="/Admin/ManageUser/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
                     <i class="bi bi-wrench"></i> </a>
-                    <a onClick=Delete('/admin/manageUser/delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
+                    <a onClick=Delete('/Admin/ManageUser/Delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
                     <i class="bi bi-trash3"></i> </a>
 					</div>`
                 },
@@ -51,11 +51,18 @@ function Delete(url) {
                 url: url,
                 type: 'DELETE',
                 success: function (data) {
-                    dataTable.ajax.reload();
-                    toastr.success(data.message);
+                    if (data.success) {
+                        dataTable.ajax.reload();
+                        toastr.success(data.message);
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
                 }
             })
-
+        }
+        else {
+            toastr.error(data.message);
         }
     })
 }

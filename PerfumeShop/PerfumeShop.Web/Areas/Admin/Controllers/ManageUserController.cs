@@ -4,7 +4,6 @@
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
 [Route("[area]/[controller]/[action]")]
-[ApiExplorerSettings(IgnoreApi = true)]
 public class ManageUserController : Controller
 {
     private readonly IMapper _mapper;
@@ -83,6 +82,21 @@ public class ManageUserController : Controller
     {
         var users = await _userManager.GetUsersInRoleAsync(TempData["role"].ToString());
         return Json(new { data = users });
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var userView = await _userManager.FindByIdAsync(id);
+
+        if (userView is null)
+        {
+            return Json(new { success = false, message = "Error while deleting" });
+        }
+
+        await _userManager.DeleteAsync(userView);
+
+        return Json(new { success = true, message = $"{userView.UserName} was deleted successfully" });
     }
     #endregion
 
