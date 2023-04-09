@@ -14,22 +14,22 @@ public static class IdentitySeedDb
         await roleManager.CreateAsync(new IdentityRole(Role.Employee.GetDisplayName()));
         await roleManager.CreateAsync(new IdentityRole(Role.Customer.GetDisplayName()));
 
-        string defaultAdminName = "admin@default.com";
-        var defaultAdmin = new AppUser { UserName = defaultAdminName, Email = defaultAdminName };
-        await userManager.CreateAsync(defaultAdmin, AuthorizationConstants.DefaultPassword);
-        defaultAdmin = await userManager.FindByNameAsync(defaultAdminName);
-        await userManager.AddToRoleAsync(defaultAdmin, Role.Admin.GetDisplayName());
+        string demoAdminName = "admin@demo.com";
+        var demoAdmin = new AppUser { UserName = demoAdminName, Email = demoAdminName };
+        await userManager.CreateAsync(demoAdmin, AuthorizationConstants.DefaultPassword);
+        demoAdmin = await userManager.FindByNameAsync(demoAdminName);
+        await userManager.AddToRoleAsync(demoAdmin, Role.Admin.GetDisplayName());
 
-        string defaultEmployeeName = "employee@default.com";
-        var defaultEmployee = new AppUser { UserName = defaultEmployeeName, Email = defaultEmployeeName };
-        await userManager.CreateAsync(defaultEmployee, AuthorizationConstants.DefaultPassword);
-        defaultEmployee = await userManager.FindByNameAsync(defaultEmployeeName);
-        await userManager.AddToRoleAsync(defaultEmployee, Role.Customer.GetDisplayName());
+        string demoEmployeeName = "employee@demo.com";
+        var demoEmployee = new AppUser { UserName = demoEmployeeName, Email = demoEmployeeName };
+        await userManager.CreateAsync(demoEmployee, AuthorizationConstants.DefaultPassword);
+        demoEmployee = await userManager.FindByNameAsync(demoEmployeeName);
+        await userManager.AddToRoleAsync(demoEmployee, Role.Employee.GetDisplayName());
 
-        string defaultCustomerName = "customer@default.com";
-        var defaultCustomer = new AppUser { UserName = defaultCustomerName, Email = defaultCustomerName };
-        await userManager.CreateAsync(defaultCustomer, AuthorizationConstants.DefaultPassword);
-        defaultCustomer = await userManager.FindByNameAsync(defaultCustomerName);
-        await userManager.AddToRoleAsync(defaultCustomer, Role.Customer.GetDisplayName());
+        string demoCustomerName = "customer@demo.com";
+        var demoCustomer = new AppUser { UserName = demoCustomerName, Email = demoCustomerName };
+        await userManager.CreateAsync(demoCustomer, AuthorizationConstants.DefaultPassword);
+        demoCustomer = await userManager.FindByNameAsync(demoCustomerName);
+        await userManager.AddToRoleAsync(demoCustomer, Role.Customer.GetDisplayName());
     }
 }
