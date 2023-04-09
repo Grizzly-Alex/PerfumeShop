@@ -1,0 +1,32 @@
+﻿<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2 class="text-muted">@TempData["role"] Information</h2>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="text-end">
+            <a asp-controller="UserManage" asp-action="Create" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+                <span class="bi bi-pen">Add</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<table id="userData" class="table table-bordered table-striped table-sm">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Street Address</th>
+            <th>Phone Number</th>
+            <th>Postal Code</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+
+@section Scripts{
+    <script src="~/js/user-table.js"></script>
+}
