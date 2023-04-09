@@ -13,4 +13,9 @@ public static class SelectListItemExtensions
         selectList.Insert(0, defaultItem);
         return selectList;
     }
+
+    public static List<SelectListItem> ToSelectListItems(this IEnumerable<string> items)
+    {
+        return items.Select(i => new SelectListItem { Value = i, Text = i }).OrderBy(i => i.Text).ToList();
+    }
 }
