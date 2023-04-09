@@ -30,7 +30,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Identity
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "varchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "varchar(max)", nullable: true),
                     StreetAddress = table.Column<string>(type: "varchar(max)", nullable: true),

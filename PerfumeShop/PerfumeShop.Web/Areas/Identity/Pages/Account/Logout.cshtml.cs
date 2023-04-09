@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-
-namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
+﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
 
 public class LogoutModel : PageModel
 {

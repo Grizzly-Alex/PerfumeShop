@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace PerfumeShop.Web.Areas.Identity.Pages.Account;
+﻿namespace PerfumeShop.Web.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]
 public class LoginModel : PageModel

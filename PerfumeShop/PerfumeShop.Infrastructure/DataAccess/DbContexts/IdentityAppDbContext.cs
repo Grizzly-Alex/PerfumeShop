@@ -1,9 +1,7 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
 
-public sealed class IdentityAppDbContext : IdentityDbContext
+public sealed class IdentityAppDbContext : IdentityDbContext<AppUser>
 {
-    public DbSet<AppUser> AppUsers { get; set; }
-
     public IdentityAppDbContext(DbContextOptions<IdentityAppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

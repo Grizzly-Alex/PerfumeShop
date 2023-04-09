@@ -1,6 +1,7 @@
 ﻿namespace PerfumeShop.Web.Areas.User.Controllers;
 
 [Area("Shop")]
+[AllowAnonymous]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

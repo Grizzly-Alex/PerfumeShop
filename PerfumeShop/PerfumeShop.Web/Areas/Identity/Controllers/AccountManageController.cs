@@ -4,18 +4,18 @@
 [Area("Identity")]
 [Route("[controller]/[action]")]
 [ApiExplorerSettings(IgnoreApi = true)]
-public class ManageController : Controller
+public class AccountManageController : Controller
 {
     [TempData]
     public string? StatusMessage { get; set; }
 
-    private readonly ILogger<ManageController> _logger;
+    private readonly ILogger<AccountManageController> _logger;
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
 
 
-    public ManageController(
-        ILogger<ManageController> logger,
+    public AccountManageController(
+        ILogger<AccountManageController> logger,
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager)
     {

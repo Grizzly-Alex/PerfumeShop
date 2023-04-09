@@ -8,7 +8,11 @@
             </span>
         </button>
         <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item" id="manage" asp-area="Identity" asp-controller="Manage" asp-action="MyProfile">My Account</a></li>
+            @if (User.IsInRole(Role.Admin.GetDisplayName()))
+            {
+                <li><a class="dropdown-item" id="admin" asp-area="Admin" asp-controller="ManageProduct" asp-action="Index">Admin</a></li>
+            }
+            <li><a class="dropdown-item" id="manage" asp-area="Identity" asp-controller="AccountManage" asp-action="MyProfile">My Account</a></li>
             <li><a class="dropdown-item" id="orders" href="#">Orders</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>

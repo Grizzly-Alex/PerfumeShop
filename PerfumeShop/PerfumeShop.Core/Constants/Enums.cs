@@ -6,3 +6,10 @@ public enum Gender
     [Display(Name = "Man")] Man = 2,
     [Display(Name = "Woman")] Woman = 3,
 }
+
+public enum Role
+{
+    [Display(Name = "Admin")] Admin = 1,
+    [Display(Name = "Employee")] Employee = 2,
+    [Display(Name = "Customer")] Customer = 3,
+}
