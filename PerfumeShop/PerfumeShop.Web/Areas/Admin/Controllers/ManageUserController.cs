@@ -1,4 +1,7 @@
-﻿namespace PerfumeShop.Web.Areas.Admin.Controllers;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+
+namespace PerfumeShop.Web.Areas.Admin.Controllers;
 
 
 [Area("Admin")]
@@ -10,7 +13,6 @@ public class ManageUserController : Controller
     private readonly ILogger<ManageUserController> _logger;
     private readonly UserManager<AppUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-
 
     public ManageUserController(
         IMapper mapper,
@@ -28,10 +30,9 @@ public class ManageUserController : Controller
 
 
     [HttpGet]
-    public async Task<IActionResult> Index(string role)
+    public IActionResult Index(string role)
     {
         TempData["role"] = role;
-        TempData.Keep("role");
         return View();
     }
 
@@ -76,14 +77,17 @@ public class ManageUserController : Controller
 
     #region API CALLS
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<JsonResult> GetAll()
     {
-        var users = await _userManager.GetUsersInRoleAsync(TempData["role"].ToString());
+        string role = TempData.Peek("role").ToString();
+
+        var users = await _userManager.GetUsersInRoleAsync(role);
+        
         return Json(new { data = users });
     }
 
     [HttpDelete]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<JsonResult> Delete(string id)
     {
         var userView = await _userManager.FindByIdAsync(id);
 

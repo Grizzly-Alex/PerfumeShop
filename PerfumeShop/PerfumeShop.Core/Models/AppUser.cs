@@ -8,4 +8,5 @@ public sealed class AppUser : IdentityUser
     public string? City { get; set; }
     public string? State { get; set; }
     public string? PostalCode { get; set; }
+    public ICollection<UserRole> UserRoles { get; set; }
 }

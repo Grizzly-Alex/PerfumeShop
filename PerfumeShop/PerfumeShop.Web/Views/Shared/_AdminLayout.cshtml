@@ -54,15 +54,15 @@
                             <div class="collapse" id="users">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
                                     <li><a class="link-dark d-inline-flex text-decoration-none rounded"
-                                           asp-area="Admin" asp-controller="ManageUser" asp-action="Index" asp-route-role="@Role.Admin.GetDisplayName()">Administrators</a>
+                                           asp-area="Admin" asp-controller="ManageUser" asp-action="Index" asp-route-role="@Roles.Admin.GetDisplayName()">Administrators</a>
                                     </li>
                                     <li>
                                         <a class="link-dark d-inline-flex text-decoration-none rounded"
-                                           asp-area="Admin" asp-controller="ManageUser" asp-action="Index" asp-route-role="@Role.Employee.GetDisplayName()">Employees</a>
+                                           asp-area="Admin" asp-controller="ManageUser" asp-action="Index" asp-route-role="@Roles.Employee.GetDisplayName()">Employees</a>
                                     </li>
                                     <li>
                                         <a class="link-dark d-inline-flex text-decoration-none rounded"
-                                           asp-area="Admin" asp-controller="ManageUser" asp-action="Index" asp-route-role="@Role.Customer.GetDisplayName()">Customers</a>
+                                           asp-area="Admin" asp-controller="ManageUser" asp-action="Index" asp-route-role="@Roles.Customer.GetDisplayName()">Customers</a>
                                     </li>
                                 </ul>
                             </div>
