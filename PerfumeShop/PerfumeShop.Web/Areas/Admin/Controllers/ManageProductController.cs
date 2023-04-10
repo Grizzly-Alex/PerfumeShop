@@ -2,7 +2,6 @@
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
-[Route("[area]/[controller]/[action]")]
 public class ManageProductController : Controller
 {
     private readonly IContentManager _contentManager;

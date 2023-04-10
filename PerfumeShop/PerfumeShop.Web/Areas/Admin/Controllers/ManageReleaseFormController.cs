@@ -2,7 +2,6 @@
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
-[Route("[area]/[controller]/[action]")]
 public class ManageReleaseFormController : Controller
 {
     private readonly IViewModelService<CatalogReleaseForm, ItemViewModel> _viewModelService;

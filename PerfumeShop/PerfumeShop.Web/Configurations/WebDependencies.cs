@@ -68,5 +68,9 @@ public static class WebDependencies
             name: "ShopDefault",
             areaName: "Shop",
             pattern: "{controller=Home}/{action=Index}/{id?}");
+        app.MapAreaControllerRoute(
+            name: "AdminDefault",
+            areaName: "Admin",
+            pattern: "Admin/{controller}/{action}/{id?}");
     }
 }

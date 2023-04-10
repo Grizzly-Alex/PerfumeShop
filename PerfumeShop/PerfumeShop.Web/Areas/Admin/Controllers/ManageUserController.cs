@@ -3,7 +3,6 @@
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
-[Route("[area]/[controller]/[action]")]
 public class ManageUserController : Controller
 {
     private readonly IMapper _mapper;
@@ -75,7 +74,6 @@ public class ManageUserController : Controller
         return View(userView);
     }
 
-
     #region API CALLS
     [HttpGet]
     public async Task<IActionResult> GetAll()
@@ -99,8 +97,6 @@ public class ManageUserController : Controller
         return Json(new { success = true, message = $"{userView.UserName} was deleted successfully" });
     }
     #endregion
-
-
 
     private IEnumerable<string> GetRoleNames() => _roleManager.Roles.Select(Role => Role.Name).ToList();      
 }

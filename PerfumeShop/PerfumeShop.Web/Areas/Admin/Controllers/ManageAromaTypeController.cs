@@ -2,7 +2,6 @@
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
-[Route("[area]/[controller]/[action]")]
 public class ManageAromaTypeController : Controller
 {
     private readonly IViewModelService<CatalogAromaType, ItemViewModel> _viewModelService;
