@@ -35,7 +35,6 @@ function loadDataTable() {
     });
 }
 
-
 function Delete(url) {
     Swal.fire({
         title: 'Are you sure?',
@@ -51,18 +50,11 @@ function Delete(url) {
                 url: url,
                 type: 'DELETE',
                 success: function (data) {
-                    if (data.success) {
-                        dataTable.ajax.reload();
-                        toastr.success(data.message);
-                    }
-                    else {
-                        toastr.error(data.message);
-                    }
+                    dataTable.ajax.reload();
+                    toastr.success(data.message);
                 }
             })
-        }
-        else {
-            toastr.error(data.message);
+
         }
     })
 }
