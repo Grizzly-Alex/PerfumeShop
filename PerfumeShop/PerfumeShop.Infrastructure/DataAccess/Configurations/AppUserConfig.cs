@@ -27,5 +27,10 @@ public sealed class AppUserConfig : IEntityTypeConfiguration<AppUser>
         builder.Property(p => p.PostalCode)
             .HasColumnType("varchar(max)")
             .IsRequired(false);
+
+        builder.HasMany(p => p.UserRoles)
+            .WithOne()
+            .HasForeignKey(p => p.UserId)
+            .IsRequired();
     }
 }

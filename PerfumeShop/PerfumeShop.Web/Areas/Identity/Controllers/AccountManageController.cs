@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Areas.Identity.Controllers;
+﻿using PerfumeShop.Core.Models.Identity;
+
+namespace PerfumeShop.Web.Areas.Identity.Controllers;
 
 [Authorize]
 [Area("Identity")]

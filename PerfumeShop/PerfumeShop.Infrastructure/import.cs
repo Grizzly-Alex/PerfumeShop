@@ -13,3 +13,4 @@ global using PerfumeShop.Infrastructure.DataAccess.Configurations;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using PerfumeShop.Core.Models;
 global using Microsoft.AspNetCore.Identity;
+global using PerfumeShop.Core.Models.Identity;

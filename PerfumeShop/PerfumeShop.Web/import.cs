@@ -32,3 +32,4 @@ global using PerfumeShop.Web.ViewModels.UserManage;
 global using PerfumeShop.Core.Constants;
 global using Microsoft.AspNetCore.Mvc.RazorPages;
 global using PerfumeShop.Core.Extensions;
+global using PerfumeShop.Core.Models.Identity;

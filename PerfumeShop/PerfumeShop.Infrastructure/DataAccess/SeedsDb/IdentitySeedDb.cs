@@ -2,7 +2,7 @@
 
 public static class IdentitySeedDb
 {
-    public static async Task SeedAsync(IdentityAppDbContext identityDbContext, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+    public static async Task SeedAsync(IdentityAppDbContext identityDbContext, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
     {
 
         if (identityDbContext.Database.IsSqlServer())
@@ -10,9 +10,9 @@ public static class IdentitySeedDb
             identityDbContext.Database.Migrate();
         }
 
-        await roleManager.CreateAsync(new IdentityRole(Roles.Admin.GetDisplayName()));
-        await roleManager.CreateAsync(new IdentityRole(Roles.Employee.GetDisplayName()));
-        await roleManager.CreateAsync(new IdentityRole(Roles.Customer.GetDisplayName()));
+        await roleManager.CreateAsync(new AppRole(Roles.Admin.GetDisplayName()));
+        await roleManager.CreateAsync(new AppRole(Roles.Employee.GetDisplayName()));
+        await roleManager.CreateAsync(new AppRole(Roles.Customer.GetDisplayName()));
 
         string demoAdminName = "admin@demo.com";
         var demoAdmin = new AppUser { UserName = demoAdminName, Email = demoAdminName };

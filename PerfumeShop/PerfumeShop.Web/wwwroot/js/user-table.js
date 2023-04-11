@@ -10,13 +10,14 @@ function loadDataTable() {
             "url": "/admin/manageUser/getAll"
         },
         "columns": [
-            { data: "id", "width": "15%" },
+            { data: "role", "width": "15%" },
+            { data: "userName", "width": "10%" },
             { data: "email", "width": "10%" },
             { data: "firstName", "width": "10%" },
             { data: "lastName", "width": "10%" },
-            { data: "state", "width": "10%" },
-            { data: "city", "width": "10%" },
             { data: "streetAddress", "width": "10%" },
+            { data: "city", "width": "10%" },
+            { data: "state", "width": "10%" },
             { data: "phoneNumber", "width": "10%" },
             { data: "postalCode", "width": "10%" },
             {

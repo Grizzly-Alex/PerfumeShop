@@ -8,7 +8,7 @@
             </span>
         </button>
         <ul class="dropdown-menu dropdown-menu-dark">
-            @if (User.IsInRole(Role.Admin.GetDisplayName()))
+            @if (User.IsInRole(Roles.Admin.GetDisplayName()))
             {
                 <li><a class="dropdown-item" id="admin" asp-area="Admin" asp-controller="ManageProduct" asp-action="Index">Admin</a></li>
             }

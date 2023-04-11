@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-
-namespace PerfumeShop.Web.Areas.Admin.Controllers;
+﻿namespace PerfumeShop.Web.Areas.Admin.Controllers;
 
 
 [Area("Admin")]
@@ -12,14 +9,14 @@ public class ManageUserController : Controller
     private readonly IUserStore<AppUser> _userStore;
     private readonly ILogger<ManageUserController> _logger;
     private readonly UserManager<AppUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<AppRole> _roleManager;
 
     public ManageUserController(
         IMapper mapper,
         IUserStore<AppUser> userStore,
         ILogger<ManageUserController> logger,
         UserManager<AppUser> userManager,
-        RoleManager<IdentityRole> roleManager)
+        RoleManager<AppRole> roleManager)
     {
         _mapper = mapper;
         _userStore = userStore;
@@ -79,10 +76,29 @@ public class ManageUserController : Controller
     [HttpGet]
     public async Task<JsonResult> GetAll()
     {
-        string role = TempData.Peek("role").ToString();
+        //string role = TempData.Peek("role").ToString();
 
-        var users = await _userManager.GetUsersInRoleAsync(role);
-        
+        //var users = await _userManager.GetUsersInRoleAsync(role);
+
+        var users = await _userManager.Users
+            .Include(u => u.UserRoles)
+            .ThenInclude(u => u.Role)
+            .Select(u => new UserWithRoleViewModel
+            {
+                Id = u.Id,
+                UserName = u.UserName,
+                Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                State = u.State,
+                City = u.City,
+                StreetAddress = u.StreetAddress,
+                PhoneNumber = u.PhoneNumber,
+                PostalCode = u.PostalCode,
+                Role = u.UserRoles.FirstOrDefault().Role.Name,
+            })
+            .ToListAsync();       
+                
         return Json(new { data = users });
     }
 

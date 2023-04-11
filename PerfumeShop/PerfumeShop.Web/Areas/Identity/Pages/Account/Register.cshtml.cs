@@ -1,4 +1,6 @@
-﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
+﻿using PerfumeShop.Core.Models.Identity;
+
+namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
 
 [AllowAnonymous]
 public class RegisterModel : PageModel
@@ -101,7 +103,7 @@ public class RegisterModel : PageModel
             {
                 _logger.LogInformation("User created a new account with password.");
 
-                await _userManager.AddToRoleAsync(user, Role.Customer.ToString());
+                await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var callbackUrl = Url.Page(

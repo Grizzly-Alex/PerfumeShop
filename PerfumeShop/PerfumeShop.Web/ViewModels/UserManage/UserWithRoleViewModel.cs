@@ -2,11 +2,13 @@
 
 public class UserWithRoleViewModel
 {
+    public string Id { get; set; }
+
     [Display(Name = "Role")]
     public string? Role { get; set; }
 
     [Display(Name = "User Name")]
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
 
     [Required]
     [EmailAddress]
