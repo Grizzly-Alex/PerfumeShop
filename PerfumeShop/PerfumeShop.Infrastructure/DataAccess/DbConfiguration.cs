@@ -13,7 +13,7 @@ public static class DbConfiguration
         services.AddDbContext<IdentityAppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
 
-        services.AddIdentity<AppUser, AppRole>(options =>
+        services.AddIdentity<AppUser, IdentityRole>(options =>
         {
             options.SignIn.RequireConfirmedAccount = false;
             options.User.RequireUniqueEmail = true;

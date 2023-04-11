@@ -8,13 +8,5 @@ public class AppUser : IdentityUser
     public string? City { get; set; }
     public string? State { get; set; }
     public string? PostalCode { get; set; }
-    public virtual ICollection<AppUserRole> UserRoles { get; set; }
-
-    public AppUser() : base()
-    {      
-    }
-
-    public AppUser(string userName) : base(userName) 
-    {       
-    }
+    public virtual ICollection<AppUserRole> Roles { get; set; }
 }

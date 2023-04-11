@@ -9,14 +9,14 @@ public class ManageUserController : Controller
     private readonly IUserStore<AppUser> _userStore;
     private readonly ILogger<ManageUserController> _logger;
     private readonly UserManager<AppUser> _userManager;
-    private readonly RoleManager<AppRole> _roleManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
     public ManageUserController(
         IMapper mapper,
         IUserStore<AppUser> userStore,
         ILogger<ManageUserController> logger,
         UserManager<AppUser> userManager,
-        RoleManager<AppRole> roleManager)
+        RoleManager<IdentityRole> roleManager)
     {
         _mapper = mapper;
         _userStore = userStore;
@@ -76,30 +76,33 @@ public class ManageUserController : Controller
     [HttpGet]
     public async Task<JsonResult> GetAll()
     {
+        var user = _userManager.Users
+            .Include(u => u.Roles)
+            .ThenInclude(r => r.Role).ToList();
+            
         //string role = TempData.Peek("role").ToString();
 
         //var users = await _userManager.GetUsersInRoleAsync(role);
 
-        var users = await _userManager.Users
-            .Include(u => u.UserRoles)
-            .ThenInclude(u => u.Role)
-            .Select(u => new UserWithRoleViewModel
-            {
-                Id = u.Id,
-                UserName = u.UserName,
-                Email = u.Email,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                State = u.State,
-                City = u.City,
-                StreetAddress = u.StreetAddress,
-                PhoneNumber = u.PhoneNumber,
-                PostalCode = u.PostalCode,
-                Role = u.UserRoles.FirstOrDefault().Role.Name,
-            })
-            .ToListAsync();       
-                
-        return Json(new { data = users });
+        //var users = _userManager.Users
+        //    .Select(u => new UserWithRoleViewModel
+        //     {
+        //         Id = u.Id,
+        //         UserName = u.UserName,
+        //         Email = u.Email,
+        //         FirstName = u.FirstName,
+        //         LastName = u.LastName,
+        //         State = u.State,
+        //         City = u.City,
+        //         StreetAddress = u.StreetAddress,
+        //         PhoneNumber = u.PhoneNumber,
+        //         PostalCode = u.PostalCode,
+        //         Role = _userManager.GetRolesAsync(u).Result.FirstOrDefault()
+        //     })
+        //    .ToListAsync();
+
+
+        return Json(new { data = user });
     }
 
     [HttpDelete]

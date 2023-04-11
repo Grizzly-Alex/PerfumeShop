@@ -28,7 +28,7 @@ public static class WebDependencies
             try
             {
                 var userManager = scopedProvider.GetRequiredService<UserManager<AppUser>>();
-                var roleManager = scopedProvider.GetRequiredService<RoleManager<AppRole>>();
+                var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
                 var identityContext = scopedProvider.GetRequiredService<IdentityAppDbContext>();
                 await IdentitySeedDb.SeedAsync(identityContext, userManager, roleManager);
             }
