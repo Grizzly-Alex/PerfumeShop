@@ -9,14 +9,14 @@ public class ManageUserController : Controller
     private readonly IUserStore<AppUser> _userStore;
     private readonly ILogger<ManageUserController> _logger;
     private readonly UserManager<AppUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<AppRole> _roleManager;
 
     public ManageUserController(
         IMapper mapper,
         IUserStore<AppUser> userStore,
         ILogger<ManageUserController> logger,
         UserManager<AppUser> userManager,
-        RoleManager<IdentityRole> roleManager)
+        RoleManager<AppRole> roleManager)
     {
         _mapper = mapper;
         _userStore = userStore;
@@ -27,9 +27,29 @@ public class ManageUserController : Controller
 
 
     [HttpGet]
-    public IActionResult Index(string role)
+    public async Task<IActionResult> Index(string role)
     {
         TempData["role"] = role;
+
+        var users = await _userManager.Users
+            .Include(u => u.UserRoles)
+            .ThenInclude(r => r.Role)
+            .Select(u => new UserWithRoleViewModel
+            {
+                Id = u.Id,
+                UserName = u.UserName,
+                Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                State = u.State,
+                City = u.City,
+                StreetAddress = u.StreetAddress,
+                PhoneNumber = u.PhoneNumber,
+                PostalCode = u.PostalCode,
+                Role = u.UserRoles.FirstOrDefault().Role.Name
+            })
+            .ToListAsync();
+
         return View();
     }
 
@@ -76,10 +96,14 @@ public class ManageUserController : Controller
     [HttpGet]
     public async Task<JsonResult> GetAll()
     {
-        var user = _userManager.Users
-            .Include(u => u.Roles)
-            .ThenInclude(r => r.Role).ToList();
-            
+
+        var users = await _userManager.Users
+            .Include(u => u.UserRoles)
+            .ThenInclude(r => r.Role)
+            .ThenInclude(r => r.Name)
+            .ToListAsync();
+
+
         //string role = TempData.Peek("role").ToString();
 
         //var users = await _userManager.GetUsersInRoleAsync(role);
@@ -101,8 +125,10 @@ public class ManageUserController : Controller
         //     })
         //    .ToListAsync();
 
+        
+        var test = users; 
 
-        return Json(new { data = user });
+        return Json(new { data = users });
     }
 
     [HttpDelete]

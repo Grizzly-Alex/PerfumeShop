@@ -1,9 +1,9 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
 
-public sealed class IdentityAppDbContext : 
-    IdentityDbContext<AppUser, IdentityRole<string>, string,
-    IdentityUserClaim<string>, AppUserRole, IdentityUserLogin<string>,
-    IdentityRoleClaim<string>, IdentityUserToken<string>>
+public class IdentityAppDbContext : 
+    IdentityDbContext<AppUser, IdentityRole, string,
+        AppUserClaim, AppUserRole, AppUserLogin,
+        AppRoleClaim, AppUserToken>
 {
     public IdentityAppDbContext(DbContextOptions<IdentityAppDbContext> options) : base(options) { }
 
@@ -13,6 +13,6 @@ public sealed class IdentityAppDbContext :
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new AppUserConfig());
-        modelBuilder.ApplyConfiguration(new AppUserRoleConfig());
+        modelBuilder.ApplyConfiguration(new AppRoleConfig());
     }
 }

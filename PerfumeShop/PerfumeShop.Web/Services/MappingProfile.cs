@@ -1,6 +1,4 @@
-﻿using PerfumeShop.Core.Models.Identity;
-
-namespace PerfumeShop.Web.Services;
+﻿namespace PerfumeShop.Web.Services;
 
 public sealed class MappingProfile : Profile
 {
