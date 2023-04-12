@@ -27,31 +27,8 @@ public class ManageUserController : Controller
 
 
     [HttpGet]
-    public async Task<IActionResult> Index(string role)
-    {
-        TempData["role"] = role;
+    public IActionResult Index() => View();
 
-        var users = await _userManager.Users
-            .Include(u => u.UserRoles)
-            .ThenInclude(r => r.Role)
-            .Select(u => new UserWithRoleViewModel
-            {
-                Id = u.Id,
-                UserName = u.UserName,
-                Email = u.Email,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                State = u.State,
-                City = u.City,
-                StreetAddress = u.StreetAddress,
-                PhoneNumber = u.PhoneNumber,
-                PostalCode = u.PostalCode,
-                Role = u.UserRoles.FirstOrDefault().Role.Name
-            })
-            .ToListAsync();
-
-        return View();
-    }
 
     [HttpGet]
     public IActionResult Create()
@@ -92,44 +69,33 @@ public class ManageUserController : Controller
         return View(userView);
     }
 
+
     #region API CALLS
     [HttpGet]
     public async Task<JsonResult> GetAll()
     {
-
         var users = await _userManager.Users
             .Include(u => u.UserRoles)
             .ThenInclude(r => r.Role)
-            .ThenInclude(r => r.Name)
+            .Select(u => new UserWithRoleViewModel
+            {
+                Id = u.Id,
+                UserName = u.UserName,
+                Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                State = u.State,
+                City = u.City,
+                StreetAddress = u.StreetAddress,
+                PhoneNumber = u.PhoneNumber,
+                PostalCode = u.PostalCode,
+                Role = u.UserRoles.FirstOrDefault().Role.Name
+            })
             .ToListAsync();
-
-
-        //string role = TempData.Peek("role").ToString();
-
-        //var users = await _userManager.GetUsersInRoleAsync(role);
-
-        //var users = _userManager.Users
-        //    .Select(u => new UserWithRoleViewModel
-        //     {
-        //         Id = u.Id,
-        //         UserName = u.UserName,
-        //         Email = u.Email,
-        //         FirstName = u.FirstName,
-        //         LastName = u.LastName,
-        //         State = u.State,
-        //         City = u.City,
-        //         StreetAddress = u.StreetAddress,
-        //         PhoneNumber = u.PhoneNumber,
-        //         PostalCode = u.PostalCode,
-        //         Role = _userManager.GetRolesAsync(u).Result.FirstOrDefault()
-        //     })
-        //    .ToListAsync();
-
-        
-        var test = users; 
 
         return Json(new { data = users });
     }
+
 
     [HttpDelete]
     public async Task<JsonResult> Delete(string id)

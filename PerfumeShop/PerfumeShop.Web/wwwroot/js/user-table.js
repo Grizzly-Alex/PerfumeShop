@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#userData').DataTable({
         "ajax": {
-            "url": "/admin/manageUser/getAll"
+            "url": "/Admin/ManageUser/GetAll"
         },
         "columns": [
             { data: "role", "width": "15%" },
