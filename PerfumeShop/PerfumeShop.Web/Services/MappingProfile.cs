@@ -4,15 +4,23 @@ public sealed class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        #region Identity
         CreateMap<AppUser, RegisterUserViewModel>().ReverseMap();
         CreateMap<AppUser, IndexUserViewModel>().ReverseMap()
-            .ForMember(p => p.Email, opt => opt.Ignore())
-            .ForMember(p => p.UserName, opt => opt.Ignore());
+            .ForMember(model => model.Email, opt => opt.Ignore())
+            .ForMember(model => model.UserName, opt => opt.Ignore());
+        CreateMap<UserWithRoleViewModel, AppUser>().ReverseMap()
+            .ForMember(view => view.Role, 
+                opt => opt.MapFrom(model => model.UserRoles.FirstOrDefault().Role.Name));
+        #endregion
+
+        #region Catalog
         CreateMap<CatalogBrand, ItemViewModel>().ReverseMap();
         CreateMap<CatalogGender, ItemViewModel>().ReverseMap();
         CreateMap<CatalogReleaseForm, ItemViewModel>().ReverseMap();
         CreateMap<CatalogAromaType, ItemViewModel>().ReverseMap();
         CreateMap<CatalogProduct, ProductViewModel>().ReverseMap();  
         CreateMap(typeof(PagedList<>), typeof(PagedListViewModel));
-	}
+        #endregion
+    }
 }

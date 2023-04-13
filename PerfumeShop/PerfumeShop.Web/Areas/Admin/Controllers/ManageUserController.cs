@@ -9,7 +9,7 @@ public class ManageUserController : Controller
     private readonly IUserStore<AppUser> _userStore;
     private readonly ILogger<ManageUserController> _logger;
     private readonly UserManager<AppUser> _userManager;
-    private readonly RoleManager<AppRole> _roleManager;
+    private readonly RoleManager<AppRole> _roleManager;   
 
     public ManageUserController(
         IMapper mapper,
@@ -36,7 +36,7 @@ public class ManageUserController : Controller
         var user = new RegisterUserViewModel
         {
             RoleList = GetRoleNames().ToSelectListItems()
-    };
+        };
         return View(user);
     }
 
@@ -69,6 +69,24 @@ public class ManageUserController : Controller
         return View(userView);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Edit(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user is null)
+        {
+            return NotFound();
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        var userView = _mapper.Map<EditUserViewModel>(user);
+        userView.Role = roles.FirstOrDefault();
+        userView.RoleList = GetRoleNames().ToSelectListItems();
+
+        return View(userView);
+    }
+
 
     #region API CALLS
     [HttpGet]
@@ -77,23 +95,11 @@ public class ManageUserController : Controller
         var users = await _userManager.Users
             .Include(u => u.UserRoles)
             .ThenInclude(r => r.Role)
-            .Select(u => new UserWithRoleViewModel
-            {
-                Id = u.Id,
-                UserName = u.UserName,
-                Email = u.Email,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                State = u.State,
-                City = u.City,
-                StreetAddress = u.StreetAddress,
-                PhoneNumber = u.PhoneNumber,
-                PostalCode = u.PostalCode,
-                Role = u.UserRoles.FirstOrDefault().Role.Name
-            })
             .ToListAsync();
 
-        return Json(new { data = users });
+        var usersWithRole = _mapper.Map<List<UserWithRoleViewModel>>(users);
+
+        return Json(new { data = usersWithRole });
     }
 
 
