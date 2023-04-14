@@ -5,9 +5,9 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#aromaTypeData').DataTable({
+    dataTable = $('#releaseFormData').DataTable({
         "ajax": {
-            "url": "/admin/manageAromaType/getAll"
+            "url": "/admin/ManageReleaseForm/GetAll"
         },
         "columns": [
             { data: "name", "width": "95%" },
@@ -15,9 +15,9 @@ function loadDataTable() {
                 data: "id",
                 "render": function (data) {
                     return `<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <a href="/admin/managearomatype/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
+                    <a href="/Admin/ManageReleaseForm/Edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
                     <i class="bi bi-wrench"></i> </a>
-                    <a onClick=Delete('/admin/managearomatype/delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
+                    <a onClick=Delete('/Admin/ManageReleaseForm/Delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
                     <i class="bi bi-trash3"></i> </a>
 					</div>`
                 },
@@ -26,7 +26,6 @@ function loadDataTable() {
         ]
     });
 }
-
 
 function Delete(url) {
     Swal.fire({
@@ -43,8 +42,13 @@ function Delete(url) {
                 url: url,
                 type: 'DELETE',
                 success: function (data) {
-                    dataTable.ajax.reload();
-                    toastr.success(data.message);
+                    if (data.success) {
+                        dataTable.ajax.reload();
+                        toastr.success(data.message);
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
                 }
             })
 

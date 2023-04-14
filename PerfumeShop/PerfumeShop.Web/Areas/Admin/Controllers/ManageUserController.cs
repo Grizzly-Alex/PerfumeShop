@@ -165,11 +165,18 @@ public class ManageUserController : Controller
             return Json(new { success = false, message = "Error while deleting" });
         }
 
+        var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+        if (currentUser.Id.Equals(id)) 
+        {
+            return Json(new { success = false, message = "This is your account!" });
+        }
+
         await _userManager.DeleteAsync(userView);
 
         return Json(new { success = true, message = $"{userView.UserName} was deleted successfully" });
     }
     #endregion
 
-    private IEnumerable<string> GetRoleNames() => _roleManager.Roles.Select(Role => Role.Name).ToList();      
+    private IEnumerable<string> GetRoleNames() 
+        => _roleManager.Roles.Select(Role => Role.Name).ToList();      
 }
