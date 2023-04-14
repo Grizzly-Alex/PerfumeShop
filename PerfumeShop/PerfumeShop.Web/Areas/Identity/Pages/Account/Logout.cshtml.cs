@@ -1,4 +1,6 @@
-﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
+﻿using PerfumeShop.Core.Models.Identity;
+
+namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
 
 public class LogoutModel : PageModel
 {

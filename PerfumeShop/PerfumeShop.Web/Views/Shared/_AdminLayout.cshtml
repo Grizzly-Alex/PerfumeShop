@@ -4,10 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Parfumer</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] Parfumer</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PerfumeShop.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/sidebars.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
@@ -39,8 +38,8 @@
     <div class="container-fluid">
         <div class="row">
             <nav id="sidebarMenu" class="col-md-2 d-md-block bg-light sidebar collapse">
-                <div class="d-flex flex-column flex-shrink-0 p-3">
-                    <div class="px-2">
+                <div class="d-flex flex-column flex-shrink-1 p-4">
+                    <div class="px-3">
                         <h5>
                             <i class="bi bi-gear"></i>
                             Managment
@@ -54,7 +53,9 @@
                             </button>
                             <div class="collapse" id="users">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
-                                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Test</a></li>
+                                    <li><a class="link-dark d-inline-flex text-decoration-none rounded"
+                                           asp-area="Admin" asp-controller="ManageUser" asp-action="Index">Users Information</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -94,12 +95,13 @@
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" asp-append-version="true"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/ia0sr3vihwibbslg5o7ktdm2v362cz4mazddl49ekljeta4b/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 

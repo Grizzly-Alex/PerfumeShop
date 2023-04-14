@@ -2,8 +2,6 @@
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
-[Route("[area]/[controller]/[action]")]
-[ApiExplorerSettings(IgnoreApi = true)]
 public class ManageReleaseFormController : Controller
 {
     private readonly IViewModelService<CatalogReleaseForm, ItemViewModel> _viewModelService;

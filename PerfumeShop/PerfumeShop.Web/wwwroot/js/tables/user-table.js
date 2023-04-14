@@ -5,19 +5,28 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#aromaTypeData').DataTable({
+    dataTable = $('#userData').DataTable({
         "ajax": {
-            "url": "/admin/manageAromaType/getAll"
+            "url": "/Admin/ManageUser/GetAll"
         },
         "columns": [
-            { data: "name", "width": "95%" },
+            { data: "role", "width": "15%" },
+            { data: "userName", "width": "10%" },
+            { data: "email", "width": "10%" },
+            { data: "firstName", "width": "10%" },
+            { data: "lastName", "width": "10%" },
+            { data: "streetAddress", "width": "10%" },
+            { data: "city", "width": "10%" },
+            { data: "state", "width": "10%" },
+            { data: "phoneNumber", "width": "10%" },
+            { data: "postalCode", "width": "10%" },
             {
                 data: "id",
                 "render": function (data) {
                     return `<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <a href="/admin/managearomatype/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
+                    <a href="/Admin/ManageUser/edit?id=${data}" class="btn btn-outline-primary btn-sm shadow-none">
                     <i class="bi bi-wrench"></i> </a>
-                    <a onClick=Delete('/admin/managearomatype/delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
+                    <a onClick=Delete('/Admin/ManageUser/Delete/${data}') class="btn btn-outline-danger btn-sm shadow-none"> 
                     <i class="bi bi-trash3"></i> </a>
 					</div>`
                 },
@@ -26,7 +35,6 @@ function loadDataTable() {
         ]
     });
 }
-
 
 function Delete(url) {
     Swal.fire({
@@ -43,8 +51,13 @@ function Delete(url) {
                 url: url,
                 type: 'DELETE',
                 success: function (data) {
-                    dataTable.ajax.reload();
-                    toastr.success(data.message);
+                    if (data.success) {
+                        dataTable.ajax.reload();
+                        toastr.success(data.message);
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
                 }
             })
 

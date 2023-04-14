@@ -28,7 +28,7 @@ public static class WebDependencies
             try
             {
                 var userManager = scopedProvider.GetRequiredService<UserManager<AppUser>>();
-                var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roleManager = scopedProvider.GetRequiredService<RoleManager<AppRole>>();
                 var identityContext = scopedProvider.GetRequiredService<IdentityAppDbContext>();
                 await IdentitySeedDb.SeedAsync(identityContext, userManager, roleManager);
             }
@@ -68,5 +68,9 @@ public static class WebDependencies
             name: "ShopDefault",
             areaName: "Shop",
             pattern: "{controller=Home}/{action=Index}/{id?}");
+        app.MapAreaControllerRoute(
+            name: "AdminDefault",
+            areaName: "Admin",
+            pattern: "Admin/{controller}/{action}/{id?}");
     }
 }
