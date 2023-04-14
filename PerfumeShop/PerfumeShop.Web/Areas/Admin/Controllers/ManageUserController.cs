@@ -10,19 +10,22 @@ public class ManageUserController : Controller
     private readonly ILogger<ManageUserController> _logger;
     private readonly UserManager<AppUser> _userManager;
     private readonly RoleManager<AppRole> _roleManager;   
+    private readonly SignInManager<AppUser> _signInManager;
 
     public ManageUserController(
         IMapper mapper,
         IUserStore<AppUser> userStore,
         ILogger<ManageUserController> logger,
         UserManager<AppUser> userManager,
-        RoleManager<AppRole> roleManager)
+        RoleManager<AppRole> roleManager,
+		SignInManager<AppUser> signInManager)
     {
         _mapper = mapper;
         _userStore = userStore;
         _logger = logger;
         _userManager = userManager;
         _roleManager = roleManager;
+        _signInManager = signInManager;
     }
 
 
@@ -52,7 +55,7 @@ public class ManageUserController : Controller
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User created a new account with password.");
+                _logger.LogInformation($"User {userView.Email} created a new account with password.");
                 await _userManager.AddToRoleAsync(user, userView.Role);
                 TempData["success"] = $"{userView.Role} was created successfully!";
                 return RedirectToAction(nameof(Index), new { role = userView.Role });
@@ -70,21 +73,70 @@ public class ManageUserController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Edit(string userId)
+    public async Task<IActionResult> Edit(string id)
     {
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await _userManager.FindByIdAsync(id);
 
-        if (user is null)
-        {
-            return NotFound();
-        }
+        if (user is null) return NotFound();
 
-        var roles = await _userManager.GetRolesAsync(user);
+        var rolesOfUser = await _userManager.GetRolesAsync(user);
         var userView = _mapper.Map<EditUserViewModel>(user);
-        userView.Role = roles.FirstOrDefault();
+        userView.Role = rolesOfUser.FirstOrDefault();
         userView.RoleList = GetRoleNames().ToSelectListItems();
 
-        return View(userView);
+        var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+        ViewBag.CurrentUserId = currentUser.Id;
+
+		return View(userView);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(EditUserViewModel userView)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _userManager.FindByIdAsync(userView.Id);
+
+            if (user is not null)
+            {
+                user.FirstName = userView.FirstName;
+                user.LastName = userView.LastName;
+                user.State = userView.State;
+                user.City = userView.City;
+                user.StreetAddress = userView.StreetAddress;
+                user.PhoneNumber = userView.PhoneNumber;
+                user.PostalCode = userView.PostalCode;
+                var result = await _userManager.UpdateAsync(user);
+                
+                if (result.Succeeded)
+                {
+					_logger.LogInformation($"User {userView.Email} was updated.");
+					var roles = await _userManager.GetRolesAsync(user);
+                    var role = roles.FirstOrDefault();
+
+                    if (!role.Equals(userView.Role, StringComparison.CurrentCultureIgnoreCase))
+                    {						
+						await _userManager.RemoveFromRoleAsync(user, role);
+                        await _userManager.AddToRoleAsync(user, userView.Role);
+						_logger.LogInformation($"Set role - {userView.Role} for user id - {userView.Id}.");
+					}
+
+					TempData["success"] = $"User {userView.Email} was updated.";
+
+					return RedirectToAction(nameof(Index), new { role = userView.Role });
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+        }
+        userView.RoleList = GetRoleNames().ToSelectListItems();
+
+		return View(userView);
     }
 
 

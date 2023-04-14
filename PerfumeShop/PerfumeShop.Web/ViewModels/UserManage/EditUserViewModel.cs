@@ -2,8 +2,8 @@
 
 public class EditUserViewModel
 {
-    [Required]
-    [EmailAddress]
+    public string Id { get; set; }
+
     [Display(Name = "Email")]
     public string? Email { get; set; }
 

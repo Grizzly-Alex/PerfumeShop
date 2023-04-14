@@ -6,6 +6,7 @@ public sealed class MappingProfile : Profile
     {
         #region Identity
         CreateMap<AppUser, RegisterUserViewModel>().ReverseMap();
+        CreateMap<AppUser, EditUserViewModel>().ReverseMap();      
         CreateMap<AppUser, IndexUserViewModel>().ReverseMap()
             .ForMember(model => model.Email, opt => opt.Ignore())
             .ForMember(model => model.UserName, opt => opt.Ignore());

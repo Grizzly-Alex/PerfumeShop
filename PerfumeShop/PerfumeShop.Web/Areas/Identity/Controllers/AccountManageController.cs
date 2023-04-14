@@ -1,6 +1,4 @@
-﻿using PerfumeShop.Core.Models.Identity;
-
-namespace PerfumeShop.Web.Areas.Identity.Controllers;
+﻿namespace PerfumeShop.Web.Areas.Identity.Controllers;
 
 [Authorize]
 [Area("Identity")]
@@ -14,16 +12,19 @@ public class AccountManageController : Controller
     private readonly ILogger<AccountManageController> _logger;
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly IMapper _mapper;
 
 
     public AccountManageController(
         ILogger<AccountManageController> logger,
         UserManager<AppUser> userManager,
-        SignInManager<AppUser> signInManager)
+        SignInManager<AppUser> signInManager,
+		IMapper mapper)
     {
         _logger = logger;
         _userManager = userManager;
         _signInManager = signInManager;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -32,20 +33,8 @@ public class AccountManageController : Controller
         var user = await _userManager.GetUserAsync(User)
             ?? throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
 
-        var userViewModel = new IndexUserViewModel
-        {
-            UserName = user.UserName,
-            Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            StreetAddress = user.StreetAddress,
-            City = user.City,
-            State = user.State,
-            PostalCode = user.PostalCode,
-            PhoneNumber = user.PhoneNumber,
-            IsEmailConfirmed = user.EmailConfirmed,
-            StatusMessage = StatusMessage
-        };
+        var userViewModel = _mapper.Map<IndexUserViewModel>(user);
+        userViewModel.StatusMessage = StatusMessage;
 
         return View(userViewModel);
     }
