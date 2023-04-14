@@ -2,8 +2,6 @@
 
 
 [Area("Shop")]
-[Route("[controller]/[action]")]
-[ApiExplorerSettings(IgnoreApi = true)]
 [AllowAnonymous]
 public class CatalogController : Controller
 {
