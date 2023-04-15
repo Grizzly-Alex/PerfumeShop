@@ -17,18 +17,22 @@ public class CatalogController : Controller
     }
 
 
-	public IActionResult Reset() => RedirectToAction(nameof(Index));
+	public IActionResult Reset(int pageSize) 
+		=> RedirectToAction(nameof(Index), new {itemsPerPage = pageSize});
 
 	[HttpGet]
 	public async Task<IActionResult> Index(
-		int pageIndex,
+        PagedInfoViewModel pageInfo,
         decimal? minPrice, decimal? maxPrice,
         int? brandId, int? genderId, int? aromaTypeId, int? releaseFormId)
 	{
         maxPrice = await _catalogService.DefineMaxPrice(maxPrice);
-
+        
 		var pagedList = await _catalogService.GetCatalogPagedListAsync(
-			Constants.ItemsPerPage, pageIndex, minPrice, maxPrice, brandId, genderId, aromaTypeId, releaseFormId);
+            pageInfo.ItemsPerPage == default ? (int)ItemsPerPage.Ten : pageInfo.ItemsPerPage,
+            pageInfo.PageIndex,
+			minPrice, maxPrice,
+			brandId, genderId, aromaTypeId, releaseFormId);
 
 		var catalogIndex = await _catalogService.GetCatalogIndexAsync(pagedList, minPrice, maxPrice);
 
@@ -39,7 +43,6 @@ public class CatalogController : Controller
 	public async Task<IActionResult> Details(int id)
 	{
 		var guitarViewModel = await _viewModelService.GetViewModelByIdAsync(id);
-
 		return View(guitarViewModel);
 	}
 }
