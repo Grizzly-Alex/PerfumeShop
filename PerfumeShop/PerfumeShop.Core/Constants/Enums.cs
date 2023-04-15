@@ -13,3 +13,10 @@ public enum Roles
     [Display(Name = "Employee")] Employee = 2,
     [Display(Name = "Customer")] Customer = 3,
 }
+
+public enum ItemsPerPage
+{
+    [Display(Name = "10")] Ten = 10,
+    [Display(Name = "20")] Twenty = 20,
+    [Display(Name = "30")] Threety = 30,
+}
