@@ -1,0 +1,8 @@
+﻿@model PagedInfoViewModel
+
+<div class="form-group" onchange="this.form.submit()">
+    <label asp-for="ItemsPerPage" class="control-label"></label>
+    <select asp-for="ItemsPerPage" class="form-control"
+        asp-items="Html.GetEnumSelectList<ItemsPerPage>()" onchange="this.form.submit()"></select>
+</div>
+

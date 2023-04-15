@@ -1,6 +1,7 @@
 ﻿@model CatalogIndexViewModel
 
-<div class="container-fluid">
+<form method="get" asp-area="Shop" asp-controller="Catalog" asp-action="Index">
+    <div class="container-fluid">
         <div class="row mt-3 pb-0">
             <div class="col-6 text-start">
                 <p class="bi bi-sliders text-muted" style="font-size: 1.2rem;"> Filter</p>
@@ -43,7 +44,7 @@
                             <i class="bi bi-check-lg"></i>
                             Apply Filter
                         </button>
-                        <a asp-controller="Catalog" asp-action="Reset" class="w-100 btn btn-primary btn-sm shadow-none">
+                        <a asp-controller="Catalog" asp-action="Reset" asp-route-pageSize="@Model.PagedList.ItemsPerPage" class="w-100 btn btn-primary btn-sm shadow-none">
                             <i class="bi bi-arrow-counterclockwise"></i>
                             Reset Filter
                         </a>
@@ -66,5 +67,7 @@
             </div>
             <hr class="featurette-divider">
             <partial name="~/Views/Shared/Components/_Pagination.cshtml" model="Model.PagedList">
+            <partial name="~/Views/Shared/Components/_PageSize.cshtml" model="Model.PagedList">
         </div>
-</div>
+    </div>
+</form>
