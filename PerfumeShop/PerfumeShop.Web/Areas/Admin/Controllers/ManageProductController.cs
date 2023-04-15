@@ -58,12 +58,15 @@ public class ManageProductController : Controller
         if (files.Count > 0)
         {
             _contentManager.UploadFiles(HttpContext.Request.Form.Files, Constants.CatalogImagePath);
-            manageViewModel.ProductViewModel!.PictureUri = _contentManager.NameFiles.FirstOrDefault();
+            manageViewModel.Product!.PictureUri = _contentManager.NameFiles.FirstOrDefault();
         }
 
         if (ModelState.IsValid)
         {
-            await _productService!.CreateViewModelAsync(manageViewModel.ProductViewModel!);
+            await _productService!.CreateViewModelAsync(manageViewModel.Product!);
+
+            TempData["success"] = $"{manageViewModel.Product.Name} was created successfully";
+
             return RedirectToAction(nameof(Index));
         }
         else return View(manageViewModel);
@@ -96,15 +99,17 @@ public class ManageProductController : Controller
 
         if (files.Count > 0)
         {
-            _contentManager.RemoveFile(Constants.CatalogImagePath, manageViewModel.ProductViewModel.PictureUri);
+            _contentManager.RemoveFile(Constants.CatalogImagePath, manageViewModel.Product.PictureUri);
             _contentManager.UploadFiles(files, Constants.CatalogImagePath);
-            manageViewModel.ProductViewModel.PictureUri = _contentManager.NameFiles.FirstOrDefault();
+            manageViewModel.Product.PictureUri = _contentManager.NameFiles.FirstOrDefault();
         }
 
         if (ModelState.IsValid)
         {
-            var viewModel = manageViewModel.ProductViewModel;
+            var viewModel = manageViewModel.Product;
             await _productService!.UpdateViewModelAsync(viewModel!);
+
+            TempData["success"] = $"{manageViewModel.Product.Name} was updated successfully";
 
             return RedirectToAction(nameof(Details), new { id = viewModel!.Id });
         }
