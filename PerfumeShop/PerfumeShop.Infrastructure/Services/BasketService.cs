@@ -4,17 +4,14 @@ public class BasketService : IBasketService
 {
     private const string _basketCookie = "BasketCookie";
     private readonly IUnitOfWork<ShoppingDbContext> _shopping;
-    private readonly IUnitOfWork<CatalogDbContext> _catalog;
     private readonly ILogger<BasketService> _logger;
 
 
     public BasketService(
         IUnitOfWork<ShoppingDbContext> shopping,
-        IUnitOfWork<CatalogDbContext> catalog,
         ILogger<BasketService> logger)
     {
         _shopping = shopping;
-        _catalog = catalog;
         _logger = logger;
     }
 
