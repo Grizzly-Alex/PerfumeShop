@@ -141,6 +141,15 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
             ? await _dbSet.CountAsync(cancellationToken)
             : await _dbSet.CountAsync(predicate, cancellationToken);
 
+    public async Task<int> CountAsync<TResult>(
+        Expression<Func<TResult, int>> sum,
+        Expression<Func<TEntity, IEnumerable<TResult>>> selector,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        CancellationToken cancellationToken = default) =>
+        predicate is null
+            ? await _dbSet.SelectMany(selector).SumAsync(sum)
+            : await _dbSet.Where(predicate).SelectMany(selector).SumAsync(sum);
+
     public Task<int> SumAsync(
         Expression<Func<TEntity, int>> selector,
         Expression<Func<TEntity, bool>>? predicate = null,
@@ -148,4 +157,5 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
         predicate is null
             ? _dbSet.SumAsync(selector, cancellationToken)
             : _dbSet.Where(predicate).SumAsync(selector, cancellationToken);
+
 }

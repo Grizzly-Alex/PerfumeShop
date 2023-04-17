@@ -50,6 +50,12 @@ public interface IRepository<TDbContext, TEntity>
         Expression<Func<TEntity, bool>>? predicate = null,
         CancellationToken cancellationToken = default);
 
+    Task<int> CountAsync<TResult>(
+        Expression<Func<TResult, int>> sum,
+        Expression<Func<TEntity, IEnumerable<TResult>>> selector,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        CancellationToken cancellationToken = default);
+
     Task<TResult> MaxAsync<TResult>(
         Expression<Func<TEntity, TResult>> selector,
         Expression<Func<TEntity, bool>>? predicate = null,
