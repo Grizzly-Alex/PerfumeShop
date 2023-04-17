@@ -20,10 +20,11 @@ public sealed class BasketViewModelService : IBasketViewMoelService
 
     public async Task<int> CountTotalBasketItemsAsync(string userName)
     {
-        var totalItems = await _shopping.GetRepository<Basket>()
-            .CountAsync(b => b.BuyerId == userName);
-            
-        throw new NotImplementedException();
+        return await _shopping.GetRepository<Basket>()
+            .CountAsync(
+                predicate: basket => basket.BuyerId == userName,
+                selector: item => item.Items,
+                sum: sum => sum.Quantity);           
     }
 
     public Task<BasketViewModel> GetBasketForUser(string userName)
