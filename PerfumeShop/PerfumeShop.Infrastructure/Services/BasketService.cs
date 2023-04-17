@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace PerfumeShop.Infrastructure.Services;
+﻿namespace PerfumeShop.Infrastructure.Services;
 
 public class BasketService : IBasketService
 {
@@ -20,7 +18,7 @@ public class BasketService : IBasketService
         _logger = logger;
     }
 
-    public async Task<Basket> AddItemToBasketAsync(string userId, int productId, int productQuantity = 1)
+    public async Task<Basket> AddItemToBasketAsync(string userId, int productId, int quantity = 1)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
         var basket = await basketRepository.GetFirstOrDefaultAsync(
@@ -31,17 +29,11 @@ public class BasketService : IBasketService
         {
             basket = new Basket(userId);
             basketRepository.Add(basket);
-            await _shopping.SaveChangesAsync();
 
             _logger.LogInformation($"Basket was created for user ID: '{userId}'.");
         }
 
-        var basketItem = await _catalog.GetRepository<CatalogProduct>()
-            .GetFirstOrDefaultAsync(
-            predicate: product => product.Id == productId,
-            selector: product => new BasketItem(product, productQuantity));
-
-        basket.AddItem(basketItem!);
+        basket.AddItem(productId, quantity);
 
         basketRepository.Update(basket);
         await _shopping.SaveChangesAsync();
@@ -67,8 +59,7 @@ public class BasketService : IBasketService
     public async Task RemoveItemFromBasketAsync(int basketItemId)
     {
         var basketRepository = _shopping.GetRepository<BasketItem>();
-        var basketItem = await basketRepository
-            .GetFirstOrDefaultAsync(predicate: b => b.Id == basketItemId)
+        var basketItem = await basketRepository.GetFirstOrDefaultAsync(predicate: b => b.Id == basketItemId)
             ?? throw new NullReferenceException($"Basket item not found with ID '{basketItemId}'.");
 
         basketRepository.Remove(basketItem);
@@ -76,40 +67,5 @@ public class BasketService : IBasketService
         _logger.LogInformation($"Basket item was deleted with ID: '{basketItem.Id}' from Basket with ID: '{basketItem.BasketId}'.");
 
         await _shopping.SaveChangesAsync();
-    }
-
-    public async Task TransferBasketAsync(string anonymousId, string userId)
-    {
-        Guard.Against.NullOrEmpty(anonymousId, nameof(anonymousId));
-        Guard.Against.NullOrEmpty(userId, nameof(userId));
-
-        var basketRepository = _shopping.GetRepository<Basket>();
-
-        var anonymousBasket = await basketRepository.GetFirstOrDefaultAsync(
-            predicate: i => i.BuyerId == anonymousId,
-            include: query => query.Include(b => b.Items));
-
-        if (anonymousBasket is not null)
-        {
-            var userBasket = await basketRepository.GetFirstOrDefaultAsync(
-                predicate: i => i.BuyerId == userId,
-                include: query => query.Include(b => b.Items));
-
-            if (userBasket is null)
-            {
-                userBasket = new Basket(userId);
-                basketRepository.Add(userBasket);
-            }
-
-            foreach (var item in anonymousBasket.Items)
-            {
-                userBasket.AddItem(item);
-            }
-
-            basketRepository.Update(userBasket);
-            basketRepository.Remove(anonymousBasket);
-
-            await _shopping.SaveChangesAsync();
-        };
     }
 }
