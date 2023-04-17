@@ -65,4 +65,44 @@ public class BasketService : IBasketService
 
         await _shopping.SaveChangesAsync();
     }
+
+    public async Task TransferBasketAsync(string anonymousId, string userId)
+    {
+        Guard.Against.NullOrEmpty(anonymousId, nameof(anonymousId));
+        Guard.Against.NullOrEmpty(userId, nameof(userId));
+
+        var basketRepository = _shopping.GetRepository<Basket>();
+
+        var anonymousBasket = await basketRepository.GetFirstOrDefaultAsync(
+            predicate: i => i.BuyerId == anonymousId,
+            include: query => query.Include(b => b.Items));
+
+        if (anonymousBasket is not null)
+        {
+            var userBasket = await basketRepository.GetFirstOrDefaultAsync(
+                predicate: i => i.BuyerId == userId,
+                include: query => query.Include(b => b.Items));
+
+            if (userBasket is null)
+            {
+                userBasket = new Basket(userId);
+                basketRepository.Add(userBasket);
+                _logger.LogInformation($"Basket was created for user with ID: {userId}");
+            }
+
+            foreach (var item in anonymousBasket.Items)
+            {
+                userBasket.AddItem(item.Id);
+                _logger.LogInformation($"Item was added with ID: {item.Id}");
+            }
+
+            basketRepository.Update(userBasket);
+            _logger.LogInformation($"Basket was successfully transferred");
+
+            basketRepository.Remove(anonymousBasket);
+            _logger.LogInformation($"Anonymous basket with ID: {anonymousBasket.Id} was removed.");
+
+            await _shopping.SaveChangesAsync();           
+        };
+    }
 }
