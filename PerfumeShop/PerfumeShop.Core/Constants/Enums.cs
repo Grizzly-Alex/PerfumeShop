@@ -16,7 +16,7 @@ public enum Roles
 
 public enum ItemsPerPage
 {
-    [Display(Name = "10")] Ten = 10,
-    [Display(Name = "20")] Twenty = 20,
-    [Display(Name = "30")] Threety = 30,
+    [Display(Name = "10")] Ten = 3,
+    [Display(Name = "20")] Twenty = 5,
+    [Display(Name = "30")] Threety = 8,
 }

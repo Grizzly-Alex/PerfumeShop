@@ -1,6 +1,4 @@
-﻿using PerfumeShop.Core.Models.Identity;
-
-namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
+﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
 
 public class LogoutModel : PageModel
 {
@@ -23,8 +21,7 @@ public class LogoutModel : PageModel
     {
         await _signInManager.SignOutAsync();
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        var userId = _signInManager.Context.User.Claims.First(c => c.Type == ClaimTypes.Name);
-
+        
         _logger.LogInformation("User logged out.");
         if (returnUrl is not null)
         {
