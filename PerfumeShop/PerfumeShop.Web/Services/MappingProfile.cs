@@ -23,5 +23,10 @@ public sealed class MappingProfile : Profile
         CreateMap<CatalogProduct, ProductViewModel>().ReverseMap();  
         CreateMap(typeof(PagedList<>), typeof(PagedListViewModel));
         #endregion
+
+        #region Shopping
+        CreateMap<Basket, BasketViewModel>().ReverseMap();
+        CreateMap<BasketItem, BasketItemViewModel>().ReverseMap();
+        #endregion
     }
 }

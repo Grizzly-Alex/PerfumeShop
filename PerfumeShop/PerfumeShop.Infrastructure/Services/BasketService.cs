@@ -2,7 +2,6 @@
 
 public class BasketService : IBasketService
 {
-    private const string _basketCookie = "BasketCookie";
     private readonly IUnitOfWork<ShoppingDbContext> _unitOfWork;
     private readonly ILogger<BasketService> _logger;
 
