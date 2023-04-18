@@ -4,18 +4,15 @@ namespace PerfumeShop.Web.Areas.Shop.Pages;
 [AllowAnonymous]
 public class CatalogModel : PageModel
 {
+    public CatalogIndexViewModel CatalogIndex { get; set; } = new();
     private readonly ICatalogViewModelService _catalogService;
-    private readonly IViewModelService<CatalogProduct, ProductViewModel> _viewModelService;
 
-    public CatalogModel(ICatalogViewModelService catalogService,
-        IViewModelService<CatalogProduct, ProductViewModel> viewModelService)
+    public CatalogModel(ICatalogViewModelService catalogService)
     {
         _catalogService = catalogService;
-        _viewModelService = viewModelService;
     }
 
-    public CatalogIndexViewModel CatalogIndex { get; set; } = new();
-  
+
     public async Task OnGetAsync(CatalogIndexViewModel catalogIndex, PagedInfoViewModel pagedInfo)
     {
         catalogIndex.MaxPrice = await _catalogService.DefineMaxPrice(catalogIndex.MaxPrice);
@@ -32,11 +29,7 @@ public class CatalogModel : PageModel
                     ? (int)ItemsPerPage.Ten
                     : pagedInfo.ItemsPerPage);
 
-        CatalogIndex = await _catalogService.GetCatalogIndexAsync(pagedList, catalogIndex.MinPrice, catalogIndex.MaxPrice);
-    }
-
-    public IActionResult OnGetReset(int pageSize)
-    {
-        return RedirectToPage();
+        CatalogIndex = await _catalogService.GetCatalogIndexAsync(
+            pagedList, catalogIndex.MinPrice, catalogIndex.MaxPrice);
     }
 }
