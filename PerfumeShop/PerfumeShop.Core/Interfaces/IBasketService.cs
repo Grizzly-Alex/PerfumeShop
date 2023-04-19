@@ -2,8 +2,7 @@
 
 public interface IBasketService
 {
-    public Task TransferBasketAsync(string anonymousId, string userName);
-    public Task RemoveItemFromBasketAsync(int basketItemId);
-    public Task DeleteBasketAsync(int basketId);
-    public Task<Basket> AddItemToBasketAsync(string userId, int productId, int productQuantity = 1);
+    public Task<BasketItem> RemoveItemFromBasketAsync(int basketItemId);
+    public Task<Basket> DeleteBasketAsync(int basketId);
+    public Task<Basket> AddItemToBasketAsync(int basketId, int productId, int productQuantity = 1);
 }

@@ -21,11 +21,11 @@ public sealed class BasketViewModelService : IBasketViewMoelService
     }
 
 
-    public async Task<int> CountTotalBasketItemsAsync(string userId)
+    public async Task<int> CountTotalBasketItemsAsync(int basketId)
     {
         return await _shopping.GetRepository<Basket>()
             .CountAsync(
-                predicate: basket => basket.BuyerId == userId,
+                predicate: basket => basket.Id == basketId,
                 selector: item => item.Items,
                 sum: sum => sum.Quantity);           
     }
@@ -39,7 +39,8 @@ public sealed class BasketViewModelService : IBasketViewMoelService
 
         if (basket is null)
         {
-            basket = new Basket(userId);
+            basket = new Basket();
+            basket.SetBuyerId(userId);
             basketRepository.Add(basket);
             await _shopping.SaveChangesAsync();
 
@@ -53,7 +54,7 @@ public sealed class BasketViewModelService : IBasketViewMoelService
         return _mapper.Map<BasketViewModel>(basket);
     }
 
-    public Task<bool> IsAvailableQuantityAsync(string userName, int productId)
+    public Task<bool> IsAvailableQuantityAsync(int basketId, int productId)
     {
         throw new NotImplementedException();
     }

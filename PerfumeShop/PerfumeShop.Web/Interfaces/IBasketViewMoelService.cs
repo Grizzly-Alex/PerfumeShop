@@ -2,7 +2,7 @@
 
 public interface IBasketViewMoelService
 {
-    Task<int> CountTotalBasketItemsAsync(string userId);
-    Task<bool> IsAvailableQuantityAsync(string userId, int productId);
+    Task<int> CountTotalBasketItemsAsync(int basketId);
+    Task<bool> IsAvailableQuantityAsync(int basketId, int productId);
     Task<BasketViewModel> GetBasketForUserAsync(string userId);
 }
