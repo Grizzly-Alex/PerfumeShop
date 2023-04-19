@@ -21,11 +21,11 @@ public sealed class BasketViewModelService : IBasketViewMoelService
     }
 
 
-    public async Task<int> CountTotalBasketItemsAsync(int basketId)
+    public async Task<int> CountTotalBasketItemsAsync(string userId)
     {
         return await _shopping.GetRepository<Basket>()
             .CountAsync(
-                predicate: basket => basket.Id == basketId,
+                predicate: basket => basket.BuyerId == userId,
                 selector: item => item.Items,
                 sum: sum => sum.Quantity);           
     }
@@ -39,8 +39,7 @@ public sealed class BasketViewModelService : IBasketViewMoelService
 
         if (basket is null)
         {
-            basket = new Basket();
-            basket.SetBuyerId(userId);
+            basket = new Basket(userId);
             basketRepository.Add(basket);
             await _shopping.SaveChangesAsync();
 

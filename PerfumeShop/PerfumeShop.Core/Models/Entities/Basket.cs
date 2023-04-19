@@ -9,13 +9,14 @@ public sealed class Basket : Entity
     public DateTime UpdateDate { get; private set; }
 
 
-    public Basket()
+    public Basket(string buyerId)
     {
+        BuyerId = buyerId;  
         CreateDate = DateTime.Now;
         UpdateDate = DateTime.Now;
     }
 
-    public void SetBuyerId(string buyerId) => BuyerId = buyerId;
+    public void SetNewBuyerId(string buyerId) => BuyerId = buyerId;
 
     public void AddItem(int productId, int quantity =1)
     {

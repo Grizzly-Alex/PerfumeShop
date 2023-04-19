@@ -29,6 +29,23 @@ public class BasketService : IBasketService
         return basket;
     }
 
+    public async Task CreateBasketAsync(string userId)
+    {
+        var basketRepository = _unitOfWork.GetRepository<Basket>();
+        var basket = await basketRepository.GetFirstOrDefaultAsync(predicate: b => b.BuyerId == userId);
+        
+        if (basket is null)
+        {
+            basketRepository.Add(new Basket(userId));
+            await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation($"Create basket for user ID '{userId}'.");
+        }
+        else
+        {
+            _logger.LogInformation($"Basket already exists for this user with ID '{userId}'.");
+        }        
+    }
+
     public async Task<Basket> DeleteBasketAsync(int basketId)
     {
         var basketRepository = _unitOfWork.GetRepository<Basket>();

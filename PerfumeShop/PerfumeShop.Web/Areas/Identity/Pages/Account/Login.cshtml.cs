@@ -69,6 +69,8 @@ public class LoginModel : PageModel
             var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, true);
             if (result.Succeeded)
             {
+                await BasketAccessManage(Input.Email);
+
                 _logger.LogInformation("User logged in.");
                 return LocalRedirect(returnUrl);
             }
@@ -88,5 +90,22 @@ public class LoginModel : PageModel
             }
         }
         return Page();
+    }
+
+    private async Task BasketAccessManage(string email)
+    {
+        var user = await _signInManager.UserManager.FindByEmailAsync(email);
+        var anonymousId = Request.Cookies[Constants.BasketCookie];
+
+        await _basketService.CreateBasketAsync(user.Id);
+
+        if (anonymousId is null || user.Id != anonymousId)
+        {
+            CookieOptions cookieOptions = new();
+            cookieOptions.Expires = DateTime.Today.AddYears(1);            
+            Response.Cookies.Append(Constants.BasketCookie, user.Id, cookieOptions);
+
+            _logger.LogInformation($"Save user ID: '{user.Id}' in cookie Key: '{Constants.BasketCookie}'.");
+        }
     }
 }
