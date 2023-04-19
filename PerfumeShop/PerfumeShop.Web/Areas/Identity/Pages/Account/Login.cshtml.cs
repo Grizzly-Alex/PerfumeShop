@@ -97,13 +97,16 @@ public class LoginModel : PageModel
         var user = await _signInManager.UserManager.FindByEmailAsync(email);
         var anonymousId = Request.Cookies[Constants.BasketCookie];
 
-        await _basketService.CreateBasketAsync(user.Id);
+        await _basketService.GetOrCreateBasketAsync(user.Id);
 
         if (anonymousId is null || user.Id != anonymousId)
         {
-            CookieOptions cookieOptions = new();
-            cookieOptions.Expires = DateTime.Today.AddYears(1);            
-            Response.Cookies.Append(Constants.BasketCookie, user.Id, cookieOptions);
+            Response.Cookies.Append(Constants.BasketCookie, user.Id,
+                new CookieOptions
+                {
+                    IsEssential = true,
+                    Expires = DateTime.Today.AddYears(1)
+                });
 
             _logger.LogInformation($"Save user ID: '{user.Id}' in cookie Key: '{Constants.BasketCookie}'.");
         }

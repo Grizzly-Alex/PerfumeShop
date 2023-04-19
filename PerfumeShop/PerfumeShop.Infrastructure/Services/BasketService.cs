@@ -29,14 +29,15 @@ public class BasketService : IBasketService
         return basket;
     }
 
-    public async Task CreateBasketAsync(string userId)
+    public async Task<Basket> GetOrCreateBasketAsync(string userId)
     {
         var basketRepository = _unitOfWork.GetRepository<Basket>();
         var basket = await basketRepository.GetFirstOrDefaultAsync(predicate: b => b.BuyerId == userId);
         
         if (basket is null)
         {
-            basketRepository.Add(new Basket(userId));
+            basket = new Basket(userId);
+            basketRepository.Add(basket);
             await _unitOfWork.SaveChangesAsync();
             _logger.LogInformation($"Create basket for user ID '{userId}'.");
         }
@@ -44,6 +45,7 @@ public class BasketService : IBasketService
         {
             _logger.LogInformation($"Basket already exists for this user with ID '{userId}'.");
         }        
+        return basket;        
     }
 
     public async Task<Basket> DeleteBasketAsync(int basketId)
