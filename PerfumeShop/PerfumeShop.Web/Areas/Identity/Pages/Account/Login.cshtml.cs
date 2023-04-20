@@ -69,7 +69,7 @@ public class LoginModel : PageModel
             var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, true);
             if (result.Succeeded)
             {
-                await BasketAccessManage(Input.Email);
+                await TransferAnonymousBasketToUserAsync(Input.Email);
 
                 _logger.LogInformation("User logged in.");
                 return LocalRedirect(returnUrl);
@@ -92,31 +92,16 @@ public class LoginModel : PageModel
         return Page();
     }
 
-    private async Task BasketAccessManage(string email)
+    private async Task TransferAnonymousBasketToUserAsync(string? userName)
     {
-        var user = await _signInManager.UserManager.FindByEmailAsync(email);
-        var anonymousId = Request.Cookies[Constants.BasketCookie];
-
-        if (anonymousId is not null && !user.Id.Equals(anonymousId))
-        {   
-            var basket = await _basketService.GetOrCreateBasketAsync(anonymousId);
-            await _basketService.ChangeOwnerAsync(basket.Id, user.Id);    
-        }
-        else 
+        if (Request.Cookies.ContainsKey(Constants.BasketCookie))
         {
-            await _basketService.GetOrCreateBasketAsync(user.Id);
+            var anonymousId = Request.Cookies[Constants.BasketCookie];
+            if (Guid.TryParse(anonymousId, out var _))
+            {
+                await _basketService.TransferBasketAsync(anonymousId, userName);
+            }
+            Response.Cookies.Delete(Constants.BasketCookie);
         }
-
-        if(anonymousId is null || !user.Id.Equals(anonymousId))
-        {
-            Response.Cookies.Append(Constants.BasketCookie, user.Id,
-                new CookieOptions
-                {
-                    IsEssential = true,
-                    Expires = DateTime.Today.AddYears(1)
-                });
-
-            _logger.LogInformation($"Save user ID: '{user.Id}' in cookie Key: '{Constants.BasketCookie}'.");
-        };
     }
 }

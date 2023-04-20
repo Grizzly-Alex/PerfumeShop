@@ -20,7 +20,8 @@ public class BasketService : IBasketService
     {
         var basketRepository = _shopping.GetRepository<Basket>();
         var basket = await basketRepository.GetFirstOrDefaultAsync(
-            predicate: i => i.BuyerId == userName);
+            predicate: i => i.BuyerId == userName,
+            include: query => query.Include(b => b.Items));
 
         if (basket is null)
         {
@@ -101,12 +102,15 @@ public class BasketService : IBasketService
             {
                 userBasket = new Basket(userName);
                 basketRepository.Add(userBasket);
+                _logger.LogInformation($"Create basket with ID '{userBasket.Id}'.");
             }
             userBasket.AddItems(anonymousBasket.Items);
             basketRepository.Update(userBasket);
             basketRepository.Remove(anonymousBasket);
-
             await _shopping.SaveChangesAsync();
+
+            _logger.LogInformation($"Basket with ID '{anonymousBasket.Id}' " +
+                $"was transferred to Basket with ID '{userBasket.Id}' successful.");
         };
     }
 }

@@ -16,11 +16,9 @@
                         <img src="@Constants.CatalogImagePath@obj.PictureUri" class="card-img-top p-0" alt="...">
                     </a>
                     <div class="card-footer h-100 pb-3 text-bg-dark">
-
-                        <a asp-area="Shop" asp-controller="Basket" asp-action="AddToBasket"
-                        asp-route-productId="@obj.Id" asp-route-returnUri="@Context.Request.Path"
-                        class="btn btn-dark btn-sm bi bi-cart-plus float-sm-end shadow-none" style="font-size: 1.2rem;"></a>
-
+                        <form method="post" asp-antiforgery="false" asp-area="Shop" asp-controller="Basket" asp-action="AddToBasket" asp-route-productId="@obj.Id">
+                            <button type="submit" class="btn btn-dark btn-sm bi bi-cart-plus float-sm-end shadow-none" style="font-size: 1.2rem;"></button>
+                        </form>
                         <h6 class="card-title small">@obj.Name</h6>
                     </div>
                 </div>
@@ -35,3 +33,9 @@ else
         <h3>Oops! We do not have such products <i class="bi bi-emoji-frown"></i></h3>
     </div>
 }
+
+
+@*<a asp-area="Shop" asp-controller="Basket" asp-action="AddToBasket"
+   asp-route-productId="@obj.Id"
+asp-route-returnUri="@Context.Request.Path"
+   class="btn btn-dark btn-sm bi bi-cart-plus float-sm-end shadow-none" style="font-size: 1.2rem;"></a>*@
