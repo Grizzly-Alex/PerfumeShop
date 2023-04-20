@@ -16,10 +16,12 @@ public sealed class Basket : Entity
         UpdateDate = DateTime.Now;
     }
 
-    public void SetNewBuyerId(string buyerId) => BuyerId = buyerId;
+    public void SetNewBuyerId(string userName) => BuyerId = userName;
 
-    public void AddItem(int productId, int quantity =1)
+    public void AddItem(int productId, int quantity = 1)
     {
+        UpdateDate = DateTime.Now;
+
         if (!_items.Any(i => i.ProductId == productId))
         {
             _items.Add(new BasketItem(productId, quantity));
@@ -28,9 +30,23 @@ public sealed class Basket : Entity
         {
             _items.FirstOrDefault(i => i.ProductId == productId)
                 !.AddQuantity(quantity);
-        }
+        }     
+    }
 
-        UpdateDate = DateTime.Now;
+    public void AddItems(IEnumerable<BasketItem> items)
+    {
+        foreach (var item in items)
+        {
+            if (!_items.Any(i => i.ProductId == item.Id))
+            {
+                _items.Add(new BasketItem(item.Id, item.Quantity));
+            }
+            else
+            {
+                _items.FirstOrDefault(i => i.ProductId == item.Id)
+                    !.SetQuantity(item.Quantity);
+            }
+        }
     }
 
     public void RemoveEmptyItems()

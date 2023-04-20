@@ -97,9 +97,17 @@ public class LoginModel : PageModel
         var user = await _signInManager.UserManager.FindByEmailAsync(email);
         var anonymousId = Request.Cookies[Constants.BasketCookie];
 
-        await _basketService.GetOrCreateBasketAsync(user.Id);
+        if (anonymousId is not null && !user.Id.Equals(anonymousId))
+        {   
+            var basket = await _basketService.GetOrCreateBasketAsync(anonymousId);
+            await _basketService.ChangeOwnerAsync(basket.Id, user.Id);    
+        }
+        else 
+        {
+            await _basketService.GetOrCreateBasketAsync(user.Id);
+        }
 
-        if (anonymousId is null || user.Id != anonymousId)
+        if(anonymousId is null || !user.Id.Equals(anonymousId))
         {
             Response.Cookies.Append(Constants.BasketCookie, user.Id,
                 new CookieOptions
@@ -109,6 +117,6 @@ public class LoginModel : PageModel
                 });
 
             _logger.LogInformation($"Save user ID: '{user.Id}' in cookie Key: '{Constants.BasketCookie}'.");
-        }
+        };
     }
 }

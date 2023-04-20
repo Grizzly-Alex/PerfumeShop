@@ -22,9 +22,9 @@ public class BasketController : Controller
     [HttpPost]
     public async Task<IActionResult> AddToBasket(int productId, int quantity = 1)
     {
-        string userId = await GetBuyerId();
-        var basket = await _basketService.GetOrCreateBasketAsync(userId);
-        await _basketService.AddItemToBasketAsync(basket.Id, productId, quantity);
+        //string userId = await GetBuyerId();
+        //var basket = await _basketService.GetOrCreateBasketAsync(userId);
+        //await _basketService.AddItemToBasketAsync(basket.Id, productId, quantity);
         return View();
     }
 
