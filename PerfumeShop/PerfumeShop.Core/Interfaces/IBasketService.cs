@@ -7,4 +7,5 @@ public interface IBasketService
     Task<Basket> AddItemToBasketAsync(string userName, int productId, int productQuantity = 1);
     Task<Basket> DeleteBasketAsync(int basketId);
     Task<Basket> GetOrCreateBasketAsync(string userName);
+    Task<bool> IsStockQtyAvailable(string userName, int productId, int productQuantity);
 }

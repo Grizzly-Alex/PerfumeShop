@@ -39,14 +39,14 @@ public class BasketService : IBasketService
         return basket;
     }
 
-    public async Task<Basket> GetOrCreateBasketAsync(string userId)
+    public async Task<Basket> GetOrCreateBasketAsync(string userName)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
-        var basket = await basketRepository.GetFirstOrDefaultAsync(predicate: b => b.BuyerId == userId);
+        var basket = await basketRepository.GetFirstOrDefaultAsync(predicate: b => b.BuyerId == userName);
         
         if (basket is null)
         {
-            basket = new Basket(userId);
+            basket = new Basket(userName);
             basketRepository.Add(basket);
             await _shopping.SaveChangesAsync();
             _logger.LogInformation($"Create basket with ID '{basket.Id}'.");
@@ -79,6 +79,28 @@ public class BasketService : IBasketService
         _logger.LogInformation($"Basket item was deleted with ID: '{basketItem.Id}' from Basket with ID: '{basketItem.BasketId}'.");
 
         return basketItem;
+    }
+
+    public async Task<bool> IsStockQtyAvailable(string userName, int productId, int quantity)
+    {
+        var basketRepository = _shopping.GetRepository<Basket>();
+        var basket = await basketRepository.GetFirstOrDefaultAsync(
+            predicate: p => p.BuyerId == userName,
+            include: i => i.Include(i => i.Items));
+
+        int productQty = await _catalog.GetRepository<CatalogProduct>()
+            .GetFirstOrDefaultAsync(
+            predicate: p => p.Id == productId,
+            selector: p => p.Stock);
+
+        if (basket is null) return quantity <= productQty;
+
+        int basketItemQty = basket!.Items
+            .Where(i => i.ProductId == productId)
+            .Select(i => i.Quantity)
+            .FirstOrDefault();
+
+        return basketItemQty + quantity <= productQty;
     }
 
     public async Task TransferBasketAsync(string anonymousId, string userName)

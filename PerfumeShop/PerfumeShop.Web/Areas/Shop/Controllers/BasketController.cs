@@ -23,7 +23,15 @@ public class BasketController : Controller
     [HttpPost]
     public async Task<IActionResult> AddToBasket(int productId, int quantity = 1)
     {
-        await _basketService.AddItemToBasketAsync(GetBuyerId(), productId, quantity);
+        var userName = GetBuyerId();
+
+        bool isAvailable = await _basketService.IsStockQtyAvailable(userName, productId, quantity);
+        if (!isAvailable)
+        {
+            return Redirect(Request.GetTypedHeaders().Referer.ToString());
+        }
+
+        await _basketService.AddItemToBasketAsync(userName, productId, quantity);
 
         return Redirect(Request.GetTypedHeaders().Referer.ToString());
     }
