@@ -4,14 +4,14 @@
 public class BasketController : Controller
 {
     private readonly IBasketService _basketService;
-    private readonly UserManager<AppUser> _userManager;
+    private readonly IBasketViewModelService _basketViewModelService;
 
     public BasketController(
         IBasketService basketService,
-        UserManager<AppUser> userManager)
+        IBasketViewModelService basketViewModelService)
     {
-        _basketService = basketService; 
-        _userManager = userManager;
+        _basketService = basketService;
+        _basketViewModelService = basketViewModelService;
     }
 
     [HttpGet]
@@ -25,13 +25,18 @@ public class BasketController : Controller
     {
         var userName = GetBuyerId();
 
-        bool isAvailable = await _basketService.IsStockQtyAvailable(userName, productId, quantity);
-        if (!isAvailable)
-        {
-            return Redirect(Request.GetTypedHeaders().Referer.ToString());
-        }
+        var availabilityVM = await _basketViewModelService.BasketToStockRatio(userName, productId, quantity);
 
-        await _basketService.AddItemToBasketAsync(userName, productId, quantity);
+        if (availabilityVM.IsAvailable)
+        {
+            await _basketService.AddItemToBasketAsync(userName, productId, quantity);
+
+            TempData["success"] = $"{quantity} {availabilityVM.ProductName} have been added to basket";
+        }
+        else
+        {
+            //
+        }
 
         return Redirect(Request.GetTypedHeaders().Referer.ToString());
     }

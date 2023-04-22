@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Services;
+﻿using PerfumeShop.Web.ViewModels.Basket;
+
+namespace PerfumeShop.Web.Services;
 
 public sealed class MappingProfile : Profile
 {

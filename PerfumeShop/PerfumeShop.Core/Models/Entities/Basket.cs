@@ -18,18 +18,18 @@ public sealed class Basket : Entity
 
     public void SetNewBuyerId(string userName) => BuyerId = userName;
 
-    public void AddItem(int productId, int quantity = 1)
+    public void AddItem(BasketItem item)
     {
         UpdateDate = DateTime.Now;
 
-        if (!_items.Any(i => i.ProductId == productId))
+        if (!_items.Any(i => i.ProductId == item.ProductId))
         {
-            _items.Add(new BasketItem(productId, quantity));
+            _items.Add(item);
         }
         else
         {
-            _items.FirstOrDefault(i => i.ProductId == productId)
-                !.AddQuantity(quantity);
+            _items.FirstOrDefault(i => i.ProductId == item.ProductId)
+                !.AddQuantity(item.Quantity);
         }     
     }
 

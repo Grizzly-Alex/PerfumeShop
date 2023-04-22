@@ -16,7 +16,7 @@ public class BasketService : IBasketService
         _logger = logger;
     }
 
-    public async Task<Basket> AddItemToBasketAsync(string userName, int productId, int quantity = 1)
+    public async Task<BasketItem> AddItemToBasketAsync(string userName, int productId, int quantity = 1)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
         var basket = await basketRepository.GetFirstOrDefaultAsync(
@@ -31,28 +31,13 @@ public class BasketService : IBasketService
             _logger.LogInformation($"Create basket with ID '{basket.Id}'.");
         }
 
-        basket.AddItem(productId, quantity);
+        BasketItem basketItem = new(productId, quantity);
+        basket.AddItem(basketItem);
         basketRepository.Update(basket);
         await _shopping.SaveChangesAsync();
         _logger.LogInformation($"Basket was updated with ID: '{basket.Id}'.");
 
-        return basket;
-    }
-
-    public async Task<Basket> GetOrCreateBasketAsync(string userName)
-    {
-        var basketRepository = _shopping.GetRepository<Basket>();
-        var basket = await basketRepository.GetFirstOrDefaultAsync(predicate: b => b.BuyerId == userName);
-        
-        if (basket is null)
-        {
-            basket = new Basket(userName);
-            basketRepository.Add(basket);
-            await _shopping.SaveChangesAsync();
-            _logger.LogInformation($"Create basket with ID '{basket.Id}'.");
-        }
-       
-        return basket;        
+        return basketItem;
     }
 
     public async Task<Basket> DeleteBasketAsync(int basketId)
