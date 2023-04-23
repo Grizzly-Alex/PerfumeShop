@@ -109,7 +109,7 @@ public class ManageProductController : Controller
             var viewModel = manageViewModel.Product;
             await _productService!.UpdateViewModelAsync(viewModel!);
 
-            TempData["success"] = $"{manageViewModel.Product.Name} was updated successfully";
+            TempData["success"] = $"{manageViewModel.Product?.Name} was updated successfully";
 
             return RedirectToAction(nameof(Details), new { id = viewModel!.Id });
         }

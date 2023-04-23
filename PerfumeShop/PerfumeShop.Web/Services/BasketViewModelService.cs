@@ -50,7 +50,6 @@ public sealed class BasketViewModelService : IBasketViewModelService
         return availabilityView!;
     }
 
-
     public async Task<int> CountTotalBasketItemsAsync(string userId)
     {
         return await _shopping.GetRepository<Basket>()

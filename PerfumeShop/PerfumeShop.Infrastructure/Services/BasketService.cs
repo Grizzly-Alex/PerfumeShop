@@ -109,13 +109,14 @@ public class BasketService : IBasketService
             {
                 userBasket = new Basket(userName);
                 basketRepository.Add(userBasket);
+                await _shopping.SaveChangesAsync();
                 _logger.LogInformation($"Create basket with ID '{userBasket.Id}'.");
             }
+
             userBasket.AddItems(anonymousBasket.Items);
             basketRepository.Update(userBasket);
             basketRepository.Remove(anonymousBasket);
             await _shopping.SaveChangesAsync();
-
             _logger.LogInformation($"Basket with ID '{anonymousBasket.Id}' " +
                 $"was transferred to Basket with ID '{userBasket.Id}' successful.");
         };

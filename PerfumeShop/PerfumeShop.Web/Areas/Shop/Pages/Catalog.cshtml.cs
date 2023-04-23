@@ -1,7 +1,6 @@
 namespace PerfumeShop.Web.Areas.Shop.Pages;
 
 [Area("Shop")]
-[AllowAnonymous]
 public class CatalogModel : PageModel
 {
     public CatalogIndexViewModel CatalogIndex { get; set; } = new();
@@ -14,7 +13,7 @@ public class CatalogModel : PageModel
 
 
     public async Task OnGetAsync(CatalogIndexViewModel catalogIndex, PagedInfoViewModel pagedInfo)
-    {
+    {        
         catalogIndex.MaxPrice = await _catalogService.DefineMaxPrice(catalogIndex.MaxPrice);
 
         var pagedList = await _catalogService.GetCatalogPagedListAsync(

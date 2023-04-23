@@ -26,18 +26,19 @@ public class BasketController : Controller
         var userName = GetBuyerId();
 
         var availabilityVM = await _basketViewModelService.BasketToStockRatio(userName, productId, quantity);
-
         if (availabilityVM.IsAvailable)
         {
             await _basketService.AddItemToBasketAsync(userName, productId, quantity);
 
-            TempData["success"] = $"{quantity} {availabilityVM.ProductName} have been added to basket";
+            TempData["success"] = $"Product \"{availabilityVM.ProductName}\"" +
+                $" added to cart in quantity {quantity}.";
         }
         else
         {
-            //
+            TempData["error"] = $"Product \"{availabilityVM.ProductName}\"" +
+                $" already added to cart in quantity {availabilityVM.BasketQty - quantity}." +
+                $" You can add no more than {availabilityVM.StockQty}.";
         }
-
         return Redirect(Request.GetTypedHeaders().Referer.ToString());
     }
 
