@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Infrastructure.Services;
+﻿using PerfumeShop.Core.Models.Entities;
+
+namespace PerfumeShop.Infrastructure.Services;
 
 public class BasketService : IBasketService
 {
@@ -48,11 +50,17 @@ public class BasketService : IBasketService
 	        selector: b => b.Id);
 	}
 
-	public async Task<BasketItem> UpdateItemBasketAsync(int basketId, int basketItemId, int productQuantity = 1)
+	public async Task<BasketItem> UpdateItemBasketAsync(int basketItemId, int productQuantity = 1)
 	{
+        var basketItemRepository = _shopping.GetRepository<BasketItem>();
+        var basketItem = await basketItemRepository.GetFirstOrDefaultAsync(predicate: i => i.Id == basketItemId)
+			?? throw new NullReferenceException($"BasketItem not found with ID '{basketItemId}'.");
 
-
-		throw new NotImplementedException();
+		basketItem.SetQuantity(productQuantity);
+		basketItemRepository.Update(basketItem);
+        await _shopping.SaveChangesAsync(); 
+        
+        return basketItem;
 	}
 
 	public async Task<Basket> DeleteBasketAsync(int basketId)
