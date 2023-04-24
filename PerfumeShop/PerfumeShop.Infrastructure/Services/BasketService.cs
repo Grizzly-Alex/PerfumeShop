@@ -1,6 +1,4 @@
-﻿using PerfumeShop.Core.Models.Entities;
-
-namespace PerfumeShop.Infrastructure.Services;
+﻿namespace PerfumeShop.Infrastructure.Services;
 
 public class BasketService : IBasketService
 {
@@ -50,17 +48,27 @@ public class BasketService : IBasketService
 	        selector: b => b.Id);
 	}
 
+	public async Task<int> GetProductId(int basketItemId)
+	{
+		return await _shopping.GetRepository<BasketItem>()
+	        .GetFirstOrDefaultAsync(
+	        predicate: i => i.Id == basketItemId,
+	        selector: b => b.ProductId);
+	}
+
 	public async Task<BasketItem> UpdateItemBasketAsync(int basketItemId, int productQuantity = 1)
 	{
         var basketItemRepository = _shopping.GetRepository<BasketItem>();
         var basketItem = await basketItemRepository.GetFirstOrDefaultAsync(predicate: i => i.Id == basketItemId)
-			?? throw new NullReferenceException($"BasketItem not found with ID '{basketItemId}'.");
+			?? throw new NullReferenceException($"Basket item not found with ID '{basketItemId}'.");
 
 		basketItem.SetQuantity(productQuantity);
 		basketItemRepository.Update(basketItem);
-        await _shopping.SaveChangesAsync(); 
-        
-        return basketItem;
+        await _shopping.SaveChangesAsync();
+
+		_logger.LogInformation($"Update qty: '{productQuantity}' for basket item with ID: '{basketItemId}'.");
+
+		return basketItem;
 	}
 
 	public async Task<Basket> DeleteBasketAsync(int basketId)
@@ -87,28 +95,6 @@ public class BasketService : IBasketService
         _logger.LogInformation($"Basket item was deleted with ID: '{basketItem.Id}' from Basket with ID: '{basketItem.BasketId}'.");
 
         return basketItem;
-    }
-
-    public async Task<bool> IsStockQtyAvailable(string userName, int productId, int quantity)
-    {
-        var basketRepository = _shopping.GetRepository<Basket>();
-        var basket = await basketRepository.GetFirstOrDefaultAsync(
-            predicate: p => p.BuyerId == userName,
-            include: i => i.Include(i => i.Items));
-
-        int productQty = await _catalog.GetRepository<CatalogProduct>()
-            .GetFirstOrDefaultAsync(
-            predicate: p => p.Id == productId,
-            selector: p => p.Stock);
-
-        if (basket is null) return quantity <= productQty;
-
-        int basketItemQty = basket!.Items
-            .Where(i => i.ProductId == productId)
-            .Select(i => i.Quantity)
-            .FirstOrDefault();
-
-        return basketItemQty + quantity <= productQty;
     }
 
     public async Task TransferBasketAsync(string anonymousId, string userName)

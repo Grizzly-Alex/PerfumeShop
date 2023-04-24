@@ -26,7 +26,7 @@ public class BasketController : Controller
     {
         var userName = GetBuyerId();
 
-        var availabilityVM = await _basketViewModelService.BasketToStockRatio(userName, productId, quantity);
+        var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity);
         if (availabilityVM.IsAvailable)
         {
             await _basketService.AddItemToBasketAsync(userName, productId, quantity);
@@ -37,7 +37,7 @@ public class BasketController : Controller
         else
         {
             TempData["error"] = $"Product \"{availabilityVM.ProductName}\"" +
-                $" already added to cart in quantity {availabilityVM.BasketQty - quantity}." +
+                $" already added to cart in quantity {availabilityVM.DesiredQty - quantity}." +
                 $" You can add no more than {availabilityVM.StockQty}.";
         }
         return Redirect(Request.GetTypedHeaders().Referer.ToString());
@@ -46,8 +46,21 @@ public class BasketController : Controller
 	[HttpPost]
 	public async Task<IActionResult> UpdateItemBasket(int basketItemId, int quantity)
     {
-		var userName = GetBuyerId();
+        var productId = await _basketService.GetProductId(basketItemId);
+		var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity);
 
+        if (availabilityVM.IsAvailable) 
+        {
+			await _basketService.UpdateItemBasketAsync(basketItemId, quantity);
+			TempData["success"] = $"Set new quantity \"{availabilityVM.DesiredQty}\"" +
+                $" for product \"{availabilityVM.ProductName}\" in your basket.";
+		}
+        else
+        {
+			TempData["error"] = $"Product \"{availabilityVM.ProductName}\"" +
+	            $" already added to cart in quantity {availabilityVM.DesiredQty - quantity}." +
+	            $" You can add no more than {availabilityVM.StockQty}.";
+		}
         return RedirectToAction(nameof(Index));
 	}
 

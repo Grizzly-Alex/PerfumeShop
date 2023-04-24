@@ -20,59 +20,74 @@ public sealed class BasketViewModelService : IBasketViewModelService
         _logger = logger;
     }
 
-    public async Task<AvailabilityViewModel> BasketToStockRatio(string userName, int productId, int quantity)
-    {
-        var basketRepository = _shopping.GetRepository<Basket>();
-        var basket = await basketRepository.GetFirstOrDefaultAsync(
-            predicate: p => p.BuyerId == userName,
-            include: i => i.Include(i => i.Items));
+    //public async Task<AvailabilityViewModel> BasketToStockRatio(string userName, int productId, int quantity)
+    //{
+    //    var basketRepository = _shopping.GetRepository<Basket>();
+    //    var basket = await basketRepository.GetFirstOrDefaultAsync(
+    //        predicate: p => p.BuyerId == userName,
+    //        include: i => i.Include(i => i.Items));
 
-        int basketItemQty = 0;
+    //    int basketItemQty = 0;
 
-        if (basket is not null)
-        {
-            basketItemQty = basket!.Items
-                .Where(i => i.ProductId == productId)
-                .Select(i => i.Quantity)
-                .FirstOrDefault();
-        }
+    //    if (basket is not null)
+    //    {
+    //        basketItemQty = basket!.Items
+    //            .Where(i => i.ProductId == productId)
+    //            .Select(i => i.Quantity)
+    //            .FirstOrDefault();
+    //    }
 
+    //    var availabilityView = await _catalog.GetRepository<CatalogProduct>()
+    //        .GetFirstOrDefaultAsync(
+    //        predicate: p => p.Id == productId,
+    //        selector: p => new AvailabilityViewModel
+    //        {
+    //            ProductName = p.Name,
+    //            StockQty = p.Stock,
+    //            BasketQty = basketItemQty + quantity
+    //        });
+
+    //    return availabilityView!;
+    //}
+
+	public async Task<AvailabilityViewModel> AvailabilityStock(int productId, int quantity)
+	{
         var availabilityView = await _catalog.GetRepository<CatalogProduct>()
             .GetFirstOrDefaultAsync(
-            predicate: p => p.Id == productId,
-            selector: p => new AvailabilityViewModel
-            {
-                ProductName = p.Name,
-                StockQty = p.Stock,
-                BasketQty = basketItemQty + quantity
-            });
+                predicate: p => p.Id == productId,
+                selector: p => new AvailabilityViewModel
+                {
+                    ProductName = p.Name,
+                    StockQty = p.Stock,
+                    DesiredQty = quantity
+                });
 
-        return availabilityView!;
-    }
+		return availabilityView!;
+	}
 
-    public async Task<int> CountTotalBasketItemsAsync(string userId)
-    {
-        return await _shopping.GetRepository<Basket>()
-            .CountAsync(
-                predicate: basket => basket.BuyerId == userId,
-                selector: item => item.Items,
-                sum: sum => sum.Quantity);           
-    }
+	//public async Task<int> CountTotalBasketItemsAsync(string userName)
+ //   {
+ //       return await _shopping.GetRepository<Basket>()
+ //           .CountAsync(
+ //               predicate: basket => basket.BuyerId == userName,
+ //               selector: item => item.Items,
+ //               sum: sum => sum.Quantity);           
+ //   }
 
-    public async Task<BasketViewModel> GetBasketForUserAsync(string userId)
+    public async Task<BasketViewModel> GetBasketForUserAsync(string userName)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
         var basket = await basketRepository.GetFirstOrDefaultAsync(
-            predicate: basket => basket.BuyerId == userId,
+            predicate: basket => basket.BuyerId == userName,
             include: query => query.Include(i => i.Items));
 
         if (basket is null)
         {
-            basket = new Basket(userId);
+            basket = new Basket(userName);
             basketRepository.Add(basket);
             await _shopping.SaveChangesAsync();
 
-            _logger.LogInformation($"New Basket was created for user with ID {userId}.");
+            _logger.LogInformation($"New Basket was created for user with ID {userName}.");
 
             return _mapper.Map<BasketViewModel>(basket);
 

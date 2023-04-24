@@ -5,6 +5,7 @@ public static class ConfigureInfrastructureServices
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
         services.AddTransient<IBasketService, BasketService>();
+        services.AddTransient<IBasketQueryService, BasketQueryService>();
 
         return services;
     }
