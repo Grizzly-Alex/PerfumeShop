@@ -15,9 +15,10 @@ public class BasketController : Controller
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var basket = await _basketViewModelService.GetBasketForUserAsync(GetBuyerId());
+        return View(basket);
     }
 
     [HttpPost]

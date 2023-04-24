@@ -74,11 +74,45 @@ public sealed class BasketViewModelService : IBasketViewModelService
 
             _logger.LogInformation($"New Basket was created for user with ID {userId}.");
 
-            return _mapper.Map<BasketViewModel>(basket);        
-        }
+            return _mapper.Map<BasketViewModel>(basket);
 
-        _logger.LogInformation($"Get basket with ID {basket.Id}");
+		}  
         
-        return _mapper.Map<BasketViewModel>(basket);
-    }
+        var basketVM = _mapper.Map<BasketViewModel>(basket);
+        basketVM.Items = await GetBasketItemsAsync(basket.Items);
+
+		_logger.LogInformation($"Get basket with ID {basket.Id}");
+
+		return basketVM;
+	}
+
+
+	private async Task<List<BasketItemViewModel>> GetBasketItemsAsync(IReadOnlyCollection<BasketItem> basketItems)
+    {
+        var basketItemsId = basketItems.Select(b => b.ProductId).ToList();
+
+        var products = await _catalog.GetRepository<CatalogProduct>()
+            .GetAllAsync(predicate: b => basketItemsId.Contains(b.Id),
+                        include: b => b.Include(b => b.Brand));
+
+        var items = basketItems.Select(basketItem =>
+        {
+			var product = products.First(c => c.Id == basketItem.ProductId);
+            var basketItemViewModel = new BasketItemViewModel
+            {
+                Id = basketItem.Id,
+                ProductId = basketItem.ProductId,
+                Brand = product.Brand.Name,
+                Name = product.Name,
+                Volume = product.Volume,
+                PictureUri = product.PictureUri,
+                UnitPrice = product.Price,
+				Quantity = basketItem.Quantity,
+                Stock = product.Stock,
+            };
+            return basketItemViewModel;
+		}).ToList();
+
+        return items;   
+	}
 }
