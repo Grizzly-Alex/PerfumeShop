@@ -1,168 +1,76 @@
 ﻿@model BasketViewModel
 
-@*<form method="post">
-	<br />
-	<div class="container">
-		<div class="card">
-			<div class="card-header bg-dark text-light ml-0">
-				<div class="row">
-					<div class="col-6  pt-2">
-						<i class="bi bi-bag"></i> &nbsp;
-						My Basket
-					</div>
-					<div class="col-6 text-end">
-						<a asp-area="Shop" asp-page="/Catalog" class="btn btn-outline-light btn-sm">Continue Shopping</a>
-					</div>
-				</div>
-			</div>
+<div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-8">
 
-			<div class="card-body">
-				@foreach (var item in Model.Items)
-				{
-					<div class="row">
-						<div class="d-none d-lg-block col-lg-1 text-center py-2">
-							<a asp-area="Shop" asp-page="/ProductDetails" asp-route-id="@item.ProductId">
-								<img src="@Constants.CatalogImagePath@item.PictureUri" class="rounded" width="100%" />
-							</a>
-						</div>
-						<div class="col-12 col-lg-6 pt-md-3">
-							<h5 class="text-black">@item.Brand</h5>
-							<h6 class="text-black-50">@item.Name</h6>
-						</div>
-
-
-
-
-
-						@*<div class="col-lg-8 text-center row py-4">
-							<div class="col-5 text-md-center pt-2">
-								<h5 class="text-black">
-									@item.Brand
-								</h5>
-								<h6 class="text-black-50">
-									@item.Name
-								</h6>
-							</div>
-							<div class="col-3 text-md-center pt-2">
-								<h5 class="text-black">
-									@item.Volume ml.
-								</h5>
-							</div>
-							<div class="col-3 text-md-center pt-2">
-								<h5>
-									<strong>
-										@item.UnitPrice.ToString("c")
-										<span class="text-muted">&nbsp;x&nbsp;</span>@item.Quantity
-									</strong>
-								</h5>
-							</div>
-						</div>
-					</div>
-					<hr />
-
-				}
-				<div class="row">
-					<div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 pr-4">
-						<ul class="list-group">
-							<li class="list-group-item d-flex justify-content-between bg-light">
-								<span class="text-info"> Total (USD)</span>
-								<strong class="text-info"></strong>
-							</li>
-						</ul>
-					</div>
-				</div>
-
-			</div>
-
-			<div class="card-footer">
-				<div class="card-footer row">
-					<div class="col-sm-12 col-lg-4 col-md-6 offset-lg-8 offset-md-6 ">
-						<a asp-action="Summary" class="btn btn-success form-control">Summary</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</form>*@
-
-
-
-    <div class="container h-100 py-5">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-8">
-
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-bold mb-0 text-black">
-						<i class="bi bi-bag"></i>&nbsp;
-						My Basket
-					</h3>
-                    <div>
-                        <p class="mb-0">
-							<span class="text-muted">Total Positions: @Model.Items.Count</span>
-						</p>
-                    </div>					
-                </div>
-
-				@foreach (var item in Model.Items)
-				{
-					<div class="card rounded-3 mb-3 shadow-sm ">
-						<div class="p-1">
-							<div class="row d-flex justify-content-between align-items-center">
-
-								<div class="col-md-2 col-lg-2 col-xl-2 row">
-									<a asp-area="Shop" asp-page="/ProductDetails" asp-route-id="@item.ProductId">
-										<img src="@Constants.CatalogImagePath@item.PictureUri" class="img-fluid rounded-3">
-									</a>
-								</div>
-				
-								<div class="col-md-4 col-lg-4 col-xl-4 text-center py-3">
-									<p>
-										<span class="fw-normal">@item.Brand</span><br>
-										<span class="text-muted">@item.Name</span><br>
-										<span class="small text-black-50">@item.Volume ml.</span><br>
-									</p>
-								</div>
-
-								<div class="col-md-2 col-lg-2 col-xl-2 text-center">
-									<span class="small text-black-50">Quantity</span>
-									<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="UpdateItemBasket" asp-route-basketItemId="@item.Id">
-										<div class="input-group input-group-sm mb-3">	
-											<button class="btn btn-primary">
-												<span class="small">Update</span>	
-											</button>
-											<input type="number" min="1" max="@item.Stock"
-												step="1" value="@item.Quantity" name="quantity" class="form-control form-control-sm shadow-none">
-										</div>								
-									</form>
-								</div>
-
-								<div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-									<p class="small text-black-50">
-										<span>Price:</span>&nbsp;
-										<span>@item.UnitPrice.ToString("c")</span><br>
-									</p>
-									<p class="fw-normal">
-										<span>Sum:</span>&nbsp;
-										<span>@item.TotalPrice.ToString("c")</span><br>
-									</p>
-								</div>
-
-								<div class="col-md-2 col-lg-1 col-xl-1 text-start">
-									<a asp-area="Shop" class="text-danger">
-										<h3><i class="bi bi-trash"></i></h3>
-									</a>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				
-				}
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold mb-0 text-black">
+					<i class="bi bi-bag"></i>&nbsp;
+					My Basket
+				</h3>
+                <div>
+                    <p class="mb-0">
+						<span class="text-muted">Total Positions: @Model.Items.Count</span>
+					</p>
+                </div>					
             </div>
 
-			<div class="col-4">
-				<div class="card rounded-3 mb-3 shadow-sm">
-				</div>
-			</div>
+			@foreach (var item in Model.Items)
+			{
+				<div class="card rounded-3 mb-3 shadow-sm ">
+					<div class="p-1 m-2">
+						<div class="row d-flex justify-content-between align-items-center">
+							<div class="col-md-2 col-lg-2 col-xl-2 row">
+								<a asp-area="Shop" asp-page="/ProductDetails" asp-route-id="@item.ProductId">
+									<img src="@Constants.CatalogImagePath@item.PictureUri" class="img-fluid rounded-3">
+								</a>
+							</div>				
+							<div class="col-md-4 col-lg-4 col-xl-4 text-center py-3">
+								<p>
+									<span class="fw-normal">@item.Brand</span><br>
+									<span class="text-muted">@item.Name</span><br>
+									<span class="small text-black-50">@item.Volume ml.</span><br>
+								</p>
+							</div>							
+							<div class="col-md-2 col-lg-2 col-xl-2 text-center">
+								<span class="small text-black-50">Quantity</span>
+								<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="UpdateItemBasket" asp-route-basketItemId="@item.Id">
+									<div class="input-group input-group-sm mb-3">
+										<button class="btn btn-primary">
+											<span class="small">Update</span>
+										</button>
+										<input type="number" min="1" max="@item.Stock"
+												step="1" value="@item.Quantity" name="quantity" class="form-control form-control-sm shadow-none">
+									</div>
+								</form>
+							</div>
+							<div class="col-md-2 col-lg-2 col-xl-2 text-center">
+								<p class="small text-black-50">
+									<span>Price:</span>&nbsp;
+									<span>@item.UnitPrice.ToString("c")</span><br>
+								</p>
+								<p class="fw-normal">
+									<span>Sum:</span>&nbsp;
+									<span>@item.TotalPrice.ToString("c")</span><br>
+								</p>
+							</div>
+							<div class="col-md-1 col-lg-1 col-xl-1 text-lg-start">
+								<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="DeleteItemBasket" asp-route-basketItemId="@item.Id">
+									<button class="unstyled-button" type="submit">
+										<h3><i class="text-danger bi bi-trash"></i></h3>
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>				
+			}
         </div>
+
+		<div class="col-4">
+			<div class="card rounded-3 mb-3 shadow-sm">
+			</div>
+		</div>
     </div>
+</div>

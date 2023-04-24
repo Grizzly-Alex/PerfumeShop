@@ -6,16 +6,19 @@ public class BasketController : Controller
     private readonly IBasketService _basketService;
     private readonly IBasketViewModelService _basketViewModelService;
     private readonly IBasketItemQueryService _basketItemQueryService;
+	private readonly IProductQueryService _productQueryService;
 
 
-    public BasketController(
+	public BasketController(
         IBasketService basketService,
         IBasketViewModelService basketViewModelService,
-		IBasketItemQueryService basketItemQueryService)
+		IBasketItemQueryService basketItemQueryService,
+		IProductQueryService productQueryService)
     {
         _basketService = basketService;
         _basketViewModelService = basketViewModelService;
         _basketItemQueryService = basketItemQueryService;
+        _productQueryService = productQueryService;
 	}
 
     [HttpGet]
@@ -69,7 +72,18 @@ public class BasketController : Controller
         return RedirectToAction(nameof(Index));
 	}
 
-    private string GetBuyerId()
+	[HttpPost]
+	public async Task<IActionResult> DeleteItemBasket(int basketItemId)
+    {
+        var basketItem = await _basketService.DeleteItemFromBasketAsync(basketItemId);
+        var productName = await _productQueryService.GetProductNameAsync(basketItem.ProductId);
+
+        TempData["success"] = $"Position with product \"{productName}\" has been deleted";
+
+        return RedirectToAction(nameof(Index));
+	}
+
+	private string GetBuyerId()
     {
         string? userName = null;
 

@@ -15,4 +15,12 @@ public sealed class ProductQueryService : IProductQueryService
 				predicate: p => p.Id == productId,
 				selector: p => p.Stock);
 	}
+
+	public async Task<string?> GetProductNameAsync(int productId)
+	{
+		return await _unitOfWork.GetRepository<CatalogProduct>()
+			.GetFirstOrDefaultAsync(
+				predicate: p => p.Id == productId,
+				selector: p => p.Name);
+	}
 }
