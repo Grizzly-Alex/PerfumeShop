@@ -5,14 +5,18 @@ public class BasketController : Controller
 {
     private readonly IBasketService _basketService;
     private readonly IBasketViewModelService _basketViewModelService;
+    private readonly IBasketItemQueryService _basketItemQueryService;
+
 
     public BasketController(
         IBasketService basketService,
-        IBasketViewModelService basketViewModelService)
+        IBasketViewModelService basketViewModelService,
+		IBasketItemQueryService basketItemQueryService)
     {
         _basketService = basketService;
         _basketViewModelService = basketViewModelService;
-    }
+        _basketItemQueryService = basketItemQueryService;
+	}
 
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -25,8 +29,9 @@ public class BasketController : Controller
     public async Task<IActionResult> AddToBasket(int productId, int quantity = 1)
     {
         var userName = GetBuyerId();
+        var inBasketQty = await _basketItemQueryService.GetQuantityAsync(productId);
 
-        var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity);
+		var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity + inBasketQty);
         if (availabilityVM.IsAvailable)
         {
             await _basketService.AddItemToBasketAsync(userName, productId, quantity);
