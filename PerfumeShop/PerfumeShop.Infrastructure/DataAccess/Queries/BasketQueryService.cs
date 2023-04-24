@@ -5,9 +5,8 @@ public sealed class BasketQueryService : IBasketQueryService
 	private readonly IUnitOfWork<ShoppingDbContext> _unitOfWork;
 
     public BasketQueryService(IUnitOfWork<ShoppingDbContext> unitOfWork)
-    {
-		_unitOfWork = unitOfWork;
-    }
+		=> _unitOfWork = unitOfWork;
+
 
     public async Task<int> CountTotalBasketItemsAsync(string userName)
 	{
