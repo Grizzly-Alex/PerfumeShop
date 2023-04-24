@@ -43,6 +43,14 @@ public class BasketController : Controller
         return Redirect(Request.GetTypedHeaders().Referer.ToString());
     }
 
+	[HttpPost]
+	public async Task<IActionResult> UpdateItemBasket(int basketItemId, int quantity)
+    {
+		var userName = GetBuyerId();
+
+        return RedirectToAction(nameof(Index));
+	}
+
     private string GetBuyerId()
     {
         string? userName = null;

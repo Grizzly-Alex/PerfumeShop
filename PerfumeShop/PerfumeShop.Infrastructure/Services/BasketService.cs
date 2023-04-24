@@ -20,7 +20,7 @@ public class BasketService : IBasketService
     {
         var basketRepository = _shopping.GetRepository<Basket>();
         var basket = await basketRepository.GetFirstOrDefaultAsync(
-            predicate: i => i.BuyerId == userName,
+            predicate: b => b.BuyerId == userName,
             include: query => query.Include(b => b.Items));
 
         if (basket is null)
@@ -40,7 +40,22 @@ public class BasketService : IBasketService
         return basketItem;
     }
 
-    public async Task<Basket> DeleteBasketAsync(int basketId)
+	public async Task<int> GetBasketId(string userName)
+	{
+		return await _shopping.GetRepository<Basket>()
+            .GetFirstOrDefaultAsync(
+            predicate: i => i.BuyerId == userName,
+	        selector: b => b.Id);
+	}
+
+	public async Task<BasketItem> UpdateItemBasketAsync(int basketId, int basketItemId, int productQuantity = 1)
+	{
+
+
+		throw new NotImplementedException();
+	}
+
+	public async Task<Basket> DeleteBasketAsync(int basketId)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
         var basket = await basketRepository.GetFirstOrDefaultAsync(predicate: b => b.Id == basketId)
