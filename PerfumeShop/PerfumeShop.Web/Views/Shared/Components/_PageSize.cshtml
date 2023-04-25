@@ -3,6 +3,5 @@
 <label asp-for="ItemsPerPage" class="control-label small"></label>
 <div class="input-group input-group-sm" onchange="this.form.submit()">
     <select asp-for="ItemsPerPage" class="form-control"
-        asp-items="Html.GetEnumSelectList<ItemsPerPage>()" onchange="this.form.submit()"></select>
+            asp-items="Html.GetEnumSelectList<ItemsPerPage>()" onchange="this.form.submit()"></select>
 </div>
-

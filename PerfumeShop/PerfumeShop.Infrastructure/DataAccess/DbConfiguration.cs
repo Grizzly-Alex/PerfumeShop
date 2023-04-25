@@ -10,8 +10,18 @@ public static class DbConfiguration
             options.EnableSensitiveDataLogging();
         });
 
+        services.AddDbContext<ShoppingDbContext>(options =>
+        {
+            options.UseSqlServer(configuration.GetConnectionString("ShoppingConnection"));
+            options.EnableSensitiveDataLogging();
+        });
+
         services.AddDbContext<IdentityAppDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
+        {
+            options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
+            options.EnableSensitiveDataLogging();
+        });
+            
 
         services.AddIdentity<AppUser, AppRole>(options =>
         {

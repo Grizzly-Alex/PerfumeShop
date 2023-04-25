@@ -57,3 +57,9 @@ body {
     background: #EAECEE;
     transform: scale(0.97);
 }
+
+.unstyled-button {
+    border: none;
+    padding: 0;
+    background: none;
+}

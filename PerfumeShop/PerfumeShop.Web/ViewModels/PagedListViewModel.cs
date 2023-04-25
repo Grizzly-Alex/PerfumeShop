@@ -2,5 +2,5 @@
 
 public sealed class PagedListViewModel : PagedInfoViewModel
 {
-    public List<CatalogItemViewModel> Items { get; set; } = new();
+    public List<CatalogItemViewModel>? Items { get; set; }
 }

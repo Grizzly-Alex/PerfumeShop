@@ -17,17 +17,34 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
     {
         _dbSet.Add(entity).State = EntityState.Added;
 	}
+
+	public void Add(IEnumerable<TEntity> entityCollection)
+	{
+		_dbSet.AddRange(entityCollection);
+	}
+
 	public void Remove(TEntity entity)
     {
 		_dbSet.Remove(entity).State = EntityState.Deleted;
     }
 
-    public void Update(TEntity entity)
+	public void Remove(IEnumerable<TEntity> entityCollection)
+    {
+        _dbSet.RemoveRange(entityCollection);
+    }
+
+	public void Update(TEntity entity)
     {
         _dbSet.Update(entity).State = EntityState.Modified;
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(
+	public void Update(IEnumerable<TEntity> entityCollection)
+	{
+		_dbSet.UpdateRange(entityCollection);
+	}
+
+	#region GetAll
+	public async Task<IEnumerable<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
@@ -44,6 +61,26 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
             : await query.ToListAsync();
     }
 
+    public async Task<IEnumerable<TResult>> GetAllAsync<TResult>(
+        Expression<Func<TEntity, TResult>> selector,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool isTracking = false)
+    {
+        IQueryable<TEntity> query = _dbSet;
+
+        if (!isTracking) { query = query.AsNoTracking(); }
+        if (predicate is not null) { query = query.Where(predicate); }
+        if (include is not null) { query = include(query); }
+
+        return orderBy is not null
+            ? await orderBy(query).Select(selector).ToListAsync()
+            : await query.Select(selector).ToListAsync();
+    }
+    #endregion
+
+    #region GetFirstOrDefault
     public async Task<TEntity?> GetFirstOrDefaultAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
@@ -78,25 +115,9 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
             ? await orderBy(query).Select(selector).FirstOrDefaultAsync()
             : await query.Select(selector).FirstOrDefaultAsync();
     }
+    #endregion
 
-    public async Task<IEnumerable<TResult>> GetAllAsync<TResult>(
-        Expression<Func<TEntity, TResult>> selector,
-        Expression<Func<TEntity, bool>>? predicate = null,
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-        bool isTracking = false)
-    {
-        IQueryable<TEntity> query = _dbSet;
-
-        if (!isTracking) { query = query.AsNoTracking(); }
-        if (predicate is not null) { query = query.Where(predicate); }
-        if (include is not null) { query = include(query); }
-
-        return orderBy is not null
-            ? await orderBy(query).Select(selector).ToListAsync()
-            : await query.Select(selector).ToListAsync();
-    }
-
+    #region GetPagetList
     public async Task<IPagedList<TResult>> GetPagedListAsync<TResult>(
         Expression<Func<TEntity, TResult>> selector,
         Expression<Func<TEntity, bool>>? predicate = null,
@@ -117,7 +138,27 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
             ? await orderBy(query).Select(selector).ToPagedListAsync(pageIndex, itemsPerPage, cancellationToken)
             : await query.Select(selector).ToPagedListAsync(pageIndex, itemsPerPage, cancellationToken);
     }
+    #endregion
 
+    #region Count
+    public async Task<int> CountAsync(
+    Expression<Func<TEntity, bool>>? predicate = null,
+    CancellationToken cancellationToken = default) =>
+    predicate is null
+        ? await _dbSet.CountAsync(cancellationToken)
+        : await _dbSet.CountAsync(predicate, cancellationToken);
+
+    public async Task<int> CountAsync<TResult>(
+        Expression<Func<TResult, int>> sum,
+        Expression<Func<TEntity, IEnumerable<TResult>>> selector,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        CancellationToken cancellationToken = default) =>
+        predicate is null
+            ? await _dbSet.SelectMany(selector).SumAsync(sum)
+            : await _dbSet.Where(predicate).SelectMany(selector).SumAsync(sum);
+    #endregion
+
+    #region Aggregations
     public async Task<TResult> MaxAsync<TResult>(
         Expression<Func<TEntity, TResult>> selector,
         Expression<Func<TEntity, bool>>? predicate = null,
@@ -134,13 +175,6 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
             ? await _dbSet.MinAsync(selector, cancellationToken)
             : await _dbSet.Where(predicate).MinAsync(selector, cancellationToken);
 
-    public async Task<int> CountAsync(
-        Expression<Func<TEntity, bool>>? predicate = null,
-        CancellationToken cancellationToken = default) =>
-        predicate is null
-            ? await _dbSet.CountAsync(cancellationToken)
-            : await _dbSet.CountAsync(predicate, cancellationToken);
-
     public Task<int> SumAsync(
         Expression<Func<TEntity, int>> selector,
         Expression<Func<TEntity, bool>>? predicate = null,
@@ -148,4 +182,5 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
         predicate is null
             ? _dbSet.SumAsync(selector, cancellationToken)
             : _dbSet.Where(predicate).SumAsync(selector, cancellationToken);
+    #endregion
 }

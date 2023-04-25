@@ -4,11 +4,16 @@
 public class LoginModel : PageModel
 {
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly IBasketService _basketService;
     private readonly ILogger<LoginModel> _logger;
 
-    public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger)
+    public LoginModel(
+        SignInManager<AppUser> signInManager,
+        IBasketService basketService,
+        ILogger<LoginModel> logger)
     {
         _signInManager = signInManager;
+        _basketService = basketService;
         _logger = logger;
     }
 
@@ -64,6 +69,8 @@ public class LoginModel : PageModel
             var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, false, true);
             if (result.Succeeded)
             {
+                await TransferAnonymousBasketToUserAsync(Input.Email);
+
                 _logger.LogInformation("User logged in.");
                 return LocalRedirect(returnUrl);
             }
@@ -83,5 +90,18 @@ public class LoginModel : PageModel
             }
         }
         return Page();
+    }
+
+    private async Task TransferAnonymousBasketToUserAsync(string? userName)
+    {
+        if (Request.Cookies.ContainsKey(Constants.BasketCookie))
+        {
+            var anonymousId = Request.Cookies[Constants.BasketCookie];
+            if (Guid.TryParse(anonymousId, out var _))
+            {
+                await _basketService.TransferBasketAsync(anonymousId, userName);
+            }
+            Response.Cookies.Delete(Constants.BasketCookie);
+        }
     }
 }

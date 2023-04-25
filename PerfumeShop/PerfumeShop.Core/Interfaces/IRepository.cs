@@ -6,11 +6,17 @@ public interface IRepository<TDbContext, TEntity>
 {
     void Remove(TEntity entity);
 
-    void Add(TEntity entity);
+	void Remove(IEnumerable<TEntity> entityCollection);
 
-    void Update(TEntity entity);
+	void Add(TEntity entity);
 
-    Task<TResult?> GetFirstOrDefaultAsync<TResult>(
+	void Add(IEnumerable<TEntity> entityCollection);
+
+	void Update(TEntity entity);
+
+	void Update(IEnumerable<TEntity> entityCollection);
+
+	Task<TResult?> GetFirstOrDefaultAsync<TResult>(
         Expression<Func<TEntity, TResult>> selector,
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
@@ -47,6 +53,12 @@ public interface IRepository<TDbContext, TEntity>
         CancellationToken cancellationToken = default);
 
     Task<int> CountAsync(
+        Expression<Func<TEntity, bool>>? predicate = null,
+        CancellationToken cancellationToken = default);
+
+    Task<int> CountAsync<TResult>(
+        Expression<Func<TResult, int>> sum,
+        Expression<Func<TEntity, IEnumerable<TResult>>> selector,
         Expression<Func<TEntity, bool>>? predicate = null,
         CancellationToken cancellationToken = default);
 

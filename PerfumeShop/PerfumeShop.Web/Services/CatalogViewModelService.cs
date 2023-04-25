@@ -67,9 +67,9 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
         var allSelect = new SelectListItem { Text = "All" };
 
         return new CatalogIndexViewModel(pagedList, minPrice ?? (decimal)0.00, maxPrice,
-            _mapper.Map<IEnumerable<ItemViewModel>>(brandsFromDb).ToSelectListItems(allSelect),
-            _mapper.Map<IEnumerable<ItemViewModel>>(gendersFromDb).ToSelectListItems(allSelect),
-            _mapper.Map<IEnumerable<ItemViewModel>>(aromaTypesFromDb).ToSelectListItems(allSelect),
-            _mapper.Map<IEnumerable<ItemViewModel>>(releaseFormsFromDb).ToSelectListItems(allSelect));
+            brands : _mapper.Map<IEnumerable<ItemViewModel>>(brandsFromDb).ToSelectListItems(allSelect),
+            genders :_mapper.Map<IEnumerable<ItemViewModel>>(gendersFromDb).ToSelectListItems(allSelect),
+            aromaTypes: _mapper.Map<IEnumerable<ItemViewModel>>(aromaTypesFromDb).ToSelectListItems(allSelect),
+            releaseForms: _mapper.Map<IEnumerable<ItemViewModel>>(releaseFormsFromDb).ToSelectListItems(allSelect));
     }
 }

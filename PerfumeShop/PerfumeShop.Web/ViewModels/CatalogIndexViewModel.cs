@@ -24,6 +24,7 @@ public sealed class CatalogIndexViewModel
 
     public CatalogIndexViewModel()
     {
+        PagedList = new PagedListViewModel();
     }
 
     public CatalogIndexViewModel(

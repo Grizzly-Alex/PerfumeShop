@@ -1,6 +1,5 @@
 ﻿namespace PerfumeShop.Web.Areas.User.Controllers;
 
-
 [Area("Shop")]
 [AllowAnonymous]
 public class CatalogController : Controller
