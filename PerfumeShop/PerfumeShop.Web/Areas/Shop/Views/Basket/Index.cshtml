@@ -1,76 +1,82 @@
 ﻿@model BasketViewModel
 
 <div class="container h-100 py-5">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-8">
+    <div class="row d-flex justify-content-center h-100">
+        <div class="col-8">		
+			<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="ClearBasket" asp-route-basketId="@Model.Id">
+				<div class="d-flex justify-content-between align-items-center mb-4">
+					<h3 class="fw-bold mb-0 text-black">
+						<i class="bi bi-bag"></i>&nbsp;
+						My Basket
+					</h3>
+					<div>
+						<p class="mb-0 ">
+							@if (Model.Items.Any())
+							{
+								<button class="unstyled-button" type="submit" style="font-size: 1.2rem;">
+									<span class="text-danger bi bi-bag-x"></span>
+								</button>								
+							}
+							&nbsp;<span class="text-muted">Total Positions: @Model.Items.Count</span>
+						</p>
+					</div>					
+				</div>
+			</form>
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="fw-bold mb-0 text-black">
-					<i class="bi bi-bag"></i>&nbsp;
-					My Basket
-				</h3>
-                <div>
-                    <p class="mb-0">
-						<span class="text-muted">Total Positions: @Model.Items.Count</span>
-					</p>
-                </div>					
-            </div>
-
-			@foreach (var item in Model.Items)
+			@if (Model.Items.Any())
 			{
-				<div class="card rounded-3 mb-3 shadow-sm ">
-					<div class="p-1 m-2">
-						<div class="row d-flex justify-content-between align-items-center">
-							<div class="col-md-2 col-lg-2 col-xl-2 row">
-								<a asp-area="Shop" asp-page="/ProductDetails" asp-route-id="@item.ProductId">
-									<img src="@Constants.CatalogImagePath@item.PictureUri" class="img-fluid rounded-3">
-								</a>
-							</div>
-							<div class="col-md-4 col-lg-4 col-xl-4 text-center py-3">
-								<p>
-									<span class="fw-normal">@item.Brand</span><br>
-									<span class="text-muted">@item.Name</span><br>
-									<span class="small text-black-50">@item.Volume ml.</span><br>
-								</p>
-							</div>
-							<div class="col-md-2 col-lg-2 col-xl-2 text-center">
-								<span class="small text-black-50">Quantity</span>
-								<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="UpdateItemBasket" asp-route-basketItemId="@item.Id">
-									<div class="input-group input-group-sm mb-3">
-										<button class="btn btn-primary">
-											<span class="small">Update</span>
+				@foreach (var item in Model.Items)
+				{
+					<div class="card rounded-3 mb-3 shadow-sm ">
+						<div class="p-1 m-2">
+							<div class="row d-flex justify-content-between align-items-center">
+								<div class="col-md-2 col-lg-2 col-xl-2 row">
+									<a asp-area="Shop" asp-page="/ProductDetails" asp-route-id="@item.ProductId">
+										<img src="@Constants.CatalogImagePath@item.PictureUri" class="img-fluid rounded-3">
+									</a>
+								</div>
+								<div class="col-md-4 col-lg-4 col-xl-4 text-center py-3">
+									<p>
+										<span class="fw-normal">@item.Brand</span><br>
+										<span class="text-muted">@item.Name</span><br>
+										<span class="small text-black-50">@item.Volume ml.</span><br>
+									</p>
+								</div>
+								<div class="col-md-2 col-lg-2 col-xl-2 text-center">
+									<span class="small text-black-50">Quantity</span>
+									<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="UpdateItemBasket" asp-route-basketItemId="@item.Id">
+										<div class="input-group input-group-sm mb-3">
+											<button class="btn btn-primary">
+												<span class="small">Update</span>
+											</button>
+											<input type="number" min="1" max="@item.Stock"
+												   step="1" value="@item.Quantity" name="quantity" class="form-control form-control-sm shadow-none">
+										</div>
+									</form>
+								</div>
+								<div class="col-md-2 col-lg-2 col-xl-2 text-center">
+									<p class="small text-black-50">
+										<span>Price:</span>&nbsp;
+										<span>@item.UnitPrice.ToString("c")</span><br>
+									</p>
+									<p class="fw-normal">
+										<span>Sum:</span>&nbsp;
+										<span>@item.TotalPrice.ToString("c")</span><br>
+									</p>
+								</div>
+								<div class="col-md-1 col-lg-1 col-xl-1 text-lg-start">
+									<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="DeleteItemBasket" asp-route-basketItemId="@item.Id">
+										<button class="unstyled-button" type="submit">
+											<h3><i class="text-danger bi bi-trash"></i></h3>
 										</button>
-										<input type="number" min="1" max="@item.Stock"
-												step="1" value="@item.Quantity" name="quantity" class="form-control form-control-sm shadow-none">
-									</div>
-								</form>
-							</div>
-							<div class="col-md-2 col-lg-2 col-xl-2 text-center">
-								<p class="small text-black-50">
-									<span>Price:</span>&nbsp;
-									<span>@item.UnitPrice.ToString("c")</span><br>
-								</p>
-								<p class="fw-normal">
-									<span>Sum:</span>&nbsp;
-									<span>@item.TotalPrice.ToString("c")</span><br>
-								</p>
-							</div>
-							<div class="col-md-1 col-lg-1 col-xl-1 text-lg-start">
-								<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="DeleteItemBasket" asp-route-basketItemId="@item.Id">
-									<button class="unstyled-button" type="submit">
-										<h3><i class="text-danger bi bi-trash"></i></h3>
-									</button>
-								</form>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				}				
 			}
         </div>
 
-		<div class="col-4">
-			<div class="card rounded-3 mb-3 shadow-sm">
-			</div>
-		</div>
     </div>
 </div>

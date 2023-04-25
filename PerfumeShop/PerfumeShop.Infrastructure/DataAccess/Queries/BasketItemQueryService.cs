@@ -15,11 +15,11 @@ public sealed class BasketItemQueryService : IBasketItemQueryService
             selector: b => b.ProductId);
     }
 
-    public async Task<int> GetQuantityAsync(int productId)
+    public async Task<int> GetQuantityAsync(int basketItemId)
 	{
 		return await _unitOfWork.GetRepository<BasketItem>()
 			.GetFirstOrDefaultAsync(
-				predicate: b => b.ProductId == productId,
+				predicate: b => b.Id == basketItemId,
 				selector: b => b.Quantity);
 	}
 }

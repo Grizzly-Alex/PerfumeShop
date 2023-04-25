@@ -5,19 +5,22 @@ public class BasketController : Controller
 {
     private readonly IBasketService _basketService;
     private readonly IBasketViewModelService _basketViewModelService;
-    private readonly IBasketItemQueryService _basketItemQueryService;
+	private readonly IBasketQueryService _basketQueryService;
+	private readonly IBasketItemQueryService _basketItemQueryService;
 	private readonly IProductQueryService _productQueryService;
 
 
 	public BasketController(
         IBasketService basketService,
         IBasketViewModelService basketViewModelService,
+		IBasketQueryService basketQueryService,
 		IBasketItemQueryService basketItemQueryService,
 		IProductQueryService productQueryService)
     {
         _basketService = basketService;
         _basketViewModelService = basketViewModelService;
-        _basketItemQueryService = basketItemQueryService;
+		_basketQueryService = basketQueryService;
+		_basketItemQueryService = basketItemQueryService;
         _productQueryService = productQueryService;
 	}
 
@@ -31,12 +34,13 @@ public class BasketController : Controller
     [HttpPost]
     public async Task<IActionResult> AddToBasket(int productId, int quantity = 1)
     {
-        var inBasketQty = await _basketItemQueryService.GetQuantityAsync(productId);
+        var userName = GetBuyerId();
+		var inBasketQty = await _basketQueryService.GetProductQtyAsync(userName, productId);
 
 		var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity + inBasketQty);
         if (availabilityVM.IsAvailable)
         {
-            await _basketService.AddItemToBasketAsync(GetBuyerId(), productId, quantity);
+            await _basketService.AddItemToBasketAsync(userName, productId, quantity);
 
             TempData["success"] = $"Product \"{availabilityVM.ProductName}\"" +
                 $" added to cart in quantity {quantity}.";
@@ -54,8 +58,8 @@ public class BasketController : Controller
 	public async Task<IActionResult> UpdateItemBasket(int basketItemId, int quantity)
     {
         var productId = await _basketItemQueryService.GetProductId(basketItemId);
-        var inBasketQty = await _basketItemQueryService.GetQuantityAsync(productId);
-        var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity);
+		var inBasketQty = await _basketQueryService.GetProductQtyAsync(GetBuyerId(), productId);
+		var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity);
 
         if (availabilityVM.IsAvailable) 
         {          
@@ -93,13 +97,12 @@ public class BasketController : Controller
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> DeleteBasket(int basketId)
+	public async Task<IActionResult> ClearBasket(int basketId)
     {
-		await _basketService.DeleteBasketAsync(basketId);
+		await _basketService.ClearBasketAsync(basketId);
 		TempData["success"] = $"Your basket has been cleared.";
 		return RedirectToAction(nameof(Index));
 	}
-
 
 	private string GetBuyerId()
     {

@@ -21,7 +21,18 @@ public sealed class BasketQueryService : IBasketQueryService
     {
         return await _unitOfWork.GetRepository<Basket>()
             .GetFirstOrDefaultAsync(
-            predicate: i => i.BuyerId == userName,
-            selector: b => b.Id);
+				predicate: i => i.BuyerId == userName,
+				selector: b => b.Id);
     }
+
+	public async Task<int> GetProductQtyAsync(string userName, int productId)
+	{
+		return await _unitOfWork.GetRepository<Basket>()
+			.GetFirstOrDefaultAsync(
+				predicate: i => i.BuyerId == userName,
+				selector: b => b.Items
+					.Where(b => b.ProductId == productId)
+					.Select(b => b.Quantity)
+					.FirstOrDefault());
+	}
 }

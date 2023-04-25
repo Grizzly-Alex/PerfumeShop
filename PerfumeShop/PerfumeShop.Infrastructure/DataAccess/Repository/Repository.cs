@@ -17,18 +17,34 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
     {
         _dbSet.Add(entity).State = EntityState.Added;
 	}
+
+	public void Add(IEnumerable<TEntity> entityCollection)
+	{
+		_dbSet.AddRange(entityCollection);
+	}
+
 	public void Remove(TEntity entity)
     {
 		_dbSet.Remove(entity).State = EntityState.Deleted;
     }
 
-    public void Update(TEntity entity)
+	public void Remove(IEnumerable<TEntity> entityCollection)
+    {
+        _dbSet.RemoveRange(entityCollection);
+    }
+
+	public void Update(TEntity entity)
     {
         _dbSet.Update(entity).State = EntityState.Modified;
     }
 
-    #region GetAll
-    public async Task<IEnumerable<TEntity>> GetAllAsync(
+	public void Update(IEnumerable<TEntity> entityCollection)
+	{
+		_dbSet.UpdateRange(entityCollection);
+	}
+
+	#region GetAll
+	public async Task<IEnumerable<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,

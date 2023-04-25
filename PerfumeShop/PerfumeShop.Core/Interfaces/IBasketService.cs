@@ -6,5 +6,5 @@ public interface IBasketService
     Task<BasketItem> DeleteItemFromBasketAsync(int basketItemId);
     Task<BasketItem> AddItemToBasketAsync(string userName, int productId, int productQuantity = 1);
 	Task<BasketItem> UpdateItemBasketAsync(int basketItemId, int productQuantity);
-	Task<Basket> DeleteBasketAsync(int basketId);
+	Task<Basket> ClearBasketAsync(int basketId);
 }
