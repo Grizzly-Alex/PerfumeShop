@@ -45,7 +45,6 @@ public static class WebDependencies
         services.AddAuthenticationSettings();        
         services.AddControllersWithViews();
         services.AddCoreServices();
-        services.AddInfrastructureServices();
         services.AddWebServices();       
     }
 

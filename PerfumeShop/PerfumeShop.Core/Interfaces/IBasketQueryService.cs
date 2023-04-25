@@ -3,5 +3,4 @@
 public interface IBasketQueryService
 {
 	Task<int> CountTotalBasketItemsAsync(string userName);
-
 }

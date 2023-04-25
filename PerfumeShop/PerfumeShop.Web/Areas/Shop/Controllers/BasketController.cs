@@ -31,13 +31,12 @@ public class BasketController : Controller
     [HttpPost]
     public async Task<IActionResult> AddToBasket(int productId, int quantity = 1)
     {
-        var userName = GetBuyerId();
         var inBasketQty = await _basketItemQueryService.GetQuantityAsync(productId);
 
 		var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity + inBasketQty);
         if (availabilityVM.IsAvailable)
         {
-            await _basketService.AddItemToBasketAsync(userName, productId, quantity);
+            await _basketService.AddItemToBasketAsync(GetBuyerId(), productId, quantity);
 
             TempData["success"] = $"Product \"{availabilityVM.ProductName}\"" +
                 $" added to cart in quantity {quantity}.";
@@ -55,13 +54,23 @@ public class BasketController : Controller
 	public async Task<IActionResult> UpdateItemBasket(int basketItemId, int quantity)
     {
         var productId = await _basketService.GetProductId(basketItemId);
-		var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity);
+        var inBasketQty = await _basketItemQueryService.GetQuantityAsync(productId);
+        var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity);
 
         if (availabilityVM.IsAvailable) 
-        {
-			await _basketService.UpdateItemBasketAsync(basketItemId, quantity);
-			TempData["success"] = $"Set new quantity \"{availabilityVM.DesiredQty}\"" +
-                $" for product \"{availabilityVM.ProductName}\" in your basket.";
+        {          
+            if (quantity > 0 && quantity != inBasketQty)
+            {
+                var basketItem = await _basketService.UpdateItemBasketAsync(basketItemId, quantity);
+
+                TempData["success"] = $"Set new quantity \"{availabilityVM.DesiredQty}\"" +
+					$" for product \"{availabilityVM.ProductName}\".";
+			}
+            else
+            {
+				TempData["info"] = $"The new quantity must not be equal to the" +
+                    $" current quantity and must be greater than zero.";
+			}
 		}
         else
         {
@@ -78,7 +87,7 @@ public class BasketController : Controller
         var basketItem = await _basketService.DeleteItemFromBasketAsync(basketItemId);
         var productName = await _productQueryService.GetProductNameAsync(basketItem.ProductId);
 
-        TempData["success"] = $"Position with product \"{productName}\" has been deleted";
+        TempData["success"] = $"Position with product \"{productName}\" has been deleted.";
 
         return RedirectToAction(nameof(Index));
 	}

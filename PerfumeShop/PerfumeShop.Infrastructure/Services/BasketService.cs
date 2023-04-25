@@ -56,18 +56,20 @@ public class BasketService : IBasketService
 	        selector: b => b.ProductId);
 	}
 
-	public async Task<BasketItem> UpdateItemBasketAsync(int basketItemId, int productQuantity = 1)
+	public async Task<BasketItem> UpdateItemBasketAsync(int basketItemId, int productQuantity)
 	{
         var basketItemRepository = _shopping.GetRepository<BasketItem>();
         var basketItem = await basketItemRepository.GetFirstOrDefaultAsync(predicate: i => i.Id == basketItemId)
 			?? throw new NullReferenceException($"Basket item not found with ID '{basketItemId}'.");
 
-		basketItem.SetQuantity(productQuantity);
-		basketItemRepository.Update(basketItem);
-        await _shopping.SaveChangesAsync();
+        if (basketItem.Quantity != productQuantity && productQuantity > 0)
+        {
+			basketItem.SetQuantity(productQuantity);
+			basketItemRepository.Update(basketItem);
+			await _shopping.SaveChangesAsync();
 
-		_logger.LogInformation($"Update qty: '{productQuantity}' for basket item with ID: '{basketItemId}'.");
-
+			_logger.LogInformation($"Update qty: '{productQuantity}' for basket item with ID: '{basketItemId}'.");
+		}		
 		return basketItem;
 	}
 
@@ -92,7 +94,8 @@ public class BasketService : IBasketService
 
         basketRepository.Remove(basketItem);
         await _shopping.SaveChangesAsync();
-        _logger.LogInformation($"Basket item was deleted with ID: '{basketItem.Id}' from Basket with ID: '{basketItem.BasketId}'.");
+        _logger.LogInformation($"Basket item was deleted with ID: '{basketItem.Id}'" +
+            $" from Basket with ID: '{basketItem.BasketId}'.");
 
         return basketItem;
     }
