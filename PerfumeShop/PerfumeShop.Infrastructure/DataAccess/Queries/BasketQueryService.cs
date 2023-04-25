@@ -16,4 +16,12 @@ public sealed class BasketQueryService : IBasketQueryService
 				selector: item => item.Items,
 				sum: sum => sum.Quantity);
 	}
+
+    public async Task<int> GetBasketId(string userName)
+    {
+        return await _unitOfWork.GetRepository<Basket>()
+            .GetFirstOrDefaultAsync(
+            predicate: i => i.BuyerId == userName,
+            selector: b => b.Id);
+    }
 }

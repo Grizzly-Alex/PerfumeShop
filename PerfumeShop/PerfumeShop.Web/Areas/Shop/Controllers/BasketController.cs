@@ -53,7 +53,7 @@ public class BasketController : Controller
 	[HttpPost]
 	public async Task<IActionResult> UpdateItemBasket(int basketItemId, int quantity)
     {
-        var productId = await _basketService.GetProductId(basketItemId);
+        var productId = await _basketItemQueryService.GetProductId(basketItemId);
         var inBasketQty = await _basketItemQueryService.GetQuantityAsync(productId);
         var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity);
 
@@ -91,6 +91,15 @@ public class BasketController : Controller
 
         return RedirectToAction(nameof(Index));
 	}
+
+	[HttpPost]
+	public async Task<IActionResult> DeleteBasket(int basketId)
+    {
+		await _basketService.DeleteBasketAsync(basketId);
+		TempData["success"] = $"Your basket has been cleared.";
+		return RedirectToAction(nameof(Index));
+	}
+
 
 	private string GetBuyerId()
     {

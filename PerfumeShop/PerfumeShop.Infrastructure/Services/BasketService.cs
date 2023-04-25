@@ -40,22 +40,6 @@ public class BasketService : IBasketService
         return basketItem;
     }
 
-	public async Task<int> GetBasketId(string userName)
-	{
-		return await _shopping.GetRepository<Basket>()
-            .GetFirstOrDefaultAsync(
-            predicate: i => i.BuyerId == userName,
-	        selector: b => b.Id);
-	}
-
-	public async Task<int> GetProductId(int basketItemId)
-	{
-		return await _shopping.GetRepository<BasketItem>()
-	        .GetFirstOrDefaultAsync(
-	        predicate: i => i.Id == basketItemId,
-	        selector: b => b.ProductId);
-	}
-
 	public async Task<BasketItem> UpdateItemBasketAsync(int basketItemId, int productQuantity)
 	{
         var basketItemRepository = _shopping.GetRepository<BasketItem>();

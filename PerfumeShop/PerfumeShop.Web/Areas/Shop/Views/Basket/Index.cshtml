@@ -25,14 +25,14 @@
 								<a asp-area="Shop" asp-page="/ProductDetails" asp-route-id="@item.ProductId">
 									<img src="@Constants.CatalogImagePath@item.PictureUri" class="img-fluid rounded-3">
 								</a>
-							</div>				
+							</div>
 							<div class="col-md-4 col-lg-4 col-xl-4 text-center py-3">
 								<p>
 									<span class="fw-normal">@item.Brand</span><br>
 									<span class="text-muted">@item.Name</span><br>
 									<span class="small text-black-50">@item.Volume ml.</span><br>
 								</p>
-							</div>							
+							</div>
 							<div class="col-md-2 col-lg-2 col-xl-2 text-center">
 								<span class="small text-black-50">Quantity</span>
 								<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="UpdateItemBasket" asp-route-basketItemId="@item.Id">
@@ -64,7 +64,7 @@
 							</div>
 						</div>
 					</div>
-				</div>				
+				</div>
 			}
         </div>
 
