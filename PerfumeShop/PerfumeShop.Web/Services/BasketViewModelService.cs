@@ -3,37 +3,24 @@
 public sealed class BasketViewModelService : IBasketViewModelService
 {
     private readonly IMapper _mapper;
+    private readonly ICheckoutService _checkoutService;
     private readonly IUnitOfWork<CatalogDbContext> _catalog;
     private readonly IUnitOfWork<ShoppingDbContext> _shopping;
     private readonly ILogger<BasketService> _logger;
 
 
-    public BasketViewModelService(
-        IMapper mapper,
+    public BasketViewModelService(IMapper mapper,
         IUnitOfWork<ShoppingDbContext> shopping,
         IUnitOfWork<CatalogDbContext> catalog,
-        ILogger<BasketService> logger)
+		ICheckoutService checkoutService,
+	    ILogger<BasketService> logger)
     {
         _mapper = mapper;
         _shopping = shopping;
         _catalog = catalog;
-        _logger = logger;
+        _checkoutService = checkoutService;
+		_logger = logger;
     }
-
-	public async Task<AvailabilityViewModel> AvailabilityStock(int productId, int quantity)
-	{
-        var availabilityView = await _catalog.GetRepository<CatalogProduct>()
-            .GetFirstOrDefaultAsync(
-                predicate: p => p.Id == productId,
-                selector: p => new AvailabilityViewModel
-                {
-                    ProductName = p.Name,
-                    StockQty = p.Stock,
-                    DesiredQty = quantity
-                });
-
-		return availabilityView!;
-	}
 
     public async Task<BasketViewModel> GetBasketForUserAsync(string userName)
     {
@@ -51,11 +38,11 @@ public sealed class BasketViewModelService : IBasketViewModelService
             _logger.LogInformation($"New Basket was created for user with ID {userName}.");
 
             return _mapper.Map<BasketViewModel>(basket);
-
 		}  
         
         var basketVM = _mapper.Map<BasketViewModel>(basket);
         basketVM.Items = await GetBasketItemsAsync(basket.Items);
+        basketVM.FinalPrice = await _checkoutService.CalculateFinalPrice(basketVM.TotalProductsPrice);
 
 		_logger.LogInformation($"Get basket with ID {basket.Id}");
 

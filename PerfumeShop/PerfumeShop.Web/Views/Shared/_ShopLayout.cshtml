@@ -25,7 +25,7 @@
                     <li><a asp-area="#" asp-controller="#" asp-action="#" class="nav-link px-3 fs-4 text-white scale">Brands</a></li>
                 </ul>
                 <div class="text-end">
-                    <partial name="~/Views/Shared/Components/_LoginLink.cshtml" />                   
+                    <partial name="~/Views/Shared/Components/_LoginLink.cshtml" />
                     @await Component.InvokeAsync("Basket")
                 </div>
             </div>
@@ -34,7 +34,7 @@
 
     <div class="container">
         <main role="main" class="pb-3">
-            <partial name="_Notification" />
+            <partial name="~/Views/Shared/Components/_Notification.cshtml" />
             @RenderBody()
         </main>
     </div>
