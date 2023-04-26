@@ -1,33 +1,35 @@
 ﻿@model BasketViewModel
 
 <div class="container h-100 py-5">
-    <div class="row d-flex justify-content-center h-100">
-        <div class="col-8">		
-			<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="ClearBasket" asp-route-basketId="@Model.Id">
-				<div class="d-flex justify-content-between align-items-center mb-4">
-					<h3 class="fw-bold mb-0 text-black">
-						<i class="bi bi-bag"></i>&nbsp;
-						My Basket
-					</h3>
-					<div>
-						<p class="mb-0 ">
-							@if (Model.Items.Any())
-							{
-								<button class="unstyled-button" type="submit" style="font-size: 1.2rem;">
-									<span class="text-danger bi bi-bag-x"></span>
-								</button>								
-							}
-							&nbsp;<span class="text-muted">Total Positions: @Model.Items.Count</span>
-						</p>
-					</div>					
+	<div class="col-lg-8">
+		<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="ClearBasket" asp-route-basketId="@Model.Id">
+			<div class="d-flex justify-content-between align-items-center mb-4">
+				<h3 class="fw-bold mb-0 text-black">
+					<i class="bi bi-bag"></i>&nbsp;
+					My Basket
+				</h3>
+				<div>
+					<p class="mb-0 ">
+						@if (Model.Items.Any())
+						{
+							<button class="unstyled-button" type="submit" style="font-size: 1.2rem;">
+								<span class="text-danger bi bi-bag-x"></span>
+							</button>
+						}
+						&nbsp;<span class="text-muted">Total Positions: @Model.Items.Count</span>
+					</p>
 				</div>
-			</form>
+			</div>
+		</form>
+	</div>
 
+    <div class="row d-flex justify-content-center h-100">
+        <div class="col-lg-8">		
 			@if (Model.Items.Any())
 			{
 				@foreach (var item in Model.Items)
 				{
-					<div class="card rounded-3 mb-3 shadow-sm ">
+					<div class="card rounded-3 mb-3 shadow-sm">
 						<div class="p-1 m-2">
 							<div class="row d-flex justify-content-between align-items-center">
 								<div class="col-md-2 col-lg-2 col-xl-2 row">
@@ -78,5 +80,48 @@
 			}
         </div>
 
+		<div class="col-md-4">
+			<div class="card rounded-3 mb-3 sticky-top">
+				<div class="card-header py-3">
+					<h4 class="mb-0">Summary</h4>
+				</div>
+				<div class="card-body">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+							Products
+							<span>$53.98</span>
+						</li>
+						<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+							Shipping
+							<span>Gratis</span>
+						</li>
+						<li class="list-group-item d-flex justify-content-between align-items-center px-0">							
+							<div class="input-group mb-3">
+								<input type="text" class="form-control" placeholder="Promo code">
+								<button type="submit" class="btn btn-success">Check</button>
+							</div>							
+						</li>
+						<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+							<div>
+								<strong>Total amount</strong>
+							</div>
+							<span><strong>$53.98</strong></span>
+						</li>
+					</ul>
+					<div class="row mb-0">
+						<div class="col-md-6 text-md-start">
+							<a asp-area="Shop" asp-page="/Catalog" class="btn btn-secondary  btn-block">
+								Continue Shopping
+							</a>
+						</div>
+						<div class="col-md-6 text-md-end">
+							<a asp-area="Shop" asp-page="/Catalog" class="btn btn-primary  btn-block">								
+								Go to checkout
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
 </div>
