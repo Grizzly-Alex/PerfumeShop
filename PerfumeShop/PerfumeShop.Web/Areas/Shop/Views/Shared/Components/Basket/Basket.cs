@@ -1,5 +1,6 @@
-﻿namespace PerfumeShop.Web.Areas.Shop.Components.Basket;
+﻿namespace PerfumeShop.Web.Areas.Shop.Shared.Components.Basket;
 
+[Area("Shop")]
 public class Basket : ViewComponent
 {
 	private readonly IBasketQueryService _basketQueryService;
@@ -30,8 +31,8 @@ public class Basket : ViewComponent
 		}
 
 		string anonymousId = GetAnnonymousIdFromCookie();
-		if (anonymousId == null)
-			return 0;
+
+		if (anonymousId == null) return 0;
 
 		return await _basketQueryService.CountTotalBasketItemsAsync(anonymousId);
 	}
