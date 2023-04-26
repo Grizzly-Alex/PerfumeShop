@@ -1,0 +1,15 @@
+﻿@model BasketComponentViewModel
+@{
+    ViewData["Title"] = "My Basket";
+}
+
+<a asp-area="Shop" asp-controller="Basket" asp-action="Index" class="btn btn-link text-white position-relative shadow-none scale">
+    <i class="bi bi-bag-check" style="font-size: 1.5rem;"></i>
+    @if (Model.ItemsCount > 0)
+    {
+        <span class="position-absolute top-0 start-70 translate-middle  badge rounded-pill bg-danger">
+            @Model.ItemsCount
+        </span>
+    }
+</a>
+
