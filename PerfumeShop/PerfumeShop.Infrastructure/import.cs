@@ -15,3 +15,4 @@ global using Microsoft.AspNetCore.Identity;
 global using PerfumeShop.Core.Models.Identity;
 global using Microsoft.Extensions.Logging;
 global using Ardalis.GuardClauses;
+global using PerfumeShop.Core.Models;

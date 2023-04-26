@@ -10,8 +10,8 @@ public sealed class BasketItemViewModel
 	public int? Volume { get; set; }
 	public decimal UnitPrice { get; set; }
     public decimal TotalPrice => UnitPrice * Quantity;
+    public int Stock { get; set; }
 
 	[Range(0, int.MaxValue, ErrorMessage = "Quantity must be bigger than 0")]
     public int Quantity { get; set; }
-    public int Stock { get; set; }
 }

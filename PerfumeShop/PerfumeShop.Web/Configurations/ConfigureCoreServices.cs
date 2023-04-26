@@ -9,6 +9,7 @@ public static class ConfigureCoreServices
 		services.AddTransient<IBasketQueryService, BasketQueryService>();
 		services.AddTransient<IProductQueryService, ProductQueryService>();
 		services.AddTransient<IBasketItemQueryService, BasketItemQueryService>();
+		services.AddTransient<ICheckoutService, CheckoutService>();
 
 		return services;
     }

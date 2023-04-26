@@ -5,6 +5,7 @@ public class BasketController : Controller
 {
     private readonly IBasketService _basketService;
     private readonly IBasketViewModelService _basketViewModelService;
+    private readonly ICheckoutService _checkoutService;
 	private readonly IBasketQueryService _basketQueryService;
 	private readonly IBasketItemQueryService _basketItemQueryService;
 	private readonly IProductQueryService _productQueryService;
@@ -13,12 +14,14 @@ public class BasketController : Controller
 	public BasketController(
         IBasketService basketService,
         IBasketViewModelService basketViewModelService,
+		ICheckoutService checkoutService,
 		IBasketQueryService basketQueryService,
 		IBasketItemQueryService basketItemQueryService,
 		IProductQueryService productQueryService)
     {
         _basketService = basketService;
         _basketViewModelService = basketViewModelService;
+        _checkoutService = checkoutService;
 		_basketQueryService = basketQueryService;
 		_basketItemQueryService = basketItemQueryService;
         _productQueryService = productQueryService;
@@ -37,19 +40,19 @@ public class BasketController : Controller
         var userName = GetBuyerId();
 		var inBasketQty = await _basketQueryService.GetProductQtyAsync(userName, productId);
 
-		var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity + inBasketQty);
-        if (availabilityVM.IsAvailable)
+		var availability = await _checkoutService.AvailabilityStock(productId, quantity + inBasketQty);
+        if (availability.IsAvailable)
         {
             await _basketService.AddItemToBasketAsync(userName, productId, quantity);
 
-            TempData["success"] = $"Product \"{availabilityVM.ProductName}\"" +
+            TempData["success"] = $"Product \"{availability.ProductName}\"" +
                 $" added to cart in quantity {quantity}.";
         }
         else
         {
-            TempData["error"] = $"Product \"{availabilityVM.ProductName}\"" +
-                $" already added to cart in quantity {availabilityVM.DesiredQty - quantity}." +
-                $" You can add no more than {availabilityVM.StockQty}.";
+            TempData["error"] = $"Product \"{availability.ProductName}\"" +
+                $" already added to cart in quantity {availability.DesiredQty - quantity}." +
+                $" You can add no more than {availability.StockQty}.";
         }
         return Redirect(Request.GetTypedHeaders().Referer.ToString());
     }
@@ -59,16 +62,16 @@ public class BasketController : Controller
     {
         var productId = await _basketItemQueryService.GetProductId(basketItemId);
 		var inBasketQty = await _basketQueryService.GetProductQtyAsync(GetBuyerId(), productId);
-		var availabilityVM = await _basketViewModelService.AvailabilityStock(productId, quantity);
+		var availability = await _checkoutService.AvailabilityStock(productId, quantity);
 
-        if (availabilityVM.IsAvailable) 
+        if (availability.IsAvailable) 
         {          
             if (quantity > 0 && quantity != inBasketQty)
             {
                 var basketItem = await _basketService.UpdateItemBasketAsync(basketItemId, quantity);
 
-                TempData["success"] = $"Set new quantity \"{availabilityVM.DesiredQty}\"" +
-					$" for product \"{availabilityVM.ProductName}\".";
+                TempData["success"] = $"Set new quantity \"{availability.DesiredQty}\"" +
+					$" for product \"{availability.ProductName}\".";
 			}
             else
             {
@@ -78,9 +81,9 @@ public class BasketController : Controller
 		}
         else
         {
-			TempData["error"] = $"Product \"{availabilityVM.ProductName}\"" +
-	            $" already added to cart in quantity {availabilityVM.DesiredQty - quantity}." +
-	            $" You can add no more than {availabilityVM.StockQty}.";
+			TempData["error"] = $"Product \"{availability.ProductName}\"" +
+	            $" already added to cart in quantity {availability.DesiredQty - quantity}." +
+	            $" You can add no more than {availability.StockQty}.";
 		}
         return RedirectToAction(nameof(Index));
 	}

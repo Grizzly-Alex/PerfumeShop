@@ -89,7 +89,7 @@
 					<ul class="list-group list-group-flush">
 						<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
 							Products
-							<span>$53.98</span>
+							<span>@Model.TotalProductsPrice.ToString("c")</span>
 						</li>
 						<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
 							Shipping
@@ -105,7 +105,7 @@
 							<div>
 								<strong>Total amount</strong>
 							</div>
-							<span><strong>$53.98</strong></span>
+							<span><strong>@Model.FinalPrice.ToString("c")</strong></span>
 						</li>
 					</ul>
 					<div class="row mb-0">
