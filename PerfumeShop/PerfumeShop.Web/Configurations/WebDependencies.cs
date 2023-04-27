@@ -72,5 +72,7 @@ public static class WebDependencies
             name: "AdminDefault",
             areaName: "Admin",
             pattern: "Admin/{controller}/{action}/{id?}");
-    }
+
+		app.UseMiddleware<ExceptionHandlingMiddleware>();
+	}
 }

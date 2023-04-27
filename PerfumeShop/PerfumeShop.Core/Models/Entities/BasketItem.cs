@@ -14,7 +14,7 @@ public sealed class BasketItem : Entity
     {
         ProductId = productId;
         SetQuantity(quantity);
-        CreateDate = DateTime.Now;
+        CreateDate = DateTime.UtcNow;
     }
 
     public void SetQuantity(int quantity)
