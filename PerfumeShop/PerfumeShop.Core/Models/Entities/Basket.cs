@@ -12,8 +12,8 @@ public sealed class Basket : Entity
     public Basket(string buyerId)
     {
         BuyerId = buyerId;  
-        CreateDate = DateTime.Now;
-        UpdateDate = DateTime.Now;
+        CreateDate = DateTime.UtcNow;
+        UpdateDate = DateTime.UtcNow;
     }
 
     public void SetNewBuyerId(string userName) => BuyerId = userName;
@@ -30,7 +30,7 @@ public sealed class Basket : Entity
                 !.AddQuantity(item.Quantity);
         }
 
-		UpdateDate = DateTime.Now;
+		UpdateDate = DateTime.UtcNow;
 	}
 
     public void FillBasket(IEnumerable<BasketItem> items)
@@ -47,5 +47,7 @@ public sealed class Basket : Entity
                     !.SetQuantity(item.Quantity);
             }
         }
-    }
+
+		UpdateDate = DateTime.UtcNow;
+	}
 }
