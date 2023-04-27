@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Core.Interfaces;
+﻿using PerfumeShop.Core.Models.ValueObjects;
+
+namespace PerfumeShop.Core.Interfaces;
 
 public interface ICheckoutService
 {

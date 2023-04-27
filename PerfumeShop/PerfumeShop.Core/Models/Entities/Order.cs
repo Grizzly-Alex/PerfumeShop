@@ -2,25 +2,31 @@
 
 public sealed class Order : Entity
 {
-    public DateTime OrderDate { get; set; }
-	public DateTime ShippingDate { get; set; }
-	public DateTime PaymentDate { get; set; }
-	public DateOnly PaymentDueDate { get; set; }
+	private readonly List<OrderItem> _orderItems = new();
+	public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
+
+	public DateTime OrderDate { get; set; }
 	public decimal OrderTotal { get; set; }
-	public string? OrderStatus { get; set; }
-    public string? PaymentStatus { get; set; }
-    public string? TrackingNumber { get; set; }
-	public string? Carrier { get; set; }
-	public string FirsrtName { get; set; }
-	public string LastName { get; set; }
-	public string PhoneNumber { get; set; }
-	public string PostalCode { get; set; }
-	public string State { get; set; }
-	public string City { get; set; }
-	public string StreetAddress { get; set; }
+	public string? OrderStatus { get; set; }	
+	
+	public PaymentInfo PaymentInfo { get; set; }
+	public ShippingInfo ShippingInfo { get; set; }
 
-	public string AppUserId { get; set; }
+	public string BuyerId { get; set; }
 
-    [ValidateNever]
-    public AppUser AppUser { get; set; }
+	private Order()
+	{
+	}
+
+	public Order(string buyerId, ShippingInfo shippingInfo, PaymentInfo paymentInfo, List<OrderItem> items)
+	{
+		Guard.Against.NullOrEmpty(buyerId, nameof(buyerId));
+		Guard.Against.Null(shippingInfo, nameof(shippingInfo));
+		Guard.Against.Null(items, nameof(items));
+
+		BuyerId = buyerId;
+		ShippingInfo = shippingInfo;
+		PaymentInfo = paymentInfo;
+		_orderItems = items;
+	}
 }

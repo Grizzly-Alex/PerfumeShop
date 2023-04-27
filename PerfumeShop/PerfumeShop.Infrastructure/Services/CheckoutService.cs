@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Infrastructure.Services;
+﻿using PerfumeShop.Core.Models.ValueObjects;
+
+namespace PerfumeShop.Infrastructure.Services;
 
 public class CheckoutService : ICheckoutService
 {
