@@ -2,6 +2,10 @@
 
 public sealed class BuyerInfoViewModel
 {
+
+    [EmailAddress]
+    public string? Email { get; set; }
+
     [DataType(DataType.Text)]
     [Display(Name = "First Name")]
     public string? BuyerName { get; set; }
