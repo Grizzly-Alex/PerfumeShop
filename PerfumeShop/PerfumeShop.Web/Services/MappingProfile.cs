@@ -7,6 +7,9 @@ public sealed class MappingProfile : Profile
     public MappingProfile()
     {
         #region Identity
+        CreateMap<AppUser, BuyerInfoViewModel>()
+            .ForMember(model => model.BuyerName, opt => opt.MapFrom(src => src.FirstName))
+            .ForMember(model => model.BuyerSurname, opt => opt.MapFrom(src => src.LastName));
         CreateMap<AppUser, RegisterUserViewModel>().ReverseMap();
         CreateMap<AppUser, EditUserViewModel>().ReverseMap();      
         CreateMap<AppUser, IndexUserViewModel>().ReverseMap()

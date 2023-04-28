@@ -7,26 +7,31 @@ public sealed class OrderConfig : IEntityTypeConfiguration<Order>
 		builder.Metadata.FindNavigation(nameof(Order.OrderItems))
 			!.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-		builder.OwnsOne(o => o.ShippingInfo, a =>
+        builder.Property(p => p.Id)
+            .IsRequired(true);
+
+        builder.Property(p => p.OrderDate)
+            .HasColumnType("datetime2")
+            .HasPrecision(0);
+
+        builder.Property(p => p.OrderTotal)
+            .IsRequired(true)
+            .HasColumnType("decimal")
+            .HasPrecision(10, 2);
+
+        builder.Property(b => b.OrderStatus)
+            .IsRequired(true)
+            .HasMaxLength(256);
+
+        #region Buyer info 
+        builder.OwnsOne(o => o.BuyerInfo, a =>
 		{
-			a.WithOwner();
+            a.Property(b => b.BuyerId)
+				.HasColumnName("BuyerId")
+                .IsRequired(true)
+				.HasMaxLength(256);
 
-			a.Property(p => p.ShippingDate)
-				.HasColumnName("ShippingDate")
-				.HasColumnType("datetime2")
-				.HasPrecision(0);
-
-			a.Property(a => a.TrackingNumber)
-				.HasColumnName("TrackingNumber")
-				.HasMaxLength(256)
-				.IsRequired();
-
-			a.Property(a => a.Carrier)
-				.HasColumnName("Carrier")
-				.HasMaxLength(256)
-				.IsRequired();
-
-			a.Property(a => a.BuyerName)
+            a.Property(a => a.BuyerName)
 				.HasColumnName("BuyerName")
 				.HasMaxLength(256)
 				.IsRequired();
@@ -36,7 +41,7 @@ public sealed class OrderConfig : IEntityTypeConfiguration<Order>
 				.HasMaxLength(256)
 				.IsRequired();
 
-			a.Property(a => a.State)
+            a.Property(a => a.State)
 				.HasColumnName("State")
 				.HasMaxLength(256)
 				.IsRequired();
@@ -59,13 +64,38 @@ public sealed class OrderConfig : IEntityTypeConfiguration<Order>
 			a.Property(a => a.PhoneNumber)
 				.HasColumnName("PhoneNumber")
 				.HasMaxLength(256)
+				.IsRequired();
+		});
+        
+        builder.Navigation(x => x.BuyerInfo).IsRequired();
+        #endregion
+
+        #region Shipping info 
+        builder.OwnsOne(o => o.ShippingInfo, a =>
+		{
+			a.WithOwner();
+
+			a.Property(p => p.ShippingDate)
+				.HasColumnName("ShippingDate")
+				.HasColumnType("datetime2")
+				.HasPrecision(0);
+
+			a.Property(a => a.TrackingNumber)
+				.HasColumnName("TrackingNumber")
+				.HasMaxLength(256)
+				.IsRequired();
+
+			a.Property(a => a.Carrier)
+				.HasColumnName("Carrier")
+				.HasMaxLength(256)
 				.IsRequired();		
 		});
+        
+        builder.Navigation(x => x.ShippingInfo).IsRequired();
+        #endregion
 
-		builder.Navigation(x => x.ShippingInfo).IsRequired();
-
-
-		builder.OwnsOne(o => o.PaymentInfo, a =>
+        #region Payment info
+        builder.OwnsOne(o => o.PaymentInfo, a =>
 		{
 			a.WithOwner();
 
@@ -84,28 +114,8 @@ public sealed class OrderConfig : IEntityTypeConfiguration<Order>
 				.HasMaxLength(256)
 				.IsRequired();			
 		});
-
-		builder.Navigation(x => x.PaymentInfo).IsRequired();
-
-
-		builder.Property(p => p.Id)
-			.IsRequired(true);
-
-		builder.Property(p => p.OrderDate)
-			.HasColumnType("datetime2")
-			.HasPrecision(0);		
-
-		builder.Property(p => p.OrderTotal)
-			.IsRequired(true)
-			.HasColumnType("decimal")
-			.HasPrecision(10, 2);
-
-		builder.Property(b => b.OrderStatus)
-            .IsRequired(true)
-            .HasMaxLength(256);
-
-		builder.Property(b => b.BuyerId)
-			.IsRequired(true)
-			.HasMaxLength(256);			
+        
+        builder.Navigation(x => x.PaymentInfo).IsRequired();
+        #endregion      			
 	}
 }

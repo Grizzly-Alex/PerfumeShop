@@ -9,22 +9,27 @@ public sealed class Order : Entity
 	public decimal OrderTotal { get; set; }
 	public string? OrderStatus { get; set; }	
 	
-	public PaymentInfo PaymentInfo { get; set; }
+	public BuyerInfo BuyerInfo { get; set; }
+    public PaymentInfo PaymentInfo { get; set; }
 	public ShippingInfo ShippingInfo { get; set; }
 
-	public string BuyerId { get; set; }
 
 	private Order()
 	{
 	}
 
-	public Order(string buyerId, ShippingInfo shippingInfo, PaymentInfo paymentInfo, List<OrderItem> items)
+	public Order(
+		BuyerInfo buyerInfo,
+		ShippingInfo shippingInfo,
+		PaymentInfo paymentInfo,
+		List<OrderItem> items)
 	{
-		Guard.Against.NullOrEmpty(buyerId, nameof(buyerId));
-		Guard.Against.Null(shippingInfo, nameof(shippingInfo));
+        Guard.Against.Null(buyerInfo, nameof(buyerInfo));
+        Guard.Against.Null(shippingInfo, nameof(shippingInfo));
+        Guard.Against.Null(paymentInfo, nameof(paymentInfo));
 		Guard.Against.Null(items, nameof(items));
 
-		BuyerId = buyerId;
+        BuyerInfo = buyerInfo;
 		ShippingInfo = shippingInfo;
 		PaymentInfo = paymentInfo;
 		_orderItems = items;

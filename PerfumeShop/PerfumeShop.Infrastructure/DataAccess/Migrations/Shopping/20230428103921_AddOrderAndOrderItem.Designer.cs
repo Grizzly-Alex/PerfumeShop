@@ -12,8 +12,8 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
 {
     [DbContext(typeof(ShoppingDbContext))]
-    [Migration("20230427161014_AddOrderAndOrderDetails")]
-    partial class AddOrderAndOrderDetails
+    [Migration("20230428103921_AddOrderAndOrderItem")]
+    partial class AddOrderAndOrderItem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,11 +84,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BuyerId")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
                     b.Property<DateTime>("OrderDate")
                         .HasPrecision(0)
                         .HasColumnType("datetime2");
@@ -146,6 +141,67 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.Order", b =>
                 {
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.BuyerInfo", "BuyerInfo", b1 =>
+                        {
+                            b1.Property<int>("OrderId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("BuyerId")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("BuyerId");
+
+                            b1.Property<string>("BuyerName")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("BuyerName");
+
+                            b1.Property<string>("BuyerSurname")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("BuyerSurname");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("PhoneNumber")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("PhoneNumber");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("PostalCode");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("State");
+
+                            b1.Property<string>("StreetAddress")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("StreetAddress");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
                     b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.PaymentInfo", "PaymentInfo", b1 =>
                         {
                             b1.Property<int>("OrderId")
@@ -181,58 +237,16 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
 
-                            b1.Property<string>("BuyerName")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("BuyerName");
-
-                            b1.Property<string>("BuyerSurname")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("BuyerSurname");
-
                             b1.Property<string>("Carrier")
                                 .IsRequired()
                                 .HasMaxLength(256)
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("Carrier");
 
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("City");
-
-                            b1.Property<string>("PhoneNumber")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("PhoneNumber");
-
-                            b1.Property<string>("PostalCode")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("PostalCode");
-
                             b1.Property<DateTime>("ShippingDate")
                                 .HasPrecision(0)
                                 .HasColumnType("datetime2")
                                 .HasColumnName("ShippingDate");
-
-                            b1.Property<string>("State")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("State");
-
-                            b1.Property<string>("StreetAddress")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("StreetAddress");
 
                             b1.Property<string>("TrackingNumber")
                                 .IsRequired()
@@ -247,6 +261,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
                         });
+
+                    b.Navigation("BuyerInfo")
+                        .IsRequired();
 
                     b.Navigation("PaymentInfo")
                         .IsRequired();

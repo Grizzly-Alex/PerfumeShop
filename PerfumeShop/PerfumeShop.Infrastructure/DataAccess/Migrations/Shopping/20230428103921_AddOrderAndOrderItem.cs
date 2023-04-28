@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
 {
     /// <inheritdoc />
-    public partial class AddOrderAndOrderDetails : Migration
+    public partial class AddOrderAndOrderItem : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,12 +20,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                     OrderDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: false),
                     OrderTotal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     OrderStatus = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    PaymentDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: false),
-                    PaymentStatus = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    PaymentIntentId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    ShippingDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: false),
-                    TrackingNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Carrier = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    BuyerId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     BuyerName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     BuyerSurname = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
@@ -33,7 +28,12 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                     State = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     City = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     StreetAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    BuyerId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
+                    PaymentDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: false),
+                    PaymentStatus = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    PaymentIntentId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    ShippingDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: false),
+                    TrackingNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Carrier = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
