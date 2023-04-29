@@ -114,10 +114,23 @@
 								Continue Shopping
 							</a>
 						</div>
-						<div class="col-md-6 text-md-end">							
-							<a asp-area="Shop" asp-page="/Checkout" class="btn btn-primary  btn-block">
-								Go to checkout
-							</a>
+						<div class="col-md-6 text-md-end">		
+							@if (Model.Items.Any())
+							{
+								<div class="col-md-6 text-md-end">
+									<a asp-area="Shop" asp-page="/Checkout" class="btn btn-primary  btn-block">
+										Go to checkout
+									</a>
+								</div>
+							}
+							else
+							{
+								<div class="col-md-6 text-md-end">
+									<a class="btn btn-primary btn-block btn-m disabled" disabled>
+										Go to checkout
+									</a>
+								</div>
+							}
 						</div>
 					</div>
 				</div>
