@@ -30,6 +30,7 @@ public class CheckoutModel : PageModel
 	public BuyerInfoViewModel BuyerInfoModel { get; set; } = new();
     public BasketViewModel BasketModel { get; set; } = new();
 
+
 	public async Task OnGet()
     {
 		await SetModelsAsync();
@@ -37,8 +38,9 @@ public class CheckoutModel : PageModel
 
 	public async Task<IActionResult> OnPost(int basketId)
 	{
-		//var buyerInfo = _mapper.Map<BuyerInfo>(BuyerInfoModel);
-		//await _checkoutService.CreateOrderAsync(buyerInfo, basketId);
+		var buyerInfo = _mapper.Map<BuyerInfo>(BuyerInfoModel);
+		await _checkoutService.CreateOrderAsync(buyerInfo, basketId);
+
         return RedirectToPage("OrderSuccess");
     }
 

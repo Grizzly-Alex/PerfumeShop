@@ -25,7 +25,6 @@ public class OrderSuccessModel : PageModel
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             EmailModel = user.Email;
-        }
-            
+        }           
     }
 }
