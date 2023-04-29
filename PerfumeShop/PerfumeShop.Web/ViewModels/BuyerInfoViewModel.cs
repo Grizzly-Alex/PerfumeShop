@@ -4,9 +4,6 @@ public sealed class BuyerInfoViewModel
 {
     public string BuyerId { get; set; }
 
-    [EmailAddress]
-    public string? Email { get; set; }
-
     [DataType(DataType.Text)]
     [Display(Name = "First Name")]
     public string? BuyerName { get; set; }

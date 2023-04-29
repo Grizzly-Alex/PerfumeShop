@@ -2,7 +2,7 @@ namespace PerfumeShop.Web.Areas.Shop.Pages;
 
 
 [Area("Shop")]
-//[Authorize]
+[Authorize]
 public class CheckoutModel : PageModel
 {
 	private readonly IMapper _mapper;
@@ -37,9 +37,9 @@ public class CheckoutModel : PageModel
 
 	public async Task<IActionResult> OnPost(int basketId)
 	{
-		var buyerInfo = _mapper.Map<BuyerInfo>(BuyerInfoModel);
-		await _checkoutService.CreateOrderAsync(buyerInfo, basketId);
-        return RedirectToPage("Success");
+		//var buyerInfo = _mapper.Map<BuyerInfo>(BuyerInfoModel);
+		//await _checkoutService.CreateOrderAsync(buyerInfo, basketId);
+        return RedirectToPage("OrderSuccess");
     }
 
 	private async Task SetModelsAsync()
