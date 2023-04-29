@@ -1,0 +1,163 @@
+﻿@page
+@model PerfumeShop.Web.Areas.Shop.Pages.CheckoutModel
+@{
+}
+
+<div class="container h-100 py-5">
+    <div class="row g-5">
+
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary">Your Basket</span>
+            </h4>
+            <ul class="list-group mb-3">
+               
+                @foreach(var item in Model.BasketModel.Items)
+                {                   
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">@item.Brand</h6>
+                            <small class="text-muted">@item.Name</small>
+                        </div>
+                        <span class="text-muted">@item.UnitPrice.ToString("c") x @item.Quantity</span>
+                    </li>                   
+                }
+              
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <div class="text-success">
+                        <h6 class="my-0">Promo code</h6>
+                        <small>EXAMPLECODE</small>
+                    </div>
+                    <span class="text-success">−$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>@Model.BasketModel.FinalPrice.ToString("c")</strong>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-7 col-lg-8">
+
+            <h4 class="mb-3">Billing address</h4>
+
+            <form asp-page="Checkout" asp-route-basketId="@Model.BasketModel.Id" method="post" class="needs-validation" novalidate="">
+
+                <input asp-for="@Model.BuyerInfoModel.BuyerId" hidden/>
+
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label asp-for="@Model.BuyerInfoModel.BuyerName"></label>
+                        <input asp-for="@Model.BuyerInfoModel.BuyerName" class="form-control" required />
+                        <span asp-validation-for="@Model.BuyerInfoModel.BuyerName" class="text-danger"></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label asp-for="@Model.BuyerInfoModel.BuyerSurname"></label>
+                        <input asp-for="@Model.BuyerInfoModel.BuyerSurname" class="form-control" required />
+                        <span asp-validation-for="@Model.BuyerInfoModel.BuyerSurname" class="text-danger"></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label asp-for="@Model.BuyerInfoModel.State"></label>
+                        <input asp-for="@Model.BuyerInfoModel.State" class="form-control" required />
+                        <span asp-validation-for="@Model.BuyerInfoModel.State" class="text-danger"></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label asp-for="@Model.BuyerInfoModel.City"></label>
+                        <input asp-for="@Model.BuyerInfoModel.City" class="form-control" required />
+                        <span asp-validation-for="@Model.BuyerInfoModel.City" class="text-danger"></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="@Model.BuyerInfoModel.StreetAddress"></label>
+                        <input asp-for="@Model.BuyerInfoModel.StreetAddress" class="form-control" placeholder="ex: 123 Main Street, Apartment 666" required />
+                        <span asp-validation-for="@Model.BuyerInfoModel.StreetAddress" class="text-danger" ></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label asp-for="@Model.BuyerInfoModel.PhoneNumber"></label>
+                        <input asp-for="@Model.BuyerInfoModel.PhoneNumber" class="form-control" placeholder="ex: 1-541-754-3010" required />
+                        <span asp-validation-for="@Model.BuyerInfoModel.PhoneNumber" class="text-danger"></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label asp-for="@Model.BuyerInfoModel.PostalCode"></label>
+                        <input asp-for="@Model.BuyerInfoModel.PostalCode" class="form-control" placeholder="ex: 220050" required />
+                        <span asp-validation-for="@Model.BuyerInfoModel.PostalCode" class="text-danger"></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <h4 class="mb-3">Payment</h4>
+
+                <div class="row gy-3">
+                    <div class="col-md-6">
+                        <label for="cc-name" class="form-label">Name on card</label>
+                        <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                        <small class="text-muted">Full name as displayed on card</small>
+                        <div class="invalid-feedback">
+                            Name on card is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="cc-number" class="form-label">Credit card number</label>
+                        <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Credit card number is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="cc-expiration" class="form-label">Expiration</label>
+                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Expiration date required
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="cc-cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Security code required
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <div class="col-4">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Сheckout</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

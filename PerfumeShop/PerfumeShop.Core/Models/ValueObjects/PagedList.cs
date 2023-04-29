@@ -1,4 +1,4 @@
-﻿namespace PerfumeShop.Core.Models;
+﻿namespace PerfumeShop.Core.Models.ValueObjects;
 
 public sealed class PagedList<TItem> : IPagedList<TItem>
 {

@@ -4,9 +4,9 @@ public sealed class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        #region Identity
+        #region Identity       
         CreateMap<AppUser, RegisterUserViewModel>().ReverseMap();
-        CreateMap<AppUser, EditUserViewModel>().ReverseMap();      
+        CreateMap<AppUser, EditUserViewModel>().ReverseMap();        
         CreateMap<AppUser, IndexUserViewModel>().ReverseMap()
             .ForMember(model => model.Email, opt => opt.Ignore())
             .ForMember(model => model.UserName, opt => opt.Ignore());
@@ -25,6 +25,11 @@ public sealed class MappingProfile : Profile
         #endregion
 
         #region Shopping
+        CreateMap<BuyerInfo, BuyerInfoViewModel>().ReverseMap();
+        CreateMap<AppUser, BuyerInfoViewModel>()
+            .ForMember(model => model.BuyerId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(model => model.BuyerName, opt => opt.MapFrom(src => src.FirstName))
+            .ForMember(model => model.BuyerSurname, opt => opt.MapFrom(src => src.LastName));
         CreateMap<Basket, BasketViewModel>()
 			.ForMember(model => model.Items, opt => opt.Ignore());        
         #endregion
