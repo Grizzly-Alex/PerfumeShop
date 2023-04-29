@@ -40,7 +40,7 @@ public class BasketController : Controller
         var userName = GetBuyerId();
 		var inBasketQty = await _basketQueryService.GetProductQtyAsync(userName, productId);
 
-		var availability = await _checkoutService.AvailabilityStock(productId, quantity + inBasketQty);
+		var availability = await _checkoutService.AvailabilityStockAsync(productId, quantity + inBasketQty);
         if (availability.IsAvailable)
         {
             await _basketService.AddItemToBasketAsync(userName, productId, quantity);
@@ -62,7 +62,7 @@ public class BasketController : Controller
     {
         var productId = await _basketItemQueryService.GetProductId(basketItemId);
 		var inBasketQty = await _basketQueryService.GetProductQtyAsync(GetBuyerId(), productId);
-		var availability = await _checkoutService.AvailabilityStock(productId, quantity);
+		var availability = await _checkoutService.AvailabilityStockAsync(productId, quantity);
 
         if (availability.IsAvailable) 
         {          

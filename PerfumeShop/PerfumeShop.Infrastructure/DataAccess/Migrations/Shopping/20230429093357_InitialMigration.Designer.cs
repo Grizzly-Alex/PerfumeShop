@@ -12,8 +12,8 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
 {
     [DbContext(typeof(ShoppingDbContext))]
-    [Migration("20230428103921_AddOrderAndOrderItem")]
-    partial class AddOrderAndOrderItem
+    [Migration("20230429093357_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,10 +92,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<decimal>("OrderTotal")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal");
 
                     b.HasKey("Id");
 
@@ -207,13 +203,17 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
 
-                            b1.Property<DateTime>("PaymentDate")
+                            b1.Property<decimal>("PayablePrice")
+                                .HasPrecision(10, 2)
+                                .HasColumnType("decimal")
+                                .HasColumnName("PayablePrice");
+
+                            b1.Property<DateTime?>("PaymentDate")
                                 .HasPrecision(0)
                                 .HasColumnType("datetime2")
                                 .HasColumnName("PaymentDate");
 
                             b1.Property<string>("PaymentIntentId")
-                                .IsRequired()
                                 .HasMaxLength(256)
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("PaymentIntentId");
@@ -238,18 +238,16 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                                 .HasColumnType("int");
 
                             b1.Property<string>("Carrier")
-                                .IsRequired()
                                 .HasMaxLength(256)
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("Carrier");
 
-                            b1.Property<DateTime>("ShippingDate")
+                            b1.Property<DateTime?>("ShippingDate")
                                 .HasPrecision(0)
                                 .HasColumnType("datetime2")
                                 .HasColumnName("ShippingDate");
 
                             b1.Property<string>("TrackingNumber")
-                                .IsRequired()
                                 .HasMaxLength(256)
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("TrackingNumber");

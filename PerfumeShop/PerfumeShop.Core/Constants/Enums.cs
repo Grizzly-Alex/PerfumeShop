@@ -21,7 +21,7 @@ public enum ItemsPerPage
     [Display(Name = "20")] Threety = 20,
 }
 
-public enum OrderStatus
+public enum OrderStatuses
 {
     [Display(Name = "Pending")] Pending = 1,
     [Display(Name = "Approved")] Approved = 2,
@@ -29,4 +29,11 @@ public enum OrderStatus
     [Display(Name = "Shipped")] Shipped = 4,
     [Display(Name = "Cancelled")] Cancelled = 5,
     [Display(Name = "Refunded")] Refunded = 6,
+}
+
+public enum PaymentStatuses
+{
+    [Display(Name = "Pending")] Pending = 1,
+    [Display(Name = "Approved")] Approved = 2,
+    [Display(Name = "Reject")] Reject = 3,
 }

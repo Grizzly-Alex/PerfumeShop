@@ -6,32 +6,28 @@ public sealed class Order : Entity
 	public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
 	public DateTime OrderDate { get; set; }
-	public decimal OrderTotal { get; set; }
 	public string? OrderStatus { get; set; }	
 	
-	public BuyerInfo BuyerInfo { get; set; }
-    public PaymentInfo PaymentInfo { get; set; }
-	public ShippingInfo ShippingInfo { get; set; }
+	public BuyerInfo? BuyerInfo { get; set; }
+    public PaymentInfo? PaymentInfo { get; set; }
+	public ShippingInfo? ShippingInfo { get; set; }
 
 
-	private Order()
+	public Order()
 	{
 	}
 
-	public Order(
-		BuyerInfo buyerInfo,
-		ShippingInfo shippingInfo,
-		PaymentInfo paymentInfo,
-		List<OrderItem> items)
+	public Order(DateTime date, OrderStatuses status, BuyerInfo buyerInfo, PaymentInfo paymentInfo, List<OrderItem> orderItems)
 	{
-        Guard.Against.Null(buyerInfo, nameof(buyerInfo));
-        Guard.Against.Null(shippingInfo, nameof(shippingInfo));
+		Guard.Against.Null(buyerInfo, nameof(buyerInfo));
         Guard.Against.Null(paymentInfo, nameof(paymentInfo));
-		Guard.Against.Null(items, nameof(items));
+        Guard.Against.Null(orderItems, nameof(orderItems));
 
         BuyerInfo = buyerInfo;
-		ShippingInfo = shippingInfo;
 		PaymentInfo = paymentInfo;
-		_orderItems = items;
-	}
+		OrderDate = date;
+		OrderStatus = status.GetDisplayName();
+        orderItems.ForEach(i => i.OrderId = Id);
+		_orderItems = orderItems;
+    }
 }

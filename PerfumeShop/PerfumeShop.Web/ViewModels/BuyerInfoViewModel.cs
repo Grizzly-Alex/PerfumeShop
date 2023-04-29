@@ -2,6 +2,7 @@
 
 public sealed class BuyerInfoViewModel
 {
+    public string BuyerId { get; set; }
 
     [EmailAddress]
     public string? Email { get; set; }

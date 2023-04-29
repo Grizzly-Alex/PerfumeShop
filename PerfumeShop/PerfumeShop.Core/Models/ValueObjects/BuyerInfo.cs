@@ -16,8 +16,9 @@ public sealed class BuyerInfo
     }
 
     public BuyerInfo(
-        string buyerId, string buyerName, string buyerSurname, string phoneNumber,
-        string postalCode, string state, string city, string streetAddress)
+        string buyerId, string buyerName, string buyerSurname,
+        string state, string city, string streetAddress,
+        string phoneNumber, string postalCode)
     {
         Guard.Against.Null(buyerId, nameof(buyerId));
         Guard.Against.Null(buyerName, nameof(buyerName));

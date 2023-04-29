@@ -90,10 +90,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<decimal>("OrderTotal")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal");
-
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -204,13 +200,17 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
 
-                            b1.Property<DateTime>("PaymentDate")
+                            b1.Property<decimal>("PayablePrice")
+                                .HasPrecision(10, 2)
+                                .HasColumnType("decimal")
+                                .HasColumnName("PayablePrice");
+
+                            b1.Property<DateTime?>("PaymentDate")
                                 .HasPrecision(0)
                                 .HasColumnType("datetime2")
                                 .HasColumnName("PaymentDate");
 
                             b1.Property<string>("PaymentIntentId")
-                                .IsRequired()
                                 .HasMaxLength(256)
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("PaymentIntentId");
@@ -235,18 +235,16 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                                 .HasColumnType("int");
 
                             b1.Property<string>("Carrier")
-                                .IsRequired()
                                 .HasMaxLength(256)
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("Carrier");
 
-                            b1.Property<DateTime>("ShippingDate")
+                            b1.Property<DateTime?>("ShippingDate")
                                 .HasPrecision(0)
                                 .HasColumnType("datetime2")
                                 .HasColumnName("ShippingDate");
 
                             b1.Property<string>("TrackingNumber")
-                                .IsRequired()
                                 .HasMaxLength(256)
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("TrackingNumber");
