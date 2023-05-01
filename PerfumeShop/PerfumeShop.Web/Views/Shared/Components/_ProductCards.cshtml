@@ -11,18 +11,31 @@
                 <div class="card h-100 shadow target">
                     <a asp-area="Shop" asp-page="/ProductDetails" asp-route-id="@obj.Id" class="link-secondary">
                         <div class="card-body p-sm-1">
-                            <h5 class="card-title float-sm-end">@obj.Price.ToString("c")</h5>
-                        </div>
-                        <img src="@Constants.CatalogImagePath@obj.PictureUri" class="card-img-top p-0" alt="...">
+                            @if (obj.isAvailable)
+                            {
+                                <h5 class="card-title float-sm-end">@obj.Price.ToString("c")</h5>
+                            }
+                            else
+                            {
+                                <h6 class="card-title float-sm-end ">Not available</h6>
+                            }
+                        </div>                                               
+                        <img src="@Constants.CatalogImagePath@obj.PictureUri" class="card-img-top p-0" alt="...">                                                                                                                     
                     </a>
                     <div class="card-footer h-100 pb-3 text-bg-dark">
-
-                        <button type="submit" class="btn btn-dark btn-sm float-sm-end shadow-none" style="font-size: 1.2rem;"
-                            asp-controller="Basket" asp-action="AddToBasket" asp-route-productId="@obj.Id" formmethod="post">
-                            <span class="bi bi-bag-plus" />
-                        </button> 
-                        
-                        <h6 class="card-title small">@obj.Name</h6>
+                        @if (obj.isAvailable)
+                        {
+                            <button type="submit" class="btn btn-dark btn-sm float-sm-end shadow-none" style="font-size: 1.2rem;"
+                                asp-controller="Basket" asp-action="AddToBasket" asp-route-productId="@obj.Id" formmethod="post">
+                                <span class="bi bi-bag-plus" />
+                            </button>
+                        }
+                        <h6 class="card-title small">
+                            @obj.Name
+                        </h6>
+                        <h6 class="card-title small" style="color:gray">
+                            @obj.Brand
+                        </h6>
                     </div>
                 </div>
             </div>

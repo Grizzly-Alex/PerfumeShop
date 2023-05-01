@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Core.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace PerfumeShop.Core.Models.Entities;
 
 
 public sealed class CatalogProduct : Entity
@@ -34,5 +36,10 @@ public sealed class CatalogProduct : Entity
         Volume = Guard.Against.NegativeOrZero(volume, nameof(volume));
         Stock = Guard.Against.Negative(stock, nameof(stock));
         PictureUri = Guard.Against.NullOrEmpty(pictureUri, nameof(pictureUri));
+	}
+
+	public void SetStock(int quantity)
+	{
+        Stock = Guard.Against.Negative(quantity, nameof(quantity)); ;
 	}
 }
