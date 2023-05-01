@@ -42,9 +42,9 @@ public class ViewModelService<TModel, TViewModel> : IViewModelService<TModel, TV
 
         if (model is null)
         {
-            _logger.LogError("Get_by_id operation is failed");
-            throw new ObjectNotFoundException("Object not found");
-        }
+            _logger.LogError($"Catalog item with ID: '{id}' not found.");
+			throw new NullReferenceException($"Database object with Id: '{id}' has not been founded.");
+		}
 
         var viewModel = _mapper.Map<TViewModel>(model);
         return viewModel;
@@ -56,8 +56,8 @@ public class ViewModelService<TModel, TViewModel> : IViewModelService<TModel, TV
 
         if (models is null)
         {
-            _logger.LogError("Get_All operation is failed");
-            throw new ObjectNotFoundException("Object not found");
+            _logger.LogError("Catalog items not found.");
+            throw new NullReferenceException("Objects from database not found.");
         }
 
         var viewModels = _mapper.Map<IEnumerable<TViewModel>>(models);

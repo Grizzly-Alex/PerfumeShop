@@ -15,13 +15,13 @@ public sealed class OrderConfig : IEntityTypeConfiguration<Order>
             .HasPrecision(0)
             .IsRequired(true);
 
-        builder.Property(b => b.OrderStatus)
-            .IsRequired(true)
-            .HasMaxLength(256)
-            .IsRequired(true);
+		builder.HasOne(p => p.OrderStatus)
+			.WithMany()
+			.HasForeignKey(p => p.OrderStatusId)
+			.OnDelete(DeleteBehavior.Restrict);
 
-        #region Buyer info 
-        builder.OwnsOne(o => o.BuyerInfo, a =>
+		#region Buyer info 
+		builder.OwnsOne(o => o.BuyerInfo, a =>
 		{
             a.Property(b => b.BuyerId)
 				.HasColumnName("BuyerId")
@@ -109,15 +109,18 @@ public sealed class OrderConfig : IEntityTypeConfiguration<Order>
 				.HasPrecision(10, 2)
 				.IsRequired(true);
 
-            a.Property(a => a.PaymentStatus)
-				.HasColumnName("PaymentStatus")
-				.HasMaxLength(256)
-				.IsRequired(true);
-
 			a.Property(a => a.PaymentIntentId)
 			   .HasColumnName("PaymentIntentId")
 				.HasMaxLength(256)
-				.IsRequired(false);			
+				.IsRequired(false);
+
+			a.Property(a => a.PaymentStatusId)
+			   .HasColumnName("PaymentStatusId");
+	
+			a.HasOne(a => a.PaymentStatus)
+				.WithMany()
+				.HasForeignKey(o => o.PaymentStatusId)
+				.OnDelete(DeleteBehavior.Restrict);
 		});
         
         builder.Navigation(x => x.PaymentInfo).IsRequired();

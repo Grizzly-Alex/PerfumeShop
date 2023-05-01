@@ -1,6 +1,4 @@
-﻿using PerfumeShop.Infrastructure.DataAccess.SeedsDb;
-using ILogger = Serilog.ILogger;
-
+﻿using ILogger = Serilog.ILogger;
 namespace PerfumeShop.Web.Configurations;
 
 
@@ -18,23 +16,22 @@ public static class WebDependencies
         return logger;
     }
 
-    public static async Task SetSeedsAsync(IServiceProvider serviceProvider, ILogger logger)
+    public static async Task ApplyInitializeDbAsync(IServiceProvider serviceProvider, ILogger logger)
     {
-        logger.Information("Seeding Database...");
+        logger.Information("Initializing Database...");
 
         using (var scope = serviceProvider.CreateScope())
         {
             var scopedProvider = scope.ServiceProvider;
             try
             {
-                var userManager = scopedProvider.GetRequiredService<UserManager<AppUser>>();
-                var roleManager = scopedProvider.GetRequiredService<RoleManager<AppRole>>();
-                var identityContext = scopedProvider.GetRequiredService<IdentityAppDbContext>();
-                await IdentitySeedDb.SeedAsync(identityContext, userManager, roleManager);
-            }
+				await scope.ServiceProvider.GetRequiredService<CatalogDbInitializer>().Initialize();
+				await scope.ServiceProvider.GetRequiredService<IdentityDbInitializer>().Initialize();
+				await scope.ServiceProvider.GetRequiredService<ShoppingDbInitializer>().Initialize();
+			}
             catch (Exception ex)
             {
-                logger.Error(ex, "An error occurred seeding the DB.");
+                logger.Error(ex, "An error occurred initializing the DB.");
             }
         }
     }

@@ -5,7 +5,7 @@ DbConfiguration.SetDbContext(builder.Configuration, builder.Services);
 WebDependencies.SetServices(builder.Services);
 
 var app = builder.Build();
-await WebDependencies.SetSeedsAsync(app.Services, logger);
+await WebDependencies.ApplyInitializeDbAsync(app.Services, logger);
 
 WebDependencies.SetMiddleware(app);
 
