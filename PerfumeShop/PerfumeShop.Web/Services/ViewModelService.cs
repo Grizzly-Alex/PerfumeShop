@@ -18,20 +18,20 @@ public class ViewModelService<TModel, TViewModel> : IViewModelService<TModel, TV
         _logger = logger;
     }
 
-    public virtual async Task<TViewModel> CreateViewModelAsync(TViewModel viewModel)
+    public virtual async Task<TModel> CreateModelAsync(TViewModel viewModel)
     {
         var model = _mapper.Map<TModel>(viewModel);
         _unitOfWork.GetRepository<TModel>().Add(model);
         await _unitOfWork.SaveChangesAsync();
-        return viewModel;
+        return model;
     }
 
-    public virtual async Task<TViewModel> DeleteViewModelAsync(TViewModel viewModel)
+    public virtual async Task<TModel> DeleteModelAsync(TViewModel viewModel)
     {
         var model = _mapper.Map<TModel>(viewModel);
         _unitOfWork.GetRepository<TModel>().Remove(model);
         await _unitOfWork.SaveChangesAsync();
-        return viewModel;
+        return model;
     }
 
     public virtual async Task<TViewModel> GetViewModelByIdAsync(int id)
@@ -64,11 +64,11 @@ public class ViewModelService<TModel, TViewModel> : IViewModelService<TModel, TV
         return viewModels;
     }
 
-    public virtual async Task<TViewModel> UpdateViewModelAsync(TViewModel viewModel)
+    public virtual async Task<TModel> UpdateModelAsync(TViewModel viewModel)
     {
         var model = _mapper.Map<TModel>(viewModel);
         _unitOfWork.GetRepository<TModel>().Update(model);
         await _unitOfWork.SaveChangesAsync();
-        return viewModel;
+        return model;
     }
 }

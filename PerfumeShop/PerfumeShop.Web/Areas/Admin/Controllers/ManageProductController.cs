@@ -63,7 +63,7 @@ public class ManageProductController : Controller
 
         if (ModelState.IsValid)
         {
-            await _productService!.CreateViewModelAsync(manageViewModel.Product!);
+            await _productService!.CreateModelAsync(manageViewModel.Product!);
 
             TempData["success"] = $"{manageViewModel.Product.Name} was created successfully";
 
@@ -107,7 +107,7 @@ public class ManageProductController : Controller
         if (ModelState.IsValid)
         {
             var viewModel = manageViewModel.Product;
-            await _productService!.UpdateViewModelAsync(viewModel!);
+            await _productService!.UpdateModelAsync(viewModel!);
 
             TempData["success"] = $"{manageViewModel.Product?.Name} was updated successfully";
 
@@ -142,7 +142,7 @@ public class ManageProductController : Controller
         }
         _contentManager.RemoveFile(Constants.CatalogImagePath, viewModel.PictureUri);
 
-        await _productService.DeleteViewModelAsync(viewModel);
+        await _productService.DeleteModelAsync(viewModel);
 
         return Json(new { success = true, message = $"{viewModel.Name} was deleted successfully" });
     }

@@ -53,16 +53,16 @@ public sealed class ProductViewModelService : ViewModelService<CatalogProduct, P
         return viewModel;
     }
 
-    public override async Task<ProductViewModel> CreateViewModelAsync(ProductViewModel viewModel)
+    public override async Task<CatalogProduct> CreateModelAsync(ProductViewModel viewModel)
     {
         viewModel.DateDelivery = DateTime.UtcNow;
         var model = _mapper.Map<CatalogProduct>(viewModel);
         _unitOfWork.GetRepository<CatalogProduct>().Add(model);
         await _unitOfWork.SaveChangesAsync();
-        return viewModel;
+        return model;
     }
 
-    public override async Task<ProductViewModel> UpdateViewModelAsync(ProductViewModel viewModel)
+    public override async Task<CatalogProduct> UpdateModelAsync(ProductViewModel viewModel)
     {
         viewModel.DateDelivery = await _unitOfWork.GetRepository<CatalogProduct>()
             .GetFirstOrDefaultAsync(
@@ -73,6 +73,6 @@ public sealed class ProductViewModelService : ViewModelService<CatalogProduct, P
         var model = _mapper.Map<CatalogProduct>(viewModel);
         _unitOfWork.GetRepository<CatalogProduct>().Update(model);
         await _unitOfWork.SaveChangesAsync();
-        return viewModel;
+        return model;
     }
 }

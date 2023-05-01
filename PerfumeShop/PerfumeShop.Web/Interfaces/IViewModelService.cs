@@ -6,8 +6,8 @@
     {
         public Task<IEnumerable<TViewModel>> GetViewModelsAsync();
         public Task<TViewModel> GetViewModelByIdAsync(int id);
-        public Task<TViewModel> CreateViewModelAsync(TViewModel viewModel);
-        public Task<TViewModel> UpdateViewModelAsync(TViewModel viewModel);
-        public Task<TViewModel> DeleteViewModelAsync(TViewModel viewModel);
+        public Task<TModel> CreateModelAsync(TViewModel viewModel);
+        public Task<TModel> UpdateModelAsync(TViewModel viewModel);
+        public Task<TModel> DeleteModelAsync(TViewModel viewModel);
     }
 }

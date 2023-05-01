@@ -22,7 +22,7 @@ public class ManageBrandController : Controller
     {
         if (ModelState.IsValid)
         {
-            await _viewModelService.CreateViewModelAsync(obj);
+            await _viewModelService.CreateModelAsync(obj);
             TempData["success"] = $"{obj.Name} was created successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -41,7 +41,7 @@ public class ManageBrandController : Controller
     {
         if (ModelState.IsValid)
         {
-            await _viewModelService.UpdateViewModelAsync(obj);
+            await _viewModelService.UpdateModelAsync(obj);
             TempData["success"] = $"{obj.Name} was updated successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -66,7 +66,7 @@ public class ManageBrandController : Controller
             return Json(new { success = false, message = "Error while deleting" });
         }
 
-        await _viewModelService.DeleteViewModelAsync(viewModel);
+        await _viewModelService.DeleteModelAsync(viewModel);
 
         return Json(new { success = true, message = $"{viewModel.Name} was deleted successfully" });
     }
