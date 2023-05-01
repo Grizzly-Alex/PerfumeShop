@@ -23,9 +23,9 @@ public sealed class ProductViewModelService : ViewModelService<CatalogProduct, P
 
         if (models is null)
         {
-            _logger.LogError("Get_All operation is failed");
-            throw new ObjectNotFoundException("Object not found");
-        }
+			_logger.LogError("Catalog items not found.");
+			throw new NullReferenceException("Objects from database not found.");
+		}
 
         var viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(models);
         return viewModels;
@@ -45,9 +45,9 @@ public sealed class ProductViewModelService : ViewModelService<CatalogProduct, P
 
         if (model is null)
         {
-            _logger.LogError("Get_by_id operation is failed");
-            throw new ObjectNotFoundException("Object not found");
-        }
+			_logger.LogError($"Product with ID: '{id}' not found.");
+			throw new NullReferenceException($"Database object with Id: '{id}' not found.");
+		}
 
         var viewModel = _mapper.Map<ProductViewModel>(model);
         return viewModel;

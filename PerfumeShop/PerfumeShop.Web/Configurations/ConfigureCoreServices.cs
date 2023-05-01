@@ -5,8 +5,9 @@ public static class ConfigureCoreServices
     public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
-		services.AddScoped<IDbInitializer, IdentityDbInitializer>();
-		services.AddScoped<IDbInitializer, CatalogDbInitializer>();
+		services.AddScoped<ShoppingDbInitializer>();
+		services.AddScoped<IdentityDbInitializer>();
+		services.AddScoped<CatalogDbInitializer>();
 		services.AddScoped<IBasketService, BasketService>();
 		services.AddScoped<IBasketQueryService, BasketQueryService>();
 		services.AddScoped<IProductQueryService, ProductQueryService>();

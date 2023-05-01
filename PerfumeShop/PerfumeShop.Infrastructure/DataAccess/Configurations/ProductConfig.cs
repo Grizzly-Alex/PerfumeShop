@@ -22,28 +22,31 @@ public sealed class ProductConfig : IEntityTypeConfiguration<CatalogProduct>
         builder.Property(p => p.Volume)
             .IsRequired(true);
 
+        builder.Property(p => p.DateDelivery)
+            .HasColumnType("datetime2")
+            .HasPrecision(0);
+
         builder.Property(p => p.PictureUri)
             .IsRequired(false);
 
         builder.HasOne(p => p.Brand)
             .WithMany()
-            .HasForeignKey(p => p.BrandId);
+            .HasForeignKey(p => p.BrandId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(p => p.AromaType)
+		builder.HasOne(p => p.AromaType)
             .WithMany()
-            .HasForeignKey(p => p.AromaTypeId);
+            .HasForeignKey(p => p.AromaTypeId)
+			.OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(p => p.Gender)
+		builder.HasOne(p => p.Gender)
             .WithMany()
-            .HasForeignKey(p => p.GenderId);
+            .HasForeignKey(p => p.GenderId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(p => p.ReleaseForm)
+		builder.HasOne(p => p.ReleaseForm)
             .WithMany()
             .HasForeignKey(p => p.ReleaseFormId)
 			.OnDelete(DeleteBehavior.Restrict);
-
-        builder.Property(p => p.DateDelivery)
-            .HasColumnType("datetime2")
-            .HasPrecision(0);
     }
 }

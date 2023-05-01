@@ -25,8 +25,9 @@ public static class WebDependencies
             var scopedProvider = scope.ServiceProvider;
             try
             {
-				var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-				await dbInitializer.Initialize();
+				await scope.ServiceProvider.GetRequiredService<CatalogDbInitializer>().Initialize();
+				await scope.ServiceProvider.GetRequiredService<IdentityDbInitializer>().Initialize();
+				await scope.ServiceProvider.GetRequiredService<ShoppingDbInitializer>().Initialize();
 			}
             catch (Exception ex)
             {

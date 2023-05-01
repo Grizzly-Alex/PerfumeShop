@@ -9,7 +9,6 @@ global using PerfumeShop.Core.Models.Entities;
 global using PerfumeShop.Web.ViewModels;
 global using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 global using PerfumeShop.Web.Interfaces;
-global using PerfumeShop.Core.Exceptions;
 global using AutoMapper;
 global using System.ComponentModel;
 global using System.ComponentModel.DataAnnotations;

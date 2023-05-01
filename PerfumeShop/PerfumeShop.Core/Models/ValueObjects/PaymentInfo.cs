@@ -4,8 +4,9 @@ public sealed class PaymentInfo
 {
 	public DateTime? PaymentDate { get; set; }
     public decimal PayablePrice { get; set; }
-	public string? PaymentStatus { get; set; }
 	public string? PaymentIntentId { get; set; }
+	public int PaymentStatusId { get; set; }
+    public PaymentStatus PaymentStatus { get; set; }
 
     public PaymentInfo() 
     {
@@ -13,7 +14,7 @@ public sealed class PaymentInfo
 
     public PaymentInfo(PaymentStatuses status, decimal payablePrice)
     {
-        PaymentStatus = status.GetDisplayName();
+        PaymentStatusId = (int)status;
         PayablePrice = payablePrice;
     }
 }

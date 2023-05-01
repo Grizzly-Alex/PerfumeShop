@@ -14,7 +14,7 @@ public sealed class CatalogDbInitializer : IDbInitializer
 	{
 		if (_dbContext.Database.IsSqlServer() && _dbContext.Database.GetPendingMigrations().Any())
 		{
-			_dbContext.Database.Migrate();
+			await _dbContext.Database.MigrateAsync();
 		}
 
 		if (!await _dbContext.AromaTypes.AnyAsync())
