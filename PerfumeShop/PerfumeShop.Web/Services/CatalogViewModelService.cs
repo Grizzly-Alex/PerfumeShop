@@ -44,11 +44,14 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
                 && (!genderId.HasValue || i.GenderId == genderId)
                 && (!aromaTypeId.HasValue || i.AromaTypeId == aromaTypeId)
                 && (!releaseFormId.HasValue || i.ReleaseFormId == releaseFormId),
+            include: i => i.Include(i => i.Brand),
             selector: i => new CatalogItemViewModel
             {
                 Id = i.Id,
                 Name = i.Name,
+                Brand = i.Brand.Name,
                 Price = i.Price,
+                isAvailable = i.Stock > 0,    
                 PictureUri = i.PictureUri,
             });
 

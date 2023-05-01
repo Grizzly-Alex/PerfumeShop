@@ -17,23 +17,27 @@
                 <p><b>Gender: </b>@Model.Product.Gender.Name</p>
                 <p><b>Aroma Type: </b>@Model.Product.AromaType.Name</p>
             </div>
-
-            <p class="fs-4"><b>Price: </b>@Model.Product.Price.ToString("c")</p>
-
-            <div class="py-0">
-                <div class="col-3">
-                    <span class="text-muted">Available: @Model.Product.Stock</span>
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text text-bg-dark">qty.</span>
-                        <input type="number" min="1" max="@Model.Product.Stock"
-                               step="1" value="1" name="quantity" class="form-control shadow-none">
+            @if (Model.Product.Stock > 0)
+            {
+                <p class="fs-4"><b>Price: </b>@Model.Product.Price.ToString("c")</p>
+                <div class="py-0">
+                    <div class="col-3">
+                        <span class="text-muted">Available: @Model.Product.Stock</span>
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text text-bg-dark">qty.</span>
+                            <input type="number" min="1" max="@Model.Product.Stock"
+                                   step="1" value="1" name="quantity" class="form-control shadow-none">
+                        </div>
                     </div>
+                    <button type="submit" class="btn btn-dark rounded-pill px-3 mb-3">
+                        <span class="">Add To Basket</span>
+                    </button>
                 </div>
-                <button type="submit" class="btn btn-dark rounded-pill px-3 mb-3">
-                    <span class="">Add To Basket</span>
-                </button>
-            </div>
-
+            }
+            else
+            {
+                <img src="@Constants.NotAvailableImage" style="max-width:30%">
+            }              
             <div class="accordion py-4">
                 <div class="accordion-item">
                     <h2 class="accordion-header">

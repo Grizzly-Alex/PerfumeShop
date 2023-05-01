@@ -13,6 +13,7 @@ public static class ConfigureCoreServices
 		services.AddScoped<IProductQueryService, ProductQueryService>();
 		services.AddScoped<IBasketItemQueryService, BasketItemQueryService>();
 		services.AddScoped<ICheckoutService, CheckoutService>();
+		services.AddScoped<ICatalogProductService, CatalogProductService>();
 
 		return services;
     }
