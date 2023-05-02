@@ -8,6 +8,7 @@ public static class ConfigureCoreServices
 		services.AddScoped<ShoppingDbInitializer>();
 		services.AddScoped<IdentityDbInitializer>();
 		services.AddScoped<CatalogDbInitializer>();
+		services.AddTransient<IEmailSender, EmailSender>();
 		services.AddScoped<IBasketService, BasketService>();
 		services.AddScoped<IBasketQueryService, BasketQueryService>();
 		services.AddScoped<IProductQueryService, ProductQueryService>();
