@@ -37,3 +37,5 @@ global using PerfumeShop.Infrastructure.DataAccess.Queries;
 global using System.Net;
 global using PerfumeShop.Core.Models.ValueObjects;
 global using PerfumeShop.Infrastructure.DataAccess.InitializeDb;
+global using Microsoft.AspNetCore.WebUtilities;
+global using System.Text;

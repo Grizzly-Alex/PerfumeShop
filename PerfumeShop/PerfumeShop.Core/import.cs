@@ -10,5 +10,3 @@ global using PerfumeShop.Core.Extensions;
 global using PerfumeShop.Core.Interfaces;
 global using PerfumeShop.Core.Models.ValueObjects;
 global using Microsoft.AspNetCore.Identity;
-global using PerfumeShop.Core.Models.Identity;
-global using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;

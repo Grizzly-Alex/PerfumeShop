@@ -1,4 +1,4 @@
-﻿namespace PerfumeShop.Web.Areas.Identity.Pages.Account;
+﻿namespace PerfumeShop.Web.Areas.Identity.Pages;
 
 [AllowAnonymous]
 public class LoginModel : PageModel

@@ -3,7 +3,7 @@
 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 @if (SignInManager.IsSignedIn(User))
 {
-    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "Shop"})">
+    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "Shop"})">
         <button id="logout" type="submit" class="nav-link px-3 fs-5 text-white scale">
             <i class="bi bi-box-arrow-left"></i> Logout
         </button>
@@ -11,8 +11,8 @@
 }
 else
 {
-    <a asp-area="Identity" asp-page="/Account/Register" class="nav-link px-3 fs-5 text-white scale">Register</a>
-    <a asp-area="Identity" asp-page="/Account/Login" class="nav-link px-3 fs-5 text-white scale">Login</a>    
+    <a asp-area="Identity" asp-page="/Register" class="nav-link px-3 fs-5 text-white scale">Register</a>
+    <a asp-area="Identity" asp-page="/Login" class="nav-link px-3 fs-5 text-white scale">Login</a>    
 }
 </ul>
 

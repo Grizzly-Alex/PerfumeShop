@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using PerfumeShop.Core.Models.Identity;
-
-namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
+﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages;
 
 [AllowAnonymous]
 public class ConfirmEmailModel : PageModel

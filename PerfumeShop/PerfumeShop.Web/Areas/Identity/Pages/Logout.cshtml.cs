@@ -1,4 +1,4 @@
-﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages.Account;
+﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages;
 
 public class LogoutModel : PageModel
 {
