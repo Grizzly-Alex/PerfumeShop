@@ -1,7 +1,6 @@
 ﻿using ILogger = Serilog.ILogger;
 namespace PerfumeShop.Web.Configurations;
 
-
 public static class WebDependencies
 {
     public static ILogger SetLogger(IConfiguration configuration, ILoggingBuilder logging)
@@ -36,8 +35,9 @@ public static class WebDependencies
         }
     }
 
-    public static void SetServices(IServiceCollection services)
+    public static void SetServices(IConfiguration configuration, IServiceCollection services)
     {
+        services.AddUtilities(configuration);
         services.AddCookieSettings();
         services.AddAuthenticationSettings();        
         services.AddControllersWithViews();
@@ -45,7 +45,7 @@ public static class WebDependencies
         services.AddWebServices();       
     }
 
-    public static void SetMiddleware(WebApplication app)
+    public static void SetMiddleware(WebApplication app, IConfiguration configuration)
     {
         if (!app.Environment.IsDevelopment())
         {
@@ -56,6 +56,7 @@ public static class WebDependencies
         app.UseRequestLocalization("en-US", "en-US");
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+        StripeConfiguration.ApiKey = configuration.GetSection("Stripe:SecretKey").Get<string>();
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();

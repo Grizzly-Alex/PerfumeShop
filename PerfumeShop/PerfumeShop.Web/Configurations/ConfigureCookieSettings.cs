@@ -17,9 +17,9 @@ public static class ConfigureCookieSettings
             options.EventsType = typeof(RevokeAuthenticationEvents);
             options.Cookie.HttpOnly = true;
             options.ExpireTimeSpan = TimeSpan.FromMinutes(ValidityMinutesPeriod);
-            options.LoginPath = $"/Identity/Account/Login";
-            options.LogoutPath = $"/Identity/Account/Logout";
-            options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            options.LoginPath = $"/Identity/Login";
+            options.LogoutPath = $"/Identity/Logout";
+            options.AccessDeniedPath = $"/Identity/AccessDenied";
             options.Cookie = new CookieBuilder
             {
                 Name = IdentifierCookieName,

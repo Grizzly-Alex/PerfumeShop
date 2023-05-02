@@ -4,8 +4,7 @@ public static class ConfigureWebServices
 {
     public static IServiceCollection AddWebServices(this IServiceCollection services)
     {
-		services.AddHttpContextAccessor();
-		services.AddTransient<ExceptionHandlingMiddleware>();
+		services.AddHttpContextAccessor();		
 		services.AddControllersWithViews();
         services.AddScoped<IContentManager, ContentManager>();
         services.AddScoped(typeof(IViewModelService<,>), typeof(ViewModelService<,>));
