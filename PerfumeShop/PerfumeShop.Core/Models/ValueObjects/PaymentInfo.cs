@@ -18,4 +18,6 @@ public sealed class PaymentInfo
         PaymentStatusId = (int)status;
         PayablePrice = payablePrice;
     }
+
+    public void SetPaymentStatus(PaymentStatuses paymentStatus) => PaymentStatusId = (int)paymentStatus;    
 }

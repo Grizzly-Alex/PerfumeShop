@@ -42,6 +42,22 @@ public sealed class OrderService : IOrderService
         return order;
     }
 
+    public async Task UpdateOrderStatus(int orderId, OrderStatuses orderStatus, PaymentStatuses paymentStat)
+    {
+        var orderRepository = _shopping.GetRepository<Order>();
+        var order = await orderRepository.GetFirstOrDefaultAsync(predicate: o => o.Id == orderId);
+
+        if (order is not null)
+        {
+            order.SetOrderStatus(orderStatus);
+            order.PaymentInfo!.SetPaymentStatus(paymentStat);
+            orderRepository.Update(order);
+            await _shopping.SaveChangesAsync();
+
+            _logger.LogInformation($"Set new order status: '{orderStatus.GetDisplayName()}' for order with ID:'{order.Id}'");
+        }
+    }
+
     private async Task<List<OrderItem>> GetOrderItemsAsync(IReadOnlyCollection<BasketItem> basketItems)
     {
         var basketItemsId = basketItems.Select(b => b.ProductId).ToList();
