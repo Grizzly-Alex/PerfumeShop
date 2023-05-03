@@ -114,7 +114,12 @@ public sealed class OrderConfig : IEntityTypeConfiguration<Order>
 				.HasMaxLength(256)
 				.IsRequired(false);
 
-			a.Property(a => a.PaymentStatusId)
+            a.Property(a => a.SessionId)
+               .HasColumnName("SessionId")
+                .HasMaxLength(256)
+                .IsRequired(false);
+
+            a.Property(a => a.PaymentStatusId)
 			   .HasColumnName("PaymentStatusId");
 	
 			a.HasOne(a => a.PaymentStatus)

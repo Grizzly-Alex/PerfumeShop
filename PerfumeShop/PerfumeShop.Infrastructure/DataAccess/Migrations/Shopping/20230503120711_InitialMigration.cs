@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
 {
     /// <inheritdoc />
-    public partial class InitialMigrtation : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -91,6 +91,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                     StreetAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
                     PayablePrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    SessionId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     PaymentIntentId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     PaymentStatusId = table.Column<int>(type: "int", nullable: false),
                     ShippingDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),

@@ -8,7 +8,7 @@ public class CheckoutModel : PageModel
 	private readonly IMapper _mapper;
     private readonly IBasketViewModelService _basketViewModelService;
 	private readonly ICatalogProductService _catalogProductService;
-	private readonly ICheckoutService _checkoutService;
+	private readonly IOrderService _orderService;
 	private readonly IBasketService _basketService;
 	private readonly SignInManager<AppUser> _signInManager;
 	private readonly UserManager<AppUser> _userManager;
@@ -18,7 +18,7 @@ public class CheckoutModel : PageModel
 		IMapper mapper,
 		IBasketViewModelService basketViewModelService,
 		ICatalogProductService catalogProductService,
-        ICheckoutService checkoutService,
+        IOrderService orderService,
 		IBasketService basketService,
         SignInManager<AppUser> signInManager,
         UserManager<AppUser> userManager)
@@ -26,7 +26,7 @@ public class CheckoutModel : PageModel
 		_mapper = mapper;
 		_basketViewModelService = basketViewModelService;
 		_catalogProductService = catalogProductService;
-		_checkoutService = checkoutService;
+        _orderService = orderService;
 		_basketService = basketService;
         _signInManager = signInManager;
 		_userManager = userManager;
@@ -45,7 +45,7 @@ public class CheckoutModel : PageModel
 	public async Task<IActionResult> OnPost(int basketId)
 	{
 		var buyerInfo = _mapper.Map<BuyerInfo>(BuyerInfoModel);
-		var order = await _checkoutService.CreateOrderAsync(buyerInfo, basketId);
+		var order = await _orderService.CreateOrderAsync(buyerInfo, basketId);
 		await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 		await _basketService.ClearBasketAsync(basketId);
 

@@ -11,8 +11,8 @@ public sealed class Order : Entity
     public PaymentInfo? PaymentInfo { get; set; }
 	public ShippingInfo? ShippingInfo { get; set; }
 
-	public int OrderStatusId { get; set; }
-	public OrderStatus OrderStatus { get; set; }
+	public int OrderStatusId { get; private set; }
+	public OrderStatus OrderStatus { get; private set; }
 
 
 	public Order()
@@ -28,4 +28,6 @@ public sealed class Order : Entity
 		PaymentInfo = Guard.Against.Null(paymentInfo, nameof(paymentInfo));
 		OrderStatusId = (int)status;
 	}
+
+	public void SetOrderStatus(OrderStatuses status) => OrderStatusId = (int)status;
 }

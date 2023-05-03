@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Configurations;
+﻿using OrderService = PerfumeShop.Infrastructure.Services.OrderService;
+
+namespace PerfumeShop.Web.Configurations;
 
 public static class ConfigureCoreServices
 {
@@ -14,7 +16,8 @@ public static class ConfigureCoreServices
 		services.AddScoped<IProductQueryService, ProductQueryService>();
 		services.AddScoped<IBasketItemQueryService, BasketItemQueryService>();
 		services.AddScoped<ICheckoutService, CheckoutService>();
-		services.AddScoped<ICatalogProductService, CatalogProductService>();
+        services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<ICatalogProductService, CatalogProductService>();
 
 		return services;
     }

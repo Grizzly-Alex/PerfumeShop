@@ -17,7 +17,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -303,6 +303,11 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                             b1.Property<int>("PaymentStatusId")
                                 .HasColumnType("int")
                                 .HasColumnName("PaymentStatusId");
+
+                            b1.Property<string>("SessionId")
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("SessionId");
 
                             b1.HasKey("OrderId");
 
