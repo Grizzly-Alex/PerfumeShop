@@ -5,11 +5,13 @@ public sealed class ShoppingDbContext : DbContext
     public DbSet<Basket> Baskets { get; set; }
     public DbSet<BasketItem> BasketItems { get; set; }
 	public DbSet<Order> Orders { get; set; }
-	public DbSet<OrderItem> OrderItems { get; set; }
 	public DbSet<OrderStatus> OrderStatuses { get; set; }
+	public DbSet<OrderDetail> OrderDetails { get; set; }
+	public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Payment> Payments { get; set; }
 	public DbSet<PaymentStatus> PaymentStatuses { get; set; }
 
-	public ShoppingDbContext(DbContextOptions<ShoppingDbContext> options) : base(options) { }
+    public ShoppingDbContext(DbContextOptions<ShoppingDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,6 +27,8 @@ public sealed class ShoppingDbContext : DbContext
         modelBuilder.ApplyConfiguration(new BasketItemConfig());
         modelBuilder.ApplyConfiguration(new OrderConfig());
 		modelBuilder.ApplyConfiguration(new OrderItemConfig());
-		#endregion
-	}
+        modelBuilder.ApplyConfiguration(new OrderDetailsConfig());
+        modelBuilder.ApplyConfiguration(new PaymentConfig());
+        #endregion
+    }
 }

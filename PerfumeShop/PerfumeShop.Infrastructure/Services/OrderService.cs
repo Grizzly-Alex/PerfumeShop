@@ -20,7 +20,7 @@ public sealed class OrderService : IOrderService
     }
 
 
-    public async Task<Order> CreateOrderAsync(BuyerInfo buyerInfo, int basketId)
+    public async Task<Order> CreateOrderAsync(Addressee addressee, int basketId, string customerId)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
 
@@ -30,14 +30,22 @@ public sealed class OrderService : IOrderService
             selector: b => b.Items);
 
         var orderItems = await GetOrderItemsAsync(basketItems);
-        var payablePrice = await _checkoutService.CalculateFinalPriceAsync(orderItems.Sum(i => i.Quantity * i.Price));
-        var paymentInfo = new PaymentInfo(PaymentStatuses.Pending, payablePrice);
-        var order = new Order(DateTime.UtcNow, OrderStatuses.Pending, buyerInfo, paymentInfo, orderItems);
+        var order = new Order(OrderStatuses.Pending, orderItems, customerId);
 
         _shopping.GetRepository<Order>().Add(order);
         await _shopping.SaveChangesAsync();
 
+        var payment = new Payment(PaymentStatuses.Pending, order.Id);
+        var cost = _checkoutService.CalculateCostAsync(orderItems);
+        var orderDetail = new OrderDetail(order.Id, cost, addressee);
+
+        _shopping.GetRepository<OrderDetail>().Add(orderDetail);
+        _shopping.GetRepository<Payment>().Add(payment);
+        await _shopping.SaveChangesAsync();
+
         _logger.LogInformation($"Order with ID:'{order.Id}' has been created.");
+        _logger.LogInformation($"Order detail with ID:'{order.Details.Id}' has been created.");
+        _logger.LogInformation($"Payment with ID:'{order.Payment.Id}' has been created.");
 
         return order;
     }
@@ -45,12 +53,14 @@ public sealed class OrderService : IOrderService
     public async Task UpdateOrderStatus(int orderId, OrderStatuses orderStatus, PaymentStatuses paymentStat)
     {
         var orderRepository = _shopping.GetRepository<Order>();
-        var order = await orderRepository.GetFirstOrDefaultAsync(predicate: o => o.Id == orderId);
+        var order = await orderRepository.GetFirstOrDefaultAsync(
+            predicate: o => o.Id == orderId,
+            include: o => o.Include(p => p.Payment));
 
         if (order is not null)
         {
             order.SetOrderStatus(orderStatus);
-            order.PaymentInfo!.SetPaymentStatus(paymentStat);
+            //order.PaymentInfo!.SetPaymentStatus(paymentStat);
             orderRepository.Update(order);
             await _shopping.SaveChangesAsync();
 

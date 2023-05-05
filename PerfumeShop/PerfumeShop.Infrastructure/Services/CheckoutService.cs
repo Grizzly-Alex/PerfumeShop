@@ -31,8 +31,17 @@ public class CheckoutService : ICheckoutService
 
 		return availability!;
 	}
-	
-	public async Task<decimal> CalculateFinalPriceAsync(decimal productTotalPrice)
+
+    public Cost CalculateCostAsync(IEnumerable<OrderItem> items)
+    {
+		decimal itemsCost = items.Sum(i => i.TotalPrice);
+		decimal shippingCost = default;
+        decimal promoCodeCost = default;
+		decimal totalCost = itemsCost + shippingCost - promoCodeCost;
+        return new Cost(itemsCost, shippingCost, promoCodeCost, totalCost);
+    }
+
+    public async Task<decimal> CalculateFinalPriceAsync(decimal productTotalPrice)
 	{		
 		return productTotalPrice;
 	}

@@ -2,6 +2,6 @@
 
 public interface IOrderService
 {
-    Task<Order> CreateOrderAsync(BuyerInfo buyerInfo, int basketId);
+    Task<Order> CreateOrderAsync(Addressee addressee, int basketId, string customerId);
     Task UpdateOrderStatus(int orderId, OrderStatuses orderStatus, PaymentStatuses paymentStatus);
 }

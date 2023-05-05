@@ -2,15 +2,15 @@
 
 public sealed class BuyerInfoViewModel
 {
-    public string BuyerId { get; set; }
+    public string Id { get; set; }
 
     [DataType(DataType.Text)]
     [Display(Name = "First Name")]
-    public string? BuyerName { get; set; }
+    public string? FirstName { get; set; }
 
     [DataType(DataType.Text)]
     [Display(Name = "Last Name")]
-    public string? BuyerSurname { get; set; }
+    public string? LastName { get; set; }
 
     [Phone]
     [DataType(DataType.PhoneNumber)]

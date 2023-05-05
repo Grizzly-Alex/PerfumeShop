@@ -25,11 +25,8 @@ public sealed class MappingProfile : Profile
         #endregion
 
         #region Shopping
-        CreateMap<BuyerInfo, BuyerInfoViewModel>().ReverseMap();
-        CreateMap<AppUser, BuyerInfoViewModel>()
-            .ForMember(model => model.BuyerId, opt => opt.MapFrom(src => src.Id))
-            .ForMember(model => model.BuyerName, opt => opt.MapFrom(src => src.FirstName))
-            .ForMember(model => model.BuyerSurname, opt => opt.MapFrom(src => src.LastName));
+        CreateMap<Addressee, BuyerInfoViewModel>().ReverseMap();
+        CreateMap<AppUser, BuyerInfoViewModel>().ReverseMap();
         CreateMap<Basket, BasketViewModel>()
 			.ForMember(model => model.Items, opt => opt.Ignore());        
         #endregion

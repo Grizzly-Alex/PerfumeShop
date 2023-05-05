@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrtation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -81,22 +81,10 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: false),
-                    BuyerId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    BuyerName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    BuyerSurname = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    PostalCode = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    State = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    City = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    StreetAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    PaymentDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
-                    PayablePrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    SessionId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    PaymentIntentId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    PaymentStatusId = table.Column<int>(type: "int", nullable: false),
                     ShippingDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
-                    TrackingNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Carrier = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    CustomerId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    EmployeeId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    TrackingId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -108,10 +96,34 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                         principalTable: "OrderStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ItemsCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    ShippingCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    PromoCodeCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    TotalCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    State = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    StreetAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_PaymentStatuses_PaymentStatusId",
-                        column: x => x.PaymentStatusId,
-                        principalTable: "PaymentStatuses",
+                        name: "FK_OrderDetails_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -124,6 +136,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -136,6 +149,35 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
+                    SessionId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    PaymentIntentId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    PaymentStatusId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Payments_PaymentStatuses_PaymentStatusId",
+                        column: x => x.PaymentStatusId,
+                        principalTable: "PaymentStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -167,6 +209,12 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                 column: "BasketId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderDetails_OrderId",
+                table: "OrderDetails",
+                column: "OrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
                 column: "OrderId");
@@ -177,8 +225,14 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                 column: "OrderStatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_PaymentStatusId",
-                table: "Orders",
+                name: "IX_Payments_OrderId",
+                table: "Payments",
+                column: "OrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_PaymentStatusId",
+                table: "Payments",
                 column: "PaymentStatusId");
         }
 
@@ -189,7 +243,13 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                 name: "BasketItems");
 
             migrationBuilder.DropTable(
+                name: "OrderDetails");
+
+            migrationBuilder.DropTable(
                 name: "OrderItems");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Baskets");
@@ -198,10 +258,10 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "OrderStatuses");
+                name: "PaymentStatuses");
 
             migrationBuilder.DropTable(
-                name: "PaymentStatuses");
+                name: "OrderStatuses");
         }
     }
 }

@@ -44,8 +44,8 @@ public class CheckoutModel : PageModel
 
 	public async Task<IActionResult> OnPost(int basketId)
 	{
-		var buyerInfo = _mapper.Map<BuyerInfo>(BuyerInfoModel);
-		var order = await _orderService.CreateOrderAsync(buyerInfo, basketId);
+		var addressee = _mapper.Map<Addressee>(BuyerInfoModel);
+		var order = await _orderService.CreateOrderAsync(addressee, basketId, BuyerInfoModel.Id);
 		await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 		await _basketService.ClearBasketAsync(basketId);
 

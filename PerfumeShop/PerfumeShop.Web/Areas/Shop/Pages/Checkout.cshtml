@@ -43,22 +43,22 @@
 
             <form asp-page="Checkout" asp-route-basketId="@Model.BasketModel.Id" method="post" class="needs-validation" novalidate="">
 
-                <input asp-for="@Model.BuyerInfoModel.BuyerId" hidden/>
+                <input asp-for="@Model.BuyerInfoModel.Id" hidden/>
 
                 <div class="row g-3">
                     <div class="col-sm-6">
-                        <label asp-for="@Model.BuyerInfoModel.BuyerName"></label>
-                        <input asp-for="@Model.BuyerInfoModel.BuyerName" class="form-control" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.BuyerName" class="text-danger"></span>
+                        <label asp-for="@Model.BuyerInfoModel.FirstName"></label>
+                        <input asp-for="@Model.BuyerInfoModel.FirstName" class="form-control" required />
+                        <span asp-validation-for="@Model.BuyerInfoModel.FirstName" class="text-danger"></span>
                         <div class="valid-feedback">
                             Valid
                         </div>
                     </div>
 
                     <div class="col-sm-6">
-                        <label asp-for="@Model.BuyerInfoModel.BuyerSurname"></label>
-                        <input asp-for="@Model.BuyerInfoModel.BuyerSurname" class="form-control" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.BuyerSurname" class="text-danger"></span>
+                        <label asp-for="@Model.BuyerInfoModel.LastName"></label>
+                        <input asp-for="@Model.BuyerInfoModel.LastName" class="form-control" required />
+                        <span asp-validation-for="@Model.BuyerInfoModel.LastName" class="text-danger"></span>
                         <div class="valid-feedback">
                             Valid
                         </div>

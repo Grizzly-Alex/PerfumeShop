@@ -4,6 +4,7 @@ public sealed class OrderItem : Entity
 {
 	public int Quantity { get; set; }
 	public decimal Price { get; set; }
+    public decimal TotalPrice { get; set; }
 
     public int ProductId { get; set; }
 
@@ -22,6 +23,7 @@ public sealed class OrderItem : Entity
 
 		Quantity = quantity;
         Price = price;
-        ProductId = productId;        
+        ProductId = productId;
+        TotalPrice = price * quantity;
     }
 }
