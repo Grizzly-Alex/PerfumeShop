@@ -1,8 +1,8 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess;
 
-public static class DbConfiguration
+public static class DataBaseInfrastructure
 {
-    public static void SetDbContext(IConfiguration configuration, IServiceCollection services)
+    public static IServiceCollection AddDataBaseInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<CatalogDbContext>(options =>
         {
@@ -36,5 +36,7 @@ public static class DbConfiguration
             .AddDefaultTokenProviders()
             .AddDefaultUI()
             .AddEntityFrameworkStores<IdentityAppDbContext>();
+
+        return services;
     }
 }

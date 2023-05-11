@@ -2,10 +2,9 @@
 
 public static class ConfigureUtilities
 {
-    public static IServiceCollection AddUtilities(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddUtilities(this IServiceCollection services)
     {
         services.AddTransient<ExceptionHandlingMiddleware>();
-        services.Configure<StripeSettings>(configuration.GetSection("Stripe"));
 
         return services;
     }

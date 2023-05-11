@@ -11,7 +11,8 @@ public static class ConfigureWebServices
         services.AddScoped<IViewModelService<CatalogProduct, ProductViewModel>, ProductViewModelService>();
         services.AddScoped<ICatalogViewModelService, CatalogViewModelService>();
         services.AddScoped<IBasketViewModelService, BasketViewModelService>();
-        services.AddAutoMapper(typeof(MappingProfile));
+		services.AddTransient<ExceptionHandlingMiddleware>();
+		services.AddAutoMapper(typeof(MappingProfile));
         services.AddRazorPages();
 
         return services;

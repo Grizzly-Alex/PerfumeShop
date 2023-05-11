@@ -1,4 +1,5 @@
-﻿using ILogger = Serilog.ILogger;
+﻿using PerfumeShop.Infrastructure.Stripe;
+using ILogger = Serilog.ILogger;
 namespace PerfumeShop.Web.Configurations;
 
 public static class WebDependencies
@@ -37,10 +38,10 @@ public static class WebDependencies
 
     public static void SetServices(IConfiguration configuration, IServiceCollection services)
     {
-        services.AddUtilities(configuration);
+        services.AddDataBaseInfrastructure(configuration);
+        services.AddStripeInfrastructure(configuration);
         services.AddCookieSettings();
         services.AddAuthenticationSettings();        
-        services.AddControllersWithViews();
         services.AddCoreServices();
         services.AddWebServices();       
     }
@@ -56,7 +57,6 @@ public static class WebDependencies
         app.UseRequestLocalization("en-US", "en-US");
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        StripeConfiguration.ApiKey = configuration.GetSection("Stripe:SecretKey").Get<string>();
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();

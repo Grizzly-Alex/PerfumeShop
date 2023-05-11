@@ -1,4 +1,4 @@
-﻿namespace PerfumeShop.Web.Utilities;
+﻿namespace PerfumeShop.Infrastructure.Stripe;
 
 public class StripeSettings
 {

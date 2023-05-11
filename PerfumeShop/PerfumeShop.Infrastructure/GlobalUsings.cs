@@ -19,3 +19,4 @@ global using PerfumeShop.Core.Models.ValueObjects;
 global using MimeKit;
 global using MailKit.Net.Smtp;
 global using Microsoft.AspNetCore.Identity.UI.Services;
+global using Stripe;
