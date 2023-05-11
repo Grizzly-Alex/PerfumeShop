@@ -6,7 +6,7 @@ WebDependencies.SetServices(builder.Configuration, builder.Services);
 var app = builder.Build();
 await WebDependencies.ApplyInitializeDbAsync(app.Services, logger);
 
-WebDependencies.SetMiddleware(app, builder.Configuration);
+WebDependencies.SetMiddleware(app);
 
 logger.Information("Application started");
 

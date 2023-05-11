@@ -1,5 +1,4 @@
-﻿using PerfumeShop.Infrastructure.Stripe;
-using ILogger = Serilog.ILogger;
+﻿using ILogger = Serilog.ILogger;
 namespace PerfumeShop.Web.Configurations;
 
 public static class WebDependencies
@@ -46,7 +45,7 @@ public static class WebDependencies
         services.AddWebServices();       
     }
 
-    public static void SetMiddleware(WebApplication app, IConfiguration configuration)
+    public static void SetMiddleware(WebApplication app)
     {
         if (!app.Environment.IsDevelopment())
         {
