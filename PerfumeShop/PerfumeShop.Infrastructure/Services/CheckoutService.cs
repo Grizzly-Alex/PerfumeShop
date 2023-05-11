@@ -41,8 +41,10 @@ public class CheckoutService : ICheckoutService
         return new Cost(itemsCost, shippingCost, promoCodeCost, totalCost);
     }
 
-    public async Task<decimal> CalculateFinalPriceAsync(decimal productTotalPrice)
-	{		
-		return productTotalPrice;
-	}
+    public decimal CalculateFinalPriceAsync(decimal productTotalPrice)
+	{
+        decimal shippingCost = default;
+        decimal promoCodeCost = default;
+        return productTotalPrice + shippingCost - promoCodeCost;
+    }
 }

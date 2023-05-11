@@ -50,7 +50,7 @@ public sealed class OrderService : IOrderService
         return order;
     }
 
-    public async Task UpdateOrderStatus(int orderId, OrderStatuses orderStatus, PaymentStatuses paymentStat)
+    public async Task UpdateOrderStatus(int orderId, OrderStatuses orderStatus)
     {
         var orderRepository = _shopping.GetRepository<Order>();
         var order = await orderRepository.GetFirstOrDefaultAsync(
@@ -60,7 +60,6 @@ public sealed class OrderService : IOrderService
         if (order is not null)
         {
             order.SetOrderStatus(orderStatus);
-            //order.PaymentInfo!.SetPaymentStatus(paymentStat);
             orderRepository.Update(order);
             await _shopping.SaveChangesAsync();
 

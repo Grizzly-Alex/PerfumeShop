@@ -3,6 +3,6 @@
 public interface ICheckoutService
 {
 	Task<ProductAvailability> AvailabilityStockAsync(int productId, int quantity);
-	Task<decimal> CalculateFinalPriceAsync(decimal productTotalPrice);
+	decimal CalculateFinalPriceAsync(decimal productTotalPrice);
     Cost CalculateCostAsync(IEnumerable<OrderItem> items);
 }

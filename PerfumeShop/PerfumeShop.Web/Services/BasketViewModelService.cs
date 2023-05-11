@@ -42,7 +42,7 @@ public sealed class BasketViewModelService : IBasketViewModelService
         
         var basketVM = _mapper.Map<BasketViewModel>(basket);
         basketVM.Items = await GetBasketItemsAsync(basket.Items);
-        basketVM.FinalPrice = await _checkoutService.CalculateFinalPriceAsync(basketVM.TotalProductsPrice);
+        basketVM.FinalPrice = _checkoutService.CalculateFinalPriceAsync(basketVM.TotalProductsPrice);
 
 		_logger.LogInformation($"Get basket with ID {basket.Id}");
 
