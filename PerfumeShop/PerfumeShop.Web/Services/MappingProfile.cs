@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Services;
+﻿using PerfumeShop.Web.ViewModels.Customer;
+
+namespace PerfumeShop.Web.Services;
 
 public sealed class MappingProfile : Profile
 {
@@ -25,8 +27,8 @@ public sealed class MappingProfile : Profile
         #endregion
 
         #region Shopping
-        CreateMap<Addressee, BuyerInfoViewModel>().ReverseMap();
-        CreateMap<AppUser, BuyerInfoViewModel>().ReverseMap();
+        CreateMap<Addressee, CustomerViewModel>().ReverseMap();
+        CreateMap<AppUser, CustomerViewModel>().ReverseMap();
         CreateMap<Basket, BasketViewModel>()
 			.ForMember(model => model.Items, opt => opt.Ignore());        
         #endregion

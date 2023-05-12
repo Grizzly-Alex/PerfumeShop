@@ -1,3 +1,5 @@
+using PerfumeShop.Web.ViewModels.Customer;
+
 namespace PerfumeShop.Web.Areas.Shop.Pages;
 
 
@@ -33,7 +35,7 @@ public class CheckoutModel : PageModel
     }
 
 	[BindProperty]
-	public BuyerInfoViewModel BuyerInfoModel { get; set; } = new();
+	public CustomerViewModel BuyerInfoModel { get; set; } = new();
     public BasketViewModel BasketModel { get; set; } = new();
 
 
@@ -60,7 +62,7 @@ public class CheckoutModel : PageModel
 
             BasketModel = await _basketViewModelService.GetBasketForUserAsync(userName);
             var user = await _userManager.FindByNameAsync(userName);
-            BuyerInfoModel = _mapper.Map<BuyerInfoViewModel>(user);
+            BuyerInfoModel = _mapper.Map<CustomerViewModel>(user);
         }
 		else
 		{
