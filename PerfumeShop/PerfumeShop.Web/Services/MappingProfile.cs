@@ -27,8 +27,8 @@ public sealed class MappingProfile : Profile
         #endregion
 
         #region Shopping
-        CreateMap<Addressee, CustomerViewModel>().ReverseMap();
-        CreateMap<AppUser, CustomerViewModel>().ReverseMap();
+        CreateMap<Addressee, BuyerViewModel>().ReverseMap();
+        CreateMap<AppUser, BuyerViewModel>().ReverseMap();
         CreateMap<Basket, BasketViewModel>()
 			.ForMember(model => model.Items, opt => opt.Ignore());        
         #endregion

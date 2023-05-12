@@ -1,6 +1,6 @@
 ﻿namespace PerfumeShop.Web.ViewModels.Customer;
 
-public sealed class CustomerViewModel
+public sealed class BuyerViewModel
 {
     public string Id { get; set; }
 

@@ -8,7 +8,7 @@ public sealed class Payment : Entity
     public int PaymentStatusId { get; set; }
     public PaymentStatus PaymentStatus { get; set; }
     public int OrderId { get; set; }
-    public Order Order { get; set; }
+    public OrderHeader Order { get; set; }
 
     public Payment()
     {

@@ -4,7 +4,7 @@ public sealed class ShoppingDbContext : DbContext
 {
     public DbSet<Basket> Baskets { get; set; }
     public DbSet<BasketItem> BasketItems { get; set; }
-	public DbSet<Order> Orders { get; set; }
+	public DbSet<OrderHeader> OrderHeaders { get; set; }
 	public DbSet<OrderStatus> OrderStatuses { get; set; }
 	public DbSet<OrderDetail> OrderDetails { get; set; }
 	public DbSet<OrderItem> OrderItems { get; set; }
@@ -25,7 +25,7 @@ public sealed class ShoppingDbContext : DbContext
 		modelBuilder.ApplyConfiguration(new PaymentStatusConfig());
 		modelBuilder.ApplyConfiguration(new BasketConfig());
         modelBuilder.ApplyConfiguration(new BasketItemConfig());
-        modelBuilder.ApplyConfiguration(new OrderConfig());
+        modelBuilder.ApplyConfiguration(new OrderHeaderConfig());
 		modelBuilder.ApplyConfiguration(new OrderItemConfig());
         modelBuilder.ApplyConfiguration(new OrderDetailsConfig());
         modelBuilder.ApplyConfiguration(new PaymentConfig());

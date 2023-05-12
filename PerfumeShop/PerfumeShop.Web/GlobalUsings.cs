@@ -38,4 +38,4 @@ global using System.Net;
 global using PerfumeShop.Core.Models.ValueObjects;
 global using PerfumeShop.Infrastructure.DataAccess.InitializeDb;
 global using PerfumeShop.Web.Utilities;
-global using PerfumeShop.Infrastructure.Stripe;
+global using PerfumeShop.Infrastructure.PaymentConfiguration;

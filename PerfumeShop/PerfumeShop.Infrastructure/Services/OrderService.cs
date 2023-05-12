@@ -20,7 +20,7 @@ public sealed class OrderService : IOrderService
     }
 
 
-    public async Task<Order> CreateOrderAsync(Addressee addressee, int basketId, string customerId)
+    public async Task<OrderHeader> CreateOrderAsync(Addressee addressee, int basketId, string customerId)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
 
@@ -30,9 +30,9 @@ public sealed class OrderService : IOrderService
             selector: b => b.Items);
 
         var orderItems = await GetOrderItemsAsync(basketItems);
-        var order = new Order(OrderStatuses.Pending, orderItems, customerId);
+        var order = new OrderHeader(OrderStatuses.Pending, orderItems, customerId);
 
-        _shopping.GetRepository<Order>().Add(order);
+        _shopping.GetRepository<OrderHeader>().Add(order);
         await _shopping.SaveChangesAsync();
 
         var payment = new Payment(PaymentStatuses.Pending, order.Id);
@@ -52,7 +52,7 @@ public sealed class OrderService : IOrderService
 
     public async Task UpdateOrderStatus(int orderId, OrderStatuses orderStatus)
     {
-        var orderRepository = _shopping.GetRepository<Order>();
+        var orderRepository = _shopping.GetRepository<OrderHeader>();
         var order = await orderRepository.GetFirstOrDefaultAsync(
             predicate: o => o.Id == orderId,
             include: o => o.Include(p => p.Payment));

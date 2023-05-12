@@ -9,7 +9,7 @@ public sealed class OrderItem : Entity
     public int ProductId { get; set; }
 
 	public int OrderId { get; set; }
-    public Order Order { get; set; }
+    public OrderHeader Order { get; set; }
 
     private OrderItem()
     {       
