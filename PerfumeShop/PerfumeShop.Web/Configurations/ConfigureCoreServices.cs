@@ -18,6 +18,7 @@ public static class ConfigureCoreServices
 		services.AddScoped<ICheckoutService, CheckoutService>();
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<ICatalogProductService, CatalogProductService>();
+		services.AddScoped<IPaymentService, PaymentService>();
 
 		return services;
     }
