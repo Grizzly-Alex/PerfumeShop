@@ -37,7 +37,7 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
 
         builder.HasOne(p => p.Payment)
             .WithOne(d => d.Order)
-            .HasForeignKey<Payment>(e => e.OrderId)
+            .HasForeignKey<PaymentDetail>(e => e.OrderId)
             .IsRequired(true)
             .OnDelete(DeleteBehavior.Restrict);
 

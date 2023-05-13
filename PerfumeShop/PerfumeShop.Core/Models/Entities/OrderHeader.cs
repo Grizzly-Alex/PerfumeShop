@@ -10,7 +10,7 @@ public sealed class OrderHeader : Entity
 	public int OrderStatusId { get; private set; }
 	public OrderStatus OrderStatus { get; private set; }
     public OrderDetail Details { get; set; }  
-    public Payment Payment { get; set; }
+    public PaymentDetail Payment { get; set; }
 
     private readonly List<OrderItem> _orderItems = new();
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();

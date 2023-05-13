@@ -2,5 +2,5 @@
 
 public interface IPaymentService
 {
-    Task PayAsync(Buyer buyer, OrderHeader order);
+    Task<PaymentDetail> PayAsync(Payment payment, CancellationToken ct);
 }

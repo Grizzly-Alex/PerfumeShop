@@ -13,6 +13,12 @@ public class ExceptionHandlingMiddleware : IMiddleware
         {
             await next(context);
         }
+        catch (OperationCanceledException ex)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            _logger.LogError($"{context.GetEndpoint()} {ex.Message}");
+            await context.Response.WriteAsync(ex.Message);
+        }
         catch (NullReferenceException ex)
         {
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;

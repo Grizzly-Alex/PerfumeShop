@@ -35,12 +35,12 @@ public sealed class OrderService : IOrderService
         _shopping.GetRepository<OrderHeader>().Add(order);
         await _shopping.SaveChangesAsync();
 
-        var payment = new Payment(PaymentStatuses.Pending, order.Id);
+        var payment = new PaymentDetail(PaymentStatuses.Pending, order.Id);
         var cost = _checkoutService.CalculateCostAsync(orderItems);
         var orderDetail = new OrderDetail(order.Id, cost, addressee);
 
         _shopping.GetRepository<OrderDetail>().Add(orderDetail);
-        _shopping.GetRepository<Payment>().Add(payment);
+        _shopping.GetRepository<PaymentDetail>().Add(payment);
         await _shopping.SaveChangesAsync();
 
         _logger.LogInformation($"Order with ID:'{order.Id}' has been created.");

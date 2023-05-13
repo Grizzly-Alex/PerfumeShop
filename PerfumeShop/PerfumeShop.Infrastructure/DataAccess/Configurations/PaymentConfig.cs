@@ -1,8 +1,8 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess.Configurations;
 
-public sealed class PaymentConfig : IEntityTypeConfiguration<Payment>
+public sealed class PaymentConfig : IEntityTypeConfiguration<PaymentDetail>
 {
-    public void Configure(EntityTypeBuilder<Payment> builder)
+    public void Configure(EntityTypeBuilder<PaymentDetail> builder)
     {
         builder.Property(p => p.Id)
             .IsRequired(true);
