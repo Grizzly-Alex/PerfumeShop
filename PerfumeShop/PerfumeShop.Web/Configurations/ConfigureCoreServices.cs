@@ -1,13 +1,11 @@
-﻿using OrderService = PerfumeShop.Infrastructure.Services.OrderService;
-
-namespace PerfumeShop.Web.Configurations;
+﻿namespace PerfumeShop.Web.Configurations;
 
 public static class ConfigureCoreServices
 {
     public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
-		services.AddScoped<ShoppingDbInitializer>();
+		services.AddScoped<SaleDbInitializer>();
 		services.AddScoped<IdentityDbInitializer>();
 		services.AddScoped<CatalogDbInitializer>();
 		services.AddTransient<IEmailSender, EmailSender>();

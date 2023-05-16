@@ -3,4 +3,4 @@
 public record Buyer(
     string Email,
     string Name,
-    PaymentCard CreditCard);
+    PaymentCard PaymentCard);

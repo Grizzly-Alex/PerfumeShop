@@ -2,9 +2,9 @@
 
 public sealed class BasketQueryService : IBasketQueryService
 {
-	private readonly IUnitOfWork<ShoppingDbContext> _unitOfWork;
+	private readonly IUnitOfWork<SaleDbContext> _unitOfWork;
 
-    public BasketQueryService(IUnitOfWork<ShoppingDbContext> unitOfWork)
+    public BasketQueryService(IUnitOfWork<SaleDbContext> unitOfWork)
 		=> _unitOfWork = unitOfWork;
 
 

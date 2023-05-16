@@ -6,4 +6,3 @@ public record PaymentCard(
     string ExpirationYear,
     string ExpirationMonth,
     string Cvc);
-

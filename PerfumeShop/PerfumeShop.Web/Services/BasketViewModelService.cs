@@ -5,12 +5,12 @@ public sealed class BasketViewModelService : IBasketViewModelService
     private readonly IMapper _mapper;
     private readonly ICheckoutService _checkoutService;
     private readonly IUnitOfWork<CatalogDbContext> _catalog;
-    private readonly IUnitOfWork<ShoppingDbContext> _shopping;
+    private readonly IUnitOfWork<SaleDbContext> _shopping;
     private readonly ILogger<BasketService> _logger;
 
 
     public BasketViewModelService(IMapper mapper,
-        IUnitOfWork<ShoppingDbContext> shopping,
+        IUnitOfWork<SaleDbContext> shopping,
         IUnitOfWork<CatalogDbContext> catalog,
 		ICheckoutService checkoutService,
 	    ILogger<BasketService> logger)

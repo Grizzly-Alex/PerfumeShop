@@ -9,8 +9,9 @@ public sealed class OrderHeader : Entity
     public string TrackingId { get; private set; } 
 	public int OrderStatusId { get; private set; }
 	public OrderStatus OrderStatus { get; private set; }
-    public OrderDetail Details { get; set; }  
-    public PaymentDetail Payment { get; set; }
+    public Cost Cost { get; private set; }
+    public Addressee Addressee { get; private set; }
+    public PaymentDetail PaymentDetail { get; set; }
 
     private readonly List<OrderItem> _orderItems = new();
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
@@ -19,8 +20,10 @@ public sealed class OrderHeader : Entity
 	{
 	}
 
-	public OrderHeader(OrderStatuses status, List<OrderItem> orderItems, string customerId)
+	public OrderHeader(OrderStatuses status, List<OrderItem> orderItems, Cost cost, Addressee addressee, string customerId)
     {
+        Addressee = Guard.Against.Null(addressee, nameof(addressee));
+        Cost = Guard.Against.Null(cost, nameof(cost));
         OrderStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
         CustomerId = Guard.Against.NullOrEmpty(customerId, nameof(customerId));;
         orderItems.ForEach(i => i.OrderId = Guard.Against.Null(Id, nameof(Id)));

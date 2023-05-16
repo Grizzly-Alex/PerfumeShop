@@ -3,7 +3,6 @@
 public sealed class PaymentDetail : Entity
 {
     public DateTime? PaymentDate { get; private set; }
-    public string? SessionId { get; private set; }
     public string? PaymentIntentId { get; private set; }
     public int PaymentStatusId { get; set; }
     public PaymentStatus PaymentStatus { get; set; }

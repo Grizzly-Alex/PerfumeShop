@@ -4,12 +4,12 @@
 public class CheckoutService : ICheckoutService
 {
 	private readonly IUnitOfWork<CatalogDbContext> _catalog;
-    private readonly IUnitOfWork<ShoppingDbContext> _shopping;
+    private readonly IUnitOfWork<SaleDbContext> _shopping;
 	private readonly ILogger<CheckoutService> _logger;
 
     public CheckoutService(
 		IUnitOfWork<CatalogDbContext> catalog,
-        IUnitOfWork<ShoppingDbContext> shopping,
+        IUnitOfWork<SaleDbContext> shopping,
         ILogger<CheckoutService> logger)
     {
 		_catalog = catalog;

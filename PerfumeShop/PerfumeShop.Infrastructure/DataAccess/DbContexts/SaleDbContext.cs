@@ -1,0 +1,32 @@
+﻿namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
+
+public sealed class SaleDbContext : DbContext
+{
+    public DbSet<Basket> Baskets { get; set; }
+    public DbSet<BasketItem> BasketItems { get; set; }
+	public DbSet<OrderHeader> OrderHeaders { get; set; }
+	public DbSet<OrderStatus> OrderStatuses { get; set; }
+	public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<PaymentDetail> PaymentDetails { get; set; }
+	public DbSet<PaymentStatus> PaymentStatuses { get; set; }
+
+    public SaleDbContext(DbContextOptions<SaleDbContext> options) : base(options) { }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+		#region Seeds
+		modelBuilder.SeedEnumValues<OrderStatuses, OrderStatus>(value => value);
+		modelBuilder.SeedEnumValues<PaymentStatuses, PaymentStatus>(value => value);
+		#endregion
+
+		#region Configurations
+		modelBuilder.ApplyConfiguration(new OrderStatusConfig());
+		modelBuilder.ApplyConfiguration(new PaymentStatusConfig());
+		modelBuilder.ApplyConfiguration(new BasketConfig());
+        modelBuilder.ApplyConfiguration(new BasketItemConfig());
+        modelBuilder.ApplyConfiguration(new OrderHeaderConfig());
+		modelBuilder.ApplyConfiguration(new OrderItemConfig());
+        modelBuilder.ApplyConfiguration(new PaymentDetailConfig());
+        #endregion
+    }
+}

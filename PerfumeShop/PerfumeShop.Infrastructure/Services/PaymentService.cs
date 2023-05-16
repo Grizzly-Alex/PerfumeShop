@@ -3,7 +3,7 @@
 public sealed class PaymentService : IPaymentService
 {
     private readonly ILogger<PaymentService> _logger;
-    private readonly IUnitOfWork<ShoppingDbContext> _unitOfWork;
+    private readonly IUnitOfWork<SaleDbContext> _unitOfWork;
     private readonly ChargeService _chargeService;
     private readonly CustomerService _customerService;
     private readonly TokenService _tokenService;
@@ -24,7 +24,7 @@ public sealed class PaymentService : IPaymentService
 
     public PaymentService(
         ILogger<PaymentService> logger,
-        IUnitOfWork<ShoppingDbContext> unitOfWork,
+        IUnitOfWork<SaleDbContext> unitOfWork,
         ChargeService chargeService,
         CustomerService customerService,
         TokenService tokenService)
@@ -76,11 +76,11 @@ public sealed class PaymentService : IPaymentService
         {
             Card = new TokenCardOptions
             {
-                Name = buyer.CreditCard.NameOwner,
-                Number = buyer.CreditCard.CardNumber,
-                ExpYear = buyer.CreditCard.ExpirationYear,
-                ExpMonth = buyer.CreditCard.ExpirationMonth,
-                Cvc = buyer.CreditCard.Cvc,
+                Name = buyer.PaymentCard.NameOwner,
+                Number = buyer.PaymentCard.CardNumber,
+                ExpYear = buyer.PaymentCard.ExpirationYear,
+                ExpMonth = buyer.PaymentCard.ExpirationMonth,
+                Cvc = buyer.PaymentCard.Cvc,
             }
         };
         Token stripeToken = await _tokenService.CreateAsync(options: tokenOptions, cancellationToken: ct);

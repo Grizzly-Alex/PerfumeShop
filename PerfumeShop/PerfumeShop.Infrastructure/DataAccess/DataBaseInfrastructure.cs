@@ -10,9 +10,9 @@ public static class DataBaseInfrastructure
             options.EnableSensitiveDataLogging();
         });
 
-        services.AddDbContext<ShoppingDbContext>(options =>
+        services.AddDbContext<SaleDbContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("ShoppingConnection"));
+            options.UseSqlServer(configuration.GetConnectionString("SaleConnection"));
             options.EnableSensitiveDataLogging();
         });
 

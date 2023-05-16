@@ -2,12 +2,12 @@
 
 public class BasketService : IBasketService
 {
-    private readonly IUnitOfWork<ShoppingDbContext> _shopping;
+    private readonly IUnitOfWork<SaleDbContext> _shopping;
     private readonly IUnitOfWork<CatalogDbContext> _catalog;
     private readonly ILogger<BasketService> _logger;
 
     public BasketService(
-        IUnitOfWork<ShoppingDbContext> shopping,
+        IUnitOfWork<SaleDbContext> shopping,
         IUnitOfWork<CatalogDbContext> catalog,
         ILogger<BasketService> logger)
     {

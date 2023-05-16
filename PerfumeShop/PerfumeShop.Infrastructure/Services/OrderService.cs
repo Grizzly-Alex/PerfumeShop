@@ -4,13 +4,13 @@ public sealed class OrderService : IOrderService
 {
     private readonly ICheckoutService _checkoutService;
     private readonly IUnitOfWork<CatalogDbContext> _catalog;
-    private readonly IUnitOfWork<ShoppingDbContext> _shopping;
+    private readonly IUnitOfWork<SaleDbContext> _shopping;
     private readonly ILogger<OrderService> _logger;
 
     public OrderService(
         ICheckoutService checkoutService,
         IUnitOfWork<CatalogDbContext> catalog,
-        IUnitOfWork<ShoppingDbContext> shopping,
+        IUnitOfWork<SaleDbContext> shopping,
         ILogger<OrderService> logger)
     {
         _checkoutService = checkoutService;
@@ -30,22 +30,19 @@ public sealed class OrderService : IOrderService
             selector: b => b.Items);
 
         var orderItems = await GetOrderItemsAsync(basketItems);
-        var order = new OrderHeader(OrderStatuses.Pending, orderItems, customerId);
+        var cost = _checkoutService.CalculateCostAsync(orderItems);
+        var order = new OrderHeader(OrderStatuses.Pending, orderItems, cost, addressee, customerId);
 
         _shopping.GetRepository<OrderHeader>().Add(order);
         await _shopping.SaveChangesAsync();
 
         var payment = new PaymentDetail(PaymentStatuses.Pending, order.Id);
-        var cost = _checkoutService.CalculateCostAsync(orderItems);
-        var orderDetail = new OrderDetail(order.Id, cost, addressee);
 
-        _shopping.GetRepository<OrderDetail>().Add(orderDetail);
         _shopping.GetRepository<PaymentDetail>().Add(payment);
         await _shopping.SaveChangesAsync();
 
         _logger.LogInformation($"Order with ID:'{order.Id}' has been created.");
-        _logger.LogInformation($"Order detail with ID:'{order.Details.Id}' has been created.");
-        _logger.LogInformation($"Payment with ID:'{order.Payment.Id}' has been created.");
+        _logger.LogInformation($"Payment detail with ID:'{order.PaymentDetail.Id}' has been created.");
 
         return order;
     }
@@ -55,7 +52,7 @@ public sealed class OrderService : IOrderService
         var orderRepository = _shopping.GetRepository<OrderHeader>();
         var order = await orderRepository.GetFirstOrDefaultAsync(
             predicate: o => o.Id == orderId,
-            include: o => o.Include(p => p.Payment));
+            include: o => o.Include(p => p.PaymentDetail));
 
         if (order is not null)
         {

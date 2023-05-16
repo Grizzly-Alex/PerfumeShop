@@ -26,7 +26,7 @@ public static class WebDependencies
             {
 				await scope.ServiceProvider.GetRequiredService<CatalogDbInitializer>().Initialize();
 				await scope.ServiceProvider.GetRequiredService<IdentityDbInitializer>().Initialize();
-				await scope.ServiceProvider.GetRequiredService<ShoppingDbInitializer>().Initialize();
+				await scope.ServiceProvider.GetRequiredService<SaleDbInitializer>().Initialize();
 			}
             catch (Exception ex)
             {
