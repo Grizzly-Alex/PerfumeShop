@@ -1,5 +1,3 @@
-using PerfumeShop.Web.ViewModels.Customer;
-
 namespace PerfumeShop.Web.Areas.Shop.Pages;
 
 
@@ -12,6 +10,7 @@ public class CheckoutModel : PageModel
 	private readonly ICatalogProductService _catalogProductService;
 	private readonly IOrderService _orderService;
 	private readonly IBasketService _basketService;
+	private readonly IPaymentService _paymentService;
 	private readonly SignInManager<AppUser> _signInManager;
 	private readonly UserManager<AppUser> _userManager;
 
@@ -22,6 +21,7 @@ public class CheckoutModel : PageModel
 		ICatalogProductService catalogProductService,
         IOrderService orderService,
 		IBasketService basketService,
+		IPaymentService paymentService,
         SignInManager<AppUser> signInManager,
         UserManager<AppUser> userManager)
     {
@@ -30,10 +30,13 @@ public class CheckoutModel : PageModel
 		_catalogProductService = catalogProductService;
         _orderService = orderService;
 		_basketService = basketService;
+		_paymentService = paymentService;
         _signInManager = signInManager;
 		_userManager = userManager;
     }
 
+    [BindProperty]
+    public PaymentCardViewModel PaymentCardModel { get; set; } = new();
 	[BindProperty]
 	public BuyerViewModel BuyerInfoModel { get; set; } = new();
     public BasketViewModel BasketModel { get; set; } = new();
@@ -44,10 +47,17 @@ public class CheckoutModel : PageModel
 		await SetModelsAsync();
 	}
 
-	public async Task<IActionResult> OnPost(int basketId)
+	public async Task<IActionResult> OnPost(int basketId, CancellationToken ct)
 	{
 		var addressee = _mapper.Map<Addressee>(BuyerInfoModel);
 		var order = await _orderService.CreateOrderAsync(addressee, basketId, BuyerInfoModel.Id);
+
+		var paymentCard = _mapper.Map<PaymentCard>(PaymentCardModel);
+        string fullName = string.Concat(BuyerInfoModel.FirstName, " ", BuyerInfoModel.LastName);
+		Buyer buyer = new Buyer(BuyerInfoModel.Email, fullName, paymentCard);
+		Payment payment = new(buyer, order.Id, "usd", order.Cost.TotalCost);		
+		await _paymentService.PayAsync(payment , ct);
+
 		await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 		await _basketService.ClearBasketAsync(basketId);
 
@@ -68,7 +78,7 @@ public class CheckoutModel : PageModel
 		{
 			BasketModel = await _basketViewModelService.GetBasketForUserAsync(GetAnonymousUserId());
 		}
-	}
+    }
 
 	private string GetAnonymousUserId()
 	{		

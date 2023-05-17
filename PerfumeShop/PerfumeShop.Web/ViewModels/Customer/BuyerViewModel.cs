@@ -12,6 +12,11 @@ public sealed class BuyerViewModel
     [Display(Name = "Last Name")]
     public string? LastName { get; set; }
 
+    [EmailAddress]
+    [DataType(DataType.EmailAddress)]
+    [Display(Name = "Email")]
+    public string? Email { get; set; }
+
     [Phone]
     [DataType(DataType.PhoneNumber)]
     [Display(Name = "Phone Number")]
@@ -31,7 +36,5 @@ public sealed class BuyerViewModel
 
     [DataType(DataType.Text)]
     [Display(Name = "Street Address")]
-    public string? StreetAddress { get; set; }
-
-    public PaymentCardViewModel PaymentCard { get; set; }   
+    public string? StreetAddress { get; set; } 
 }

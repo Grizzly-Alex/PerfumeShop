@@ -1,10 +1,24 @@
 ﻿namespace PerfumeShop.Web.ViewModels.Customer;
 
-public class PaymentCardViewModel
+public sealed class PaymentCardViewModel
 {
-    public string Name;
-    public string CardNumber;
-    public string ExpirationYear;
-    public string ExpirationMonth;
-    public string Cvc;
+    [Required(ErrorMessage = "Value {0} must not be empty!")]
+    [Display(Name = "Name")]
+    public string? NameOwner { get; set; }
+
+    [Required(ErrorMessage = "Value {0} must not be empty!")]
+    [Display(Name = "Number")]
+    public string? CardNumber { get; set; }
+
+    [Required(ErrorMessage = "Value {0} must not be empty!")]
+    [Display(Name = "Year")]
+    public string? ExpirationYear { get; set; }
+
+    [Required(ErrorMessage = "Value {0} must not be empty!")]
+    [Display(Name = "Month")]
+    public string? ExpirationMonth { get; set; }
+
+    [Required(ErrorMessage = "Value {0} must not be empty!")]
+    [Display(Name = "Cvc")]
+    public string? Cvc { get; set; }
 }

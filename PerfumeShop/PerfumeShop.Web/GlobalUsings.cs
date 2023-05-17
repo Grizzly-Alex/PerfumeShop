@@ -39,3 +39,4 @@ global using PerfumeShop.Core.Models.ValueObjects;
 global using PerfumeShop.Infrastructure.DataAccess.InitializeDb;
 global using PerfumeShop.Web.Utilities;
 global using PerfumeShop.Infrastructure.PaymentConfiguration;
+global using PerfumeShop.Web.ViewModels.Customer;
