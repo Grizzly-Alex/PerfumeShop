@@ -74,7 +74,12 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
                 .HasColumnName("PhoneNumber")
                 .HasMaxLength(256)
                 .IsRequired(true);
-        });
+
+			a.Property(a => a.ReceiptEmail)
+				.HasColumnName("ReceiptEmail")
+				.HasMaxLength(256)
+				.IsRequired(true);
+		});
 
         builder.Navigation(x => x.Customer).IsRequired();
         #endregion

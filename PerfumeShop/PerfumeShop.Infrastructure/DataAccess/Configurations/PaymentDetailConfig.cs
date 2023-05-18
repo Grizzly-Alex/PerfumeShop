@@ -13,11 +13,6 @@ public sealed class PaymentDetailConfig : IEntityTypeConfiguration<PaymentDetail
             .HasPrecision(0)
             .IsRequired(false);
 
-        builder.Property(a => a.PaymentIntentId)
-            .HasColumnName("PaymentIntentId")
-            .HasMaxLength(256)
-            .IsRequired(false);
-
         builder.Property(a => a.PaymentStatusId)
             .HasColumnName("PaymentStatusId");
 

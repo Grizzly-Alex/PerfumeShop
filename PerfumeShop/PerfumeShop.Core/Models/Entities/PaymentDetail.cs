@@ -3,7 +3,6 @@
 public sealed class PaymentDetail : Entity
 {
     public DateTime? PaymentDate { get; private set; }
-    public string? PaymentIntentId { get; private set; }
     public int PaymentStatusId { get; set; }
     public PaymentStatus PaymentStatus { get; set; }
     public int OrderId { get; set; }
@@ -20,6 +19,5 @@ public sealed class PaymentDetail : Entity
     }
 
     public void SetPaymentStatus(PaymentStatuses status) => PaymentStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
-    public void SetPaymentIntentId(string paymentIntentId) => PaymentIntentId = Guard.Against.NullOrEmpty(paymentIntentId, nameof(paymentIntentId));
     public void SetPaymentDate(DateTime date) => PaymentDate = Guard.Against.Null(date, nameof(date));
 }

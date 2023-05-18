@@ -13,14 +13,17 @@ public sealed class PaymentService : IPaymentService
         string Id,
         string Name,
         string Phone,
-        string Email);
+        string Email,
+        string State,
+        string City,
+        string Line1,
+        string PostalCode);
 
     private record StripePayment(
         string CustomerId,
         string ReceiptEmail,
         string Currency,
         long Amount,
-        string PaymentIntentId,
         bool Paid);
 
     public PaymentService(
@@ -43,7 +46,6 @@ public sealed class PaymentService : IPaymentService
         StripePayment stripePayment = await AddStripePaymentAsync(payment, stripeCustomer.Id, ct);
         return await UpdatePaymentDetail(stripePayment, payment.OrderId);
     }
-
     
     #region Stripe
     private async Task<StripeCustomer> AddStripeCustomerAsync(Buyer buyer, CancellationToken ct)
@@ -65,10 +67,10 @@ public sealed class PaymentService : IPaymentService
         {
             Address = new AddressOptions
             {
-                State = "",
-                City = "",
-                Country = "",
-                PostalCode = "",
+                State = buyer.Address.State,
+                City = buyer.Address.City,
+                Line1 = buyer.Address.StreetAddress,
+                PostalCode = buyer.Address.PostalCode,
             },
             Name = buyer.Name,
             Email = buyer.Email,
@@ -77,7 +79,15 @@ public sealed class PaymentService : IPaymentService
         };
         Customer createdCustomer = await _customerService.CreateAsync(options: customerOptions, cancellationToken: ct);
 
-        return new StripeCustomer(createdCustomer.Id, createdCustomer.Name, createdCustomer.Email, createdCustomer.Phone);
+        return new StripeCustomer(
+            createdCustomer.Id,
+            createdCustomer.Name,
+            createdCustomer.Email,
+            createdCustomer.Phone,
+            createdCustomer.Address.State,
+			createdCustomer.Address.City,
+			createdCustomer.Address.Line1,
+            createdCustomer.Address.PostalCode);
     }
 
     private async Task<StripePayment> AddStripePaymentAsync(Payment payment, string stripeCustomerId, CancellationToken ct)
@@ -92,12 +102,11 @@ public sealed class PaymentService : IPaymentService
 
         Charge createdPayment = await _chargeService.CreateAsync(options: paymentOptions, cancellationToken: ct);
 
-        return new StripePayment(
+		return new StripePayment(
               createdPayment.CustomerId,
               createdPayment.ReceiptEmail,
               createdPayment.Currency,
               createdPayment.Amount,
-              createdPayment.PaymentIntent.Id,
               createdPayment.Paid);
     }
     #endregion
@@ -111,7 +120,7 @@ public sealed class PaymentService : IPaymentService
         if (stripePayment.Paid)
         {
             paymentDetail.SetPaymentStatus(PaymentStatuses.Approved);
-            paymentDetail.SetPaymentIntentId(stripePayment.PaymentIntentId);
+            paymentDetail.SetPaymentDate(DateTime.UtcNow);
             paymentDetailRepository.Update(paymentDetail);
 
             _logger.LogInformation($"Order with ID '{orderId}' successfully paid.");

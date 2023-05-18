@@ -58,9 +58,11 @@ public class CheckoutModel : PageModel
 		var paymentCard = _mapper.Map<PaymentCard>(PaymentCardModel);
         		
         var order = await _orderService.CreateOrderAsync(shippingAddress, customer, basketId);
-		Buyer buyer = new(BuyerModel.Email, customer.PhoneNumber, customer.GetFullName(), shippingAddress, paymentCard);
-		Payment payment = new(buyer, order.Id, "usd", order.Cost.TotalCost);		
-		await _paymentService.PayAsync(payment , ct);
+
+		Buyer buyer = new(customer.ReceiptEmail, customer.PhoneNumber, customer.GetFullName(), shippingAddress, paymentCard);
+		Payment payment = new(buyer, order.Id, Constants.Currency.ToLower(), order.Cost.TotalCost);	
+		
+		await _paymentService.PayAsync(payment, ct);
 
 		await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 		await _basketService.ClearBasketAsync(basketId);
