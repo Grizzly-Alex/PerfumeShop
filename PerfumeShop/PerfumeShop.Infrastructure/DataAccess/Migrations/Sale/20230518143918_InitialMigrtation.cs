@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sales
+namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 {
     /// <inheritdoc />
     public partial class InitialMigrtation : Migration
@@ -82,7 +82,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sales
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: false),
                     ShippingDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
-                    CustomerId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     EmployeeId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     TrackingId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false),
@@ -90,12 +89,13 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sales
                     ShippingCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     PromoCodeCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     TotalCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    CustomerName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    CustomerSurname = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     State = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     City = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     StreetAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
                 },
                 constraints: table =>

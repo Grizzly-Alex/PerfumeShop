@@ -4,13 +4,13 @@ public sealed class OrderHeader : Entity
 {
     public DateTime OrderDate { get; private set; }
     public DateTime? ShippingDate { get; private set; }
-    public string CustomerId { get; private set; }
     public string? EmployeeId { get; private set; }
     public string TrackingId { get; private set; } 
 	public int OrderStatusId { get; private set; }
 	public OrderStatus OrderStatus { get; private set; }
     public Cost Cost { get; private set; }
-    public Addressee Addressee { get; private set; }
+    public Customer Customer { get; private set; }
+    public Address ShippingAddress { get; private set; }
     public PaymentDetail PaymentDetail { get; set; }
 
     private readonly List<OrderItem> _orderItems = new();
@@ -20,12 +20,12 @@ public sealed class OrderHeader : Entity
 	{
 	}
 
-	public OrderHeader(OrderStatuses status, List<OrderItem> orderItems, Cost cost, Addressee addressee, string customerId)
+	public OrderHeader(OrderStatuses status, List<OrderItem> orderItems, Cost cost, Customer customer, Address shippingAddress)
     {
-        Addressee = Guard.Against.Null(addressee, nameof(addressee));
+        Customer = Guard.Against.Null(customer, nameof(customer));
+        ShippingAddress = Guard.Against.Null(shippingAddress, nameof(shippingAddress));
         Cost = Guard.Against.Null(cost, nameof(cost));
-        OrderStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
-        CustomerId = Guard.Against.NullOrEmpty(customerId, nameof(customerId));;
+        OrderStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));        
         orderItems.ForEach(i => i.OrderId = Guard.Against.Null(Id, nameof(Id)));
         _orderItems = Guard.Against.Null(orderItems, nameof(orderItems));
         OrderDate = DateTime.UtcNow;

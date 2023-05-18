@@ -35,11 +35,13 @@ public class CheckoutModel : PageModel
 		_userManager = userManager;
     }
 
+    public BasketViewModel BasketModel { get; set; } = new();
     [BindProperty]
     public PaymentCardViewModel PaymentCardModel { get; set; } = new();
 	[BindProperty]
-	public BuyerViewModel BuyerInfoModel { get; set; } = new();
-    public BasketViewModel BasketModel { get; set; } = new();
+	public BuyerViewModel BuyerModel { get; set; } = new();
+	[BindProperty]
+	public AddressViewModel AddressModel { get; set; } = new();
 
 
 	public async Task OnGet()
@@ -49,12 +51,14 @@ public class CheckoutModel : PageModel
 
 	public async Task<IActionResult> OnPost(int basketId, CancellationToken ct)
 	{
-		var addressee = _mapper.Map<Addressee>(BuyerInfoModel);
-		var order = await _orderService.CreateOrderAsync(addressee, basketId, BuyerInfoModel.Id);
+		if (!ModelState.IsValid) return Page();
 
+        var shippingAddress = _mapper.Map<Address>(AddressModel);
+        var customer = _mapper.Map<Customer>(BuyerModel);
 		var paymentCard = _mapper.Map<PaymentCard>(PaymentCardModel);
-        string fullName = string.Concat(BuyerInfoModel.FirstName, " ", BuyerInfoModel.LastName);
-		Buyer buyer = new Buyer(BuyerInfoModel.Email, fullName, paymentCard);
+        		
+        var order = await _orderService.CreateOrderAsync(shippingAddress, customer, basketId);
+		Buyer buyer = new(BuyerModel.Email, customer.PhoneNumber, customer.GetFullName(), shippingAddress, paymentCard);
 		Payment payment = new(buyer, order.Id, "usd", order.Cost.TotalCost);		
 		await _paymentService.PayAsync(payment , ct);
 
@@ -72,7 +76,8 @@ public class CheckoutModel : PageModel
 
             BasketModel = await _basketViewModelService.GetBasketForUserAsync(userName);
             var user = await _userManager.FindByNameAsync(userName);
-            BuyerInfoModel = _mapper.Map<BuyerViewModel>(user);
+            BuyerModel = _mapper.Map<BuyerViewModel>(user);
+			AddressModel = _mapper.Map<AddressViewModel>(user);
         }
 		else
 		{

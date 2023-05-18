@@ -43,75 +43,75 @@
 
             <form asp-page="Checkout" asp-route-basketId="@Model.BasketModel.Id" method="post" class="needs-validation" novalidate>
 
-                <input asp-for="@Model.BuyerInfoModel.Id" hidden/>
+                <input asp-for="@Model.BuyerModel.Id" hidden/>
 
                 <div class="row g-3">
                     <div class="col-12">
-                        <label asp-for="@Model.BuyerInfoModel.Email"></label>
-                        <input asp-for="@Model.BuyerInfoModel.Email" class="form-control" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.Email" class="text-danger"></span>
+                        <label asp-for="@Model.BuyerModel.Email"></label>
+                        <input asp-for="@Model.BuyerModel.Email" class="form-control" required />
+                        <span asp-validation-for="@Model.BuyerModel.Email" class="text-danger"></span>
                         <div class="valid-feedback">
                             Valid
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <label asp-for="@Model.BuyerInfoModel.FirstName"></label>
-                        <input asp-for="@Model.BuyerInfoModel.FirstName" class="form-control" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.FirstName" class="text-danger"></span>
+                        <label asp-for="@Model.BuyerModel.FirstName"></label>
+                        <input asp-for="@Model.BuyerModel.FirstName" class="form-control" required />
+                        <span asp-validation-for="@Model.BuyerModel.FirstName" class="text-danger"></span>
                         <div class="valid-feedback">
                             Valid
                         </div>
                     </div>
 
                     <div class="col-sm-6">
-                        <label asp-for="@Model.BuyerInfoModel.LastName"></label>
-                        <input asp-for="@Model.BuyerInfoModel.LastName" class="form-control" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.LastName" class="text-danger"></span>
-                        <div class="valid-feedback">
-                            Valid
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <label asp-for="@Model.BuyerInfoModel.State"></label>
-                        <input asp-for="@Model.BuyerInfoModel.State" class="form-control" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.State" class="text-danger"></span>
-                        <div class="valid-feedback">
-                            Valid
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <label asp-for="@Model.BuyerInfoModel.City"></label>
-                        <input asp-for="@Model.BuyerInfoModel.City" class="form-control" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.City" class="text-danger"></span>
+                        <label asp-for="@Model.BuyerModel.LastName"></label>
+                        <input asp-for="@Model.BuyerModel.LastName" class="form-control" required />
+                        <span asp-validation-for="@Model.BuyerModel.LastName" class="text-danger"></span>
                         <div class="valid-feedback">
                             Valid
                         </div>
                     </div>
 
                     <div class="col-12">
-                        <label asp-for="@Model.BuyerInfoModel.StreetAddress"></label>
-                        <input asp-for="@Model.BuyerInfoModel.StreetAddress" class="form-control" placeholder="ex: 123 Main Street, Apartment 666" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.StreetAddress" class="text-danger" ></span>
+                        <label asp-for="@Model.BuyerModel.PhoneNumber"></label>
+                        <input asp-for="@Model.BuyerModel.PhoneNumber" class="form-control" type="tel" placeholder="ex: 1-541-754-3010" required />
+                        <span asp-validation-for="@Model.BuyerModel.PhoneNumber" class="text-danger"></span>
                         <div class="valid-feedback">
                             Valid
                         </div>
                     </div>
 
                     <div class="col-6">
-                        <label asp-for="@Model.BuyerInfoModel.PhoneNumber"></label>
-                        <input asp-for="@Model.BuyerInfoModel.PhoneNumber" class="form-control" placeholder="ex: 1-541-754-3010" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.PhoneNumber" class="text-danger"></span>
+                        <label asp-for="@Model.AddressModel.State"></label>
+                        <input asp-for="@Model.AddressModel.State" class="form-control" required />
+                        <span asp-validation-for="@Model.AddressModel.State" class="text-danger"></span>
                         <div class="valid-feedback">
                             Valid
                         </div>
                     </div>
 
                     <div class="col-6">
-                        <label asp-for="@Model.BuyerInfoModel.PostalCode"></label>
-                        <input asp-for="@Model.BuyerInfoModel.PostalCode" class="form-control" placeholder="ex: 220050" required />
-                        <span asp-validation-for="@Model.BuyerInfoModel.PostalCode" class="text-danger"></span>
+                        <label asp-for="@Model.AddressModel.City"></label>
+                        <input asp-for="@Model.AddressModel.City" class="form-control" required />
+                        <span asp-validation-for="@Model.AddressModel.City" class="text-danger"></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                    </div>
+
+                    <div class="col-10">
+                        <label asp-for="@Model.AddressModel.StreetAddress"></label>
+                        <input asp-for="@Model.AddressModel.StreetAddress" class="form-control" placeholder="ex: 123 Main Street, Apartment 666" required />
+                        <span asp-validation-for="@Model.AddressModel.StreetAddress" class="text-danger"></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                    </div>
+                   
+                    <div class="col-2">
+                        <label asp-for="@Model.AddressModel.PostalCode"></label>
+                        <input asp-for="@Model.AddressModel.PostalCode" class="form-control" placeholder="ex: 220050" required />
+                        <span asp-validation-for="@Model.AddressModel.PostalCode" class="text-danger"></span>
                         <div class="valid-feedback">
                             Valid
                         </div>

@@ -8,7 +8,7 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 
 #nullable disable
 
-namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sales
+namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 {
     [DbContext(typeof(SaleDbContext))]
     partial class SaleDbContextModelSnapshot : ModelSnapshot
@@ -80,11 +80,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sales
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("EmployeeId")
                         .HasMaxLength(256)
@@ -275,7 +270,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sales
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Addressee", "Addressee", b1 =>
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Address", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("OrderHeaderId")
                                 .HasColumnType("int");
@@ -285,24 +280,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sales
                                 .HasMaxLength(256)
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("City");
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("FirstName");
-
-                            b1.Property<string>("LastName")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("LastName");
-
-                            b1.Property<string>("PhoneNumber")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("PhoneNumber");
 
                             b1.Property<string>("PostalCode")
                                 .IsRequired()
@@ -363,13 +340,53 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sales
                                 .HasForeignKey("OrderHeaderId");
                         });
 
-                    b.Navigation("Addressee")
-                        .IsRequired();
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Customer", "Customer", b1 =>
+                        {
+                            b1.Property<int>("OrderHeaderId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("CustomerName");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("CustomerSurname");
+
+                            b1.Property<string>("PhoneNumber")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("PhoneNumber");
+
+                            b1.Property<string>("UserId")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("UserId");
+
+                            b1.HasKey("OrderHeaderId");
+
+                            b1.ToTable("OrderHeaders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderHeaderId");
+                        });
 
                     b.Navigation("Cost")
                         .IsRequired();
 
+                    b.Navigation("Customer")
+                        .IsRequired();
+
                     b.Navigation("OrderStatus");
+
+                    b.Navigation("ShippingAddress")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderItem", b =>

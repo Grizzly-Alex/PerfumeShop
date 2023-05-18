@@ -1,4 +1,7 @@
-﻿namespace PerfumeShop.Infrastructure.Services;
+﻿using Address = PerfumeShop.Core.Models.ValueObjects.Address;
+using Customer = PerfumeShop.Core.Models.ValueObjects.Customer;
+
+namespace PerfumeShop.Infrastructure.Services;
 
 public sealed class OrderService : IOrderService
 {
@@ -20,7 +23,7 @@ public sealed class OrderService : IOrderService
     }
 
 
-    public async Task<OrderHeader> CreateOrderAsync(Addressee addressee, int basketId, string customerId)
+    public async Task<OrderHeader> CreateOrderAsync(Address shippingAddress, Customer customer, int basketId)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
 
@@ -31,7 +34,7 @@ public sealed class OrderService : IOrderService
 
         var orderItems = await GetOrderItemsAsync(basketItems);
         var cost = _checkoutService.CalculateCostAsync(orderItems);
-        var order = new OrderHeader(OrderStatuses.Pending, orderItems, cost, addressee, customerId);
+        var order = new OrderHeader(OrderStatuses.Pending, orderItems, cost, customer, shippingAddress);
 
         _shopping.GetRepository<OrderHeader>().Add(order);
         await _shopping.SaveChangesAsync();

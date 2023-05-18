@@ -7,18 +7,14 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
         builder.Property(p => p.Id)
             .IsRequired(true);
 
-        builder.Property(b => b.CustomerId)
-            .IsRequired(true)
-            .HasMaxLength(256);
-
-        builder.Property(b => b.EmployeeId)
-            .IsRequired(false)
-            .HasMaxLength(256);
-
         builder.Property(p => p.OrderDate)
             .HasColumnType("datetime2")
             .HasPrecision(0)
             .IsRequired(true);
+
+        builder.Property(b => b.EmployeeId)
+            .IsRequired(false)
+            .HasMaxLength(256);
 
         builder.Property(p => p.ShippingDate)
             .HasColumnType("datetime2")
@@ -29,19 +25,9 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
             .HasMaxLength(256)
             .IsRequired(true);
 
-        #region Addressee 
-        builder.OwnsOne(o => o.Addressee, a =>
+        #region Address
+        builder.OwnsOne(o => o.ShippingAddress, a =>
         {
-            a.Property(a => a.FirstName)
-                .HasColumnName("FirstName")
-                .HasMaxLength(256)
-                .IsRequired(true);
-
-            a.Property(a => a.LastName)
-                .HasColumnName("LastName")
-                .HasMaxLength(256)
-                .IsRequired(true);
-
             a.Property(a => a.State)
                 .HasColumnName("State")
                 .HasMaxLength(256)
@@ -61,6 +47,28 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
                 .HasColumnName("PostalCode")
                 .HasMaxLength(256)
                 .IsRequired(true);
+        });
+
+        builder.Navigation(x => x.ShippingAddress).IsRequired();
+        #endregion
+
+        #region Customer
+        builder.OwnsOne(o => o.Customer, a =>
+        {
+            a.Property(a => a.UserId)
+                .HasColumnName("UserId")
+                .HasMaxLength(256)
+                .IsRequired(true);
+
+            a.Property(a => a.FirstName)
+                .HasColumnName("CustomerName")
+                .HasMaxLength(256)
+                .IsRequired(true);
+
+            a.Property(a => a.LastName)
+                .HasColumnName("CustomerSurname")
+                .HasMaxLength(256)
+                .IsRequired(true);
 
             a.Property(a => a.PhoneNumber)
                 .HasColumnName("PhoneNumber")
@@ -68,7 +76,7 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
                 .IsRequired(true);
         });
 
-        builder.Navigation(x => x.Addressee).IsRequired();
+        builder.Navigation(x => x.Customer).IsRequired();
         #endregion
 
         #region Cost

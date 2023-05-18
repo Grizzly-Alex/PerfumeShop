@@ -1,4 +1,5 @@
-﻿namespace PerfumeShop.Infrastructure.Services;
+﻿using Customer = Stripe.Customer;
+namespace PerfumeShop.Infrastructure.Services;
 
 public sealed class PaymentService : IPaymentService
 {
@@ -11,6 +12,7 @@ public sealed class PaymentService : IPaymentService
     private record StripeCustomer(
         string Id,
         string Name,
+        string Phone,
         string Email);
 
     private record StripePayment(
@@ -18,7 +20,6 @@ public sealed class PaymentService : IPaymentService
         string ReceiptEmail,
         string Currency,
         long Amount,
-        string PaymentId,
         string PaymentIntentId,
         bool Paid);
 
@@ -42,6 +43,64 @@ public sealed class PaymentService : IPaymentService
         StripePayment stripePayment = await AddStripePaymentAsync(payment, stripeCustomer.Id, ct);
         return await UpdatePaymentDetail(stripePayment, payment.OrderId);
     }
+
+    
+    #region Stripe
+    private async Task<StripeCustomer> AddStripeCustomerAsync(Buyer buyer, CancellationToken ct)
+    {
+        var tokenOptions = new TokenCreateOptions
+        {
+            Card = new TokenCardOptions
+            {
+                Name = buyer.PaymentCard.NameOwner,
+                Number = buyer.PaymentCard.CardNumber,
+                ExpYear = buyer.PaymentCard.ExpirationYear,
+                ExpMonth = buyer.PaymentCard.ExpirationMonth,
+                Cvc = buyer.PaymentCard.Cvc,
+            }
+        };
+        Token stripeToken = await _tokenService.CreateAsync(options: tokenOptions, cancellationToken: ct);
+
+        var customerOptions = new CustomerCreateOptions
+        {
+            Address = new AddressOptions
+            {
+                State = "",
+                City = "",
+                Country = "",
+                PostalCode = "",
+            },
+            Name = buyer.Name,
+            Email = buyer.Email,
+            Phone = buyer.Phone,
+            Source = stripeToken.Id,
+        };
+        Customer createdCustomer = await _customerService.CreateAsync(options: customerOptions, cancellationToken: ct);
+
+        return new StripeCustomer(createdCustomer.Id, createdCustomer.Name, createdCustomer.Email, createdCustomer.Phone);
+    }
+
+    private async Task<StripePayment> AddStripePaymentAsync(Payment payment, string stripeCustomerId, CancellationToken ct)
+    {
+        var paymentOptions = new ChargeCreateOptions
+        { 
+            Customer = stripeCustomerId,
+            ReceiptEmail = payment.Buyer.Email,           
+            Currency = payment.Currency,
+            Amount = (long)payment.TotalPrice * 100,           
+        };
+
+        Charge createdPayment = await _chargeService.CreateAsync(options: paymentOptions, cancellationToken: ct);
+
+        return new StripePayment(
+              createdPayment.CustomerId,
+              createdPayment.ReceiptEmail,
+              createdPayment.Currency,
+              createdPayment.Amount,
+              createdPayment.PaymentIntent.Id,
+              createdPayment.Paid);
+    }
+    #endregion
 
     private async Task<PaymentDetail> UpdatePaymentDetail(StripePayment stripePayment, int orderId)
     {
@@ -68,54 +127,4 @@ public sealed class PaymentService : IPaymentService
 
         return paymentDetail;
     }
-
-    #region Stripe
-    private async Task<StripeCustomer> AddStripeCustomerAsync(Buyer buyer, CancellationToken ct)
-    {
-        var tokenOptions = new TokenCreateOptions
-        {
-            Card = new TokenCardOptions
-            {
-                Name = buyer.PaymentCard.NameOwner,
-                Number = buyer.PaymentCard.CardNumber,
-                ExpYear = buyer.PaymentCard.ExpirationYear,
-                ExpMonth = buyer.PaymentCard.ExpirationMonth,
-                Cvc = buyer.PaymentCard.Cvc,
-            }
-        };
-        Token stripeToken = await _tokenService.CreateAsync(options: tokenOptions, cancellationToken: ct);
-
-        var customerOptions = new CustomerCreateOptions
-        {
-            Name = buyer.Name,
-            Email = buyer.Email,
-            Source = stripeToken.Id,
-        };
-        Customer createdCustomer = await _customerService.CreateAsync(options: customerOptions, cancellationToken: ct);
-
-        return new StripeCustomer(createdCustomer.Name, createdCustomer.Email, createdCustomer.Id);
-    }
-
-    private async Task<StripePayment> AddStripePaymentAsync(Payment payment, string stripeCustomerId, CancellationToken ct)
-    {
-        var paymentOptions = new ChargeCreateOptions
-        {
-            Customer = stripeCustomerId,
-            ReceiptEmail = payment.Buyer.Email,           
-            Currency = payment.Currency,
-            Amount = (long)payment.TotalPrice * 100,
-        };
-
-        Charge createdPayment = await _chargeService.CreateAsync(options: paymentOptions, cancellationToken: ct);
-
-        return new StripePayment(
-              createdPayment.CustomerId,
-              createdPayment.ReceiptEmail,
-              createdPayment.Currency,
-              createdPayment.Amount,
-              createdPayment.Id,
-              createdPayment.PaymentIntentId,
-              createdPayment.Paid);
-    }
-    #endregion
 }
