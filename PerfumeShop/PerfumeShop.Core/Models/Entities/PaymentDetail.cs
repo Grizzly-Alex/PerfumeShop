@@ -18,6 +18,8 @@ public sealed class PaymentDetail : Entity
         PaymentStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
     }
 
-    public void SetPaymentStatus(PaymentStatuses status) => PaymentStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
-    public void SetPaymentDate(DateTime date) => PaymentDate = Guard.Against.Null(date, nameof(date));
+    public void SetPaymentStatus(PaymentStatuses status) 
+        => PaymentStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
+    public void SetPaymentDate(DateTime date) 
+        => PaymentDate = Guard.Against.Null(date, nameof(date));
 }

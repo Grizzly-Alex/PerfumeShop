@@ -20,3 +20,4 @@ global using MimeKit;
 global using MailKit.Net.Smtp;
 global using Microsoft.AspNetCore.Identity.UI.Services;
 global using Stripe;
+global using Microsoft.EntityFrameworkCore.Infrastructure;

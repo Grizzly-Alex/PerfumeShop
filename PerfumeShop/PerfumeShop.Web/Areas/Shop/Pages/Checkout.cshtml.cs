@@ -62,7 +62,7 @@ public class CheckoutModel : PageModel
 		Buyer buyer = new(customer.ReceiptEmail, customer.PhoneNumber, customer.GetFullName(), shippingAddress, paymentCard);
 		Payment payment = new(buyer, order.Id, Constants.Currency.ToLower(), order.Cost.TotalCost);	
 		
-		await _paymentService.PayAsync(payment, ct);
+		var paymentDetail = await _paymentService.PayAsync(payment, ct);
 
 		await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 		await _basketService.ClearBasketAsync(basketId);

@@ -1,6 +1,5 @@
 ﻿using Address = PerfumeShop.Core.Models.ValueObjects.Address;
 using Customer = PerfumeShop.Core.Models.ValueObjects.Customer;
-
 namespace PerfumeShop.Infrastructure.Services;
 
 public sealed class OrderService : IOrderService

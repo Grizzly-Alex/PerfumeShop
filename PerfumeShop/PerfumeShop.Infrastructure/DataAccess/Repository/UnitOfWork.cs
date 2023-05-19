@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-
-
-namespace PerfumeShop.Infrastructure.DataAccess.Repository;
+﻿namespace PerfumeShop.Infrastructure.DataAccess.Repository;
 
 public sealed class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext>
     where TDbContext : DbContext
@@ -15,5 +12,5 @@ public sealed class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext>
 
     public IRepository<TDbContext, TEntity> GetRepository<TEntity>()
         where TEntity : Entity
-        => _db.GetService<IRepository<TDbContext, TEntity>>();    
+        => _db.GetService<IRepository<TDbContext, TEntity>>();
 }
