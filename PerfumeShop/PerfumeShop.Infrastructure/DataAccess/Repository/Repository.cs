@@ -15,8 +15,10 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
 
     public void Add(TEntity entity)
     {
+        bool tracked = _dbContext.Entry(entity).State != EntityState.Detached;
+
         _dbSet.Add(entity).State = EntityState.Added;
-	}
+    }
 
 	public void Add(IEnumerable<TEntity> entityCollection)
 	{

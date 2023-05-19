@@ -5,7 +5,8 @@ public static class ConfigureCoreServices
     public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
-		services.AddScoped<SaleDbInitializer>();
+        services.AddScoped(typeof(IRepository< , >), typeof(Repository< , >));
+        services.AddScoped<SaleDbInitializer>();
 		services.AddScoped<IdentityDbInitializer>();
 		services.AddScoped<CatalogDbInitializer>();
 		services.AddTransient<IEmailSender, EmailSender>();
