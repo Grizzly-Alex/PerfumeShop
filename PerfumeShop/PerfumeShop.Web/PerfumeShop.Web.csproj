@@ -23,19 +23,21 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
+    <PackageReference Include="Stripe.net" Version="41.16.0" />
   </ItemGroup>
 
   <ItemGroup>

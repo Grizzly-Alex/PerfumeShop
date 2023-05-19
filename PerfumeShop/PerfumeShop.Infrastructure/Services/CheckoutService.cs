@@ -4,12 +4,12 @@
 public class CheckoutService : ICheckoutService
 {
 	private readonly IUnitOfWork<CatalogDbContext> _catalog;
-    private readonly IUnitOfWork<ShoppingDbContext> _shopping;
+    private readonly IUnitOfWork<SaleDbContext> _shopping;
 	private readonly ILogger<CheckoutService> _logger;
 
     public CheckoutService(
 		IUnitOfWork<CatalogDbContext> catalog,
-        IUnitOfWork<ShoppingDbContext> shopping,
+        IUnitOfWork<SaleDbContext> shopping,
         ILogger<CheckoutService> logger)
     {
 		_catalog = catalog;
@@ -31,52 +31,20 @@ public class CheckoutService : ICheckoutService
 
 		return availability!;
 	}
-	
-	public async Task<decimal> CalculateFinalPriceAsync(decimal productTotalPrice)
-	{		
-		return productTotalPrice;
-	}
 
-    public async Task<Order> CreateOrderAsync(BuyerInfo buyerInfo, int basketId)
+    public Cost CalculateCostAsync(IEnumerable<OrderItem> items)
     {
-        var basketRepository = _shopping.GetRepository<Basket>();
-
-		var basketItems = await basketRepository.GetFirstOrDefaultAsync(
-			predicate: b => b.Id == basketId,
-			include: b => b.Include(i => i.Items),
-			selector: b => b.Items);
-
-        var orderItems = await GetOrderItemsAsync(basketItems);
-		var payablePrice = await CalculateFinalPriceAsync(orderItems.Sum(i => i.Quantity * i.Price));
-		var paymentInfo = new PaymentInfo(PaymentStatuses.Pending, payablePrice);
-		var order = new Order(DateTime.UtcNow, OrderStatuses.Pending, buyerInfo, paymentInfo, orderItems);
-
-        _shopping.GetRepository<Order>().Add(order);
-        await _shopping.SaveChangesAsync();
-
-		_logger.LogInformation($"Order with ID:'{order.Id}' has been created.");
-
-		return order;
+		decimal itemsCost = items.Sum(i => i.TotalPrice);
+		decimal shippingCost = default;
+        decimal promoCodeCost = default;
+		decimal totalCost = itemsCost + shippingCost - promoCodeCost;
+        return new Cost(itemsCost, shippingCost, promoCodeCost, totalCost);
     }
 
-	private async Task<List<OrderItem>> GetOrderItemsAsync(IReadOnlyCollection<BasketItem> basketItems)
+    public decimal CalculateFinalPriceAsync(decimal productTotalPrice)
 	{
-        var basketItemsId = basketItems.Select(b => b.ProductId).ToList();
-
-        var products = await _catalog.GetRepository<CatalogProduct>()
-            .GetAllAsync(predicate: b => basketItemsId.Contains(b.Id));
-
-		var items = basketItems.Select(i =>
-		{
-			var product = products.First(c => c.Id == i.ProductId);
-			var orderItem = new OrderItem(i.Quantity, product.Price, i.ProductId);
-
-            _logger.LogInformation($"Order item with product ID: '{product.Id}' Name: '{product.Name}' has been created.");
-
-            return orderItem;
-
-		}).ToList();	
-
-		return items;	
+        decimal shippingCost = default;
+        decimal promoCodeCost = default;
+        return productTotalPrice + shippingCost - promoCodeCost;
     }
 }

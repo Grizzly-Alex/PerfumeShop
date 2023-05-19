@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Extensions;
+﻿using System;
+
+namespace PerfumeShop.Web.Extensions;
 
 public static class SelectListItemExtensions
 {

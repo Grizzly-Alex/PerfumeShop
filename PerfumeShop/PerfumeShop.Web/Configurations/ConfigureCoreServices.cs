@@ -5,7 +5,8 @@ public static class ConfigureCoreServices
     public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
-		services.AddScoped<ShoppingDbInitializer>();
+        services.AddScoped(typeof(IRepository< , >), typeof(Repository< , >));
+        services.AddScoped<SaleDbInitializer>();
 		services.AddScoped<IdentityDbInitializer>();
 		services.AddScoped<CatalogDbInitializer>();
 		services.AddTransient<IEmailSender, EmailSender>();
@@ -14,7 +15,9 @@ public static class ConfigureCoreServices
 		services.AddScoped<IProductQueryService, ProductQueryService>();
 		services.AddScoped<IBasketItemQueryService, BasketItemQueryService>();
 		services.AddScoped<ICheckoutService, CheckoutService>();
-		services.AddScoped<ICatalogProductService, CatalogProductService>();
+        services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<ICatalogProductService, CatalogProductService>();
+		services.AddScoped<IPaymentService, PaymentService>();
 
 		return services;
     }

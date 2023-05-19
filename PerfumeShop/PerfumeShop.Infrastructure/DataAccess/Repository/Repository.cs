@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Infrastructure.DataAccess.Repository;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+namespace PerfumeShop.Infrastructure.DataAccess.Repository;
 
 public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
     where TDbContext : DbContext
@@ -15,8 +17,8 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
 
     public void Add(TEntity entity)
     {
-        _dbSet.Add(entity).State = EntityState.Added;
-	}
+        _dbSet.Add(entity).State = EntityState.Added;        
+    }
 
 	public void Add(IEnumerable<TEntity> entityCollection)
 	{
@@ -35,6 +37,7 @@ public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
 
 	public void Update(TEntity entity)
     {
+        _dbContext.ChangeTracker.Clear();
         _dbSet.Update(entity).State = EntityState.Modified;
     }
 

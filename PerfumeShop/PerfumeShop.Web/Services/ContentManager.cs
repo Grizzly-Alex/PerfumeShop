@@ -54,9 +54,9 @@ public sealed class ContentManager : IContentManager
             {
                 string _filePath = Path.Combine(string.Concat(_webRootPath, contentPath), nameFile);
 
-                if (File.Exists(_filePath))
+                if (System.IO.File.Exists(_filePath))
                 {
-                    File.Delete(_filePath);
+                    System.IO.File.Delete(_filePath);
                 }
             }
         }

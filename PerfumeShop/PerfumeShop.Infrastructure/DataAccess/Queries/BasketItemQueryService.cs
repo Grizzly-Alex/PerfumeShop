@@ -2,9 +2,9 @@
 
 public sealed class BasketItemQueryService : IBasketItemQueryService
 {
-	private readonly IUnitOfWork<ShoppingDbContext> _unitOfWork;
+	private readonly IUnitOfWork<SaleDbContext> _unitOfWork;
 
-    public BasketItemQueryService(IUnitOfWork<ShoppingDbContext> unitOfWork)
+    public BasketItemQueryService(IUnitOfWork<SaleDbContext> unitOfWork)
 		=> _unitOfWork = unitOfWork;
 
     public async Task<int> GetProductId(int basketItemId)

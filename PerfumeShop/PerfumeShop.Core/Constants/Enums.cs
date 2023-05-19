@@ -21,6 +21,22 @@ public enum ItemsPerPage
     [Display(Name = "20")] Threety = 20,
 }
 
+public enum Month
+{
+    [Display(Name = "1")] January = 1,
+    [Display(Name = "2")] February = 2,
+    [Display(Name = "3")] March = 3,
+    [Display(Name = "4")] April = 4,
+    [Display(Name = "5")] May = 5,
+    [Display(Name = "6")] June = 6,
+    [Display(Name = "7")] July = 7,
+    [Display(Name = "8")] August = 8,
+    [Display(Name = "9")] September = 9,
+    [Display(Name = "10")] October = 10,
+    [Display(Name = "11")] November = 11,
+    [Display(Name = "12")] December = 12,
+}
+
 public enum OrderStatuses
 {
     [Display(Name = "Pending")] Pending = 1,

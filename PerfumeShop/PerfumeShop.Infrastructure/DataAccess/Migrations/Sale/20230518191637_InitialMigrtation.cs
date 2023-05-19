@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
+namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 {
     /// <inheritdoc />
     public partial class InitialMigrtation : Migration
@@ -75,42 +75,37 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "OrderHeaders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: false),
-                    BuyerId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    BuyerName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    BuyerSurname = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    ShippingDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
+                    EmployeeId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    TrackingId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    ItemsCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    ShippingCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    PromoCodeCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    TotalCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    CustomerName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    CustomerSurname = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    ReceiptEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    PostalCode = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     State = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     City = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     StreetAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    PaymentDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
-                    PayablePrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    PaymentIntentId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    PaymentStatusId = table.Column<int>(type: "int", nullable: false),
-                    ShippingDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
-                    TrackingNumber = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Carrier = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: false)
+                    PostalCode = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_OrderHeaders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_OrderStatuses_OrderStatusId",
+                        name: "FK_OrderHeaders_OrderStatuses_OrderStatusId",
                         column: x => x.OrderStatusId,
                         principalTable: "OrderStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_PaymentStatuses_PaymentStatusId",
-                        column: x => x.PaymentStatusId,
-                        principalTable: "PaymentStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -123,6 +118,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -130,11 +126,38 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                 {
                     table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderId",
+                        name: "FK_OrderItems_OrderHeaders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Orders",
+                        principalTable: "OrderHeaders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymentDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
+                    PaymentStatusId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PaymentDetails_OrderHeaders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "OrderHeaders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PaymentDetails_PaymentStatuses_PaymentStatusId",
+                        column: x => x.PaymentStatusId,
+                        principalTable: "PaymentStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -166,18 +189,24 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                 column: "BasketId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderHeaders_OrderStatusId",
+                table: "OrderHeaders",
+                column: "OrderStatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_OrderStatusId",
-                table: "Orders",
-                column: "OrderStatusId");
+                name: "IX_PaymentDetails_OrderId",
+                table: "PaymentDetails",
+                column: "OrderId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_PaymentStatusId",
-                table: "Orders",
+                name: "IX_PaymentDetails_PaymentStatusId",
+                table: "PaymentDetails",
                 column: "PaymentStatusId");
         }
 
@@ -191,16 +220,19 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Shopping
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
+                name: "PaymentDetails");
+
+            migrationBuilder.DropTable(
                 name: "Baskets");
 
             migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "OrderStatuses");
+                name: "OrderHeaders");
 
             migrationBuilder.DropTable(
                 name: "PaymentStatuses");
+
+            migrationBuilder.DropTable(
+                name: "OrderStatuses");
         }
     }
 }

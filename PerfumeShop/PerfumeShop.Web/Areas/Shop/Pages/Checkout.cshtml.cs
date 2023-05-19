@@ -8,8 +8,9 @@ public class CheckoutModel : PageModel
 	private readonly IMapper _mapper;
     private readonly IBasketViewModelService _basketViewModelService;
 	private readonly ICatalogProductService _catalogProductService;
-	private readonly ICheckoutService _checkoutService;
+	private readonly IOrderService _orderService;
 	private readonly IBasketService _basketService;
+	private readonly IPaymentService _paymentService;
 	private readonly SignInManager<AppUser> _signInManager;
 	private readonly UserManager<AppUser> _userManager;
 
@@ -18,23 +19,29 @@ public class CheckoutModel : PageModel
 		IMapper mapper,
 		IBasketViewModelService basketViewModelService,
 		ICatalogProductService catalogProductService,
-        ICheckoutService checkoutService,
+        IOrderService orderService,
 		IBasketService basketService,
+		IPaymentService paymentService,
         SignInManager<AppUser> signInManager,
         UserManager<AppUser> userManager)
     {
 		_mapper = mapper;
 		_basketViewModelService = basketViewModelService;
 		_catalogProductService = catalogProductService;
-		_checkoutService = checkoutService;
+        _orderService = orderService;
 		_basketService = basketService;
+		_paymentService = paymentService;
         _signInManager = signInManager;
 		_userManager = userManager;
     }
 
-	[BindProperty]
-	public BuyerInfoViewModel BuyerInfoModel { get; set; } = new();
     public BasketViewModel BasketModel { get; set; } = new();
+    [BindProperty]
+    public PaymentCardViewModel PaymentCardModel { get; set; } = new();
+	[BindProperty]
+	public BuyerViewModel BuyerModel { get; set; } = new();
+	[BindProperty]
+	public AddressViewModel AddressModel { get; set; } = new();
 
 
 	public async Task OnGet()
@@ -42,10 +49,21 @@ public class CheckoutModel : PageModel
 		await SetModelsAsync();
 	}
 
-	public async Task<IActionResult> OnPost(int basketId)
+	public async Task<IActionResult> OnPost(int basketId, CancellationToken ct)
 	{
-		var buyerInfo = _mapper.Map<BuyerInfo>(BuyerInfoModel);
-		var order = await _checkoutService.CreateOrderAsync(buyerInfo, basketId);
+		if (!ModelState.IsValid) return Page();
+
+        var shippingAddress = _mapper.Map<Address>(AddressModel);
+        var customer = _mapper.Map<Customer>(BuyerModel);
+		var paymentCard = _mapper.Map<PaymentCard>(PaymentCardModel);
+        		
+        var order = await _orderService.CreateOrderAsync(shippingAddress, customer, basketId);
+
+		Buyer buyer = new(customer.ReceiptEmail, customer.PhoneNumber, customer.GetFullName(), shippingAddress, paymentCard);
+		Payment payment = new(buyer, order.Id, Constants.Currency.ToLower(), order.Cost.TotalCost);	
+		
+		var paymentDetail = await _paymentService.PayAsync(payment, ct);
+
 		await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 		await _basketService.ClearBasketAsync(basketId);
 
@@ -60,13 +78,14 @@ public class CheckoutModel : PageModel
 
             BasketModel = await _basketViewModelService.GetBasketForUserAsync(userName);
             var user = await _userManager.FindByNameAsync(userName);
-            BuyerInfoModel = _mapper.Map<BuyerInfoViewModel>(user);
+            BuyerModel = _mapper.Map<BuyerViewModel>(user);
+			AddressModel = _mapper.Map<AddressViewModel>(user);
         }
 		else
 		{
 			BasketModel = await _basketViewModelService.GetBasketForUserAsync(GetAnonymousUserId());
 		}
-	}
+    }
 
 	private string GetAnonymousUserId()
 	{		
