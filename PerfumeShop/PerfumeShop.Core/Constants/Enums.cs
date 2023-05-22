@@ -59,3 +59,9 @@ public enum PaymentMethods
 	[Display(Name = "Payment Place")] PaymentPlace = 1,
 	[Display(Name = "Payment Remote")] PaymentRemote = 2,
 }
+
+public enum DeliveryMethods
+{
+	[Display(Name = "Pickup")] Pickup = 1,
+	[Display(Name = "Courier")] Courier = 2,
+}
