@@ -43,6 +43,9 @@ public class CreateOrderModel : PageModel
 	[BindProperty]
 	public AddressViewModel AddressModel { get; set; } = new();
 
+	public PaymentMethods PaymentMethod { get; set; }
+	public DeliveryMethods DeliveryMethod { get; set; }
+
 
 	public async Task OnGet()
     {
