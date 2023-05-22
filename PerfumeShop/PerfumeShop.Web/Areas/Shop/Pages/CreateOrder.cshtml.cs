@@ -3,7 +3,7 @@ namespace PerfumeShop.Web.Areas.Shop.Pages;
 
 [Area("Shop")]
 [Authorize]
-public class CheckoutModel : PageModel
+public class CreateOrderModel : PageModel
 {
 	private readonly IMapper _mapper;
     private readonly IBasketViewModelService _basketViewModelService;
@@ -15,7 +15,7 @@ public class CheckoutModel : PageModel
 	private readonly UserManager<AppUser> _userManager;
 
 
-	public CheckoutModel(
+	public CreateOrderModel(
 		IMapper mapper,
 		IBasketViewModelService basketViewModelService,
 		ICatalogProductService catalogProductService,
