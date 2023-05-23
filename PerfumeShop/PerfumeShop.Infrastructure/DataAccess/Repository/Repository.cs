@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-namespace PerfumeShop.Infrastructure.DataAccess.Repository;
+﻿namespace PerfumeShop.Infrastructure.DataAccess.Repository;
 
 public class Repository<TDbContext, TEntity> : IRepository<TDbContext, TEntity>
     where TDbContext : DbContext

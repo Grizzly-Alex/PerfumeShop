@@ -1,6 +1,4 @@
-﻿using PerfumeShop.Core.Constants;
-
-namespace PerfumeShop.Core.Models.Entities;
+﻿namespace PerfumeShop.Core.Models.Entities;
 
 public sealed class OrderHeader : Entity
 {

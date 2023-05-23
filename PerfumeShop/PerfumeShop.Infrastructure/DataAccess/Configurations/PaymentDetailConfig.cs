@@ -16,9 +16,17 @@ public sealed class PaymentDetailConfig : IEntityTypeConfiguration<PaymentDetail
         builder.Property(a => a.PaymentStatusId)
             .HasColumnName("PaymentStatusId");
 
-        builder.HasOne(a => a.PaymentStatus)
+		builder.HasOne(a => a.PaymentStatus)
             .WithMany()
             .HasForeignKey(o => o.PaymentStatusId)
             .OnDelete(DeleteBehavior.Restrict);
+
+		builder.Property(a => a.PaymentMethodId)
+			.HasColumnName("PaymentMethodId");
+
+		builder.HasOne(a => a.PaymentMethod)
+			.WithMany()
+			.HasForeignKey(o => o.PaymentMethodId)
+			.OnDelete(DeleteBehavior.Restrict);
     }
 }

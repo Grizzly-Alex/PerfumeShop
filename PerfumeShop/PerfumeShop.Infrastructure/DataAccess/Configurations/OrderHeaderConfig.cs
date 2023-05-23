@@ -121,7 +121,12 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
             .IsRequired(true)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(p => p.OrderStatus)
+		builder.HasOne(p => p.DeliveryMethod)
+			.WithMany()
+			.HasForeignKey(p => p.DeliveryMethodId)
+			.OnDelete(DeleteBehavior.Restrict);
+
+		builder.HasOne(p => p.OrderStatus)
 			.WithMany()
 			.HasForeignKey(p => p.OrderStatusId)
 			.OnDelete(DeleteBehavior.Restrict);
