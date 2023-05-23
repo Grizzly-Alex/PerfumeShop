@@ -10,3 +10,5 @@ global using PerfumeShop.Core.Extensions;
 global using PerfumeShop.Core.Interfaces;
 global using PerfumeShop.Core.Models.ValueObjects;
 global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Http;
+global using System.Text.Json;
