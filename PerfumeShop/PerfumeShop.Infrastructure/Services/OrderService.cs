@@ -22,7 +22,10 @@ public sealed class OrderService : IOrderService
     }
 
 
-    public async Task<OrderHeader> CreateOrderAsync(Address shippingAddress, Customer customer, int basketId)
+    public async Task<OrderHeader> CreateOrderAsync(
+        PaymentMethods paymentMethod, DeliveryMethods deliveryMethod,
+        Address shippingAddress, Customer customer,       
+        int basketId)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
 
@@ -33,12 +36,12 @@ public sealed class OrderService : IOrderService
 
         var orderItems = await GetOrderItemsAsync(basketItems);
         var cost = _checkoutService.CalculateCostAsync(orderItems);
-        var order = new OrderHeader(OrderStatuses.Pending, orderItems, cost, customer, shippingAddress);
+        var order = new OrderHeader(OrderStatuses.Pending, deliveryMethod, orderItems, cost, customer, shippingAddress);
 
         _shopping.GetRepository<OrderHeader>().Add(order);
         await _shopping.SaveChangesAsync();
 
-        var payment = new PaymentDetail(PaymentStatuses.Pending, order.Id);
+        var payment = new PaymentDetail(PaymentStatuses.Pending, paymentMethod, order.Id);
 
         _shopping.GetRepository<PaymentDetail>().Add(payment);
         await _shopping.SaveChangesAsync();

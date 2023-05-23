@@ -3,6 +3,8 @@
 public sealed class PaymentDetail : Entity
 {
     public DateTime? PaymentDate { get; private set; }
+    public int PaymentMethodId { get; set; }
+    public PaymentMethod PaymentMethod { get; set; }
     public int PaymentStatusId { get; set; }
     public PaymentStatus PaymentStatus { get; set; }
     public int OrderId { get; set; }
@@ -12,10 +14,11 @@ public sealed class PaymentDetail : Entity
     {
     }
 
-    public PaymentDetail(PaymentStatuses status, int orderId)
+    public PaymentDetail(PaymentStatuses status, PaymentMethods method, int orderId)
     {
         OrderId = Guard.Against.NegativeOrZero(orderId, nameof(orderId));
         PaymentStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
+        PaymentMethodId = Guard.Against.NegativeOrZero((int)method, nameof(method));
     }
 
     public void SetPaymentStatus(PaymentStatuses status) 

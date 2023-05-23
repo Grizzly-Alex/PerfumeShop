@@ -39,6 +39,8 @@ public static class WebDependencies
     {
         services.AddDataBaseInfrastructure(configuration);
         services.AddStripeInfrastructure(configuration);
+        services.AddDistributedMemoryCache();
+        services.AddSession();
         services.AddCookieSettings();
         services.AddAuthenticationSettings();  
         services.AddUtilities();
@@ -60,6 +62,7 @@ public static class WebDependencies
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseSession();
         app.MapRazorPages();
 
         app.MapAreaControllerRoute(

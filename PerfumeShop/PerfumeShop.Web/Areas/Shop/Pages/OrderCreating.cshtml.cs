@@ -53,15 +53,16 @@ public class OrderCreatingModel : PageModel
 		await SetModelsAsync();
 	}
 
-	public async Task<IActionResult> OnPost(int basketId, CancellationToken ct)
+	public async Task<IActionResult> OnPost(int basketId)
 	{
 		if (!ModelState.IsValid) return Page();
 
         var shippingAddress = _mapper.Map<Address>(AddressModel);
         var customer = _mapper.Map<Customer>(BuyerModel);
         		
-        var order = await _orderService.CreateOrderAsync(shippingAddress, customer, basketId);
-		HttpContext.Session.Set(Constants.SessionOrderHeader, _mapper.Map<OrderViewModel>(order));
+        var order = await _orderService.CreateOrderAsync(PaymentMethod, DeliveryMethod, shippingAddress, customer, basketId);
+
+		HttpContext.Session.Set(Constants.SessionOrderId, order.Id);
 		
 		//var paymentCard = _mapper.Map<PaymentCard>(PaymentCardModel);
 		/*

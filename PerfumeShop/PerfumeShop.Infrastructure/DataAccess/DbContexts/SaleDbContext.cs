@@ -1,4 +1,5 @@
-﻿namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
+﻿using PaymentMethod = PerfumeShop.Core.Models.Entities.PaymentMethod;
+namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
 
 public sealed class SaleDbContext : DbContext
 {
@@ -9,6 +10,8 @@ public sealed class SaleDbContext : DbContext
 	public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<PaymentDetail> PaymentDetails { get; set; }
 	public DbSet<PaymentStatus> PaymentStatuses { get; set; }
+    public DbSet<PaymentMethod> PaymentMethods { get; set; }
+    public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
     public SaleDbContext(DbContextOptions<SaleDbContext> options) : base(options) { }
 
@@ -17,10 +20,14 @@ public sealed class SaleDbContext : DbContext
 		#region Seeds
 		modelBuilder.SeedEnumValues<OrderStatuses, OrderStatus>(value => value);
 		modelBuilder.SeedEnumValues<PaymentStatuses, PaymentStatus>(value => value);
-		#endregion
+        modelBuilder.SeedEnumValues<PaymentMethods, PaymentMethod>(value => value);
+        modelBuilder.SeedEnumValues<DeliveryMethods, DeliveryMethod>(value => value);
+        #endregion
 
-		#region Configurations
-		modelBuilder.ApplyConfiguration(new OrderStatusConfig());
+        #region Configurations
+        modelBuilder.ApplyConfiguration(new PaymentMethodConfig());
+        modelBuilder.ApplyConfiguration(new DeliveryMethodConfig());
+        modelBuilder.ApplyConfiguration(new OrderStatusConfig());
 		modelBuilder.ApplyConfiguration(new PaymentStatusConfig());
 		modelBuilder.ApplyConfiguration(new BasketConfig());
         modelBuilder.ApplyConfiguration(new BasketItemConfig());

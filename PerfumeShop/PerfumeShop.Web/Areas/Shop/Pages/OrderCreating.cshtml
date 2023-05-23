@@ -1,5 +1,5 @@
 ﻿@page
-@model PerfumeShop.Web.Areas.Shop.Pages.CheckoutModel
+@model OrderCreatingModel
 @{
 }
 
@@ -41,7 +41,7 @@
 
             <h4 class="mb-3">Billing address</h4>
 
-            <form asp-page="Checkout" asp-route-basketId="@Model.BasketModel.Id" method="post" class="needs-validation" novalidate>
+            <form asp-page="OrderCreating" asp-route-basketId="@Model.BasketModel.Id" method="post" class="needs-validation" novalidate>
 
                 <input asp-for="@Model.BuyerModel.Id" hidden/>
 

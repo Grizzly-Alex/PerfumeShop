@@ -2,6 +2,7 @@
 
 public sealed class OrderViewModel
 {
+    public int Id { get; set; }
     public DateTime OrderDate { get; set; }
     public string TrackingId { get; set; }
     public string OrderStatus { get; set; }
@@ -13,5 +14,5 @@ public sealed class OrderViewModel
     public decimal PromoCodeCost { get; private set; }
     public decimal TotalPrice { get; set; }
     public BuyerViewModel Buyer { get; set; }
-    public AddressViewModel Address { get; set; }
+    public AddressViewModel ShippingAddress { get; set; }
 }

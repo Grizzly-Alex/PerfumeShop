@@ -5,10 +5,14 @@ namespace PerfumeShop.Web.Areas.Shop.Pages;
 public class PaymentModel : PageModel
 {
     private readonly IPaymentService _paymentService;
+    private readonly IOrderViewModelService _orderViewModelService;
 
-    public PaymentModel(IPaymentService paymentService)
+    public PaymentModel(
+        IPaymentService paymentService,
+        IOrderViewModelService orderViewModelService)
     {
         _paymentService = paymentService;
+        _orderViewModelService = orderViewModelService;
     }
 
 
@@ -16,8 +20,12 @@ public class PaymentModel : PageModel
     public PaymentCardViewModel PaymentCardModel { get; set; } = new();
     public OrderViewModel OrderModel { get; set; }
 
-    public void OnGet()
+    public async Task OnGet()
     {
+
+        var orderHeader = await _orderViewModelService.GetOrderAsync(HttpContext.Session.Get<int>(Constants.SessionOrderId));
+
+
 
     }
 }
