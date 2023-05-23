@@ -24,6 +24,7 @@ public class PaymentModel : PageModel
     {
 
         var orderHeader = await _orderViewModelService.GetOrderAsync(HttpContext.Session.Get<int>(Constants.SessionOrderId));
+        var test = orderHeader;
 
 
 

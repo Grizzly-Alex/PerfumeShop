@@ -36,16 +36,14 @@ public class OrderCreatingModel : PageModel
     }
 
     public BasketViewModel BasketModel { get; set; } = new();
-    [BindProperty]
-    public PaymentCardViewModel PaymentCardModel { get; set; } = new();
 	[BindProperty]
 	public BuyerViewModel BuyerModel { get; set; } = new();
 	[BindProperty]
 	public AddressViewModel AddressModel { get; set; } = new();
-    [BindProperty]
-    public PaymentMethods PaymentMethod { get; set; }
-    [BindProperty]
-    public DeliveryMethods DeliveryMethod { get; set; }
+	[BindProperty]
+	public PaymentMethods PaymentMethod { get; set; } = PaymentMethods.PaymentRemote;
+	[BindProperty]
+	public DeliveryMethods DeliveryMethod { get; set; } = DeliveryMethods.Pickup;
 
 
 	public async Task OnGet()
@@ -59,6 +57,7 @@ public class OrderCreatingModel : PageModel
 
         var shippingAddress = _mapper.Map<Address>(AddressModel);
         var customer = _mapper.Map<Customer>(BuyerModel);
+
         		
         var order = await _orderService.CreateOrderAsync(PaymentMethod, DeliveryMethod, shippingAddress, customer, basketId);
 
@@ -74,13 +73,13 @@ public class OrderCreatingModel : PageModel
 		await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 		await _basketService.ClearBasketAsync(basketId);
 
-        return PaymentMethod switch
-        {
-            PaymentMethods.PaymentPlace => RedirectToPage("OrderSuccess"),
-            PaymentMethods.PaymentRemote => RedirectToPage("Payment"),
-            _ => Page(),
-        };
-    }
+		return PaymentMethod switch
+		{
+			PaymentMethods.PaymentPlace => RedirectToPage("OrderSuccess"),
+			PaymentMethods.PaymentRemote => RedirectToPage("Payment"),
+			_ => Page(),
+		};
+	}
 
     private async Task SetModelsAsync()
 	{

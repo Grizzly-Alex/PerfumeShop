@@ -9,10 +9,12 @@ public sealed class OrderViewModel
     public string PaymentStatus { get; set; }
     public string PaymentMethod { get; set; }
     public string DeliveryMethod { get; set; }
+    public string CustomerName { get; set; }
+	public string CustomerPhone { get; set; }
+	public string CustomerEmail { get; set; }
+	public string Address { get; set; }
     public decimal ItemsCost { get; private set; }
     public decimal ShippingCost { get; private set; }
     public decimal PromoCodeCost { get; private set; }
     public decimal TotalPrice { get; set; }
-    public BuyerViewModel Buyer { get; set; }
-    public AddressViewModel ShippingAddress { get; set; }
 }

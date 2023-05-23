@@ -22,12 +22,15 @@ public sealed class OrderViewModelService : IOrderViewModelService
             .GetFirstOrDefaultAsync(
                 predicate: order => order.Id == id,
                 include: query => query
-                        .Include(order => order.DeliveryMethod)
-                        .Include(order => order.OrderStatus)
-                        .Include(order => order.Customer)
-                        .Include(order => order.ShippingAddress)
-                        .Include(order => order.PaymentDetail),
-                isTracking: false) ?? throw new NullReferenceException($"OrderHeader not found in database with ID: '{id}'.");
+                    .Include(order => order.DeliveryMethod)
+                    .Include(order => order.OrderStatus)
+                    .Include(order => order.Customer)
+                    .Include(order => order.ShippingAddress)
+                    .Include(order => order.PaymentDetail)
+                    .ThenInclude(payment => payment.PaymentStatus)
+					.Include(order => order.PaymentDetail)
+					.ThenInclude(payment => payment.PaymentMethod),
+				isTracking: false) ?? throw new NullReferenceException($"OrderHeader not found in database with ID: '{id}'.");
 
         _logger.LogInformation($"Getting Order Header with ID:'{id}' successfully.");
 
