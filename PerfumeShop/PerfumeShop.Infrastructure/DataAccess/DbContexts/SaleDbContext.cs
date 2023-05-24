@@ -3,6 +3,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
 
 public sealed class SaleDbContext : DbContext
 {
+    public DbSet<PhysicalShop> PhysicalShops { get; set; }
     public DbSet<Basket> Baskets { get; set; }
     public DbSet<BasketItem> BasketItems { get; set; }
 	public DbSet<OrderHeader> OrderHeaders { get; set; }
@@ -25,6 +26,7 @@ public sealed class SaleDbContext : DbContext
         #endregion
 
         #region Configurations
+        modelBuilder.ApplyConfiguration(new PhysicalShopConfig());
         modelBuilder.ApplyConfiguration(new PaymentMethodConfig());
         modelBuilder.ApplyConfiguration(new DeliveryMethodConfig());
         modelBuilder.ApplyConfiguration(new OrderStatusConfig());
@@ -35,5 +37,12 @@ public sealed class SaleDbContext : DbContext
 		modelBuilder.ApplyConfiguration(new OrderItemConfig());
         modelBuilder.ApplyConfiguration(new PaymentDetailConfig());
         #endregion
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<TimeOnly>()
+            .HaveConversion<TimeOnlyConverter>()
+            .HaveColumnType("time(0)");
     }
 }
