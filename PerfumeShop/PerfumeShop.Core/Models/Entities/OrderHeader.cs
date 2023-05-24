@@ -5,7 +5,7 @@ public sealed class OrderHeader : Entity
     public DateTime OrderDate { get; private set; }
     public DateTime? ShippingDate { get; private set; }
     public string? EmployeeId { get; private set; }
-    public string TrackingId { get; private set; }
+    public string OrderId { get; private set; }
     public int DeliveryMethodId { get; private set; }
     public DeliveryMethod DeliveryMethod { get; private set; }
     public int OrderStatusId { get; private set; }
@@ -38,7 +38,7 @@ public sealed class OrderHeader : Entity
         orderItems.ForEach(i => i.OrderId = Guard.Against.Null(Id, nameof(Id)));
         _orderItems = Guard.Against.Null(orderItems, nameof(orderItems));
         OrderDate = DateTime.UtcNow;
-        TrackingId = Guid.NewGuid().ToString();       
+        OrderId = Guid.NewGuid().ToString();       
     }
 
     public void SetEmployeeId(string employeeId) => EmployeeId = Guard.Against.NullOrEmpty(employeeId, nameof(employeeId));

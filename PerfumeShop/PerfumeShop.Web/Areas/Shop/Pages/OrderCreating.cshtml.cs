@@ -57,8 +57,7 @@ public class OrderCreatingModel : PageModel
 
         var shippingAddress = _mapper.Map<Address>(AddressModel);
         var customer = _mapper.Map<Customer>(BuyerModel);
-
-        		
+       		
         var order = await _orderService.CreateOrderAsync(PaymentMethod, DeliveryMethod, shippingAddress, customer, basketId);
 
 		HttpContext.Session.Set(Constants.SessionOrderId, order.Id);

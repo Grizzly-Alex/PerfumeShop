@@ -21,7 +21,7 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
             .HasPrecision(0)
             .IsRequired(false);
 
-        builder.Property(a => a.TrackingId)
+        builder.Property(a => a.OrderId)
             .HasMaxLength(256)
             .IsRequired(true);
 

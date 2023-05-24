@@ -12,6 +12,7 @@ public static class ConfigureWebServices
         services.AddScoped<ICatalogViewModelService, CatalogViewModelService>();
         services.AddScoped<IBasketViewModelService, BasketViewModelService>();
         services.AddScoped<IOrderViewModelService, OrderViewModelService>();
+        services.AddSession();
         services.AddRazorPages();
 
         return services;

@@ -119,17 +119,17 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .HasPrecision(0)
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ShippingDate")
                         .HasPrecision(0)
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("TrackingId")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
