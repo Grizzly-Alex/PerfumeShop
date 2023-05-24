@@ -43,7 +43,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasKey("Id");
 
-                    b.ToTable("Baskets", (string)null);
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.BasketItem", b =>
@@ -70,7 +70,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasIndex("BasketId");
 
-                    b.ToTable("BasketItems", (string)null);
+                    b.ToTable("BasketItems");
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.DeliveryMethod", b =>
@@ -85,7 +85,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeliveryMethods", (string)null);
+                    b.ToTable("DeliveryMethods");
 
                     b.HasData(
                         new
@@ -137,7 +137,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasIndex("OrderStatusId");
 
-                    b.ToTable("OrderHeaders", (string)null);
+                    b.ToTable("OrderHeaders");
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderItem", b =>
@@ -168,7 +168,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderStatus", b =>
@@ -183,7 +183,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderStatuses", (string)null);
+                    b.ToTable("OrderStatuses");
 
                     b.HasData(
                         new
@@ -251,7 +251,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasIndex("PaymentStatusId");
 
-                    b.ToTable("PaymentDetails", (string)null);
+                    b.ToTable("PaymentDetails");
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.PaymentMethod", b =>
@@ -266,7 +266,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentMethods", (string)null);
+                    b.ToTable("PaymentMethods");
 
                     b.HasData(
                         new
@@ -293,7 +293,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentStatuses", (string)null);
+                    b.ToTable("PaymentStatuses");
 
                     b.HasData(
                         new
@@ -311,6 +311,25 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                             Id = 3,
                             Name = "Reject"
                         });
+                });
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.PhysicalShop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<TimeSpan>("CloseTime")
+                        .HasColumnType("time(0)");
+
+                    b.Property<TimeSpan>("OpenTime")
+                        .HasColumnType("time(0)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PhysicalShops");
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.BasketItem", b =>
@@ -336,7 +355,44 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("PerfumeShop.Core.Models.Entities.OrderHeader.Cost#PerfumeShop.Core.Models.ValueObjects.Cost", "Cost", b1 =>
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Address", "ShippingAddress", b1 =>
+                        {
+                            b1.Property<int>("OrderHeaderId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("PostalCode");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("State");
+
+                            b1.Property<string>("StreetAddress")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("StreetAddress");
+
+                            b1.HasKey("OrderHeaderId");
+
+                            b1.ToTable("OrderHeaders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderHeaderId");
+                        });
+
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Cost", "Cost", b1 =>
                         {
                             b1.Property<int>("OrderHeaderId")
                                 .HasColumnType("int");
@@ -363,13 +419,13 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                             b1.HasKey("OrderHeaderId");
 
-                            b1.ToTable("OrderHeaders", (string)null);
+                            b1.ToTable("OrderHeaders");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderHeaderId");
                         });
 
-                    b.OwnsOne("PerfumeShop.Core.Models.Entities.OrderHeader.Customer#PerfumeShop.Core.Models.ValueObjects.Customer", "Customer", b1 =>
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Customer", "Customer", b1 =>
                         {
                             b1.Property<int>("OrderHeaderId")
                                 .HasColumnType("int");
@@ -406,44 +462,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                             b1.HasKey("OrderHeaderId");
 
-                            b1.ToTable("OrderHeaders", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrderHeaderId");
-                        });
-
-                    b.OwnsOne("PerfumeShop.Core.Models.Entities.OrderHeader.ShippingAddress#PerfumeShop.Core.Models.ValueObjects.Address", "ShippingAddress", b1 =>
-                        {
-                            b1.Property<int>("OrderHeaderId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("City");
-
-                            b1.Property<string>("PostalCode")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("PostalCode");
-
-                            b1.Property<string>("State")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("State");
-
-                            b1.Property<string>("StreetAddress")
-                                .IsRequired()
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("StreetAddress");
-
-                            b1.HasKey("OrderHeaderId");
-
-                            b1.ToTable("OrderHeaders", (string)null);
+                            b1.ToTable("OrderHeaders");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderHeaderId");
@@ -499,6 +518,49 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.Navigation("PaymentMethod");
 
                     b.Navigation("PaymentStatus");
+                });
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.PhysicalShop", b =>
+                {
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("PhysicalShopId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("PostalCode");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("State");
+
+                            b1.Property<string>("StreetAddress")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("StreetAddress");
+
+                            b1.HasKey("PhysicalShopId");
+
+                            b1.ToTable("PhysicalShops");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PhysicalShopId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.Basket", b =>
