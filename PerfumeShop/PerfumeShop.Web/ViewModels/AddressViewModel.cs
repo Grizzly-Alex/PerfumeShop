@@ -1,4 +1,4 @@
-﻿namespace PerfumeShop.Web.ViewModels.Customer;
+﻿namespace PerfumeShop.Web.ViewModels;
 
 public sealed class AddressViewModel
 {

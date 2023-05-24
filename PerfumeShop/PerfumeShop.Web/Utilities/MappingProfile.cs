@@ -49,7 +49,7 @@ public sealed class MappingProfile : Profile
         CreateMap<Basket, BasketViewModel>()
             .ForMember(model => model.Items, opt => opt.Ignore());
 
-        CreateMap<OrderViewModel, OrderHeader>().ReverseMap()
+        CreateMap<OrderInfoViewModel, OrderHeader>().ReverseMap()
             .ForMember(view => view.OrderStatus, opt => opt.MapFrom(model => model.OrderStatus.Name))
             .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus.Name))
             .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryMethod.Name))

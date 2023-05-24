@@ -2,5 +2,5 @@
 
 public interface IOrderViewModelService
 {
-    Task<OrderViewModel> GetOrderAsync(int id);
+    Task<OrderInfoViewModel> GetOrderAsync(int id);
 }
