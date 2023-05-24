@@ -32,7 +32,7 @@ public sealed class MappingProfile : Profile
         CreateMap(typeof(PagedList<>), typeof(PagedListViewModel));
         #endregion
 
-        #region Shopping
+        #region Sale
         CreateMap<PaymentCard, PaymentCardViewModel>().ReverseMap();
 
         CreateMap<Customer, BuyerViewModel>().ReverseMap()
@@ -61,6 +61,8 @@ public sealed class MappingProfile : Profile
             .ForMember(view => view.CustomerPhone, opt => opt.MapFrom(model => model.Customer.PhoneNumber))
             .ForMember(view => view.CustomerEmail, opt => opt.MapFrom(model => model.Customer.ReceiptEmail))
             .ForMember(view => view.Address, opt => opt.MapFrom(model => model.ShippingAddress.GetFullAddress()));
-		#endregion
-	}
+
+        CreateMap<PhysicalShopViewModel, PhysicalShop>().ReverseMap();
+        #endregion
+    }
 }
