@@ -5,9 +5,9 @@ namespace PerfumeShop.Web.Areas.Shop.Pages;
 public class ProductDetailsModel : PageModel
 {
     public ProductViewModel Product { get; set; } = new();
-    private readonly IViewModelService<CatalogProduct, ProductViewModel> _viewModelService;
+    private readonly IViewModelService<CatalogProduct, ProductViewModel, CatalogDbContext> _viewModelService;
 
-    public ProductDetailsModel(IViewModelService<CatalogProduct, ProductViewModel> viewModelService)
+    public ProductDetailsModel(IViewModelService<CatalogProduct, ProductViewModel, CatalogDbContext> viewModelService)
     {
         _viewModelService = viewModelService;
     }

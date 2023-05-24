@@ -1,11 +1,11 @@
 ﻿namespace PerfumeShop.Web.Services;
 
-public sealed class ProductViewModelService : ViewModelService<CatalogProduct, ProductViewModel>
+public sealed class ProductViewModelService : ViewModelService<CatalogProduct, ProductViewModel, CatalogDbContext>
 {
     public ProductViewModelService(
         IMapper mapper,
         IUnitOfWork<CatalogDbContext> unitOfWork,
-        ILogger<ViewModelService<CatalogProduct, ProductViewModel>> logger)
+        ILogger<ViewModelService<CatalogProduct, ProductViewModel, CatalogDbContext>> logger)
         : base(mapper, unitOfWork, logger)
     {
     }

@@ -4,9 +4,9 @@
 [Authorize(Roles = "Admin")]
 public class ManagePhysicalShopController : Controller
 {
-    private readonly IViewModelService<CatalogAromaType, ItemViewModel> _viewModelService;
+    private readonly IViewModelService<PhysicalShop, PhysicalShopViewModel, SaleDbContext> _viewModelService;
 
-    public ManagePhysicalShopController(IViewModelService<CatalogAromaType, ItemViewModel> viewModelService)
+    public ManagePhysicalShopController(IViewModelService<PhysicalShop, PhysicalShopViewModel, SaleDbContext> viewModelService)
     {
         _viewModelService = viewModelService;
     }
@@ -18,12 +18,12 @@ public class ManagePhysicalShopController : Controller
     public IActionResult Create() => View();
 
     [HttpPost]
-    public async Task<IActionResult> Create(ItemViewModel obj)
+    public async Task<IActionResult> Create(PhysicalShopViewModel obj)
     {
         if (ModelState.IsValid)
         {
-            await _viewModelService.CreateModelAsync(obj);
-            TempData["success"] = $"{obj.Name} was created successfully";
+            var model = await _viewModelService.CreateModelAsync(obj);
+            TempData["success"] = $"{model.Address.GetFullAddress()} was created successfully";
             return RedirectToAction(nameof(Index));
         }
         else return View(obj);
@@ -37,12 +37,12 @@ public class ManagePhysicalShopController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(ItemViewModel obj)
+    public async Task<IActionResult> Edit(PhysicalShopViewModel obj)
     {
         if (ModelState.IsValid)
         {
-            await _viewModelService.UpdateModelAsync(obj);
-            TempData["success"] = $"{obj.Name} was updated successfully";
+            var model = await _viewModelService.UpdateModelAsync(obj);
+            TempData["success"] = $"{model.Address.GetFullAddress()} was updated successfully";
             return RedirectToAction(nameof(Index));
         }
         return View(obj);
@@ -68,7 +68,7 @@ public class ManagePhysicalShopController : Controller
 
         await _viewModelService.DeleteModelAsync(viewModel);
 
-        return Json(new { success = true, message = $"{viewModel.Name} was deleted successfully" });
+        return Json(new { success = true, message = $"{viewModel.Address.GetFullAddress()} was deleted successfully" });
     }
     #endregion
 }

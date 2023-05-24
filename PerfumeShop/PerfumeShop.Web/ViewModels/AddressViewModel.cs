@@ -17,4 +17,6 @@ public sealed class AddressViewModel
     [DataType(DataType.PostalCode)]
     [Display(Name = "Postal Code")]
     public string? PostalCode { get; set; }
+
+    public string GetFullAddress() => string.Concat(StreetAddress, ", ", PostalCode, " ", City, ", ", State);
 }

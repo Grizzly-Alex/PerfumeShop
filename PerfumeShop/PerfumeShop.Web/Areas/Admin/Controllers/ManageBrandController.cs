@@ -4,9 +4,9 @@
 [Authorize(Roles = "Admin")]
 public class ManageBrandController : Controller
 {
-    private readonly IViewModelService<CatalogBrand, ItemViewModel> _viewModelService;
+    private readonly IViewModelService<CatalogBrand, ItemViewModel, CatalogDbContext> _viewModelService;
 
-    public ManageBrandController(IViewModelService<CatalogBrand, ItemViewModel> viewModelService)
+    public ManageBrandController(IViewModelService<CatalogBrand, ItemViewModel, CatalogDbContext> viewModelService)
     {
         _viewModelService = viewModelService;
     }

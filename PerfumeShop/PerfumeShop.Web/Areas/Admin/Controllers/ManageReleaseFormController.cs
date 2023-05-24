@@ -4,9 +4,9 @@
 [Authorize(Roles = "Admin")]
 public class ManageReleaseFormController : Controller
 {
-    private readonly IViewModelService<CatalogReleaseForm, ItemViewModel> _viewModelService;
+    private readonly IViewModelService<CatalogReleaseForm, ItemViewModel, CatalogDbContext> _viewModelService;
 
-    public ManageReleaseFormController(IViewModelService<CatalogReleaseForm, ItemViewModel> viewModelService)
+    public ManageReleaseFormController(IViewModelService<CatalogReleaseForm, ItemViewModel, CatalogDbContext> viewModelService)
     {
         _viewModelService = viewModelService;
     }
