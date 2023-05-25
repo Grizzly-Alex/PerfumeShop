@@ -5,7 +5,7 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#productData').DataTable({
+    dataTable = $('#physicalShopData').DataTable({
         "ajax": {
             "url": "/Admin/ManagePhysicalShop/GetAll"
         },
