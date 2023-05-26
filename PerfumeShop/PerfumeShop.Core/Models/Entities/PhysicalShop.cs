@@ -5,6 +5,7 @@ public sealed class PhysicalShop : Entity
     public Address Address { get; private set; }
     public TimeOnly OpenTime { get; private set; }
     public TimeOnly CloseTime { get; private set; }
+    public List<DayOfWeek> Weekends { get; private set; }
 
 
     public PhysicalShop()
