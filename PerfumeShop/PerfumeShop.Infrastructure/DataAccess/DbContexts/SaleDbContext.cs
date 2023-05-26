@@ -44,5 +44,8 @@ public sealed class SaleDbContext : DbContext
         configurationBuilder.Properties<TimeOnly>()
             .HaveConversion<TimeOnlyConverter>()
             .HaveColumnType("time(0)");
-    }
+
+        configurationBuilder.Properties<List<DayOfWeek>>()
+            .HaveConversion<WeekConverter>();
+	}
 }

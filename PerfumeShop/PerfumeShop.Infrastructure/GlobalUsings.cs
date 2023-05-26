@@ -23,3 +23,4 @@ global using Stripe;
 global using Microsoft.EntityFrameworkCore.Infrastructure;
 global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 global using PerfumeShop.Infrastructure.DataAccess.Converters;
+global using Newtonsoft.Json;

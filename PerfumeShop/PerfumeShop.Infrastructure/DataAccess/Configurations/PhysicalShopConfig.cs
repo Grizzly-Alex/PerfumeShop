@@ -15,6 +15,8 @@ public sealed class PhysicalShopConfig : IEntityTypeConfiguration<PhysicalShop>
         builder.Property(p => p.CloseTime)
             .IsRequired();
 
+        builder.Property(p => p.Weekends);
+
         #region Address
         builder.OwnsOne(o => o.Address, a =>
         {

@@ -327,6 +327,10 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.Property<TimeSpan>("OpenTime")
                         .HasColumnType("time(0)");
 
+                    b.Property<string>("Weekends")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("PhysicalShops");

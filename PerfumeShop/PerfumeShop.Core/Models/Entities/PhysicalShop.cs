@@ -13,10 +13,11 @@ public sealed class PhysicalShop : Entity
         
     }
 
-    public PhysicalShop(Address address, TimeOnly openTime, TimeOnly closeTime)
+    public PhysicalShop(Address address, TimeOnly openTime, TimeOnly closeTime, List<DayOfWeek> weekends)
     {
         Address = Guard.Against.Null(address, nameof(address));
         OpenTime = Guard.Against.Null(openTime, nameof(openTime));
         CloseTime = Guard.Against.Null(closeTime, nameof(closeTime));
+        Weekends = weekends;
     }
 }
