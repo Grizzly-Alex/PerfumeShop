@@ -15,7 +15,16 @@ public class ManagePhysicalShopController : Controller
     public IActionResult Index() => View();
 
     [HttpGet]
-    public IActionResult Create() => View();
+    public IActionResult Create()
+    {
+
+        List<CheckboxViewModel> checkbox = new();
+
+
+
+        ManagePhysicalShopViewModel editViewModel = new ManagePhysicalShopViewModel();
+        return View();
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create(PhysicalShopViewModel obj)

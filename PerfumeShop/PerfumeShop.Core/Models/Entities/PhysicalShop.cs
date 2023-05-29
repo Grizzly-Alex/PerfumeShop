@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Core.Models.Entities;
+﻿using static Azure.Core.HttpHeader;
+
+namespace PerfumeShop.Core.Models.Entities;
 
 public sealed class PhysicalShop : Entity
 {
@@ -20,4 +22,6 @@ public sealed class PhysicalShop : Entity
         CloseTime = Guard.Against.Null(closeTime, nameof(closeTime));
         Weekends = weekends;
     }
+
+    public string GetWeekends() => string.Join(", ", Weekends.ToArray());
 }

@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Utilities;
+﻿using PerfumeShop.Web.ViewModels.PhysicalShop;
+
+namespace PerfumeShop.Web.Utilities;
 
 public sealed class MappingProfile : Profile
 {
@@ -37,7 +39,6 @@ public sealed class MappingProfile : Profile
 
         CreateMap<Customer, BuyerViewModel>().ReverseMap()
             .ForMember(model => model.UserId, opt => opt.MapFrom(view => view.Id))
-
 			.ForMember(model => model.ReceiptEmail, opt => opt.MapFrom(view => view.Email));
 
 		CreateMap<AppUser, BuyerViewModel>().ReverseMap();
@@ -62,7 +63,9 @@ public sealed class MappingProfile : Profile
             .ForMember(view => view.CustomerEmail, opt => opt.MapFrom(model => model.Customer.ReceiptEmail))
             .ForMember(view => view.Address, opt => opt.MapFrom(model => model.ShippingAddress.GetFullAddress()));
 
-        CreateMap<PhysicalShopViewModel, PhysicalShop>().ReverseMap();
-        #endregion
-    }
+        CreateMap<PhysicalShopViewModel, PhysicalShop>().ReverseMap()
+            .ForMember(view => view.Weekends, opt => opt.MapFrom(model => model.GetWeekends()));
+
+		#endregion
+	}
 }

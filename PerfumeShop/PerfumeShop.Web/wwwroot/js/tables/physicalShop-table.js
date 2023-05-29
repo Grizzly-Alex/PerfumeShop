@@ -13,9 +13,10 @@ function loadDataTable() {
             { data: "address.state", "width": "20%" },
             { data: "address.city", "width": "20%" },
             { data: "address.streetAddress", "width": "20%" },
-            { data: "address.postalCode", "width": "10%" },      
-            { data: "openTime", "width": "15%" },
-            { data: "closeTime", "width": "15%" },
+            { data: "address.postalCode", "width": "5%" },      
+            { data: "openTime", "width": "5%" },
+            { data: "closeTime", "width": "5%" },
+            { data: "weekends", "width": "20%" },
             {
                 data: "id",
                 "render": function (data) {
