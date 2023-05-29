@@ -17,9 +17,14 @@ public class ManagePhysicalShopController : Controller
     [HttpGet]
     public IActionResult Create()
     {
+        var list = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>();
+        var checkBox = new List<CheckBoxViewModel>();
         
-        
-        return View();
+        list.ToList().ForEach(i => checkBox.Add(new CheckBoxViewModel { Id = (int)i, LabelName = i.ToString(), IsChecked = true }));
+
+        var viewModel = new ManagePhysicalShopViewModel(checkBox);
+
+        return View(viewModel);
     }
 
     [HttpPost]

@@ -1,4 +1,4 @@
-﻿@model PhysicalShopViewModel
+﻿@model ManagePhysicalShopViewModel
 
 <form method="post" asp-controller="ManagePhysicalShop" asp-action="Create" class="row g-3 needs-validation" novalidate>
 
@@ -73,6 +73,25 @@
 					<input asp-for="@Model.CloseTime" class="form-control" type="time" required>
 					<span asp-validation-for="@Model.CloseTime" class="text-danger"></span>
 				</div>
+			</div>
+
+			<h4 class="my-3">Select Weekend</h4>
+
+			<div>
+				@foreach (var day in @Model.DayOfWeek)
+				{
+					<input type="checkbox" asp-for="@day.IsChecked" class="form-check-input" />
+					<label class="form-check-label" asp-for="@day.IsChecked">
+						@day.LabelName
+					</label>
+					<input type="hidden" asp-for="@day.Id" />
+					<input type="hidden" asp-for="@day.LabelName" />
+					<br />
+				}
+			</div>
+
+			<div>
+				<input class="btn btn-primary mt-3" type="submit" value="Submit" />
 			</div>
 
 		</div>
