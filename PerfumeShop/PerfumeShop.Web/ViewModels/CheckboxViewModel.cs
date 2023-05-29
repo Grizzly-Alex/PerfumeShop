@@ -1,6 +1,6 @@
 ﻿namespace PerfumeShop.Web.ViewModels;
 
-public sealed class CheckboxViewModel
+public sealed class CheckBoxViewModel
 {
 	public int Id { get; set; }
 	public string LabelName { get; set; } 

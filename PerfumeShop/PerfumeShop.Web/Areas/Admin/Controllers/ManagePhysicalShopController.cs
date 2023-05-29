@@ -17,12 +17,8 @@ public class ManagePhysicalShopController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-
-        List<CheckboxViewModel> checkbox = new();
-
-
-
-        ManagePhysicalShopViewModel editViewModel = new ManagePhysicalShopViewModel();
+        
+        
         return View();
     }
 
