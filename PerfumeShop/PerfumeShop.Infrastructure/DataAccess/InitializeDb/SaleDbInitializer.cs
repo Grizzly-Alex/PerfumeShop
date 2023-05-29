@@ -17,7 +17,7 @@ public sealed class SaleDbInitializer : IDbInitializer
 			await _dbContext.Database.MigrateAsync();
 		}	
 
-		if (! await _dbContext.PhysicalShops.AnyAsync())
+		if (!await _dbContext.PhysicalShops.AnyAsync())
 		{
 			await _dbContext.AddRangeAsync(GetPhysicalShops());
 			await _dbContext.SaveChangesAsync();
