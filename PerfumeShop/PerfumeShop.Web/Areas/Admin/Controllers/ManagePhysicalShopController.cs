@@ -50,6 +50,7 @@ public class ManagePhysicalShopController : Controller
     {
 		if (ModelState.IsValid)
         {
+			manageModel.Shop.Weekends = CheckBoxHelper.GetСheckedItems<DayOfWeek>(manageModel.DayOfWeek);
 			var model = await _viewModelService.UpdateModelAsync(manageModel.Shop);
             TempData["success"] = $"{model.Address.GetFullAddress()} was updated successfully";
             return RedirectToAction(nameof(Index));
