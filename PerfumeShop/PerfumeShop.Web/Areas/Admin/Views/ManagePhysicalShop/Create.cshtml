@@ -3,7 +3,7 @@
 <form method="post" asp-controller="ManagePhysicalShop" asp-action="Create" class="row g-3 needs-validation" novalidate>
 
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2 class="text-muted">Edit Physical Shop</h2>
+		<h2 class="text-muted">Create Physical Shop</h2>
 		<div class="btn-toolbar mb-2 mb-md-0">
 			<div class="text-end">
 
@@ -89,19 +89,6 @@
 					<br />
 				}
 			</div>
-
-			@*<div>
-				@foreach (var day in Model.DayOfWeek)
-				{
-					<input type="checkbox" asp-for="@day.IsChecked" class="form-check-input" />
-					<label class="form-check-label" asp-for="@day.IsChecked">
-						@day.LabelName
-					</label>
-					<input type="hidden" asp-for="@day.Id" />
-					<input type="hidden" asp-for="@day.LabelName" />
-					<br />
-				}
-			</div>*@
 
 			<div>
 				<input class="btn btn-primary mt-3" type="submit" value="Submit" />

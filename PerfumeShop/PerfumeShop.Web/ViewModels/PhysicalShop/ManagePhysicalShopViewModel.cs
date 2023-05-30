@@ -13,5 +13,11 @@ public sealed class ManagePhysicalShopViewModel
     public ManagePhysicalShopViewModel(List<CheckBoxViewModel> dayOfWeek)
     {
         DayOfWeek = dayOfWeek;
-    }
+	}
+
+    public ManagePhysicalShopViewModel(PhysicalShopViewModel shop,  List<CheckBoxViewModel> dayOfWeek)
+	{
+		DayOfWeek = dayOfWeek;
+        Shop = shop;
+	}
 }

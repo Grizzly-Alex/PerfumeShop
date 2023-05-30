@@ -38,8 +38,11 @@ public class ManagePhysicalShopController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var viewModel = await _viewModelService.GetViewModelByIdAsync(id);
-        return View(viewModel);
+        var shopViewModel = await _viewModelService.GetViewModelByIdAsync(id);
+        var manageModel = new ManagePhysicalShopViewModel(shopViewModel,
+            CheckBoxHelper.GetCheckBoxList(shopViewModel.Weekends));
+
+		return View(manageModel);
     }
 
     [HttpPost]
