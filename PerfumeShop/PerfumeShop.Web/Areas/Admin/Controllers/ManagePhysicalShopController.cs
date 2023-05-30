@@ -23,15 +23,16 @@ public class ManagePhysicalShopController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(PhysicalShopViewModel obj)
+    public async Task<IActionResult> Create(ManagePhysicalShopViewModel manageModel)
     {
         if (ModelState.IsValid)
         {
-            var model = await _viewModelService.CreateModelAsync(obj);
+			manageModel.Shop.Weekends = CheckBoxHelper.GetСheckedItems<DayOfWeek>(manageModel.DayOfWeek);
+			var model = await _viewModelService.CreateModelAsync(manageModel.Shop);
             TempData["success"] = $"{model.Address.GetFullAddress()} was created successfully";
             return RedirectToAction(nameof(Index));
         }
-        else return View(obj);
+        else return View(manageModel);
     }
 
     [HttpGet]
@@ -42,15 +43,15 @@ public class ManagePhysicalShopController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(PhysicalShopViewModel obj)
+    public async Task<IActionResult> Edit(ManagePhysicalShopViewModel manageModel)
     {
-        if (ModelState.IsValid)
+		if (ModelState.IsValid)
         {
-            var model = await _viewModelService.UpdateModelAsync(obj);
+			var model = await _viewModelService.UpdateModelAsync(manageModel.Shop);
             TempData["success"] = $"{model.Address.GetFullAddress()} was updated successfully";
             return RedirectToAction(nameof(Index));
         }
-        return View(obj);
+        return View(manageModel);
     }
 
     #region API CALLS

@@ -6,6 +6,10 @@ public sealed class CheckBoxViewModel
 	public string LabelName { get; set; } 
 	public bool IsChecked { get; set; }
 
+    public CheckBoxViewModel()
+    {       
+    }
+
     public CheckBoxViewModel(int id, string labelName, bool isChecked)
     {
         Id = id;

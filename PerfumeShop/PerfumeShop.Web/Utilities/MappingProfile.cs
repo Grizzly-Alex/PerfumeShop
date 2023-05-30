@@ -63,8 +63,7 @@ public sealed class MappingProfile : Profile
             .ForMember(view => view.CustomerEmail, opt => opt.MapFrom(model => model.Customer.ReceiptEmail))
             .ForMember(view => view.Address, opt => opt.MapFrom(model => model.ShippingAddress.GetFullAddress()));
 
-        CreateMap<PhysicalShopViewModel, PhysicalShop>().ReverseMap()
-            .ForMember(view => view.Weekends, opt => opt.MapFrom(model => model.GetWeekends()));
+        CreateMap<PhysicalShopViewModel, PhysicalShop>().ReverseMap();
 
 		#endregion
 	}

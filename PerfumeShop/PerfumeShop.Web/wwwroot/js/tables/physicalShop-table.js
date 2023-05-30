@@ -16,7 +16,7 @@ function loadDataTable() {
             { data: "address.postalCode", "width": "5%" },      
             { data: "openTime", "width": "5%" },
             { data: "closeTime", "width": "5%" },
-            { data: "weekends", "width": "20%" },
+            { data: "weekendsStr", "width": "20%" },
             {
                 data: "id",
                 "render": function (data) {

@@ -1,11 +1,14 @@
 ﻿namespace PerfumeShop.Web.ViewModels.PhysicalShop;
 
-public sealed class ManagePhysicalShopViewModel : EntityViewModel
+public sealed class ManagePhysicalShopViewModel
 {
-    public AddressViewModel Address { get; set; }
-    public TimeOnly OpenTime { get; set; }
-    public TimeOnly CloseTime { get; set; }
+    public PhysicalShopViewModel Shop { get; set; }
     public List<CheckBoxViewModel> DayOfWeek { get; set; }
+
+    public ManagePhysicalShopViewModel()
+    {
+        
+    }
 
     public ManagePhysicalShopViewModel(List<CheckBoxViewModel> dayOfWeek)
     {
