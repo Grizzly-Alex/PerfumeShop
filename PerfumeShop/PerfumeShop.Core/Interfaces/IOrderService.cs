@@ -1,9 +1,11 @@
-﻿namespace PerfumeShop.Core.Interfaces;
+﻿using PerfumeShop.Core.Constants;
+
+namespace PerfumeShop.Core.Interfaces;
 
 public interface IOrderService
 {
     Task<OrderHeader> CreateOrderAsync(
-        PaymentMethods paymentMethod, DeliveryMethods deliveryMethod,
+        PaymentMethods paymentMethod, OrderReceiptMethods orderReceiptMethod,
         Address shippingAddress, Customer customer,
         int basketId);
     Task UpdateOrderStatus(int orderId, OrderStatuses orderStatus);

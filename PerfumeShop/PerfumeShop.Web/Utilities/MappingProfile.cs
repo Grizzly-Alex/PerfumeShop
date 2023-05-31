@@ -1,6 +1,4 @@
-﻿using PerfumeShop.Web.ViewModels.PhysicalShop;
-
-namespace PerfumeShop.Web.Utilities;
+﻿namespace PerfumeShop.Web.Utilities;
 
 public sealed class MappingProfile : Profile
 {
@@ -53,7 +51,7 @@ public sealed class MappingProfile : Profile
         CreateMap<OrderInfoViewModel, OrderHeader>().ReverseMap()
             .ForMember(view => view.OrderStatus, opt => opt.MapFrom(model => model.OrderStatus.Name))
             .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus.Name))
-            .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryMethod.Name))
+            .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.OrderReceiptMethod.Name))
             .ForMember(view => view.ItemsCost, opt => opt.MapFrom(model => model.Cost.ItemsCost))
             .ForMember(view => view.ShippingCost, opt => opt.MapFrom(model => model.Cost.ShippingCost))
             .ForMember(view => view.PromoCodeCost, opt => opt.MapFrom(model => model.Cost.PromoCodeCost))

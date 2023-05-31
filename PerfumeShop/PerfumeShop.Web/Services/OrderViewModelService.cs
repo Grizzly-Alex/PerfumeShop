@@ -22,7 +22,7 @@ public sealed class OrderViewModelService : IOrderViewModelService
             .GetFirstOrDefaultAsync(
                 predicate: order => order.Id == id,
                 include: query => query
-                    .Include(order => order.DeliveryMethod)
+                    .Include(order => order.OrderReceiptMethod)
                     .Include(order => order.OrderStatus)
                     .Include(order => order.Customer)
                     .Include(order => order.ShippingAddress)

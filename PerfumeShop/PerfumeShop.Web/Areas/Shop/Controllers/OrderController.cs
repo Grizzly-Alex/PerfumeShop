@@ -1,6 +1,7 @@
 ﻿namespace PerfumeShop.Web.Areas.Shop.Controllers;
 
 [Area("Shop")]
+[Authorize]
 public class OrderController : Controller
 {
     private readonly IMapper _mapper;

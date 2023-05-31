@@ -6,8 +6,8 @@ public sealed class OrderHeader : Entity
     public DateTime? ShippingDate { get; private set; }
     public string? EmployeeId { get; private set; }
     public string OrderId { get; private set; }
-    public int DeliveryMethodId { get; private set; }
-    public DeliveryMethod DeliveryMethod { get; private set; }
+    public int OrderReceiptMethodId { get; private set; }
+    public OrderReceiptMethod OrderReceiptMethod { get; private set; }
     public int OrderStatusId { get; private set; }
 	public OrderStatus OrderStatus { get; private set; }
     public Cost Cost { get; private set; }
@@ -24,7 +24,7 @@ public sealed class OrderHeader : Entity
 
 	public OrderHeader(
         OrderStatuses status,
-        DeliveryMethods deliveryMethod,
+        OrderReceiptMethods orderReceiptMethod,
         List<OrderItem> orderItems,
         Cost cost,
         Customer customer,
@@ -34,7 +34,7 @@ public sealed class OrderHeader : Entity
         ShippingAddress = Guard.Against.Null(shippingAddress, nameof(shippingAddress));
         Cost = Guard.Against.Null(cost, nameof(cost));
         OrderStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
-        DeliveryMethodId = Guard.Against.NegativeOrZero((int)deliveryMethod, nameof(deliveryMethod));
+		OrderReceiptMethodId = Guard.Against.NegativeOrZero((int)orderReceiptMethod, nameof(orderReceiptMethod));
         orderItems.ForEach(i => i.OrderId = Guard.Against.Null(Id, nameof(Id)));
         _orderItems = Guard.Against.Null(orderItems, nameof(orderItems));
         OrderDate = DateTime.UtcNow;

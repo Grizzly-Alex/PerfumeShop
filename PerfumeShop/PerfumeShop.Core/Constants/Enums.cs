@@ -60,7 +60,7 @@ public enum PaymentMethods
 	[Display(Name = "Payment Remote")] PaymentRemote = 2,
 }
 
-public enum DeliveryMethods
+public enum OrderReceiptMethods
 {
 	[Display(Name = "Pickup")] Pickup = 1,
 	[Display(Name = "Courier")] Courier = 2,
