@@ -60,7 +60,7 @@ public class OrderCreatingModel : PageModel
        		
         var order = await _orderService.CreateOrderAsync(PaymentMethod, DeliveryMethod, shippingAddress, customer, basketId);
 
-		HttpContext.Session.Set(Constants.SessionOrderId, order.Id);
+		HttpContext.Session.Set(Constants.CATALOG_IMAGE_PATH, order.Id);
 		
 		//var paymentCard = _mapper.Map<PaymentCard>(PaymentCardModel);
 		/*
@@ -99,14 +99,14 @@ public class OrderCreatingModel : PageModel
 
 	private string GetAnonymousUserId()
 	{		
-		if (Request.Cookies.ContainsKey(Constants.BasketCookie))
+		if (Request.Cookies.ContainsKey(Constants.BASKET_COOKIE))
 		{
-			return Request.Cookies[Constants.BasketCookie];
+			return Request.Cookies[Constants.BASKET_COOKIE];
 		}
 		else
 		{
 			var userName = Guid.NewGuid().ToString();
-			Response.Cookies.Append(Constants.BasketCookie, userName,
+			Response.Cookies.Append(Constants.BASKET_COOKIE, userName,
 			new CookieOptions
 			{
 				IsEssential = true,

@@ -57,7 +57,7 @@ public class ManageProductController : Controller
 
         if (files.Count > 0)
         {
-            _contentManager.UploadFiles(HttpContext.Request.Form.Files, Constants.CatalogImagePath);
+            _contentManager.UploadFiles(HttpContext.Request.Form.Files, Constants.CATALOG_IMAGE_PATH);
             manageViewModel.Product!.PictureUri = _contentManager.NameFiles.FirstOrDefault();
         }
 
@@ -99,8 +99,8 @@ public class ManageProductController : Controller
 
         if (files.Count > 0)
         {
-            _contentManager.RemoveFile(Constants.CatalogImagePath, manageViewModel.Product.PictureUri);
-            _contentManager.UploadFiles(files, Constants.CatalogImagePath);
+            _contentManager.RemoveFile(Constants.CATALOG_IMAGE_PATH, manageViewModel.Product.PictureUri);
+            _contentManager.UploadFiles(files, Constants.CATALOG_IMAGE_PATH);
             manageViewModel.Product.PictureUri = _contentManager.NameFiles.FirstOrDefault();
         }
 
@@ -140,7 +140,7 @@ public class ManageProductController : Controller
         {
             return Json(new { success = false, message = "Error while deleting" });
         }
-        _contentManager.RemoveFile(Constants.CatalogImagePath, viewModel.PictureUri);
+        _contentManager.RemoveFile(Constants.CATALOG_IMAGE_PATH, viewModel.PictureUri);
 
         await _productService.DeleteModelAsync(viewModel);
 

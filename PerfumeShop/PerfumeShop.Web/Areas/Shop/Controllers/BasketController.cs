@@ -115,9 +115,9 @@ public class BasketController : Controller
         {
             return Request.HttpContext.User.Identity.Name;
         }
-        if (Request.Cookies.ContainsKey(Constants.BasketCookie))
+        if (Request.Cookies.ContainsKey(Constants.BASKET_COOKIE))
         {
-            userName = Request.Cookies[Constants.BasketCookie];
+            userName = Request.Cookies[Constants.BASKET_COOKIE];
 
             if (!Request.HttpContext.User.Identity.IsAuthenticated 
                 && !Guid.TryParse(userName, out var _))
@@ -129,7 +129,7 @@ public class BasketController : Controller
 
         userName = Guid.NewGuid().ToString();
 
-        Response.Cookies.Append(Constants.BasketCookie, userName,
+        Response.Cookies.Append(Constants.BASKET_COOKIE, userName,
             new CookieOptions 
             {
                 IsEssential = true,
