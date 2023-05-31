@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Utilities;
+﻿using PerfumeShop.Web.ViewModels.PhysicalShop;
+
+namespace PerfumeShop.Web.Utilities;
 
 public sealed class MappingProfile : Profile
 {
@@ -32,12 +34,11 @@ public sealed class MappingProfile : Profile
         CreateMap(typeof(PagedList<>), typeof(PagedListViewModel));
         #endregion
 
-        #region Shopping
+        #region Sale
         CreateMap<PaymentCard, PaymentCardViewModel>().ReverseMap();
 
         CreateMap<Customer, BuyerViewModel>().ReverseMap()
             .ForMember(model => model.UserId, opt => opt.MapFrom(view => view.Id))
-
 			.ForMember(model => model.ReceiptEmail, opt => opt.MapFrom(view => view.Email));
 
 		CreateMap<AppUser, BuyerViewModel>().ReverseMap();
@@ -49,7 +50,7 @@ public sealed class MappingProfile : Profile
         CreateMap<Basket, BasketViewModel>()
             .ForMember(model => model.Items, opt => opt.Ignore());
 
-        CreateMap<OrderViewModel, OrderHeader>().ReverseMap()
+        CreateMap<OrderInfoViewModel, OrderHeader>().ReverseMap()
             .ForMember(view => view.OrderStatus, opt => opt.MapFrom(model => model.OrderStatus.Name))
             .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus.Name))
             .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryMethod.Name))
@@ -61,6 +62,9 @@ public sealed class MappingProfile : Profile
             .ForMember(view => view.CustomerPhone, opt => opt.MapFrom(model => model.Customer.PhoneNumber))
             .ForMember(view => view.CustomerEmail, opt => opt.MapFrom(model => model.Customer.ReceiptEmail))
             .ForMember(view => view.Address, opt => opt.MapFrom(model => model.ShippingAddress.GetFullAddress()));
+
+        CreateMap<PhysicalShopViewModel, PhysicalShop>().ReverseMap();
+
 		#endregion
 	}
 }

@@ -1,0 +1,29 @@
+﻿<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2 class="text-muted">Physical Shops Information</h2>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="text-end">
+            <a asp-controller="ManagePhysicalShop" asp-action="Create" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+                <span class="bi bi-pen">Add</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<table id="physicalShopData" class="table table-bordered table-striped table-sm">
+    <thead>
+        <tr>
+            <th>State</th>
+            <th>City</th>
+            <th>Street address</th>
+            <th>Postal code</th>
+            <th>Open time</th>
+            <th>Close time</th>
+            <th>Weekends</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script src="~/js/tables/physicalShop-table.js"></script>
+}

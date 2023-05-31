@@ -1,8 +1,9 @@
 ﻿namespace PerfumeShop.Web.Interfaces
 {
-    public interface IViewModelService<TModel, TViewModel>
+    public interface IViewModelService<TModel, TViewModel, TDbContext>
         where TModel : Entity
         where TViewModel : EntityViewModel
+        where TDbContext : DbContext
     {
         public Task<IEnumerable<TViewModel>> GetViewModelsAsync();
         public Task<TViewModel> GetViewModelByIdAsync(int id);

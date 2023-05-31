@@ -5,20 +5,20 @@
 public class ManageProductController : Controller
 {
     private readonly IContentManager _contentManager;
-    private readonly IViewModelService<CatalogProduct, ProductViewModel> _productService;
-    private readonly IViewModelService<CatalogBrand, ItemViewModel> _brandService;
-    private readonly IViewModelService<CatalogGender, ItemViewModel> _genderService;
-    private readonly IViewModelService<CatalogAromaType, ItemViewModel> _aromaTypeService;
-    private readonly IViewModelService<CatalogReleaseForm, ItemViewModel> _releaseFormService;
+    private readonly IViewModelService<CatalogProduct, ProductViewModel, CatalogDbContext> _productService;
+    private readonly IViewModelService<CatalogBrand, ItemViewModel, CatalogDbContext> _brandService;
+    private readonly IViewModelService<CatalogGender, ItemViewModel, CatalogDbContext> _genderService;
+    private readonly IViewModelService<CatalogAromaType, ItemViewModel, CatalogDbContext> _aromaTypeService;
+    private readonly IViewModelService<CatalogReleaseForm, ItemViewModel, CatalogDbContext> _releaseFormService;
 
 
     public ManageProductController(
         IContentManager contentManager,
-        IViewModelService<CatalogProduct, ProductViewModel> catalogService,
-        IViewModelService<CatalogBrand, ItemViewModel> brandService,
-        IViewModelService<CatalogGender, ItemViewModel> genderService,
-        IViewModelService<CatalogAromaType, ItemViewModel> typeService,
-        IViewModelService<CatalogReleaseForm, ItemViewModel> releaseFormService)      
+        IViewModelService<CatalogProduct, ProductViewModel, CatalogDbContext> catalogService,
+        IViewModelService<CatalogBrand, ItemViewModel, CatalogDbContext> brandService,
+        IViewModelService<CatalogGender, ItemViewModel, CatalogDbContext> genderService,
+        IViewModelService<CatalogAromaType, ItemViewModel, CatalogDbContext> typeService,
+        IViewModelService<CatalogReleaseForm, ItemViewModel, CatalogDbContext> releaseFormService)      
     {
         _contentManager = contentManager;
         _productService = catalogService;

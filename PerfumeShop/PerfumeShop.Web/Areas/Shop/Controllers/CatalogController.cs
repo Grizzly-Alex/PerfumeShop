@@ -5,11 +5,11 @@
 public class CatalogController : Controller
 {
 	private readonly ICatalogViewModelService _catalogService;
-	private readonly IViewModelService<CatalogProduct, ProductViewModel> _viewModelService;
+	private readonly IViewModelService<CatalogProduct, ProductViewModel, CatalogDbContext> _viewModelService;
 
     public CatalogController(
 		ICatalogViewModelService catalogService,
-		IViewModelService<CatalogProduct, ProductViewModel> viewModelService)
+		IViewModelService<CatalogProduct, ProductViewModel, CatalogDbContext> viewModelService)
     {
         _catalogService = catalogService;
 		_viewModelService = viewModelService;

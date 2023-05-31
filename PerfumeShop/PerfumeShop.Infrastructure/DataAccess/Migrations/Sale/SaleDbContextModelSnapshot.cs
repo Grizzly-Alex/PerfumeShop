@@ -119,17 +119,17 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .HasPrecision(0)
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ShippingDate")
                         .HasPrecision(0)
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("TrackingId")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -311,6 +311,29 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                             Id = 3,
                             Name = "Reject"
                         });
+                });
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.PhysicalShop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<TimeSpan>("CloseTime")
+                        .HasColumnType("time(0)");
+
+                    b.Property<TimeSpan>("OpenTime")
+                        .HasColumnType("time(0)");
+
+                    b.Property<string>("Weekends")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PhysicalShops");
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.BasketItem", b =>
@@ -499,6 +522,49 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.Navigation("PaymentMethod");
 
                     b.Navigation("PaymentStatus");
+                });
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.PhysicalShop", b =>
+                {
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("PhysicalShopId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("PostalCode");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("State");
+
+                            b1.Property<string>("StreetAddress")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("StreetAddress");
+
+                            b1.HasKey("PhysicalShopId");
+
+                            b1.ToTable("PhysicalShops");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PhysicalShopId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.Basket", b =>

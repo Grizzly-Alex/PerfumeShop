@@ -47,6 +47,19 @@
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
+                            <button class="btn btn-toggle d-inline-flex align-items-center border-0 rounded shadow-none" data-bs-toggle="collapse" data-bs-target="#shopes" aria-expanded="false">
+                                <h6 class="bi bi-buildings"> Physical Shopes</h6>
+                            </button>
+                            <div class="collapse" id="shopes">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">
+                                    <li>
+                                        <a class="link-dark d-inline-flex text-decoration-none rounded"
+                                           asp-area="Admin" asp-controller="ManagePhysicalShop" asp-action="Index">Physical Shops Information</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
                             <button class="btn btn-toggle d-inline-flex align-items-center border-0 rounded shadow-none" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false">
                                 <h6 class="bi bi-people"> Users</h6>
                             </button>
@@ -70,7 +83,7 @@
                         </li>
                         <li class="nav-item">
                             <button class="btn btn-toggle d-inline-flex align-items-center border-0 rounded shadow-none" data-bs-toggle="collapse" data-bs-target="#data" aria-expanded="false">
-                                <h6 class="bi bi-database-gear"> Data</h6>
+                                <h6 class="bi bi-book"> Catalog</h6>
                             </button>
                             <div class="collapse" id="data">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1">

@@ -4,9 +4,9 @@
 [Authorize(Roles = "Admin")]
 public class ManageAromaTypeController : Controller
 {
-    private readonly IViewModelService<CatalogAromaType, ItemViewModel> _viewModelService;
+    private readonly IViewModelService<CatalogAromaType, ItemViewModel, CatalogDbContext> _viewModelService;
 
-    public ManageAromaTypeController(IViewModelService<CatalogAromaType, ItemViewModel> viewModelService)
+    public ManageAromaTypeController(IViewModelService<CatalogAromaType, ItemViewModel, CatalogDbContext> viewModelService)
     {
         _viewModelService = viewModelService;
     }

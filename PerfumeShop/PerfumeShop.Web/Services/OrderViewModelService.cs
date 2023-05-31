@@ -16,7 +16,7 @@ public sealed class OrderViewModelService : IOrderViewModelService
         _logger = logger;
     }
 
-    public async Task<OrderViewModel> GetOrderAsync(int id)
+    public async Task<OrderInfoViewModel> GetOrderAsync(int id)
     {
         var orderHeader = await _unitOfWork.GetRepository<OrderHeader>()
             .GetFirstOrDefaultAsync(
@@ -34,6 +34,6 @@ public sealed class OrderViewModelService : IOrderViewModelService
 
         _logger.LogInformation($"Getting Order Header with ID:'{id}' successfully.");
 
-        return _mapper.Map<OrderViewModel>(orderHeader);
+        return _mapper.Map<OrderInfoViewModel>(orderHeader);
     }
 }

@@ -18,7 +18,7 @@ public class PaymentModel : PageModel
 
     [BindProperty]
     public PaymentCardViewModel PaymentCardModel { get; set; } = new();
-    public OrderViewModel OrderModel { get; set; }
+    public OrderInfoViewModel OrderModel { get; set; }
 
     public async Task OnGet()
     {

@@ -1,17 +1,18 @@
 ﻿namespace PerfumeShop.Web.Services;
 
-public class ViewModelService<TModel, TViewModel> : IViewModelService<TModel, TViewModel>
+public class ViewModelService<TModel, TViewModel, TDbContext> : IViewModelService<TModel, TViewModel, TDbContext>
     where TModel : Entity
     where TViewModel : EntityViewModel
+    where TDbContext : DbContext
 {
     protected readonly IMapper _mapper;
-    protected readonly IUnitOfWork<CatalogDbContext> _unitOfWork;
-    protected readonly ILogger<ViewModelService<TModel, TViewModel>> _logger;
+    protected readonly IUnitOfWork<TDbContext> _unitOfWork;
+    protected readonly ILogger<ViewModelService<TModel, TViewModel, TDbContext>> _logger;
 
     public ViewModelService(
         IMapper mapper,
-        IUnitOfWork<CatalogDbContext> unitOfWork,
-        ILogger<ViewModelService<TModel, TViewModel>> logger)
+        IUnitOfWork<TDbContext> unitOfWork,
+        ILogger<ViewModelService<TModel, TViewModel, TDbContext>> logger)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
