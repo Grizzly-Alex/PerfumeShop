@@ -29,7 +29,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeliveryMethods",
+                name: "OrderReceiptMethods",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -37,7 +37,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeliveryMethods", x => x.Id);
+                    table.PrimaryKey("PK_OrderReceiptMethods", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,6 +77,25 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                 });
 
             migrationBuilder.CreateTable(
+                name: "PhysicalShops",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    State = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    StreetAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    OpenTime = table.Column<TimeSpan>(type: "time(0)", nullable: false),
+                    CloseTime = table.Column<TimeSpan>(type: "time(0)", nullable: false),
+                    Weekends = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhysicalShops", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BasketItems",
                 columns: table => new
                 {
@@ -108,7 +127,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     ShippingDate = table.Column<DateTime>(type: "datetime2(0)", precision: 0, nullable: true),
                     EmployeeId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     OrderId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    DeliveryMethodId = table.Column<int>(type: "int", nullable: false),
+                    OrderReceiptMethodId = table.Column<int>(type: "int", nullable: false),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false),
                     ItemsCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     ShippingCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
@@ -128,9 +147,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                 {
                     table.PrimaryKey("PK_OrderHeaders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderHeaders_DeliveryMethods_DeliveryMethodId",
-                        column: x => x.DeliveryMethodId,
-                        principalTable: "DeliveryMethods",
+                        name: "FK_OrderHeaders_OrderReceiptMethods_OrderReceiptMethodId",
+                        column: x => x.OrderReceiptMethodId,
+                        principalTable: "OrderReceiptMethods",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -199,7 +218,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                 });
 
             migrationBuilder.InsertData(
-                table: "DeliveryMethods",
+                table: "OrderReceiptMethods",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -245,9 +264,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                 column: "BasketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderHeaders_DeliveryMethodId",
+                name: "IX_OrderHeaders_OrderReceiptMethodId",
                 table: "OrderHeaders",
-                column: "DeliveryMethodId");
+                column: "OrderReceiptMethodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderHeaders_OrderStatusId",
@@ -289,6 +308,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                 name: "PaymentDetails");
 
             migrationBuilder.DropTable(
+                name: "PhysicalShops");
+
+            migrationBuilder.DropTable(
                 name: "Baskets");
 
             migrationBuilder.DropTable(
@@ -301,7 +323,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                 name: "PaymentStatuses");
 
             migrationBuilder.DropTable(
-                name: "DeliveryMethods");
+                name: "OrderReceiptMethods");
 
             migrationBuilder.DropTable(
                 name: "OrderStatuses");

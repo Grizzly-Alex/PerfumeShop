@@ -12,8 +12,8 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 {
     [DbContext(typeof(SaleDbContext))]
-    [Migration("20230526114523_Week")]
-    partial class Week
+    [Migration("20230601063530_InitialMigrtation")]
+    partial class InitialMigrtation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,33 +76,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.ToTable("BasketItems");
                 });
 
-            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.DeliveryMethod", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DeliveryMethods");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Pickup"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Courier"
-                        });
-                });
-
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderHeader", b =>
                 {
                     b.Property<int>("Id")
@@ -110,9 +83,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DeliveryMethodId")
-                        .HasColumnType("int");
 
                     b.Property<string>("EmployeeId")
                         .HasMaxLength(256)
@@ -127,6 +97,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int>("OrderReceiptMethodId")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
@@ -136,7 +109,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeliveryMethodId");
+                    b.HasIndex("OrderReceiptMethodId");
 
                     b.HasIndex("OrderStatusId");
 
@@ -172,6 +145,33 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderReceiptMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderReceiptMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Pickup"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Courier"
+                        });
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderStatus", b =>
@@ -350,9 +350,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderHeader", b =>
                 {
-                    b.HasOne("PerfumeShop.Core.Models.Entities.DeliveryMethod", "DeliveryMethod")
+                    b.HasOne("PerfumeShop.Core.Models.Entities.OrderReceiptMethod", "OrderReceiptMethod")
                         .WithMany()
-                        .HasForeignKey("DeliveryMethodId")
+                        .HasForeignKey("OrderReceiptMethodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -481,7 +481,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.Navigation("Customer")
                         .IsRequired();
 
-                    b.Navigation("DeliveryMethod");
+                    b.Navigation("OrderReceiptMethod");
 
                     b.Navigation("OrderStatus");
 

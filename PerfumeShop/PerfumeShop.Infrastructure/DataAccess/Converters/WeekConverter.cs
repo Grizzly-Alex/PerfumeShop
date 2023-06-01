@@ -1,9 +1,10 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess.Converters;
 
-public class WeekConverter : ValueConverter<List<DayOfWeek>, string>
+public class EnumConverter<TEnum> : ValueConverter<List<TEnum>, string>
+    where TEnum : Enum
 {
-    public WeekConverter() : base(
-        w => JsonConvert.SerializeObject(w.Select(d => d.ToString())),
-        w => JsonConvert.DeserializeObject<List<DayOfWeek>>(w))
+    public EnumConverter() : base(
+        e => JsonConvert.SerializeObject(e.Select(e => e.ToString() ?? string.Empty)),
+        e => JsonConvert.DeserializeObject<List<TEnum>>(e))
     { }
 }

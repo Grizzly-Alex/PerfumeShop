@@ -46,6 +46,6 @@ public sealed class SaleDbContext : DbContext
             .HaveColumnType("time(0)");
 
         configurationBuilder.Properties<List<DayOfWeek>>()
-            .HaveConversion<WeekConverter>();
+            .HaveConversion<EnumConverter<DayOfWeek>>();
 	}
 }
