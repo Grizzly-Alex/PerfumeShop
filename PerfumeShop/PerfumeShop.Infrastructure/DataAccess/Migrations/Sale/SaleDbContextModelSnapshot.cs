@@ -94,7 +94,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("OrderReceiptMethodId")
+                    b.Property<int>("OrderDeliveryMethodId")
                         .HasColumnType("int");
 
                     b.Property<int>("OrderStatusId")
@@ -106,7 +106,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderReceiptMethodId");
+                    b.HasIndex("OrderDeliveryMethodId");
 
                     b.HasIndex("OrderStatusId");
 
@@ -144,7 +144,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderReceiptMethod", b =>
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderDeliveryMethod", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -156,7 +156,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderReceiptMethods");
+                    b.ToTable("OrderDeliveryMethods");
 
                     b.HasData(
                         new
@@ -347,9 +347,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderHeader", b =>
                 {
-                    b.HasOne("PerfumeShop.Core.Models.Entities.OrderReceiptMethod", "OrderReceiptMethod")
+                    b.HasOne("PerfumeShop.Core.Models.Entities.OrderDeliveryMethod", "OrderDeliveryMethod")
                         .WithMany()
-                        .HasForeignKey("OrderReceiptMethodId")
+                        .HasForeignKey("OrderDeliveryMethodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -478,7 +478,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.Navigation("Customer")
                         .IsRequired();
 
-                    b.Navigation("OrderReceiptMethod");
+                    b.Navigation("OrderDeliveryMethod");
 
                     b.Navigation("OrderStatus");
 

@@ -43,7 +43,7 @@ public class OrderCreatingModel : PageModel
 	[BindProperty]
 	public PaymentMethods PaymentMethod { get; set; } = PaymentMethods.PaymentRemote;
 	[BindProperty]
-	public OrderReceiptMethods OrderReceiptMethod { get; set; } = OrderReceiptMethods.Pickup;
+	public OrderDeliveryMethods OrderDeliveryMethod { get; set; } = OrderDeliveryMethods.Pickup;
 
 
 	public async Task OnGet()
@@ -58,7 +58,7 @@ public class OrderCreatingModel : PageModel
         var shippingAddress = _mapper.Map<Address>(AddressModel);
         var customer = _mapper.Map<Customer>(BuyerModel);
        		
-        var order = await _orderService.CreateOrderAsync(PaymentMethod, OrderReceiptMethod, shippingAddress, customer, basketId);
+        var order = await _orderService.CreateOrderAsync(PaymentMethod, OrderDeliveryMethod, shippingAddress, customer, basketId);
 
 		HttpContext.Session.Set(Constants.CATALOG_IMAGE_PATH, order.Id);
 		

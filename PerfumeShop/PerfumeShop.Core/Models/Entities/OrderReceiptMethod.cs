@@ -1,20 +1,20 @@
 ﻿namespace PerfumeShop.Core.Models.Entities;
 
-public sealed class OrderReceiptMethod : Entity
+public sealed class OrderDeliveryMethod : Entity
 {
 	public string Name { get; private set; }
 
-	private OrderReceiptMethod()
+	private OrderDeliveryMethod()
 	{
 	}
 
-	public OrderReceiptMethod(OrderReceiptMethods method)
+	public OrderDeliveryMethod(OrderDeliveryMethods method)
 	{
 		Id = (int)method;
 		Name = method.GetDisplayName();
 	}
 
 
-	public static implicit operator OrderReceiptMethod(OrderReceiptMethods enumMethods) => new OrderReceiptMethod(enumMethods);
-	public static implicit operator OrderReceiptMethods(OrderReceiptMethod classMethod) => (OrderReceiptMethods)classMethod.Id;
+	public static implicit operator OrderDeliveryMethod(OrderDeliveryMethods enumMethods) => new OrderDeliveryMethod(enumMethods);
+	public static implicit operator OrderDeliveryMethods(OrderDeliveryMethod classMethod) => (OrderDeliveryMethods)classMethod.Id;
 }
