@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Services;
+﻿using PerfumeShop.Web.ViewModels.Order;
+
+namespace PerfumeShop.Web.Services;
 
 public sealed class OrderViewModelService : IOrderViewModelService
 {

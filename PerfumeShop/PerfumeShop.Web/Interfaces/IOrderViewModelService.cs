@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Interfaces;
+﻿using PerfumeShop.Web.ViewModels.Order;
+
+namespace PerfumeShop.Web.Interfaces;
 
 public interface IOrderViewModelService
 {

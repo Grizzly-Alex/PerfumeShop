@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Utilities;
+﻿using PerfumeShop.Web.ViewModels.Order;
+
+namespace PerfumeShop.Web.Utilities;
 
 public sealed class MappingProfile : Profile
 {

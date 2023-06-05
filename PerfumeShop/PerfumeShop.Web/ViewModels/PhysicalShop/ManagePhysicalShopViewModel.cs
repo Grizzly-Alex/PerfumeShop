@@ -3,19 +3,19 @@
 public sealed class ManagePhysicalShopViewModel
 {
     public PhysicalShopViewModel Shop { get; set; }
-    public List<CheckBoxViewModel> DayOfWeek { get; set; }
+    public List<CheckboxItem> DayOfWeek { get; set; }
 
     public ManagePhysicalShopViewModel()
     {
         
     }
 
-    public ManagePhysicalShopViewModel(List<CheckBoxViewModel> dayOfWeek)
+    public ManagePhysicalShopViewModel(List<CheckboxItem> dayOfWeek)
     {
         DayOfWeek = dayOfWeek;
 	}
 
-    public ManagePhysicalShopViewModel(PhysicalShopViewModel shop,  List<CheckBoxViewModel> dayOfWeek)
+    public ManagePhysicalShopViewModel(PhysicalShopViewModel shop,  List<CheckboxItem> dayOfWeek)
 	{
 		DayOfWeek = dayOfWeek;
         Shop = shop;

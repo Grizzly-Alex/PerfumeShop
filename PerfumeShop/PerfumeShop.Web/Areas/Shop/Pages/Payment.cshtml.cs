@@ -1,3 +1,5 @@
+using PerfumeShop.Web.ViewModels.Order;
+
 namespace PerfumeShop.Web.Areas.Shop.Pages;
 
 [Area("Shop")]
