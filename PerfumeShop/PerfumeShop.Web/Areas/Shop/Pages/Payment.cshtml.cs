@@ -25,10 +25,7 @@ public class PaymentModel : PageModel
     public async Task OnGet()
     {
 
-        var orderHeader = await _orderViewModelService.GetOrderAsync(HttpContext.Session.Get<int>(Constants.SESSION_ORDER_ID));
+        var orderHeader = await _orderViewModelService.GetOrderInfoModelAsync(HttpContext.Session.Get<int>(Constants.SESSION_ORDER_ID));
         var test = orderHeader;
-
-
-
     }
 }

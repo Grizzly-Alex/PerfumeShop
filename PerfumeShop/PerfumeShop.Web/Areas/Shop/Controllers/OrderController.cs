@@ -8,7 +8,7 @@ public class OrderController : Controller
 {
     private readonly IMapper _mapper;
 	private readonly IBasketViewModelService _basketViewModelService;
-	private readonly IViewModelService<PhysicalShop, PhysicalShopViewModel, SaleDbContext> _viewModelService;
+	private readonly IOrderViewModelService _orderViewModelService;
     private readonly SignInManager<AppUser> _signInManager;
 	private readonly UserManager<AppUser> _userManager;
 
@@ -16,13 +16,13 @@ public class OrderController : Controller
 	public OrderController(
         IMapper mapper,
         IBasketViewModelService basketViewModelService,
-		IViewModelService<PhysicalShop, PhysicalShopViewModel, SaleDbContext> viewModelService,
+		IOrderViewModelService orderViewModelService,
 		SignInManager<AppUser> signInManager,
 		UserManager<AppUser> userManager)
     {
 		_mapper = mapper;
 		_basketViewModelService = basketViewModelService;
-		_viewModelService = viewModelService;
+		_orderViewModelService = orderViewModelService;
 		_signInManager = signInManager;
 		_userManager = userManager;
 	}
@@ -30,24 +30,9 @@ public class OrderController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-		var order = new CreateOrderViewModel();
-
-		if (_signInManager.IsSignedIn(HttpContext.User))
-		{
-			var userName = User.Identity.Name;
-			var user = await _userManager.FindByNameAsync(userName);
-			order.Basket = await _basketViewModelService.GetBasketForUserAsync(userName);
-			order.Buyer = _mapper.Map<BuyerViewModel>(user);
-			order.Address = _mapper.Map<AddressViewModel>(user);
-		}
-		else
-		{
-			order.Basket = await _basketViewModelService.GetBasketForUserAsync(GetAnonymousUserId());
-		}
-
-		var physicalShopes = await _viewModelService.GetViewModelsAsync();
-		order.PhysicalShopes = physicalShopes.ToSelectListItems();
-		order.PaymentMethos = CheckBoxHelper.GetCheckBoxList<PaymentMethods>();
+		OrderCreateViewModel order = _signInManager.IsSignedIn(HttpContext.User)
+			? await _orderViewModelService.GetOrderCreateModelForAuthorizedUserAsync(User.Identity.Name)
+			: await _orderViewModelService.GetOrderCreateModelForAnonymousUserAsync(GetAnonymousUserId());
 
 		return View(order);			
     }

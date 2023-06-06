@@ -1,6 +1,6 @@
 ﻿namespace PerfumeShop.Web.ViewModels.Order;
 
-public sealed class CreateOrderViewModel
+public sealed class OrderCreateViewModel
 {
 	public BasketViewModel Basket { get; set; }
 	public BuyerViewModel Buyer { get; set; }
