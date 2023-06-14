@@ -26,7 +26,7 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
             .IsRequired(true);
 
         #region Address
-        builder.OwnsOne(o => o.ShippingAddress, a =>
+        builder.OwnsOne(o => o.DeliveryAddress, a =>
         {
             a.Property(a => a.State)
                 .HasColumnName("State")
@@ -49,7 +49,7 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
                 .IsRequired(true);
         });
 
-        builder.Navigation(x => x.ShippingAddress).IsRequired();
+        builder.Navigation(x => x.DeliveryAddress).IsRequired();
         #endregion
 
         #region Customer
@@ -121,9 +121,9 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
             .IsRequired(true)
             .OnDelete(DeleteBehavior.Restrict);
 
-		builder.HasOne(p => p.OrderDeliveryMethod)
+		builder.HasOne(p => p.DeliveryMethod)
 			.WithMany()
-			.HasForeignKey(p => p.OrderDeliveryMethodId)
+			.HasForeignKey(p => p.DeliveryMethodId)
 			.OnDelete(DeleteBehavior.Restrict);
 
 		builder.HasOne(p => p.OrderStatus)

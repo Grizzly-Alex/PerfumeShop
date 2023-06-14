@@ -56,11 +56,11 @@ public enum PaymentStatuses
 
 public enum PaymentMethods
 {
-	[Display(Name = "Payment Place")] PaymentPlace = 1,
-	[Display(Name = "Payment Remote")] PaymentRemote = 2,
+	[Display(Name = "Cash")] Cash = 1,
+	[Display(Name = "Payment Card")] PaymentCard = 2,
 }
 
-public enum OrderDeliveryMethods
+public enum DeliveryMethods
 {
 	[Display(Name = "Pickup")] Pickup = 1,
 	[Display(Name = "Courier")] Courier = 2,

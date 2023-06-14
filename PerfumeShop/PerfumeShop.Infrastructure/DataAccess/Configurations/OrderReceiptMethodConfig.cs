@@ -1,8 +1,8 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess.Configurations;
 
-public sealed class OrderDeliveryMethodConfig : IEntityTypeConfiguration<OrderDeliveryMethod>
+public sealed class OrderDeliveryMethodConfig : IEntityTypeConfiguration<DeliveryMethod>
 {
-    public void Configure(EntityTypeBuilder<OrderDeliveryMethod> builder)
+    public void Configure(EntityTypeBuilder<DeliveryMethod> builder)
     {
         builder.HasKey(p => p.Id);
 

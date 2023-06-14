@@ -41,9 +41,9 @@ public class OrderCreatingModel : PageModel
 	[BindProperty]
 	public AddressViewModel AddressModel { get; set; } = new();
 	[BindProperty]
-	public PaymentMethods PaymentMethod { get; set; } = PaymentMethods.PaymentRemote;
+	public PaymentMethods PaymentMethod { get; set; } = PaymentMethods.PaymentCard;
 	[BindProperty]
-	public OrderDeliveryMethods OrderDeliveryMethod { get; set; } = OrderDeliveryMethods.Pickup;
+	public DeliveryMethods DeliveryMethod { get; set; } = DeliveryMethods.Pickup;
 
 
 	public async Task OnGet()
@@ -58,7 +58,7 @@ public class OrderCreatingModel : PageModel
         var shippingAddress = _mapper.Map<Address>(AddressModel);
         var customer = _mapper.Map<Customer>(BuyerModel);
        		
-        var order = await _orderService.CreateOrderAsync(PaymentMethod, OrderDeliveryMethod, shippingAddress, customer, basketId);
+        var order = await _orderService.CreateOrderAsync(PaymentMethod, DeliveryMethod, shippingAddress, customer, basketId);
 
 		HttpContext.Session.Set(Constants.CATALOG_IMAGE_PATH, order.Id);
 		
@@ -74,8 +74,8 @@ public class OrderCreatingModel : PageModel
 
 		return PaymentMethod switch
 		{
-			PaymentMethods.PaymentPlace => RedirectToPage("OrderSuccess"),
-			PaymentMethods.PaymentRemote => RedirectToPage("Payment"),
+			PaymentMethods.Cash => RedirectToPage("OrderSuccess"),
+			PaymentMethods.PaymentCard => RedirectToPage("Payment"),
 			_ => Page(),
 		};
 	}

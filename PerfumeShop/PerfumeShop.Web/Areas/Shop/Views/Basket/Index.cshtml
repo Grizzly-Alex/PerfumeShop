@@ -116,11 +116,18 @@
 						</div>							
 						@if (Model.Items.Any())
 						{
-							<div class="col-md-6 text-md-end">
+							@*<div class="col-md-6 text-md-end">
 								<a asp-area="Shop" asp-page="/OrderCreating" class="btn btn-primary  btn-block">
 									Go to checkout
 								</a>
+							</div>*@
+
+							<div class="col-md-6 text-md-end">
+								<a asp-area="Shop" asp-controller="Order" asp-action="Index" class="btn btn-primary  btn-block">
+									Go to checkout
+								</a>
 							</div>
+
 						}
 						else
 						{

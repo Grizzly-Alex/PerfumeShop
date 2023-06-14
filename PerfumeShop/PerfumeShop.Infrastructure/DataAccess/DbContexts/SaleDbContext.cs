@@ -12,7 +12,7 @@ public sealed class SaleDbContext : DbContext
     public DbSet<PaymentDetail> PaymentDetails { get; set; }
 	public DbSet<PaymentStatus> PaymentStatuses { get; set; }
     public DbSet<PaymentMethod> PaymentMethods { get; set; }
-    public DbSet<OrderDeliveryMethod> OrderDeliveryMethods { get; set; }
+    public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
     public SaleDbContext(DbContextOptions<SaleDbContext> options) : base(options) { }
 
@@ -22,7 +22,7 @@ public sealed class SaleDbContext : DbContext
 		modelBuilder.SeedEnumValues<OrderStatuses, OrderStatus>(value => value);
 		modelBuilder.SeedEnumValues<PaymentStatuses, PaymentStatus>(value => value);
         modelBuilder.SeedEnumValues<PaymentMethods, PaymentMethod>(value => value);
-        modelBuilder.SeedEnumValues<OrderDeliveryMethods, OrderDeliveryMethod>(value => value);
+        modelBuilder.SeedEnumValues<DeliveryMethods, DeliveryMethod>(value => value);
         #endregion
 
         #region Configurations

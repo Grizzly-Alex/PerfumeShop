@@ -1,5 +1,4 @@
 ﻿using PerfumeShop.Web.ViewModels.Order;
-
 namespace PerfumeShop.Web.Areas.Shop.Controllers;
 
 [Area("Shop")]

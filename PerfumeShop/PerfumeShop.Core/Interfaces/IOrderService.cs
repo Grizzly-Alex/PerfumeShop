@@ -3,7 +3,7 @@
 public interface IOrderService
 {
     Task<OrderHeader> CreateOrderAsync(
-        PaymentMethods paymentMethod, OrderDeliveryMethods orderDeliveryMethod,
+        PaymentMethods paymentMethod, DeliveryMethods orderDeliveryMethod,
         Address shippingAddress, Customer customer,
         int basketId);
     Task UpdateOrderStatus(int orderId, OrderStatuses orderStatus);

@@ -1,5 +1,4 @@
-﻿using PerfumeShop.Web.UIModels;
-namespace PerfumeShop.Web.Extensions;
+﻿namespace PerfumeShop.Web.Extensions;
 
 public static class CheckBoxHelper
 {
@@ -9,7 +8,8 @@ public static class CheckBoxHelper
 
 		foreach (var item in Enum.GetValues(typeof(TEnum)))
 		{
-			checkBox.Add(new CheckboxItem((int)item, item.ToString(), false));
+			var @enum = (TEnum)item;
+			checkBox.Add(new CheckboxItem((int)item, @enum.GetDisplayName(), false));
 		}
 		
 		return checkBox;
@@ -21,7 +21,8 @@ public static class CheckBoxHelper
 
 		foreach (var item in Enum.GetValues(typeof(TEnum)))
 		{
-			checkBox.Add(new CheckboxItem((int)item, item.ToString(), enumList.Contains((TEnum)item)));
+            var @enum = (TEnum)item;
+            checkBox.Add(new CheckboxItem((int)item, @enum.GetDisplayName(), enumList.Contains((TEnum)item)));
 		}
 
 		return checkBox;

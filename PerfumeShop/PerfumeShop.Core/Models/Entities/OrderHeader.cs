@@ -6,13 +6,13 @@ public sealed class OrderHeader : Entity
     public DateTime? ShippingDate { get; private set; }
     public string? EmployeeId { get; private set; }
     public string OrderId { get; private set; }
-    public int OrderDeliveryMethodId { get; private set; }
-    public OrderDeliveryMethod OrderDeliveryMethod { get; private set; }
+    public int DeliveryMethodId { get; private set; }
+    public DeliveryMethod DeliveryMethod { get; private set; }
     public int OrderStatusId { get; private set; }
 	public OrderStatus OrderStatus { get; private set; }
     public Cost Cost { get; private set; }
     public Customer Customer { get; private set; }
-    public Address ShippingAddress { get; private set; }
+    public Address DeliveryAddress { get; private set; }
     public PaymentDetail PaymentDetail { get; set; }
 
     private readonly List<OrderItem> _orderItems = new();
@@ -24,17 +24,17 @@ public sealed class OrderHeader : Entity
 
 	public OrderHeader(
         OrderStatuses status,
-        OrderDeliveryMethods orderDeliveryMethod,
+        DeliveryMethods deliveryMethod,
         List<OrderItem> orderItems,
         Cost cost,
         Customer customer,
-        Address shippingAddress)
+        Address deliveryAddress)
     {
         Customer = Guard.Against.Null(customer, nameof(customer));
-        ShippingAddress = Guard.Against.Null(shippingAddress, nameof(shippingAddress));
+        DeliveryAddress = Guard.Against.Null(deliveryAddress, nameof(deliveryAddress));
         Cost = Guard.Against.Null(cost, nameof(cost));
         OrderStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
-		OrderDeliveryMethodId = Guard.Against.NegativeOrZero((int)orderDeliveryMethod, nameof(orderDeliveryMethod));
+		DeliveryMethodId = Guard.Against.NegativeOrZero((int)deliveryMethod, nameof(deliveryMethod));
         orderItems.ForEach(i => i.OrderId = Guard.Against.Null(Id, nameof(Id)));
         _orderItems = Guard.Against.Null(orderItems, nameof(orderItems));
         OrderDate = DateTime.UtcNow;

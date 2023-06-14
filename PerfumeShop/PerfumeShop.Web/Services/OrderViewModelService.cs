@@ -1,5 +1,4 @@
-﻿using MailKit.Search;
-using PerfumeShop.Web.ViewModels.Order;
+﻿using PerfumeShop.Web.ViewModels.Order;
 namespace PerfumeShop.Web.Services;
 
 public sealed class OrderViewModelService : IOrderViewModelService
@@ -64,10 +63,10 @@ public sealed class OrderViewModelService : IOrderViewModelService
             .GetFirstOrDefaultAsync(
                 predicate: order => order.Id == orderId,
                 include: query => query
-                    .Include(order => order.OrderDeliveryMethod)
+                    .Include(order => order.DeliveryMethod)
                     .Include(order => order.OrderStatus)
                     .Include(order => order.Customer)
-                    .Include(order => order.ShippingAddress)
+                    .Include(order => order.DeliveryAddress)
                     .Include(order => order.PaymentDetail)
                     .ThenInclude(payment => payment.PaymentStatus)
 					.Include(order => order.PaymentDetail)
