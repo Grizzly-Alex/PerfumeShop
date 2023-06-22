@@ -24,7 +24,7 @@ public sealed class OrderService : IOrderService
 
     public async Task<OrderHeader> CreateOrderAsync(
         PaymentMethods paymentMethod, DeliveryMethods deliveryMethod,
-        Address shippingAddress, Customer customer,       
+        Address deliveryAddress, Customer customer,       
         int basketId)
     {
         var basketRepository = _shopping.GetRepository<Basket>();
@@ -36,18 +36,21 @@ public sealed class OrderService : IOrderService
 
         var orderItems = await GetOrderItemsAsync(basketItems);
         var cost = _checkoutService.CalculateCostAsync(orderItems);
-        var order = new OrderHeader(OrderStatuses.Pending, deliveryMethod, orderItems, cost, customer, shippingAddress);
+        var order = new OrderHeader(OrderStatuses.Pending, orderItems, cost, customer);
 
         _shopping.GetRepository<OrderHeader>().Add(order);
         await _shopping.SaveChangesAsync();
 
         var payment = new PaymentDetail(PaymentStatuses.Pending, paymentMethod, order.Id);
+        var delivery = new DeliveryDetail(deliveryAddress, deliveryMethod, order.Id);
 
         _shopping.GetRepository<PaymentDetail>().Add(payment);
+        _shopping.GetRepository<DeliveryDetail>().Add(delivery);
         await _shopping.SaveChangesAsync();
 
         _logger.LogInformation($"Order with ID:'{order.Id}' has been created.");
         _logger.LogInformation($"Payment detail with ID:'{order.PaymentDetail.Id}' has been created.");
+        _logger.LogInformation($"Delivery detail with ID:'{order.DeliveryDetail.Id}' has been created.");
 
         return order;
     }

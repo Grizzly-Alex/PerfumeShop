@@ -3,17 +3,14 @@
 public sealed class OrderHeader : Entity
 {
     public DateTime OrderDate { get; private set; }
-    public DateTime? ShippingDate { get; private set; }
     public string? EmployeeId { get; private set; }
     public string OrderId { get; private set; }
-    public int DeliveryMethodId { get; private set; }
-    public DeliveryMethod DeliveryMethod { get; private set; }
     public int OrderStatusId { get; private set; }
 	public OrderStatus OrderStatus { get; private set; }
     public Cost Cost { get; private set; }
     public Customer Customer { get; private set; }
-    public Address DeliveryAddress { get; private set; }
     public PaymentDetail PaymentDetail { get; set; }
+    public DeliveryDetail DeliveryDetail { get; set; }
 
     private readonly List<OrderItem> _orderItems = new();
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
@@ -24,17 +21,13 @@ public sealed class OrderHeader : Entity
 
 	public OrderHeader(
         OrderStatuses status,
-        DeliveryMethods deliveryMethod,
         List<OrderItem> orderItems,
         Cost cost,
-        Customer customer,
-        Address deliveryAddress)
+        Customer customer)
     {
         Customer = Guard.Against.Null(customer, nameof(customer));
-        DeliveryAddress = Guard.Against.Null(deliveryAddress, nameof(deliveryAddress));
         Cost = Guard.Against.Null(cost, nameof(cost));
         OrderStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));
-		DeliveryMethodId = Guard.Against.NegativeOrZero((int)deliveryMethod, nameof(deliveryMethod));
         orderItems.ForEach(i => i.OrderId = Guard.Against.Null(Id, nameof(Id)));
         _orderItems = Guard.Against.Null(orderItems, nameof(orderItems));
         OrderDate = DateTime.UtcNow;
@@ -42,6 +35,5 @@ public sealed class OrderHeader : Entity
     }
 
     public void SetEmployeeId(string employeeId) => EmployeeId = Guard.Against.NullOrEmpty(employeeId, nameof(employeeId));
-    public void SetShippingDate(DateTime dateTime) => ShippingDate = Guard.Against.Null(dateTime, nameof(dateTime));
     public void SetOrderStatus(OrderStatuses status) => OrderStatusId = Guard.Against.NegativeOrZero((int)status, nameof(status));    
 }

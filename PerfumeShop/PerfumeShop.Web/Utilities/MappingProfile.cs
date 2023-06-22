@@ -53,7 +53,7 @@ public sealed class MappingProfile : Profile
         CreateMap<OrderInfoViewModel, OrderHeader>().ReverseMap()
             .ForMember(view => view.OrderStatus, opt => opt.MapFrom(model => model.OrderStatus.Name))
             .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus.Name))
-            .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryMethod.Name))
+            .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryMethod.Name))
             .ForMember(view => view.ItemsCost, opt => opt.MapFrom(model => model.Cost.ItemsCost))
             .ForMember(view => view.ShippingCost, opt => opt.MapFrom(model => model.Cost.ShippingCost))
             .ForMember(view => view.PromoCodeCost, opt => opt.MapFrom(model => model.Cost.PromoCodeCost))
@@ -61,10 +61,12 @@ public sealed class MappingProfile : Profile
             .ForMember(view => view.CustomerName, opt => opt.MapFrom(model => model.Customer.GetFullName()))
             .ForMember(view => view.CustomerPhone, opt => opt.MapFrom(model => model.Customer.PhoneNumber))
             .ForMember(view => view.CustomerEmail, opt => opt.MapFrom(model => model.Customer.ReceiptEmail))
-            .ForMember(view => view.Address, opt => opt.MapFrom(model => model.DeliveryAddress.GetFullAddress()));
+            .ForMember(view => view.Address, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryAddress.GetFullAddress()));
 
         CreateMap<PhysicalShopViewModel, PhysicalShop>().ReverseMap();
 
-		#endregion
-	}
+        CreateMap<PaymentMethod, ItemViewModel>().ReverseMap();
+
+        #endregion
+    }
 }

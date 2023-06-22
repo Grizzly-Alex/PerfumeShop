@@ -7,7 +7,7 @@ public sealed class PaymentDetail : Entity
     public PaymentMethod PaymentMethod { get; set; }
     public int PaymentStatusId { get; set; }
     public PaymentStatus PaymentStatus { get; set; }
-    public int OrderId { get; set; }
+    public int OrderId { get; private set; }
     public OrderHeader Order { get; set; }
 
     public PaymentDetail()

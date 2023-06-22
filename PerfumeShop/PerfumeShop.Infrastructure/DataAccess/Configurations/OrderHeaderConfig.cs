@@ -16,41 +16,9 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
             .IsRequired(false)
             .HasMaxLength(256);
 
-        builder.Property(p => p.ShippingDate)
-            .HasColumnType("datetime2")
-            .HasPrecision(0)
-            .IsRequired(false);
-
         builder.Property(a => a.OrderId)
             .HasMaxLength(256)
             .IsRequired(true);
-
-        #region Address
-        builder.OwnsOne(o => o.DeliveryAddress, a =>
-        {
-            a.Property(a => a.State)
-                .HasColumnName("State")
-                .HasMaxLength(256)
-                .IsRequired(true);
-
-            a.Property(a => a.City)
-                .HasColumnName("City")
-                .HasMaxLength(256)
-                .IsRequired(true);
-
-            a.Property(a => a.StreetAddress)
-                .HasColumnName("StreetAddress")
-                .HasMaxLength(256)
-                .IsRequired(true);
-
-            a.Property(a => a.PostalCode)
-                .HasColumnName("PostalCode")
-                .HasMaxLength(256)
-                .IsRequired(true);
-        });
-
-        builder.Navigation(x => x.DeliveryAddress).IsRequired();
-        #endregion
 
         #region Customer
         builder.OwnsOne(o => o.Customer, a =>
@@ -121,12 +89,13 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
             .IsRequired(true)
             .OnDelete(DeleteBehavior.Restrict);
 
-		builder.HasOne(p => p.DeliveryMethod)
-			.WithMany()
-			.HasForeignKey(p => p.DeliveryMethodId)
-			.OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(p => p.DeliveryDetail)
+            .WithOne(d => d.Order)
+            .HasForeignKey<DeliveryDetail>(e => e.OrderId)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.Restrict);
 
-		builder.HasOne(p => p.OrderStatus)
+        builder.HasOne(p => p.OrderStatus)
 			.WithMany()
 			.HasForeignKey(p => p.OrderStatusId)
 			.OnDelete(DeleteBehavior.Restrict);

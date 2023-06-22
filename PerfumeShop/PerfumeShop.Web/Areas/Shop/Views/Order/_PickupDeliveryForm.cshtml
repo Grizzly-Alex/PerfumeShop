@@ -1,6 +1,6 @@
 ﻿@model OrderCreateViewModel
 
-<form asp-area="Shop" asp-controller="Order" asp-action="OrderingCourier" method="post" class="needs-validation" novalidate>
+<form asp-area="Shop" asp-controller="Order" asp-action="OrderingPickup" method="post" class="needs-validation" novalidate>
 
     <input asp-for="@Model.Buyer.Id" hidden />
     <input asp-for="@Model.Basket.Id" hidden />
@@ -47,51 +47,22 @@
 
     <div class="row g-3 my-3">
         <h5 class="mb-3">Billing address</h5>
-
-        <div class="col-6">
-            <label asp-for="@Model.Address.State"></label>
-            <input asp-for="@Model.Address.State" class="form-control" required />
-            <span asp-validation-for="@Model.Address.State" class="text-danger"></span>
-            <div class="valid-feedback">
-                Valid
-            </div>
-        </div>
-
-        <div class="col-6">
-            <label asp-for="@Model.Address.City"></label>
-            <input asp-for="@Model.Address.City" class="form-control" required />
-            <span asp-validation-for="@Model.Address.City" class="text-danger"></span>
-            <div class="valid-feedback">
-                Valid
-            </div>
-        </div>
-
-        <div class="col-10">
-            <label asp-for="@Model.Address.StreetAddress"></label>
-            <input asp-for="@Model.Address.StreetAddress" class="form-control" placeholder="ex: 123 Main Street, Apartment 666" required />
-            <span asp-validation-for="@Model.Address.StreetAddress" class="text-danger"></span>
-            <div class="valid-feedback">
-                Valid
-            </div>
-        </div>
-
-        <div class="col-2">
-            <label asp-for="@Model.Address.PostalCode"></label>
-            <input asp-for="@Model.Address.PostalCode" class="form-control" placeholder="ex: 220050" required />
-            <span asp-validation-for="@Model.Address.PostalCode" class="text-danger"></span>
-            <div class="valid-feedback">
-                Valid
-            </div>
+        <select asp-for="@Model.PhysicalShopId" asp-items="@Model.PhysicalShopes" class="form-select" required>
+            <option selected disabled value="">--Select Shop--</option>
+        </select>
+        <span asp-validation-for="@Model.PhysicalShopId" class="text-danger"></span>
+        <div class="valid-feedback">
+            Valid
         </div>
     </div>
 
     <div class="row g-3 my-3">
         <h5 class="mb-3">Payment method</h5>
 
-        @foreach(var item in Model.PaymentMethods)
+        @foreach (var item in Model.PaymentMethods)
         {
-            <div class="form-check form-check-inline">              
-                @Html.RadioButtonFor(model => model.PaymentMethodId, item.Value) @item.Text 
+            <div class="form-check form-check-inline">
+                @Html.RadioButtonFor(model => model.PaymentMethodId, item.Value) @item.Text
             </div>
         }
         <span asp-validation-for="@Model.PaymentMethodId" class="text-danger"></span>

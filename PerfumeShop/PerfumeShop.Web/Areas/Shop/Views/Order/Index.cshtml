@@ -9,33 +9,26 @@
                 Checkout
             </h3>
             <div class="py-4">
+
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-courier-tab" 
-                        data-bs-toggle="pill" data-bs-target="#pills-courier"
-                        type="button" role="tab" aria-controls="pills-courier"
-                        aria-selected="true">Courier delivery</button>
+                        <button class="nav-link active" id="pills-courier-tab" data-bs-toggle="pill" data-bs-target="#pills-courier" type="button" role="tab" aria-controls="pills-courier" aria-selected="true">Courier delivery</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-pickup-tab"
-                        data-bs-toggle="pill" data-bs-target="#pills-pickup"
-                        type="button" role="tab" aria-controls="pills-pickup"
-                        aria-selected="false">Pickup delivery</button>
+                        <button class="nav-link" id="pills-pickup-tab" data-bs-toggle="pill" data-bs-target="#pills-pickup" type="button" role="tab" aria-controls="pills-pickup" aria-selected="false">Pickup delivery</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
-
-                    @*Courier delivery form*@
-                    <div class="tab-pane fade" id="pills-pickup" role="tabpanel" aria-labelledby="pills-courier-tab" tabindex="0">
+                    <div class="tab-pane fade show active" id="pills-courier" role="tabpanel" aria-labelledby="pills-courier-tab" tabindex="0">                       
                         <partial name="~/Areas/Shop/Views/Order/_CourierDeliveryForm.cshtml" model="@Model" />
                     </div>
-
-                    @*Pickup form*@
-                    <div class="tab-pane fade show active" id="pills-courier" role="tabpanel" aria-labelledby="pills-pickup-tab" tabindex="0">
-                        <partial name="~/Areas/Shop/Views/Order/_PickupForm.cshtml" model="@Model" />
+                    <div class="tab-pane fade" id="pills-pickup" role="tabpanel" aria-labelledby="pills-pickup-tab" tabindex="0">
+                        <partial name="~/Areas/Shop/Views/Order/_PickupDeliveryForm.cshtml" model="@Model" />
                     </div>
                 </div>
             </div>
+
+
         </div>
 
         <div class="col-lg-4 order-md-last">
@@ -72,4 +65,6 @@
 </div>
 
 
-
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

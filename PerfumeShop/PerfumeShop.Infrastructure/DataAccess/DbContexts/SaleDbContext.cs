@@ -13,6 +13,7 @@ public sealed class SaleDbContext : DbContext
 	public DbSet<PaymentStatus> PaymentStatuses { get; set; }
     public DbSet<PaymentMethod> PaymentMethods { get; set; }
     public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+    public DbSet<DeliveryDetail> DeliveryDetails { get; set; }
 
     public SaleDbContext(DbContextOptions<SaleDbContext> options) : base(options) { }
 
@@ -36,6 +37,7 @@ public sealed class SaleDbContext : DbContext
         modelBuilder.ApplyConfiguration(new OrderHeaderConfig());
 		modelBuilder.ApplyConfiguration(new OrderItemConfig());
         modelBuilder.ApplyConfiguration(new PaymentDetailConfig());
+        modelBuilder.ApplyConfiguration(new DeliveryDetailConfig());
         #endregion
     }
 

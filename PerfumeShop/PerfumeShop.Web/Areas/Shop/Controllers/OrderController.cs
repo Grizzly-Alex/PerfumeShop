@@ -37,15 +37,15 @@ public class OrderController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> OrderingPickup()
+    public async Task<IActionResult> OrderingPickup(OrderCreateViewModel order)
     {
-        return View();
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]
-    public async Task<IActionResult> OrderingCourier()
+    public async Task<IActionResult> OrderingCourier(OrderCreateViewModel order)
     {
-        return View();
+        return RedirectToAction(nameof(Index));
     }
 
 	private string GetAnonymousUserId()
