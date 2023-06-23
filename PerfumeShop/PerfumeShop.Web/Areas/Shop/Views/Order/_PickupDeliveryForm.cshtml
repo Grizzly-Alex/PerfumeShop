@@ -47,10 +47,10 @@
 
     <div class="row g-3 my-3">
         <h5 class="mb-3">Billing address</h5>
-        <select asp-for="@Model.PhysicalShopId" asp-items="@Model.PhysicalShopes" class="form-select" required>
-            <option selected disabled value="">--Select Shop--</option>
+        <select asp-for="@Model.PickupPointId" asp-items="@Model.PickupPoints" class="form-select" required>
+            <option selected disabled value="">--Select Pickup Point--</option>
         </select>
-        <span asp-validation-for="@Model.PhysicalShopId" class="text-danger"></span>
+        <span asp-validation-for="@Model.PickupPointId" class="text-danger"></span>
         <div class="valid-feedback">
             Valid
         </div>

@@ -1,5 +1,4 @@
-﻿using PerfumeShop.Core.Constants;
-using PerfumeShop.Web.ViewModels.Order;
+﻿using PerfumeShop.Web.ViewModels.Order;
 namespace PerfumeShop.Web.Services;
 
 public sealed class OrderViewModelService : IOrderViewModelService
@@ -40,7 +39,7 @@ public sealed class OrderViewModelService : IOrderViewModelService
         return new OrderCreateViewModel()
         {
             Basket = await _basketViewModelService.GetBasketForUserAsync(userName),
-			PhysicalShopes = physicalShopes.ToSelectListItems(),
+			PickupPoints = physicalShopes.ToSelectListItems(),
             PaymentMethods = paymentMethods.ToSelectListItems(),
         };
 	}
@@ -58,7 +57,7 @@ public sealed class OrderViewModelService : IOrderViewModelService
 		    Basket = await _basketViewModelService.GetBasketForUserAsync(userName),
 		    Buyer = _mapper.Map<BuyerViewModel>(user),
 		    Address = _mapper.Map<AddressViewModel>(user),
-		    PhysicalShopes = physicalShopes.ToSelectListItems(),
+		    PickupPoints = physicalShopes.ToSelectListItems(),
 		    PaymentMethods = paymentMethods.ToSelectListItems(),
         };
 	}
