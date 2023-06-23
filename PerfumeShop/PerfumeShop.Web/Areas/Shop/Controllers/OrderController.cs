@@ -51,13 +51,16 @@ public class OrderController : Controller
         {
 			var deliveryAddress = await _physicalShopQueryService.GetAddress(model.PickupPointId);
             var customer = _mapper.Map<Customer>(model.Buyer);
+            var paymentMethod = (PaymentMethods)model.PaymentMethodId;
 
             var order = await _orderService.CreateOrderAsync(
-                (PaymentMethods)model.PaymentMethodId,
+                paymentMethod,
                 DeliveryMethods.Pickup,
                 deliveryAddress,
                 customer,
                 model.Basket.Id);
+
+            return RedirectToPage(GetRedirectionPageName(paymentMethod), new { orderId = order.Id });
         }
 
         return RedirectToAction(nameof(Index));
@@ -70,19 +73,30 @@ public class OrderController : Controller
 		{
 			var deliveryAddress = _mapper.Map<Address>(model.Address);
 			var customer = _mapper.Map<Customer>(model.Buyer);
+			var paymentMethod = (PaymentMethods)model.PaymentMethodId;
 
 			var order = await _orderService.CreateOrderAsync(
-				(PaymentMethods)model.PaymentMethodId,
+                paymentMethod,
 				DeliveryMethods.Courier,
 				deliveryAddress,
 				customer,
 				model.Basket.Id);
+
+			return RedirectToPage(GetRedirectionPageName(paymentMethod), new { orderId = order.Id });
 		}
 
         return RedirectToAction(nameof(Index));
     }
 
-	private string GetAnonymousUserId()
+
+	private string GetRedirectionPageName(PaymentMethods method) => method switch
+	{
+		PaymentMethods.Cash => "Cash",
+		PaymentMethods.PaymentCard => "PaymentCard",
+		_ => throw new ArgumentOutOfRangeException(nameof(method), $"Not expected direction value: {method}"),
+    };
+
+    private string GetAnonymousUserId()
 	{
 		if (Request.Cookies.ContainsKey(Constants.BASKET_COOKIE))
 		{
