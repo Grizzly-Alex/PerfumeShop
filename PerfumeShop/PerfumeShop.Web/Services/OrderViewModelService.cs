@@ -5,7 +5,8 @@ public sealed class OrderViewModelService : IOrderViewModelService
 {
 	private readonly UserManager<AppUser> _userManager;
     private readonly IMapper _mapper;
-    private readonly IUnitOfWork<SaleDbContext> _unitOfWork;
+    private readonly IUnitOfWork<SaleDbContext> _sale;
+    private readonly IUnitOfWork<CatalogDbContext> _catalog;
     private readonly ILogger<OrderViewModelService> _logger;
 	private readonly IBasketViewModelService _basketViewModelService;
 	private readonly IViewModelService<PhysicalShop, PhysicalShopViewModel, SaleDbContext> _physicalShopViewModelService;
@@ -14,7 +15,8 @@ public sealed class OrderViewModelService : IOrderViewModelService
     public OrderViewModelService(
         UserManager<AppUser> userManager,
         IMapper mapper,
-        IUnitOfWork<SaleDbContext> unitOfWork,
+        IUnitOfWork<SaleDbContext> sale,
+        IUnitOfWork<CatalogDbContext> catalog,
         ILogger<OrderViewModelService> logger,
         IBasketViewModelService basketViewModelService,
 		IViewModelService<PhysicalShop, PhysicalShopViewModel, SaleDbContext> physicalShopViewModelService,
@@ -22,7 +24,8 @@ public sealed class OrderViewModelService : IOrderViewModelService
     {
         _userManager = userManager;
         _mapper = mapper;
-        _unitOfWork = unitOfWork;
+        _sale = sale;
+        _catalog = catalog;
         _logger = logger;
         _basketViewModelService = basketViewModelService;
         _physicalShopViewModelService = physicalShopViewModelService;
@@ -62,9 +65,9 @@ public sealed class OrderViewModelService : IOrderViewModelService
         };
 	}
 
-	public async Task<OrderInfoViewModel> GetOrderInfoModelAsync(int orderId)
+    public async Task<OrderInfoViewModel> GetOrderInfoModelAsync(int orderId)
     {
-        var orderHeader = await _unitOfWork.GetRepository<OrderHeader>()
+        var orderHeader = await _sale.GetRepository<OrderHeader>()
             .GetFirstOrDefaultAsync(
                 predicate: order => order.Id == orderId,
                 include: query => query
@@ -80,5 +83,42 @@ public sealed class OrderViewModelService : IOrderViewModelService
         _logger.LogInformation($"Getting Order Header with ID:'{orderId}' successfully.");
 
         return _mapper.Map<OrderInfoViewModel>(orderHeader);
+    }
+
+    public async Task<IList<OrderItemViewModel>> GetOrderItemModelCollectionAsync(int orderId)
+    {
+        var orderItems = await _sale.GetRepository<OrderHeader>()
+            .GetFirstOrDefaultAsync(
+            predicate: order => order.Id == orderId,
+            selector: i => i.OrderItems);
+
+        var orderItemsId = orderItems.Select(b => b.ProductId).ToList();
+
+        var products = await _catalog.GetRepository<CatalogProduct>()
+            .GetAllAsync(
+                predicate: b => orderItemsId.Contains(b.Id),
+                include: product => product.Include(product => product.Brand));
+
+        var orderItemViewModel = orderItems.Select(orderItem =>
+        {
+            var product = products.First(product => product.Id == orderItem.ProductId);
+            var item = new OrderItemViewModel
+            {
+                Quantity = orderItem.Quantity,
+                Price = orderItem.Price,
+                TotalPrice = orderItem.TotalPrice,
+                Brand = product.Brand.Name,
+                Name = product.Name,
+                PictureUri = product.PictureUri,
+                ProductId = orderItem.ProductId,
+            };
+
+            _logger.LogInformation($"Get Order item with ID: '{orderItem.Id}' Name: '{item.Name}'.");
+
+            return item;
+
+        }).ToList();
+
+        return orderItemViewModel;
     }
 }

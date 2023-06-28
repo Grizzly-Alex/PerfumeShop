@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
-namespace PerfumeShop.Core.Models.Entities;
+﻿namespace PerfumeShop.Core.Models.Entities;
 
 
 public sealed class CatalogProduct : Entity

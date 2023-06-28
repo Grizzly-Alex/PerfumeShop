@@ -91,7 +91,7 @@ public class OrderController : Controller
 
 	private string GetRedirectionPageName(PaymentMethods method) => method switch
 	{
-		PaymentMethods.Cash => "Cash",
+		PaymentMethods.Cash => "/OrderSuccess",
 		PaymentMethods.PaymentCard => "PaymentCard",
 		_ => throw new ArgumentOutOfRangeException(nameof(method), $"Not expected direction value: {method}"),
     };

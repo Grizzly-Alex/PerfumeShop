@@ -10,7 +10,7 @@ public sealed class OrderItemConfig : IEntityTypeConfiguration<OrderItem>
 		builder.Property(p => p.ProductId)
 			.IsRequired(true);
 
-		builder.Property(p => p.Price)
+        builder.Property(p => p.Price)
 			.IsRequired(true)
 			.HasColumnType("decimal")
 			.HasPrecision(10, 2);		
