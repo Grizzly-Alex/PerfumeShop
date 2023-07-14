@@ -98,6 +98,7 @@ public sealed class OrderViewModelService : IOrderViewModelService
             .GetAllAsync(
                 predicate: b => orderItemsId.Contains(b.Id),
                 include: product => product.Include(product => product.Brand));
+    
 
         var orderItemViewModel = orderItems.Select(orderItem =>
         {
