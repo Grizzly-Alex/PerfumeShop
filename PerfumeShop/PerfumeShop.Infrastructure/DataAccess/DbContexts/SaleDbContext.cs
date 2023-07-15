@@ -1,4 +1,5 @@
-﻿using PaymentMethod = PerfumeShop.Core.Models.Entities.PaymentMethod;
+﻿using PerfumeShop.Infrastructure.DataAccess.Comparers;
+using PaymentMethod = PerfumeShop.Core.Models.Entities.PaymentMethod;
 namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
 
 public sealed class SaleDbContext : DbContext
@@ -47,7 +48,7 @@ public sealed class SaleDbContext : DbContext
             .HaveConversion<TimeOnlyConverter>()
             .HaveColumnType("time(0)");
 
-        configurationBuilder.Properties<List<DayOfWeek>>()
-            .HaveConversion<EnumConverter<DayOfWeek>>();
+        configurationBuilder.Properties<ICollection<DayOfWeek>>()
+            .HaveConversion<EnumConverter<DayOfWeek>, CollectionValueComparer<DayOfWeek>>();
 	}
 }
