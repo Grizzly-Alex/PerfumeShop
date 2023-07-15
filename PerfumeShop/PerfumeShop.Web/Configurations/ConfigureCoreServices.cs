@@ -12,6 +12,7 @@ public static class ConfigureCoreServices
 		services.AddTransient<IEmailSender, EmailSender>();
 		services.AddScoped<IBasketService, BasketService>();
 		services.AddScoped<IBasketQueryService, BasketQueryService>();
+		services.AddScoped<IOrderQueryService, OrderQueryService>();
 		services.AddScoped<IPhysicalShopQueryService, PhysicalShopQueryService>();
 		services.AddScoped<IProductQueryService, ProductQueryService>();
 		services.AddScoped<IBasketItemQueryService, BasketItemQueryService>();

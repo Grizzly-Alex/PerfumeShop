@@ -10,7 +10,9 @@ public class OrderController : Controller
 	private readonly IOrderViewModelService _orderViewModelService;
     private readonly IOrderService _orderService;
 	private readonly IPhysicalShopQueryService _physicalShopQueryService;
-    private readonly SignInManager<AppUser> _signInManager;
+	private readonly ICatalogProductService _catalogProductService;
+	private readonly IBasketService _basketService;
+	private readonly SignInManager<AppUser> _signInManager;
 	private readonly UserManager<AppUser> _userManager;
 
 
@@ -20,7 +22,9 @@ public class OrderController : Controller
 		IOrderService orderService,
 		IOrderViewModelService orderViewModelService,
         IPhysicalShopQueryService physicalShopQueryService,
-        SignInManager<AppUser> signInManager,
+		ICatalogProductService catalogProductService,
+		IBasketService basketService,
+		SignInManager<AppUser> signInManager,
 		UserManager<AppUser> userManager)
     {
 		_mapper = mapper;
@@ -28,6 +32,8 @@ public class OrderController : Controller
 		_orderService = orderService;
 		_orderViewModelService = orderViewModelService;
 		_physicalShopQueryService = physicalShopQueryService;
+		_catalogProductService = catalogProductService;
+		_basketService = basketService;
 		_signInManager = signInManager;
 		_userManager = userManager;
 	}
@@ -60,7 +66,10 @@ public class OrderController : Controller
                 customer,
                 model.Basket.Id);
 
-            return RedirectToPage(GetRedirectionPageName(paymentMethod), new { orderId = order.Id });
+			await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
+			await _basketService.ClearBasketAsync(model.Basket.Id);
+
+			return RedirectToPage(GetRedirectionPageName(paymentMethod), new { orderId = order.Id });
         }
 
         return RedirectToAction(nameof(Index));
@@ -81,6 +90,9 @@ public class OrderController : Controller
 				deliveryAddress,
 				customer,
 				model.Basket.Id);
+
+			await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
+			await _basketService.ClearBasketAsync(model.Basket.Id);
 
 			return RedirectToPage(GetRedirectionPageName(paymentMethod), new { orderId = order.Id });
 		}

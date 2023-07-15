@@ -1,7 +1,7 @@
 ﻿@page
 @model OrderSuccessModel
 @{
-    ViewData["Title"] = "Checkout Complete";
+    ViewData["Title"] = "Order Success";
 }
 
 <body>
@@ -15,10 +15,15 @@
             </div>
             <div class="text-center">
                 <h1>Thanks for your Order !</h1>
-                <p>We have sent a cash voucher to your email:                    
+                <h4>
+                    <span class="text-muted">You order number is @Model.OrderNumber</span>
+                </h4>
+                <p class="p-4">
+                    We have sent a cash voucher to your email:
                     <a href="mailto:@Model.EmailModel">@Model.EmailModel</a>
                 </p>              
-                <a asp-page="/Index" class="btn btn-primary">Continue Shopping...</a>
+                <a asp-page="#" class="btn btn-primary">Order Details</a>
+                <a asp-page="/Shop/Catalog" class="btn btn-primary">Continue Shopping...</a>
             </div>
         </div>
     </div>
