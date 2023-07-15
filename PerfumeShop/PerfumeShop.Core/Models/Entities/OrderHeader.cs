@@ -23,7 +23,8 @@ public sealed class OrderHeader : Entity
         OrderStatuses status,
         List<OrderItem> orderItems,
         Cost cost,
-        Customer customer)
+        Customer customer,
+        string trackingId)
     {
         Customer = Guard.Against.Null(customer, nameof(customer));
         Cost = Guard.Against.Null(cost, nameof(cost));
@@ -31,7 +32,7 @@ public sealed class OrderHeader : Entity
         orderItems.ForEach(i => i.OrderId = Guard.Against.Null(Id, nameof(Id)));
         _orderItems = Guard.Against.Null(orderItems, nameof(orderItems));
         OrderDate = DateTime.UtcNow;
-		TrackingId = string.Join("-", OrderDate.Year, OrderDate.Month, OrderDate.Day, DeliveryDetail.DeliveryMethodId,  Id);
+        TrackingId = Guard.Against.Null(trackingId, nameof(trackingId));
 	}
 
     public void SetEmployeeId(string employeeId) => EmployeeId = Guard.Against.NullOrEmpty(employeeId, nameof(employeeId));

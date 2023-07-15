@@ -6,5 +6,5 @@ public interface IOrderService
         PaymentMethods paymentMethod, DeliveryMethods deliveryMethod,
         Address deliveryAddress, Customer customer,
         int basketId);
-    Task UpdateOrderStatus(int orderId, OrderStatuses orderStatus);
+    Task UpdateOrderStatusAsync(int orderId, OrderStatuses orderStatus);
 }
