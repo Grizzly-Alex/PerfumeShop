@@ -61,18 +61,6 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
                 .HasColumnType("decimal")
                 .HasPrecision(10, 2);
 
-            a.Property(p => p.ShippingCost)
-                .HasColumnName("ShippingCost")
-                .IsRequired(true)
-                .HasColumnType("decimal")
-                .HasPrecision(10, 2);
-
-            a.Property(a => a.PromoCodeCost)
-                .HasColumnName("PromoCodeCost")
-                .IsRequired(true)
-                .HasColumnType("decimal")
-                .HasPrecision(10, 2);
-
             a.Property(a => a.TotalCost)
                 .HasColumnName("TotalCost")
                 .IsRequired(true)

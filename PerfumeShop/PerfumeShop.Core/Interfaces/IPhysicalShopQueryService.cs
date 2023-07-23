@@ -2,5 +2,5 @@
 
 public interface IPhysicalShopQueryService
 {
-    Task<Address> GetAddress(int Id);
+    Task<Address> GetAddressAsync(int Id);
 }

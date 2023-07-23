@@ -60,7 +60,7 @@ public class BasketController : Controller
 	[HttpPost]
 	public async Task<IActionResult> UpdateItemBasket(int basketItemId, int quantity)
     {
-        var productId = await _basketItemQueryService.GetProductId(basketItemId);
+        var productId = await _basketItemQueryService.GetProductIdAsync(basketItemId);
 		var inBasketQty = await _basketQueryService.GetProductQtyAsync(GetBuyerId(), productId);
 		var availability = await _checkoutService.AvailabilityStockAsync(productId, quantity);
 

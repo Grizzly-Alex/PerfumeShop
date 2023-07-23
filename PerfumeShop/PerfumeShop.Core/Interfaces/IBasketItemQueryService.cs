@@ -3,5 +3,5 @@
 public interface IBasketItemQueryService
 {
 	Task<int> GetQuantityAsync(int productId);
-    Task<int> GetProductId(int basketItemId);
+    Task<int> GetProductIdAsync(int basketItemId);
 }

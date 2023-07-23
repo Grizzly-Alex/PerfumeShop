@@ -128,8 +128,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     TrackingId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false),
                     ItemsCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    ShippingCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    PromoCodeCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     TotalCost = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     CustomerName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),

@@ -1,5 +1,4 @@
-﻿using PerfumeShop.Web.ViewModels.Order;
-namespace PerfumeShop.Web.Areas.Shop.Controllers;
+﻿namespace PerfumeShop.Web.Areas.Shop.Controllers;
 
 [Area("Shop")]
 [Authorize]
@@ -55,7 +54,7 @@ public class OrderController : Controller
 
         if (ModelState.IsValid)
         {
-			var deliveryAddress = await _physicalShopQueryService.GetAddress(model.PickupPointId);
+			var deliveryAddress = await _physicalShopQueryService.GetAddressAsync(model.PickupPointId);
             var customer = _mapper.Map<Customer>(model.Buyer);
             var paymentMethod = (PaymentMethods)model.PaymentMethodId;
 
@@ -66,10 +65,12 @@ public class OrderController : Controller
                 customer,
                 model.Basket.Id);
 
-			await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
+            HttpContext.Session.Set<String>(Constants.SESSION_ORDER_TRACKING_ID, order.TrackingId);
+
+            await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 			await _basketService.ClearBasketAsync(model.Basket.Id);
 
-			return RedirectToPage(GetRedirectionPageName(paymentMethod), new { orderId = order.Id });
+			return RedirectToPage(GetRedirectionPageName(paymentMethod));
         }
 
         return RedirectToAction(nameof(Index));
@@ -91,20 +92,21 @@ public class OrderController : Controller
 				customer,
 				model.Basket.Id);
 
-			await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
+			HttpContext.Session.Set<String>(Constants.SESSION_ORDER_TRACKING_ID, order.TrackingId);
+
+            await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 			await _basketService.ClearBasketAsync(model.Basket.Id);
 
-			return RedirectToPage(GetRedirectionPageName(paymentMethod), new { orderId = order.Id });
+            return RedirectToPage(GetRedirectionPageName(paymentMethod));
 		}
 
         return RedirectToAction(nameof(Index));
     }
 
-
 	private string GetRedirectionPageName(PaymentMethods method) => method switch
 	{
 		PaymentMethods.Cash => "/OrderSuccess",
-		PaymentMethods.PaymentCard => "PaymentCard",
+		PaymentMethods.PaymentCard => "/Payment",
 		_ => throw new ArgumentOutOfRangeException(nameof(method), $"Not expected direction value: {method}"),
     };
 

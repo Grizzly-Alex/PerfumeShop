@@ -1,4 +1,7 @@
 ﻿@model OrderCreateViewModel
+@{
+    ViewData["Title"] = "Checkout";
+}
 
 
 <div class="container h-100 py-5">
@@ -6,7 +9,7 @@
         <div class="col-lg-8">
             <h3 class="fw-bold mb-0 text-black">
                 <i class="bi bi-clipboard-check"></i>&nbsp;
-                Checkout
+                @ViewData["Title"]
             </h3>
             <div class="py-4">
 
@@ -30,8 +33,8 @@
 
 
         </div>
-
-        <div class="col-lg-4 order-md-last">
+                
+        <div class="col-lg-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-primary">Summary</span>
             </h4>
@@ -40,27 +43,27 @@
                 @foreach (var item in Model.Basket.Items)
                 {
                     <li class="list-group-item d-flex justify-content-between lh-sm">
-                        <div>
-                            <h6 class="my-0">@item.Brand</h6>
+                        <div class="col-7">
+                            <h6 class="my-0">
+                                @item.Brand
+                            </h6>
                             <small class="text-muted">@item.Name</small>
                         </div>
-                        <span class="text-muted">@item.UnitPrice.ToString("c") x @item.Quantity</span>
+                        <div class="col-2">
+                            <img src="@Constants.CATALOG_IMAGE_PATH@item.PictureUri" class="img-fluid" width="30">
+                        </div>
+                        <div class="col-3">
+                            <span class="text-muted">@item.UnitPrice.ToString("c") x @item.Quantity</span>
+                        </div>
                     </li>
                 }
-
-                <li class="list-group-item d-flex justify-content-between bg-light">
-                    <div class="text-success">
-                        <h6 class="my-0">Promo code</h6>
-                        <small>EXAMPLECODE</small>
-                    </div>
-                    <span class="text-success">−$5</span>
-                </li>
                 <li class="list-group-item d-flex justify-content-between">
-                    <span>Total (USD)</span>
-                    <strong>@Model.Basket.FinalPrice.ToString("c")</strong>
+                    <span>Total Price</span>
+                    <strong>@Model.Basket.TotalProductsPrice.ToString("c")</strong>
                 </li>
             </ul>
         </div>
+               
     </div>
 </div>
 

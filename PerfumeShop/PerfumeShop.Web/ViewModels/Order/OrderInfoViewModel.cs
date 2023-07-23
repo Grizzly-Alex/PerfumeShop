@@ -14,7 +14,5 @@ public sealed class OrderInfoViewModel
     public string CustomerEmail { get; set; }
     public string Address { get; set; }
     public decimal ItemsCost { get; private set; }
-    public decimal ShippingCost { get; private set; }
-    public decimal PromoCodeCost { get; private set; }
     public decimal TotalPrice { get; set; }
 }

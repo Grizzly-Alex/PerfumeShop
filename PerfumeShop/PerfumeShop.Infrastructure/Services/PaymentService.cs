@@ -13,11 +13,7 @@ public sealed class PaymentService : IPaymentService
         string Id,
         string Name,
         string Phone,
-        string Email,
-        string State,
-        string City,
-        string Line1,
-        string PostalCode);
+        string Email);
 
     private record StripePayment(
         string CustomerId,
@@ -65,13 +61,6 @@ public sealed class PaymentService : IPaymentService
 
         var customerOptions = new CustomerCreateOptions
         {
-            Address = new AddressOptions
-            {
-                State = buyer.Address.State,
-                City = buyer.Address.City,
-                Line1 = buyer.Address.StreetAddress,
-                PostalCode = buyer.Address.PostalCode,
-            },
             Name = buyer.Name,
             Email = buyer.Email,
             Phone = buyer.Phone,
@@ -83,11 +72,7 @@ public sealed class PaymentService : IPaymentService
             createdCustomer.Id,
             createdCustomer.Name,
             createdCustomer.Email,
-            createdCustomer.Phone,
-            createdCustomer.Address.State,
-			createdCustomer.Address.City,
-			createdCustomer.Address.Line1,
-            createdCustomer.Address.PostalCode);
+            createdCustomer.Phone);
     }
 
     private async Task<StripePayment> AddStripePaymentAsync(Payment payment, string stripeCustomerId, CancellationToken ct)

@@ -444,16 +444,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                                 .HasColumnType("decimal")
                                 .HasColumnName("ItemsCost");
 
-                            b1.Property<decimal>("PromoCodeCost")
-                                .HasPrecision(10, 2)
-                                .HasColumnType("decimal")
-                                .HasColumnName("PromoCodeCost");
-
-                            b1.Property<decimal>("ShippingCost")
-                                .HasPrecision(10, 2)
-                                .HasColumnType("decimal")
-                                .HasColumnName("ShippingCost");
-
                             b1.Property<decimal>("TotalCost")
                                 .HasPrecision(10, 2)
                                 .HasColumnType("decimal")

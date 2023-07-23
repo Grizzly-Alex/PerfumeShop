@@ -42,3 +42,4 @@ global using PerfumeShop.Infrastructure.PaymentConfiguration;
 global using PerfumeShop.Web.ViewModels.Customer;
 global using PerfumeShop.Web.ViewModels.PhysicalShop;
 global using PerfumeShop.Web.UIModels;
+global using PerfumeShop.Web.ViewModels.Order;

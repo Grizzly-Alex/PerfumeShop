@@ -16,7 +16,7 @@ public sealed class BasketQueryService : IBasketQueryService
 				sum: sum => sum.Quantity);
 	
 
-    public async Task<int> GetBasketId(string userName)   
+    public async Task<int> GetBasketIdAsync(string userName)   
         => await _unitOfWork.GetRepository<Basket>()
             .GetFirstOrDefaultAsync(
 				predicate: i => i.BuyerId == userName,

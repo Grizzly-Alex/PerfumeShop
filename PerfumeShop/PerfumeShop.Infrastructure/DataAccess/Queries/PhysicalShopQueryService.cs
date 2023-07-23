@@ -8,7 +8,7 @@ public sealed class PhysicalShopQueryService : IPhysicalShopQueryService
     public PhysicalShopQueryService(IUnitOfWork<SaleDbContext> unitOfWork)
         => _unitOfWork = unitOfWork;
 
-    public async Task<Address> GetAddress(int Id)
+    public async Task<Address> GetAddressAsync(int Id)
         => await _unitOfWork.GetRepository<PhysicalShop>()
             .GetFirstOrDefaultAsync(
             predicate: i => i.Id == Id,

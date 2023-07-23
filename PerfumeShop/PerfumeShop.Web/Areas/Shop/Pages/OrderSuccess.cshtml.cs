@@ -1,5 +1,3 @@
-using PerfumeShop.Web.ViewModels.Order;
-
 namespace PerfumeShop.Web.Areas.Shop.Pages;
 
 [Area("Shop")]
@@ -8,28 +6,30 @@ public class OrderSuccessModel : PageModel
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
-    private readonly IOrderQueryService _orderQueryService;
 
 	public OrderSuccessModel(
         UserManager<AppUser> userManager,
-        SignInManager<AppUser> signInManager,
-        IOrderQueryService orderQueryService)
+        SignInManager<AppUser> signInManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
-        _orderQueryService = orderQueryService;
     }
 
     public string EmailModel { get; set; } = new string(string.Empty);
-    public string OrderNumber { get; set; } = new string(string.Empty);
+    public string OrderTrackingId { get; set; } = new string(string.Empty);
 
-    public async Task OnGet(int orderId)
+    public async Task OnGet()
     {
         if (_signInManager.IsSignedIn(HttpContext.User))
         {
-            OrderNumber = await _orderQueryService.GetTrackingId(orderId);
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             EmailModel = user.Email;
+
+            if (HttpContext.Session.Keys.Contains(Constants.SESSION_ORDER_TRACKING_ID))
+            {
+                OrderTrackingId = HttpContext.Session.Get<String>(Constants.SESSION_ORDER_TRACKING_ID)!;
+                HttpContext.Session.Remove(Constants.SESSION_ORDER_TRACKING_ID);
+            }         
         }           
     }
 }

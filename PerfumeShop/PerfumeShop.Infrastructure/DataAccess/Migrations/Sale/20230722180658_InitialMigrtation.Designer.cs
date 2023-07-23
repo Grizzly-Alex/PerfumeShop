@@ -12,7 +12,7 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 {
     [DbContext(typeof(SaleDbContext))]
-    [Migration("20230715094757_InitialMigrtation")]
+    [Migration("20230722180658_InitialMigrtation")]
     partial class InitialMigrtation
     {
         /// <inheritdoc />
@@ -446,16 +446,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                                 .HasPrecision(10, 2)
                                 .HasColumnType("decimal")
                                 .HasColumnName("ItemsCost");
-
-                            b1.Property<decimal>("PromoCodeCost")
-                                .HasPrecision(10, 2)
-                                .HasColumnType("decimal")
-                                .HasColumnName("PromoCodeCost");
-
-                            b1.Property<decimal>("ShippingCost")
-                                .HasPrecision(10, 2)
-                                .HasColumnType("decimal")
-                                .HasColumnName("ShippingCost");
 
                             b1.Property<decimal>("TotalCost")
                                 .HasPrecision(10, 2)

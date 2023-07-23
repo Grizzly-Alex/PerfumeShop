@@ -56,8 +56,6 @@ public sealed class MappingProfile : Profile
             .ForMember(view => view.PaymentMethod, opt => opt.MapFrom(model => model.PaymentDetail.PaymentMethod.Name))
             .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryMethod.Name))
             .ForMember(view => view.ItemsCost, opt => opt.MapFrom(model => model.Cost.ItemsCost))
-            .ForMember(view => view.ShippingCost, opt => opt.MapFrom(model => model.Cost.ShippingCost))
-            .ForMember(view => view.PromoCodeCost, opt => opt.MapFrom(model => model.Cost.PromoCodeCost))
             .ForMember(view => view.TotalPrice, opt => opt.MapFrom(model => model.Cost.TotalCost))
             .ForMember(view => view.CustomerName, opt => opt.MapFrom(model => model.Customer.GetFullName()))
             .ForMember(view => view.CustomerPhone, opt => opt.MapFrom(model => model.Customer.PhoneNumber))

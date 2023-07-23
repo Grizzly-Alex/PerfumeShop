@@ -7,7 +7,7 @@ public sealed class BasketItemQueryService : IBasketItemQueryService
     public BasketItemQueryService(IUnitOfWork<SaleDbContext> unitOfWork)
 		=> _unitOfWork = unitOfWork;
 
-    public async Task<int> GetProductId(int basketItemId)    
+    public async Task<int> GetProductIdAsync(int basketItemId)    
         => await _unitOfWork.GetRepository<BasketItem>()
             .GetFirstOrDefaultAsync(
             predicate: i => i.Id == basketItemId,

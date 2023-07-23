@@ -35,16 +35,8 @@ public class CheckoutService : ICheckoutService
     public Cost CalculateCostAsync(IEnumerable<OrderItem> items)
     {
 		decimal itemsCost = items.Sum(i => i.TotalPrice);
-		decimal shippingCost = default;
-        decimal promoCodeCost = default;
-		decimal totalCost = itemsCost + shippingCost - promoCodeCost;
-        return new Cost(itemsCost, shippingCost, promoCodeCost, totalCost);
-    }
+		decimal totalCost = itemsCost;
 
-    public decimal CalculateFinalPriceAsync(decimal productTotalPrice)
-	{
-        decimal shippingCost = default;
-        decimal promoCodeCost = default;
-        return productTotalPrice + shippingCost - promoCodeCost;
+        return new Cost(itemsCost, totalCost);
     }
 }
