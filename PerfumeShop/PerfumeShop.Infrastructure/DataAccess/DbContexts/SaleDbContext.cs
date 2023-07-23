@@ -1,7 +1,10 @@
-﻿namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
+﻿using PerfumeShop.Infrastructure.DataAccess.Comparers;
+using PaymentMethod = PerfumeShop.Core.Models.Entities.PaymentMethod;
+namespace PerfumeShop.Infrastructure.DataAccess.DbContexts;
 
 public sealed class SaleDbContext : DbContext
 {
+    public DbSet<PhysicalShop> PhysicalShops { get; set; }
     public DbSet<Basket> Baskets { get; set; }
     public DbSet<BasketItem> BasketItems { get; set; }
 	public DbSet<OrderHeader> OrderHeaders { get; set; }
@@ -9,6 +12,9 @@ public sealed class SaleDbContext : DbContext
 	public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<PaymentDetail> PaymentDetails { get; set; }
 	public DbSet<PaymentStatus> PaymentStatuses { get; set; }
+    public DbSet<PaymentMethod> PaymentMethods { get; set; }
+    public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+    public DbSet<DeliveryDetail> DeliveryDetails { get; set; }
 
     public SaleDbContext(DbContextOptions<SaleDbContext> options) : base(options) { }
 
@@ -17,16 +23,32 @@ public sealed class SaleDbContext : DbContext
 		#region Seeds
 		modelBuilder.SeedEnumValues<OrderStatuses, OrderStatus>(value => value);
 		modelBuilder.SeedEnumValues<PaymentStatuses, PaymentStatus>(value => value);
-		#endregion
+        modelBuilder.SeedEnumValues<PaymentMethods, PaymentMethod>(value => value);
+        modelBuilder.SeedEnumValues<DeliveryMethods, DeliveryMethod>(value => value);
+        #endregion
 
-		#region Configurations
-		modelBuilder.ApplyConfiguration(new OrderStatusConfig());
+        #region Configurations
+        modelBuilder.ApplyConfiguration(new PhysicalShopConfig());
+        modelBuilder.ApplyConfiguration(new PaymentMethodConfig());
+        modelBuilder.ApplyConfiguration(new OrderDeliveryMethodConfig());
+        modelBuilder.ApplyConfiguration(new OrderStatusConfig());
 		modelBuilder.ApplyConfiguration(new PaymentStatusConfig());
 		modelBuilder.ApplyConfiguration(new BasketConfig());
         modelBuilder.ApplyConfiguration(new BasketItemConfig());
         modelBuilder.ApplyConfiguration(new OrderHeaderConfig());
 		modelBuilder.ApplyConfiguration(new OrderItemConfig());
         modelBuilder.ApplyConfiguration(new PaymentDetailConfig());
+        modelBuilder.ApplyConfiguration(new DeliveryDetailConfig());
         #endregion
     }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<TimeOnly>()
+            .HaveConversion<TimeOnlyConverter>()
+            .HaveColumnType("time(0)");
+
+        configurationBuilder.Properties<ICollection<DayOfWeek>>()
+            .HaveConversion<EnumConverter<DayOfWeek>, CollectionValueComparer<DayOfWeek>>();
+	}
 }

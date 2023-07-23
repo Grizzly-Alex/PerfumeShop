@@ -1,0 +1,99 @@
+﻿@model ManagePhysicalShopViewModel
+
+<form method="post" asp-controller="ManagePhysicalShop" asp-action="Create" class="row g-3 needs-validation" novalidate>
+
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h2 class="text-muted">Create Physical Shop</h2>
+		<div class="btn-toolbar mb-2 mb-md-0">
+			<div class="text-end">
+
+				<button type="submit" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+					<span class="bi bi-check-lg">Create</span>
+				</button>
+
+				<a asp-controller="ManagePhysicalShop" asp-action="index" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+					<span class="bi bi-reply"> Back</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<h4 class="my-3">Address</h4>
+
+	<div class="row">
+		<div class="col-md-6">
+
+			<div class="mb-3">
+				<label asp-for="@Model.Shop.Address.State" class="fw-bold text-secondary"></label>
+				<input asp-for="@Model.Shop.Address.State" class="form-control" required>
+				<span asp-validation-for="@Model.Shop.Address.State" class="text-danger"></span>
+				<div class="valid-feedback">
+					Valid!
+				</div>
+			</div>
+
+			<div class="mb-3">
+				<label asp-for="@Model.Shop.Address.City" class="fw-bold text-secondary"></label>
+				<input asp-for="@Model.Shop.Address.City" class="form-control" required>
+				<span asp-validation-for="@Model.Shop.Address.City" class="text-danger"></span>
+				<div class="valid-feedback">
+					Valid!
+				</div>
+			</div>
+
+			<div class="mb-3">
+				<label asp-for="@Model.Shop.Address.StreetAddress" class="fw-bold text-secondary"></label>
+				<input asp-for="@Model.Shop.Address.StreetAddress" class="form-control" required>
+				<span asp-validation-for="@Model.Shop.Address.StreetAddress" class="text-danger"></span>
+				<div class="valid-feedback">
+					Valid!
+				</div>
+			</div>
+
+			<div class="mb-3">
+				<label asp-for="@Model.Shop.Address.PostalCode" class="fw-bold text-secondary"></label>
+				<input asp-for="@Model.Shop.Address.PostalCode" class="form-control" required>
+				<span asp-validation-for="@Model.Shop.Address.PostalCode" class="text-danger"></span>
+				<div class="valid-feedback">
+					Valid!
+				</div>
+			</div>
+
+			<h4 class="my-3">Working time</h4>
+
+			<div class="hstack gap-3">
+				<div class="mb-3">
+					<label asp-for="@Model.Shop.OpenTime" class="fw-bold text-secondary"></label>
+					<input asp-for="@Model.Shop.OpenTime" class="form-control" type="time" required>
+					<span asp-validation-for="@Model.Shop.OpenTime" class="text-danger"></span>
+				</div>
+				<i class="bi bi-dash"></i>
+				<div class="mb-3">
+					<label asp-for="@Model.Shop.CloseTime" class="fw-bold text-secondary"></label>
+					<input asp-for="@Model.Shop.CloseTime" class="form-control" type="time" required>
+					<span asp-validation-for="@Model.Shop.CloseTime" class="text-danger"></span>
+				</div>
+			</div>
+
+			<h4 class="my-3">Select Weekend</h4>
+
+			<div>
+				@for (var index = 0; index < @Model.DayOfWeek.Count(); index++)
+				{
+					<input type="checkbox" asp-for="@Model.DayOfWeek[index].IsChecked" class="form-check-input" />
+					<label class="form-check-label" asp-for="@Model.DayOfWeek[index].IsChecked">
+						@Model.DayOfWeek[index].LabelName
+					</label>
+					<input type="hidden" asp-for="@Model.DayOfWeek[index].Id" />
+					<input type="hidden" asp-for="@Model.DayOfWeek[index].LabelName" />
+					<br />
+				}
+			</div>
+
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+}

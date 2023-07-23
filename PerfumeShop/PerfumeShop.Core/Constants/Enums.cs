@@ -53,3 +53,15 @@ public enum PaymentStatuses
     [Display(Name = "Approved")] Approved = 2,
     [Display(Name = "Reject")] Reject = 3,
 }
+
+public enum PaymentMethods
+{
+	[Display(Name = "Cash")] Cash = 1,
+	[Display(Name = "Payment Card")] PaymentCard = 2,
+}
+
+public enum DeliveryMethods
+{
+	[Display(Name = "Pickup")] Pickup = 1,
+	[Display(Name = "Courier")] Courier = 2,
+}

@@ -16,41 +16,9 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
             .IsRequired(false)
             .HasMaxLength(256);
 
-        builder.Property(p => p.ShippingDate)
-            .HasColumnType("datetime2")
-            .HasPrecision(0)
-            .IsRequired(false);
-
         builder.Property(a => a.TrackingId)
             .HasMaxLength(256)
             .IsRequired(true);
-
-        #region Address
-        builder.OwnsOne(o => o.ShippingAddress, a =>
-        {
-            a.Property(a => a.State)
-                .HasColumnName("State")
-                .HasMaxLength(256)
-                .IsRequired(true);
-
-            a.Property(a => a.City)
-                .HasColumnName("City")
-                .HasMaxLength(256)
-                .IsRequired(true);
-
-            a.Property(a => a.StreetAddress)
-                .HasColumnName("StreetAddress")
-                .HasMaxLength(256)
-                .IsRequired(true);
-
-            a.Property(a => a.PostalCode)
-                .HasColumnName("PostalCode")
-                .HasMaxLength(256)
-                .IsRequired(true);
-        });
-
-        builder.Navigation(x => x.ShippingAddress).IsRequired();
-        #endregion
 
         #region Customer
         builder.OwnsOne(o => o.Customer, a =>
@@ -93,18 +61,6 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
                 .HasColumnType("decimal")
                 .HasPrecision(10, 2);
 
-            a.Property(p => p.ShippingCost)
-                .HasColumnName("ShippingCost")
-                .IsRequired(true)
-                .HasColumnType("decimal")
-                .HasPrecision(10, 2);
-
-            a.Property(a => a.PromoCodeCost)
-                .HasColumnName("PromoCodeCost")
-                .IsRequired(true)
-                .HasColumnType("decimal")
-                .HasPrecision(10, 2);
-
             a.Property(a => a.TotalCost)
                 .HasColumnName("TotalCost")
                 .IsRequired(true)
@@ -118,6 +74,12 @@ public sealed class OrderHeaderConfig : IEntityTypeConfiguration<OrderHeader>
         builder.HasOne(p => p.PaymentDetail)
             .WithOne(d => d.Order)
             .HasForeignKey<PaymentDetail>(e => e.OrderId)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(p => p.DeliveryDetail)
+            .WithOne(d => d.Order)
+            .HasForeignKey<DeliveryDetail>(e => e.OrderId)
             .IsRequired(true)
             .OnDelete(DeleteBehavior.Restrict);
 

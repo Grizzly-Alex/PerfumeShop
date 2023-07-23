@@ -21,3 +21,7 @@ global using MailKit.Net.Smtp;
 global using Microsoft.AspNetCore.Identity.UI.Services;
 global using Stripe;
 global using Microsoft.EntityFrameworkCore.Infrastructure;
+global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+global using PerfumeShop.Infrastructure.DataAccess.Converters;
+global using Newtonsoft.Json;
+global using Microsoft.EntityFrameworkCore.ChangeTracking;

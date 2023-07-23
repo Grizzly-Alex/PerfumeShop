@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="DataAccess\Migrations\Catalog\" />
+    <Folder Include="DataAccess\Migrations\Sale\" />
   </ItemGroup>
 
   <ItemGroup>

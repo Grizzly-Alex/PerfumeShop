@@ -94,14 +94,14 @@ public class LoginModel : PageModel
 
     private async Task TransferAnonymousBasketToUserAsync(string? userName)
     {
-        if (Request.Cookies.ContainsKey(Constants.BasketCookie))
+        if (Request.Cookies.ContainsKey(Constants.BASKET_COOKIE))
         {
-            var anonymousId = Request.Cookies[Constants.BasketCookie];
+            var anonymousId = Request.Cookies[Constants.BASKET_COOKIE];
             if (Guid.TryParse(anonymousId, out var _))
             {
                 await _basketService.TransferBasketAsync(anonymousId, userName);
             }
-            Response.Cookies.Delete(Constants.BasketCookie);
+            Response.Cookies.Delete(Constants.BASKET_COOKIE);
         }
     }
 }

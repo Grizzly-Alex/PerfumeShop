@@ -7,19 +7,16 @@ public sealed class BasketItemQueryService : IBasketItemQueryService
     public BasketItemQueryService(IUnitOfWork<SaleDbContext> unitOfWork)
 		=> _unitOfWork = unitOfWork;
 
-    public async Task<int> GetProductId(int basketItemId)
-    {
-        return await _unitOfWork.GetRepository<BasketItem>()
+    public async Task<int> GetProductIdAsync(int basketItemId)    
+        => await _unitOfWork.GetRepository<BasketItem>()
             .GetFirstOrDefaultAsync(
             predicate: i => i.Id == basketItemId,
             selector: b => b.ProductId);
-    }
+    
 
-    public async Task<int> GetQuantityAsync(int basketItemId)
-	{
-		return await _unitOfWork.GetRepository<BasketItem>()
+    public async Task<int> GetQuantityAsync(int basketItemId)	
+		=> await _unitOfWork.GetRepository<BasketItem>()
 			.GetFirstOrDefaultAsync(
 				predicate: b => b.Id == basketItemId,
-				selector: b => b.Quantity);
-	}
+				selector: b => b.Quantity);	
 }

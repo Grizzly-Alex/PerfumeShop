@@ -14,4 +14,6 @@ public sealed class Address
         StreetAddress = Guard.Against.Null(streetAddress, nameof(streetAddress));
         PostalCode = Guard.Against.Null(postalCode, nameof(postalCode));
     }
+
+	public string GetFullAddress() => string.Concat(StreetAddress, ", ", PostalCode, " ", City, ", ", State);
 }

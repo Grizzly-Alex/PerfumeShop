@@ -12,7 +12,7 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 {
     [DbContext(typeof(SaleDbContext))]
-    [Migration("20230518191637_InitialMigrtation")]
+    [Migration("20230722180658_InitialMigrtation")]
     partial class InitialMigrtation
     {
         /// <inheritdoc />
@@ -76,6 +76,63 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.ToTable("BasketItems");
                 });
 
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.DeliveryDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DeliveryDate")
+                        .HasPrecision(0)
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeliveryDate");
+
+                    b.Property<int>("DeliveryMethodId")
+                        .HasColumnType("int")
+                        .HasColumnName("DeliveryMethodId");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeliveryMethodId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("DeliveryDetails");
+                });
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.DeliveryMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeliveryMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Pickup"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Courier"
+                        });
+                });
+
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderHeader", b =>
                 {
                     b.Property<int>("Id")
@@ -94,10 +151,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("ShippingDate")
-                        .HasPrecision(0)
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("TrackingId")
                         .IsRequired()
@@ -124,7 +177,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.Property<decimal>("Price")
                         .HasPrecision(10, 2)
-                        .HasColumnType("decimal");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -133,7 +186,8 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("Id");
 
@@ -205,6 +259,10 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .HasColumnType("datetime2")
                         .HasColumnName("PaymentDate");
 
+                    b.Property<int>("PaymentMethodId")
+                        .HasColumnType("int")
+                        .HasColumnName("PaymentMethodId");
+
                     b.Property<int>("PaymentStatusId")
                         .HasColumnType("int")
                         .HasColumnName("PaymentStatusId");
@@ -214,9 +272,38 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                     b.HasIndex("OrderId")
                         .IsUnique();
 
+                    b.HasIndex("PaymentMethodId");
+
                     b.HasIndex("PaymentStatusId");
 
                     b.ToTable("PaymentDetails");
+                });
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.PaymentMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Cash"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Payment Card"
+                        });
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.PaymentStatus", b =>
@@ -251,6 +338,29 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         });
                 });
 
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.PhysicalShop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<TimeSpan>("CloseTime")
+                        .HasColumnType("time(0)");
+
+                    b.Property<TimeSpan>("OpenTime")
+                        .HasColumnType("time(0)");
+
+                    b.Property<string>("Weekends")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PhysicalShops");
+                });
+
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.BasketItem", b =>
                 {
                     b.HasOne("PerfumeShop.Core.Models.Entities.Basket", null)
@@ -260,17 +370,23 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderHeader", b =>
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.DeliveryDetail", b =>
                 {
-                    b.HasOne("PerfumeShop.Core.Models.Entities.OrderStatus", "OrderStatus")
+                    b.HasOne("PerfumeShop.Core.Models.Entities.DeliveryMethod", "DeliveryMethod")
                         .WithMany()
-                        .HasForeignKey("OrderStatusId")
+                        .HasForeignKey("DeliveryMethodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Address", "ShippingAddress", b1 =>
+                    b.HasOne("PerfumeShop.Core.Models.Entities.OrderHeader", "Order")
+                        .WithOne("DeliveryDetail")
+                        .HasForeignKey("PerfumeShop.Core.Models.Entities.DeliveryDetail", "OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Address", "DeliveryAddress", b1 =>
                         {
-                            b1.Property<int>("OrderHeaderId")
+                            b1.Property<int>("DeliveryDetailId")
                                 .HasColumnType("int");
 
                             b1.Property<string>("City")
@@ -297,13 +413,29 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                                 .HasColumnType("nvarchar(256)")
                                 .HasColumnName("StreetAddress");
 
-                            b1.HasKey("OrderHeaderId");
+                            b1.HasKey("DeliveryDetailId");
 
-                            b1.ToTable("OrderHeaders");
+                            b1.ToTable("DeliveryDetails");
 
                             b1.WithOwner()
-                                .HasForeignKey("OrderHeaderId");
+                                .HasForeignKey("DeliveryDetailId");
                         });
+
+                    b.Navigation("DeliveryAddress")
+                        .IsRequired();
+
+                    b.Navigation("DeliveryMethod");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderHeader", b =>
+                {
+                    b.HasOne("PerfumeShop.Core.Models.Entities.OrderStatus", "OrderStatus")
+                        .WithMany()
+                        .HasForeignKey("OrderStatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Cost", "Cost", b1 =>
                         {
@@ -314,16 +446,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                                 .HasPrecision(10, 2)
                                 .HasColumnType("decimal")
                                 .HasColumnName("ItemsCost");
-
-                            b1.Property<decimal>("PromoCodeCost")
-                                .HasPrecision(10, 2)
-                                .HasColumnType("decimal")
-                                .HasColumnName("PromoCodeCost");
-
-                            b1.Property<decimal>("ShippingCost")
-                                .HasPrecision(10, 2)
-                                .HasColumnType("decimal")
-                                .HasColumnName("ShippingCost");
 
                             b1.Property<decimal>("TotalCost")
                                 .HasPrecision(10, 2)
@@ -388,9 +510,6 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .IsRequired();
 
                     b.Navigation("OrderStatus");
-
-                    b.Navigation("ShippingAddress")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderItem", b =>
@@ -412,6 +531,12 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("PerfumeShop.Core.Models.Entities.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("PerfumeShop.Core.Models.Entities.PaymentStatus", "PaymentStatus")
                         .WithMany()
                         .HasForeignKey("PaymentStatusId")
@@ -420,7 +545,52 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
                     b.Navigation("Order");
 
+                    b.Navigation("PaymentMethod");
+
                     b.Navigation("PaymentStatus");
+                });
+
+            modelBuilder.Entity("PerfumeShop.Core.Models.Entities.PhysicalShop", b =>
+                {
+                    b.OwnsOne("PerfumeShop.Core.Models.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("PhysicalShopId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("PostalCode");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("State");
+
+                            b1.Property<string>("StreetAddress")
+                                .IsRequired()
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("StreetAddress");
+
+                            b1.HasKey("PhysicalShopId");
+
+                            b1.ToTable("PhysicalShops");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PhysicalShopId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.Basket", b =>
@@ -430,6 +600,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Sale
 
             modelBuilder.Entity("PerfumeShop.Core.Models.Entities.OrderHeader", b =>
                 {
+                    b.Navigation("DeliveryDetail")
+                        .IsRequired();
+
                     b.Navigation("OrderItems");
 
                     b.Navigation("PaymentDetail")
