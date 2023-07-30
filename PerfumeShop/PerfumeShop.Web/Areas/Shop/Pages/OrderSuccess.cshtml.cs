@@ -21,7 +21,7 @@ public class OrderSuccessModel : PageModel
     public async Task OnGet()
     {
         if (_signInManager.IsSignedIn(HttpContext.User))
-        {
+        {           
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             EmailModel = user.Email;
 

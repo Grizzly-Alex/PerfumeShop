@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Infrastructure.Services;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace PerfumeShop.Infrastructure.Services;
 
 public class BasketService : IBasketService
 {
@@ -61,8 +63,8 @@ public class BasketService : IBasketService
 			include: query => query.Include(b => b.Items))
 			?? throw new NullReferenceException($"Basket not found with ID '{basketId}'.");
 
-        _shopping.GetRepository<BasketItem>().Remove(basket.Items);   
-		await _shopping.SaveChangesAsync();
+        _shopping.GetRepository<BasketItem>().Remove(basket.Items);
+        await _shopping.SaveChangesAsync();
         _logger.LogInformation($"Basket has been cleared with ID: '{basket.Id}'.");
 
         return basket;

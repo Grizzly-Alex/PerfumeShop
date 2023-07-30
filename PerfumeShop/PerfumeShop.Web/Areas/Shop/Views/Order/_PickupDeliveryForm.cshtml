@@ -1,6 +1,6 @@
 ﻿@model OrderCreateViewModel
 
-<form asp-area="Shop" asp-controller="Order" asp-action="OrderingPickup" method="post" class="needs-validation" novalidate>
+<form asp-area="Shop" asp-controller="Order" asp-action="OrderByPickup" method="post" class="needs-validation" novalidate>
 
     <input asp-for="@Model.Buyer.Id" hidden />
     <input asp-for="@Model.Basket.Id" hidden />
