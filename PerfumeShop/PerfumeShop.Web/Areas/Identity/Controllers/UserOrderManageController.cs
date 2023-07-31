@@ -21,9 +21,14 @@ public class UserOrderManageController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public IActionResult Index() => View();
+
+    #region API CALLS
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
     {
         var ordersInfo = await _orderViewModelService.GetOrderInfoModelCollectionAsync(_userManager.GetUserId(User));
-        return View(ordersInfo);
+        return Json(new { data = ordersInfo });
     }
+    #endregion
 }
