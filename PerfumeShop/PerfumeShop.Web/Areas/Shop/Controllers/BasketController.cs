@@ -45,6 +45,9 @@ public class BasketController : Controller
         {
             await _basketService.AddItemToBasketAsync(userName, productId, quantity);
 
+            HttpContext.Session.Set(Constants.BASKET_ITEMS_QTY,
+                quantity + HttpContext.Session.GetInt32(Constants.BASKET_ITEMS_QTY));
+
             TempData["success"] = $"Product \"{availability.ProductName}\"" +
                 $" added to cart in quantity {quantity}.";
         }
@@ -70,6 +73,8 @@ public class BasketController : Controller
             {
                 var basketItem = await _basketService.UpdateItemBasketAsync(basketItemId, quantity);
 
+                HttpContext.Session.Set(Constants.BASKET_ITEMS_QTY, quantity);
+
                 TempData["success"] = $"Set new quantity \"{availability.DesiredQty}\"" +
 					$" for product \"{availability.ProductName}\".";
 			}
@@ -94,6 +99,9 @@ public class BasketController : Controller
         var basketItem = await _basketService.DeleteItemFromBasketAsync(basketItemId);
         var productName = await _productQueryService.GetProductNameAsync(basketItem.ProductId);
 
+        HttpContext.Session.Set(Constants.BASKET_ITEMS_QTY,
+            HttpContext.Session.GetInt32(Constants.BASKET_ITEMS_QTY) - basketItem.Quantity);
+
         TempData["success"] = $"Position with product \"{productName}\" has been deleted.";
 
         return RedirectToAction(nameof(Index));
@@ -103,7 +111,11 @@ public class BasketController : Controller
 	public async Task<IActionResult> ClearBasket(int basketId)
     {
 		await _basketService.ClearBasketAsync(basketId);
-		TempData["success"] = $"Your basket has been cleared.";
+
+        HttpContext.Session.Set(Constants.BASKET_ITEMS_QTY, 0);
+
+        TempData["success"] = $"Your basket has been cleared.";
+
 		return RedirectToAction(nameof(Index));
 	}
 

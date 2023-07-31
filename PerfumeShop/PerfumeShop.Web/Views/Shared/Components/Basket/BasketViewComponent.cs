@@ -1,12 +1,12 @@
 ﻿namespace PerfumeShop.Web.Areas.Shop.Shared.Components.Basket;
 
 [Area("Shop")]
-public class Basket : ViewComponent
+public class BasketViewComponent : ViewComponent
 {
 	private readonly IBasketQueryService _basketQueryService;
 	private readonly SignInManager<AppUser> _signInManager;
 
-	public Basket(
+	public BasketViewComponent(
 		IBasketQueryService basketQueryService,
 		SignInManager<AppUser> signInManager)
     {
@@ -18,24 +18,27 @@ public class Basket : ViewComponent
 	{
 		var viewModel = new BasketComponentViewModel
 		{
-			ItemsCount = await CountTotalBasketItems()
-		};
+			ItemsCount = await BasketItemsQtyFromSession()
+        };
 		return View(viewModel);
 	}
 
-	private async Task<int> CountTotalBasketItems()
+	private async Task<int> BasketItemsQtyFromSession()
 	{
-		if (_signInManager.IsSignedIn(HttpContext.User))
+		if (HttpContext.Session.GetInt32(Constants.BASKET_ITEMS_QTY) is null)
 		{
-			return await _basketQueryService.CountTotalBasketItemsAsync(User.Identity.Name);
-		}
+			HttpContext.Session.SetInt32(Constants.BASKET_ITEMS_QTY, await BasketItemsQtyFromDb());
+        }
 
-		string anonymousId = GetAnnonymousIdFromCookie();
+		return HttpContext.Session.GetInt32(Constants.BASKET_ITEMS_QTY).GetValueOrDefault();
+    }
 
-		if (anonymousId == null) return 0;
-
-		return await _basketQueryService.CountTotalBasketItemsAsync(anonymousId);
-	}
+	private async Task<int> BasketItemsQtyFromDb()
+	{
+        return _signInManager.IsSignedIn(HttpContext.User)
+			? await _basketQueryService.CountTotalBasketItemsAsync(User.Identity.Name)
+			: await _basketQueryService.CountTotalBasketItemsAsync(GetAnnonymousIdFromCookie());
+    }
 
 	private string GetAnnonymousIdFromCookie()
 	{

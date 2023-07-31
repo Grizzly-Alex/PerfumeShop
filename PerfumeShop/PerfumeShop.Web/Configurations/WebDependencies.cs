@@ -39,7 +39,6 @@ public static class WebDependencies
     {
         services.AddDataBaseInfrastructure(configuration);
         services.AddStripeInfrastructure(configuration);
-        services.AddDistributedMemoryCache();
         services.AddCookieSettings();
         services.AddAuthenticationSettings();  
         services.AddUtilities();

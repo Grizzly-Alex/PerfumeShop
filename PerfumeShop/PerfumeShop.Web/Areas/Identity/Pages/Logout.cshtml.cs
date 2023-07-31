@@ -21,7 +21,9 @@ public class LogoutModel : PageModel
     {
         await _signInManager.SignOutAsync();
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        
+
+        HttpContext.Session.Clear();
+
         _logger.LogInformation("User logged out.");
         if (returnUrl is not null)
         {

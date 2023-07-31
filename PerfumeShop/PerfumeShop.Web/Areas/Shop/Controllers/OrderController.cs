@@ -48,7 +48,7 @@ public class OrderController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> OrderingPickup(OrderCreateViewModel model)
+    public async Task<IActionResult> OrderByPickup(OrderCreateViewModel model)
     {
 		ModelState.Remove(nameof(model.Address));
 
@@ -70,14 +70,16 @@ public class OrderController : Controller
             await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 			await _basketService.ClearBasketAsync(model.Basket.Id);
 
-			return RedirectToPage(GetRedirectionPageName(paymentMethod));
+            HttpContext.Session.Remove(Constants.BASKET_ITEMS_QTY);
+
+            return RedirectToPage(GetRedirectionPageName(paymentMethod));
         }
 
         return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]
-    public async Task<IActionResult> OrderingCourier(OrderCreateViewModel model)
+    public async Task<IActionResult> OrderByCourier(OrderCreateViewModel model)
     {
         if (ModelState.IsValid)
 		{
@@ -96,6 +98,8 @@ public class OrderController : Controller
 
             await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 			await _basketService.ClearBasketAsync(model.Basket.Id);
+
+            HttpContext.Session.Remove(Constants.BASKET_ITEMS_QTY);
 
             return RedirectToPage(GetRedirectionPageName(paymentMethod));
 		}

@@ -59,7 +59,7 @@ public class LoginModel : PageModel
     }
 
     public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-    {
+    {        
         returnUrl ??= Url.Content("~/");
 
         ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -70,7 +70,7 @@ public class LoginModel : PageModel
             if (result.Succeeded)
             {
                 await TransferAnonymousBasketToUserAsync(Input.Email);
-
+                
                 _logger.LogInformation("User logged in.");
                 return LocalRedirect(returnUrl);
             }
@@ -93,15 +93,18 @@ public class LoginModel : PageModel
     }
 
     private async Task TransferAnonymousBasketToUserAsync(string? userName)
-    {
+    {       
         if (Request.Cookies.ContainsKey(Constants.BASKET_COOKIE))
         {
             var anonymousId = Request.Cookies[Constants.BASKET_COOKIE];
+
             if (Guid.TryParse(anonymousId, out var _))
             {
                 await _basketService.TransferBasketAsync(anonymousId, userName);
             }
+
             Response.Cookies.Delete(Constants.BASKET_COOKIE);
-        }
+        }       
+        HttpContext.Session.Remove(Constants.BASKET_ITEMS_QTY);
     }
 }
