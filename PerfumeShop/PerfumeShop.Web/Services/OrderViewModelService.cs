@@ -64,6 +64,15 @@ public sealed class OrderViewModelService : IOrderViewModelService
         };
 	}
 
+    public async Task<OrderViewModel> GetOrderViewModelAsync(int orderId)
+    {
+        return new OrderViewModel()
+        {
+            OrderInfo = await GetOrderInfoModelAsync(orderId),
+            OrderItems = await GetOrderItemModelCollectionAsync(orderId)
+        };
+    }
+
     public async Task<OrderInfoViewModel> GetOrderInfoModelAsync(int orderId)
     {
         var orderHeader = await _sale.GetRepository<OrderHeader>()
@@ -141,4 +150,5 @@ public sealed class OrderViewModelService : IOrderViewModelService
 
         return orderItemViewModel;
     }
+
 }
