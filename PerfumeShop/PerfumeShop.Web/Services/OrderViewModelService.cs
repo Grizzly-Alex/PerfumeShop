@@ -64,6 +64,15 @@ public sealed class OrderViewModelService : IOrderViewModelService
         };
 	}
 
+    public async Task<OrderViewModel> GetOrderViewModelAsync(int orderId)
+    {
+        return new OrderViewModel()
+        {
+            OrderInfo = await GetOrderInfoModelAsync(orderId),
+            OrderItems = await GetOrderItemModelCollectionAsync(orderId)
+        };
+    }
+
     public async Task<OrderInfoViewModel> GetOrderInfoModelAsync(int orderId)
     {
         var orderHeader = await _sale.GetRepository<OrderHeader>()
@@ -82,6 +91,26 @@ public sealed class OrderViewModelService : IOrderViewModelService
         _logger.LogInformation($"Getting Order Header with ID:'{orderId}' successfully.");
 
         return _mapper.Map<OrderInfoViewModel>(orderHeader);
+    }
+
+    public async Task<IList<OrderInfoViewModel>> GetOrderInfoModelCollectionAsync(string userId)
+    {
+        var orderHeaders = await _sale.GetRepository<OrderHeader>()
+            .GetAllAsync(
+                predicate: order => order.Customer.UserId == userId,
+                include: query => query
+                    .Include(order => order.OrderStatus)
+                    .Include(order => order.PaymentDetail)
+                    .ThenInclude(payment => payment.PaymentMethod)
+                    .Include(order => order.PaymentDetail)
+                    .ThenInclude(payment => payment.PaymentStatus)
+                    .Include(order => order.DeliveryDetail)
+                    .ThenInclude(delivery => delivery.DeliveryMethod),
+                isTracking: false) ?? throw new NullReferenceException($"OrderHeader not found in database for user with ID: '{userId}'.");
+
+        orderHeaders.ToList().ForEach(orderHeader => _logger.LogInformation($"Getting Order Header with ID:'{orderHeader.Id}' successfully."));
+
+        return _mapper.Map<IList<OrderInfoViewModel>>(orderHeaders.ToList()); 
     }
 
     public async Task<IList<OrderItemViewModel>> GetOrderItemModelCollectionAsync(int orderId)
@@ -121,4 +150,5 @@ public sealed class OrderViewModelService : IOrderViewModelService
 
         return orderItemViewModel;
     }
+
 }

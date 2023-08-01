@@ -1,0 +1,92 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Order Number: " + Model.OrderInfo.TrackingId;
+}
+
+<h2 class="text-muted">@ViewData["Title"]</h2>
+<hr />
+
+<div class="row g-5">
+    <div class="col-lg-5 order-md-last">
+        <h5 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">Items</span>
+        </h5>
+
+        @if (Model.OrderItems.Any())
+        {
+            <ul class="list-group mb-3">
+                @foreach (var item in Model.OrderItems)
+                {
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div class="col-7">
+                            <h6 class="my-0">
+                                @item.Brand
+                            </h6>
+                            <small class="text-muted">@item.Name</small>
+                        </div>
+                        <div class="col-2">                           
+                            <img src="@Constants.CATALOG_IMAGE_PATH@item.PictureUri" class="img-fluid" width="30">
+                        </div>
+                        <div class="col-3">
+                            <span class="text-muted">@item.Price.ToString("c") x @item.Quantity</span>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+    <div class="col-lg-7">
+        <div class="my-0 p-0">
+            <h5 class="text-primary">Order Header</h5>
+
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td>Date</td>
+                        <td>@Model.OrderInfo.DateFormat</td>
+                    </tr>
+                    <tr>
+                        <td>Order Status</td>
+                        <td>@Model.OrderInfo.OrderStatus</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Status</td>
+                        <td>@Model.OrderInfo.PaymentStatus</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Method</td>
+                        <td>@Model.OrderInfo.PaymentMethod</td>
+                    </tr>
+                    <tr>
+                        <td>Delivery Method</td>
+                        <td>@Model.OrderInfo.DeliveryMethod</td>
+                    </tr>
+                    <tr>
+                        <td>Address Delivery</td>
+                        <td>@Model.OrderInfo.Address</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Phone</td>
+                        <td>@Model.OrderInfo.CustomerPhone</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Email</td>
+                        <td>@Model.OrderInfo.CustomerEmail</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Name</td>
+                        <td>@Model.OrderInfo.CustomerName</td>
+                    </tr>
+                    <tr>
+                        <td>Items Cost</td>
+                        <td>@Model.OrderInfo.ItemsCostFormat</td>
+                    </tr>
+                    <tr>
+                        <td>Total Price</td>
+                        <td>@Model.OrderInfo.TotalPriceFormat</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
