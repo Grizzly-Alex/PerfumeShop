@@ -14,5 +14,8 @@ public sealed class OrderInfoViewModel
     public string CustomerEmail { get; set; }
     public string Address { get; set; }
     public decimal ItemsCost { get; private set; }
-    public decimal TotalPrice { get; set; }
+    public decimal TotalPrice { get; private set; }
+    public string DateFormat => OrderDate.ToString("MM/dd/yyyy hh:mm tt");
+    public string ItemsCostFormat => ItemsCost.ToString("c");
+    public string TotalPriceFormat => TotalPrice.ToString("c");
 }

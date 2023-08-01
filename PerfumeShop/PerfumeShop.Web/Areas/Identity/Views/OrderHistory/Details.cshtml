@@ -43,7 +43,7 @@
                 <tbody>
                     <tr>
                         <td>Date</td>
-                        <td>@Model.OrderInfo.OrderDate.ToString("MM/dd/yyyy hh:mm tt")</td>
+                        <td>@Model.OrderInfo.DateFormat</td>
                     </tr>
                     <tr>
                         <td>Order Status</td>
@@ -79,11 +79,11 @@
                     </tr>
                     <tr>
                         <td>Items Cost</td>
-                        <td>@Model.OrderInfo.ItemsCost.ToString("c")</td>
+                        <td>@Model.OrderInfo.ItemsCostFormat</td>
                     </tr>
                     <tr>
                         <td>Total Price</td>
-                        <td>@Model.OrderInfo.TotalPrice.ToString("c")</td>
+                        <td>@Model.OrderInfo.TotalPriceFormat</td>
                     </tr>
                 </tbody>
             </table>

@@ -10,8 +10,8 @@ function loadDataTable() {
             "url": "/OrderHistory/GetAll"
         },
         "columns": [
-            { data: "trackingId", "width": "5%" },
-            { data: "orderDate", "width": "12%" },
+            { data: "trackingId", "width": "9%" },
+            { data: "dateFormat", "width": "8%" },
             { data: "orderStatus", "width": "5%" },
             { data: "paymentStatus", "width": "5%" },
             { data: "paymentMethod", "width": "10%" },
@@ -19,8 +19,8 @@ function loadDataTable() {
             { data: "customerPhone", "width": "5%" },
             { data: "customerEmail", "width": "10%" },
             { data: "address", "width": "25%" },
-            { data: "itemsCost", "width": "5%" },
-            { data: "totalPrice", "width": "5%" },
+            { data: "itemsCostFormat", "width": "5%" },
+            { data: "totalPriceFormat", "width": "5%" },
             {
                 data: "id",
                 "render": function (data) {
