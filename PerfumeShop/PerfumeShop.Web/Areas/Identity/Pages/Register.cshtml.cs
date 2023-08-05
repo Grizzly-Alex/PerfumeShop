@@ -107,7 +107,7 @@ public class RegisterModel : PageModel
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var callbackUrl = Url.Page(
-                    "/Account/ConfirmEmail",
+                    "./ConfirmEmail",
                     pageHandler: null,
                     values: new { userId = user.Id, code = code },
                     protocol: Request.Scheme);
