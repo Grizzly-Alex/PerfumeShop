@@ -10,6 +10,11 @@ public static class ConfigureAuthenticationSettings
                 options.ClientId = configuration["Authentication:Google:ClientId"];
                 options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
             })
+            .AddFacebook(options =>
+            {
+                options.AppId = configuration["Authentication:Facebook:AppId"];
+                options.AppSecret = configuration["Authentication:Facebook:AppSecret"];
+            })
             .AddCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
