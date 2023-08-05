@@ -63,3 +63,40 @@ body {
     padding: 0;
     background: none;
 }
+
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+
+.h-custom {
+    height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%
+    }
+}
+
+
+.google-signin::before {
+    content: "";
+    display: inline-block;
+    background-image: url('../images/svg-icons/signin-google.svg');
+    background-repeat: no-repeat;
+    width: 3rem;
+    height: 3rem;
+}
+
+.facebook-signin::before {
+    content: "";
+    display: inline-block;
+    background-image: url('../images/svg-icons/signin-facebook.svg');
+    background-repeat: no-repeat;
+    width: 3rem;
+    height: 3rem;
+}

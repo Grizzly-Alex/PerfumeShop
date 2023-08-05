@@ -1,15 +1,41 @@
 ﻿@page
 @model LoginModel
 
-@{
-    ViewData["Title"] = "Log in";
-}
 <div class="container col-8">
     <div class="modal-content rounded-4 shadow">
-        <div class="modal-header p-5 pb-4 border-bottom-0">
-            <h1 class="fw-bold mb-0 fs-2">@ViewData["Title"]</h1>
-        </div>
         <div class="modal-body p-5 pt-0">
+
+            <div class="py-5 pb-4">
+                <p class="fw-bold mb-0 fs-3">Sign in with</p>
+            </div>
+
+            <div class="col-md-6 col-md-offset-2">
+                <section>
+                    @{
+                        if ((Model.ExternalLogins.Any()))
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                @Html.GetExternalAuthProviders(Model.ExternalLogins)
+                            </form>
+                        }
+                        else
+                        {
+                            <div>
+                                <p>
+                                    There are no external authentication services configured.                          
+                                </p>
+                            </div>
+
+                        }
+                    }
+                </section>
+            </div>
+
+
+            <div class="divider d-flex align-items-center my-4">
+                <p class="text-center fw-bold mx-3 mb-0">Or</p>
+            </div>
+
             <form id="account" method="post" class="needs-validation" novalidate>
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
@@ -34,20 +60,20 @@
                         @Html.DisplayNameFor(m => m.Input.RememberMe)
                     </label>
                 </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                <div>                  
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">SIGN IN</button>
                 </div>
                 <div class="p-0 pt-4">
-                    <p>
-                        <a asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    <p class="small  mt-2 pt-1 mb-0">
+                        Don't have an account?
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="link-primary">Register</a>
                     </p>
                 </div>
             </form>
+
         </div>
     </div>
+
 
     <div class="py-5">
         <div class="card">
