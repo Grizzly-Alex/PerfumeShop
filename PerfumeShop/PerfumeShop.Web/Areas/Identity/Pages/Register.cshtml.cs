@@ -24,6 +24,7 @@ public class RegisterModel : PageModel
     public InputModel? Input { get; set; }
 
     public string? ReturnUrl { get; set; }
+    public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
     public class InputModel
     {
@@ -74,9 +75,10 @@ public class RegisterModel : PageModel
         public string? ConfirmPassword { get; set; }
     }
 
-    public void OnGet(string? returnUrl = null)
+    public async Task OnGet(string? returnUrl = null)
     {
         ReturnUrl = returnUrl;
+        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     }
 
     public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
