@@ -100,3 +100,12 @@ body {
     width: 3rem;
     height: 3rem;
 }
+
+.twitter-signin::before {
+    content: "";
+    display: inline-block;
+    background-image: url('../images/svg-icons/signin-twitter.svg');
+    background-repeat: no-repeat;
+    width: 3rem;
+    height: 3rem;
+}

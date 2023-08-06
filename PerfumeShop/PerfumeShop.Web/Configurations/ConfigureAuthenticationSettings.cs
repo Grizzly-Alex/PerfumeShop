@@ -15,6 +15,11 @@ public static class ConfigureAuthenticationSettings
                 options.AppId = configuration["Authentication:Facebook:AppId"];
                 options.AppSecret = configuration["Authentication:Facebook:AppSecret"];
             })
+            .AddTwitter(options =>
+            {
+                options.ConsumerKey = configuration["Authentication:Twitter:ConsumerKey"];
+                options.ConsumerSecret = configuration["Authentication:Twitter:ConsumerSecret"];
+            })
             .AddCookie(options =>
             {
                 options.Cookie.HttpOnly = true;

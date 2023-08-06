@@ -16,16 +16,20 @@ public static class AuthenticationListHelper
             button.MergeAttribute("value", provider.Name);
             button.MergeAttribute("title", $"Log in using your {provider.DisplayName}");
 
-            string btnSignIn = provider.Name switch
+            switch (provider.Name)
             {
-                "Google" => "btn google-signin",
-                "Facebook" => "btn facebook-signin",
-                _ => "btn btn-primary"
-            };
-            button.MergeAttribute("class", btnSignIn);
+                case "Google": button.MergeAttribute("class", "btn google-signin"); break;
+                case "Facebook": button.MergeAttribute("class", "btn facebook-signin"); break;
+                case "Twitter": button.MergeAttribute("class", "btn twitter-signin"); break;
+                default: 
+                    button.MergeAttribute("class", "btn btn-primary"); 
+                    button.InnerHtml.Append(provider.DisplayName);
+                    break;
+            }
 
             div.InnerHtml.AppendHtml(button);
         }
+
         var writer = new System.IO.StringWriter();
         div.WriteTo(writer, HtmlEncoder.Default);
 

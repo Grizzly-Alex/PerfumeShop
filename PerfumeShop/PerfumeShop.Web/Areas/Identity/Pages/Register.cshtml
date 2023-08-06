@@ -6,12 +6,15 @@
 
 <div class="container col-8 ">
     <div class="modal-content rounded-4 shadow">
-        <div class="modal-header p-5 pb-4 border-bottom-0">
+        <div class="p-5 pb-4 border-bottom-0 text-center">
             <h1 class="fw-bold mb-0 fs-2">@ViewData["Title"]</h1>
         </div>
         <div class="modal-body p-5 pt-0">
             <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="needs-validation" novalidate>
                 <div asp-validation-summary="All" class="text-danger"></div>
+
+                <h2 class="fs-6 fw-bold mt-4 mb-3">Required fields</h2>
+
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" required />
                     <label asp-for="Input.Email"></label>
@@ -90,15 +93,18 @@
                     <div class="valid-feedback">
                         Optional
                     </div>
-                </div>    
-                <button id="registerSubmit" type="submit" class="w-100 mt-4 btn btn-lg btn-primary">Registration</button>
+                </div>
+
+                <div class="justify-content-sm-center col-lg-4 mx-auto">
+                    <button id="registerSubmit" type="submit" class="w-100 mt-4 btn btn-lg btn-primary">Registration</button>
+                </div>            
             </form>
 
             <div class="divider d-flex align-items-center my-4">
                 <p class="text-center fw-bold mx-3 mb-0">Use another service to register</p>
             </div>
 
-            <div class="col-md-5">
+            <div class="text-center">
                 <section>
                     @{
                         if ((Model.ExternalLogins.Any()))
