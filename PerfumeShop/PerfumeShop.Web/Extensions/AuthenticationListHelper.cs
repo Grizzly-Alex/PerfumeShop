@@ -29,6 +29,7 @@ public static class AuthenticationListHelper
 
             div.InnerHtml.AppendHtml(button);
         }
+
         var writer = new System.IO.StringWriter();
         div.WriteTo(writer, HtmlEncoder.Default);
 
