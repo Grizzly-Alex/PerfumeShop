@@ -5,8 +5,9 @@ public sealed class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext>
 {
     private readonly TDbContext _db;
 
-    public UnitOfWork(TDbContext db) => _db = db;
-
+    public UnitOfWork(TDbContext db) 
+        => _db = db 
+        ?? throw new ArgumentNullException(nameof(db));
 
     public async Task SaveChangesAsync() => await _db.SaveChangesAsync();
 

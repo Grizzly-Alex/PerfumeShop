@@ -109,3 +109,12 @@ body {
     width: 3rem;
     height: 3rem;
 }
+
+.microsoft-signin::before {
+    content: "";
+    display: inline-block;
+    background-image: url('../images/svg-icons/signin-microsoft.svg');
+    background-repeat: no-repeat;
+    width: 3rem;
+    height: 3rem;
+}
