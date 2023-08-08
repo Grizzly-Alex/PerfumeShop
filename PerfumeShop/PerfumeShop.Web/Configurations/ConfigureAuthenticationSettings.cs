@@ -5,6 +5,11 @@ public static class ConfigureAuthenticationSettings
     public static IServiceCollection AddAuthenticationSettings(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddMicrosoftAccount(options =>
+            {
+                options.ClientId = configuration["Authentication:Microsoft:ClientId"];
+                options.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
+            })
             .AddGoogle(options =>
             {
                 options.ClientId = configuration["Authentication:Google:ClientId"];
