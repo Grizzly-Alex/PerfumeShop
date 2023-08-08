@@ -21,6 +21,7 @@ public static class AuthenticationListHelper
                 case "Google": button.MergeAttribute("class", "btn google-signin"); break;
                 case "Facebook": button.MergeAttribute("class", "btn facebook-signin"); break;
                 case "Twitter": button.MergeAttribute("class", "btn twitter-signin"); break;
+                case "Microsoft": button.MergeAttribute("class", "btn microsoft-signin"); break;
                 default: 
                     button.MergeAttribute("class", "btn btn-primary"); 
                     button.InnerHtml.Append(provider.DisplayName);
