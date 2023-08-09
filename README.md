@@ -21,7 +21,7 @@ Layers of architecture:
 - Authorization and authentication (ASP.NET Core Identity)
 - External authentication (Facebook, Google, Microsoft and Twitter NuGet Packages)
 - Property mapping (AutoMapper)
-- Mailing of letters (MailKit)
+- Mail sender (MailKit)
 - Logger (Serilog)
 - Guard clause help methods (Ardalis)
 - HTML & CSS (bootstrap 5)
