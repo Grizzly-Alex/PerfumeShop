@@ -12,5 +12,20 @@ Layers of architecture:
 - Infrastructure *(everything related to business logic and data access)*
 - Web *(controllers, view models and page html are located here, it's top level of application)*
 
-I used relational database with EF Core for storage information about products, users and orders,
-also Identity for authorization and authentication and used Serilog for to collect logs.
+### Auxiliary services and libraries
+
+- Notifications (SweetAlert2, Toastr)
+- Payment (Stripe)
+- Databases (MSSQL)
+- ORM (Entity Framework Core)
+- Authorization and authentication (ASP.NET Core Identity)
+- External authentication (Facebook, Google, Microsoft and Twitter NuGet Packages)
+- Property mapping (AutoMapper)
+- Mail sender (MailKit)
+- Logger (Serilog)
+- Guard clause help methods (Ardalis)
+- HTML & CSS (bootstrap 5)
+- Text editor (TinyMCE)
+- Js tables (CloudTables)
+
+
