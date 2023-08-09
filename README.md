@@ -14,7 +14,7 @@ Layers of architecture:
 
 ### Auxiliary services and libraries
 
-- Notifications (SweetAlert2)
+- Notifications (SweetAlert2, Toastr)
 - Payment (Stripe)
 - Databases (MSSQL)
 - ORM (Entity Framework Core)
