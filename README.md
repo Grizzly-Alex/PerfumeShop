@@ -1,6 +1,6 @@
 # PerfumeShop (client-server application) 
 
-### General Overview 
+### Description 
 
 The main idea of the project is to develop a perfume shop.
 The store has an admin area, a user's personal account and store area.
