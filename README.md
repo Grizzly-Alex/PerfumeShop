@@ -39,13 +39,14 @@ Layers of architecture:
   - Enum as database table
   - Generic repository and unit of work
     
-- Data storing in a cookie
-- Data storing in a session
-- ExceptionHandlingMiddleware
+- Data storage in the cookies
+- Data storage in the sessions
+- Exception handling middleware
 - Logger
 - Automated mapping properties
+- Notifications
 
-- Authentication
+- Identity
   - Authentication with external services
   - User authentication and registration
   - Using user roles
@@ -55,8 +56,8 @@ Layers of architecture:
   - Updating password
 
 - Store administration
-  - CRUD for product
-  - CRUD for physical store information
+  - Management of products
+  - Management of physical store information
   - Loading and deleting a picture
 
 - Catalog
