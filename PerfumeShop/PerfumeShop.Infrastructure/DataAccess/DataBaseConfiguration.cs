@@ -1,8 +1,8 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess;
 
-public static class DataBaseInfrastructure
+public static class DataBaseConfiguration
 {
-    public static IServiceCollection AddDataBaseInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDataBaseSettings(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<CatalogDbContext>(options =>
         {
