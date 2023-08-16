@@ -25,3 +25,5 @@ global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 global using PerfumeShop.Infrastructure.DataAccess.Converters;
 global using Newtonsoft.Json;
 global using Microsoft.EntityFrameworkCore.ChangeTracking;
+global using PerfumeShop.Infrastructure.EmailConfiguration;
+global using Microsoft.Extensions.Options;
