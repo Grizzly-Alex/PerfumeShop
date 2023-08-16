@@ -1,4 +1,4 @@
-﻿namespace PerfumeShop.Infrastructure.EmailConfiguration;
+﻿namespace PerfumeShop.Core.Models.ValueObjects;
 
 public class EmailData
 {
