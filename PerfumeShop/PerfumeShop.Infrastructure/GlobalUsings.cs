@@ -28,3 +28,4 @@ global using Microsoft.EntityFrameworkCore.ChangeTracking;
 global using PerfumeShop.Infrastructure.EmailConfiguration;
 global using Microsoft.Extensions.Options;
 global using MailKit.Security;
+global using Microsoft.AspNetCore.Http;

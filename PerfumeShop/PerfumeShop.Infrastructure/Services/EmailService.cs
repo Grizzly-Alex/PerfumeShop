@@ -13,8 +13,7 @@ public class EmailService : IEmailService
     {
         try
         {
-            var message = new MimeMessage();
-
+            await SendAsync(CreateEmail(emailData), ct);
 
             return true;
         }
@@ -23,41 +22,68 @@ public class EmailService : IEmailService
             return false;
         }
     }   
-
-    private void GetSender(MimeMessage message, EmailData emailData)
+  
+    private MimeMessage CreateEmail(EmailData emailData)
     {
-        message.From.Add(new MailboxAddress(_settings.DisplayName, emailData.DisplayName ?? _settings.From));
-        message.Sender = new MailboxAddress(emailData.DisplayName ?? _settings.DisplayName, emailData.From ?? _settings.From);
-    }
+        var email = new MimeMessage();
 
-    private void CreateReseiver(MimeMessage message, EmailData emailData)
-    {
-        emailData.To.ForEach(mailAddress => message.To.Add(MailboxAddress.Parse(mailAddress)));
-    }
+        email.From.Add(new MailboxAddress(_settings.DisplayName, emailData.From ?? _settings.From));
+        email.Sender = new MailboxAddress(emailData.DisplayName ?? _settings.DisplayName, emailData.From ?? _settings.From);
 
-    private void SetBcc(MimeMessage message, EmailData emailData) =>
+        emailData.To.ForEach(emailAddress => email.To.Add(MailboxAddress.Parse(emailAddress)));
+
         emailData.Bcc?
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .ToList()
-                .ForEach(mailAddress => message.Bcc.Add(MailboxAddress.Parse(mailAddress.Trim())));
+           .Where(x => !string.IsNullOrWhiteSpace(x))
+           .ToList()
+           .ForEach(mailAddress => email.Bcc.Add(MailboxAddress.Parse(mailAddress.Trim())));
 
-    private void SetCc(MimeMessage message, EmailData emailData) =>
         emailData.Cc?
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .ToList()
-                .ForEach(mailAddress => message.Cc.Add(MailboxAddress.Parse(mailAddress.Trim())));
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .ToList()
+            .ForEach(mailAddress => email.Cc.Add(MailboxAddress.Parse(mailAddress.Trim())));
 
-    private void AddContentToMessage(MimeMessage message, EmailData emailData)
+        email.Subject = emailData.Subject;
+
+        email.Body = CreateBodyEmail(emailData.Body ?? string.Empty, emailData.Attachments).ToMessageBody();
+
+        return email;
+    } 
+
+    private BodyBuilder CreateBodyEmail(string html, IFormFileCollection attachments)
     {
-        var body = new BodyBuilder();
-        message.Subject = emailData.Subject;
-        body.HtmlBody = emailData.Body;
-        message.Body = body.ToMessageBody();
+        var body = new BodyBuilder()
+        {
+            HtmlBody = html
+        };
+
+        if (attachments != null)
+        {
+            byte[] attachmentFileByteArray;
+
+            foreach (IFormFile attachment in attachments)
+            {
+                // Check if length of the file in bytes is larger than 0
+                if (attachment.Length > 0)
+                {
+                    // Create a new memory stream and attach attachment to mail body
+                    using (MemoryStream memoryStream = new())
+                    {
+                        // Copy the attachment to the stream
+                        attachment.CopyTo(memoryStream);
+                        attachmentFileByteArray = memoryStream.ToArray();
+                    }
+                    // Add the attachment from the byte array
+                    body.Attachments.Add(attachment.FileName, attachmentFileByteArray, ContentType.Parse(attachment.ContentType));
+                }
+            }
+        }
+        return body;        
     }
-    
-    private async Task SendEmail(MimeMessage message, CancellationToken ct = default)
+
+    private async Task SendAsync(MimeMessage email, CancellationToken ct = default)
     {
         using var smtp = new SmtpClient();
+        smtp.AuthenticationMechanisms.Remove("XOAUTH2");
         if (_settings.UseSSL)
         {
             await smtp.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.SslOnConnect, ct);
@@ -67,7 +93,7 @@ public class EmailService : IEmailService
             await smtp.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls, ct);
         }
         await smtp.AuthenticateAsync(_settings.UserName, _settings.Password, ct);
-        await smtp.SendAsync(message, ct);
+        await smtp.SendAsync(email, ct);
         await smtp.DisconnectAsync(true, ct);
     }
 }

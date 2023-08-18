@@ -18,24 +18,23 @@ public class EmailData
     #region Content
     public string? Subject { get; }
     public string? Body { get; }
+    public IFormFileCollection Attachments { get; }
     #endregion
 
-    public EmailData(
-        List<string> to,
-        string subject, string? body = null, string?
-        from = null, string? displayName = null, string?
-        replyTo = null, string? replyToName = null,
-        List<string>? bcc = null, List<string>? cc = null)
+    public EmailData(string subject, 
+        List<string> to, string? body = null, List<string>? bcc = null, List<string>? cc = null,
+        string? from = null, string? displayName = null, string? replyTo = null, string? replyToName = null,
+        IFormFileCollection? attachments = null)
     {
+        Subject = subject;
         To = to;
+        Body = body;
         Bcc = bcc ?? new List<string>();
         Cc = cc ?? new List<string>();
         From = from;
         DisplayName = displayName;
         ReplyTo = replyTo;
         ReplyToName = replyToName;
-        Subject = subject;
-        Body = body;
+        Attachments = attachments ?? new FormFileCollection();
     }
-
 }
