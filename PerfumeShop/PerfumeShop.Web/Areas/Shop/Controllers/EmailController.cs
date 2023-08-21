@@ -21,4 +21,15 @@ public class EmailController : Controller
 
         return View();
     }
+
+    [HttpPost]
+    public async Task SendWelcomeEmail(WelcomeEmail welcomeEmail)
+    {
+        var mailData = new EmailData(
+            "Welcome to the Perfume Shop",
+            new List<string> { welcomeEmail.Email },
+            _emailService.GetEmailTemplate("welcome", welcomeEmail));
+
+        bool result = await _emailService.SendEmailAsync(mailData, new CancellationToken());
+    }
 }
