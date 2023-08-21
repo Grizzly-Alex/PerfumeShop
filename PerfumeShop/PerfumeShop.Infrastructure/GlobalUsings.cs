@@ -29,3 +29,5 @@ global using Microsoft.Extensions.Options;
 global using MailKit.Security;
 global using Microsoft.AspNetCore.Http;
 global using PerfumeShop.Core.Exceptions;
+global using System.Text;
+global using RazorEngineCore;

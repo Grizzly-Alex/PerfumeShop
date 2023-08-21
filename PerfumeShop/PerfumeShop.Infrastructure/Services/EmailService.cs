@@ -14,6 +14,30 @@ public class EmailService : IEmailService
 
     }
 
+    public string GetEmailTemplate<T>(string emailTemplateName, T emailTemplateModel)
+    {
+        string emailTemplate = LoadTemplate(emailTemplateName);
+        IRazorEngine razorEngine = new RazorEngine();
+        IRazorEngineCompiledTemplate modifiedMailTemplate = razorEngine.Compile(emailTemplate);
+
+        return modifiedMailTemplate.Run(emailTemplateModel);
+    }
+
+    private string LoadTemplate(string emailTemplate)
+    {
+        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+        string templateDir = Path.Combine(baseDir, "Views/EmailTemplates");
+        string templatePath = Path.Combine(templateDir, $"{emailTemplate}.cshtml");
+
+        using FileStream fileStream = new FileStream(templatePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        using StreamReader streamReader = new StreamReader(fileStream, Encoding.Default);
+
+        string mailTemplate = streamReader.ReadToEnd();
+        streamReader.Close();
+
+        return mailTemplate;
+    }
+
     public async Task<bool> SendEmailAsync(EmailData emailData, CancellationToken ct = default)
     {
         try
@@ -87,9 +111,6 @@ public class EmailService : IEmailService
         return body;        
     }
 
-    private 
-
-
     private async Task SendAsync(MimeMessage email, CancellationToken ct = default)
     {
         using var smtp = new SmtpClient();
@@ -106,4 +127,5 @@ public class EmailService : IEmailService
         await smtp.SendAsync(email, ct);
         await smtp.DisconnectAsync(true, ct);
     }
+
 }
