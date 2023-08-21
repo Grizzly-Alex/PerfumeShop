@@ -3,22 +3,32 @@
 public class EmailService : IEmailService
 {
     private readonly EmailSettings _settings;
+    private readonly ILogger<PaymentService> _logger;
 
-    public EmailService(IOptions<EmailSettings> settings)
+    public EmailService(
+        IOptions<EmailSettings> settings,
+        ILogger<PaymentService> logger)
     {
         _settings = settings.Value;
+        _logger = logger;
+
     }
 
     public async Task<bool> SendEmailAsync(EmailData emailData, CancellationToken ct = default)
     {
         try
         {
-            await SendAsync(CreateEmail(emailData), ct);
+            var email = CreateEmail(emailData);
+            await SendAsync(email, ct);
+
+            _logger.LogInformation($"Mail has successfully been sent.");
 
             return true;
         }
-        catch (Exception)
+        catch (EmailException)
         {
+            _logger.LogError($"An error occured. The Mail could not be sent.");
+
             return false;
         }
     }   
@@ -62,23 +72,23 @@ public class EmailService : IEmailService
 
             foreach (IFormFile attachment in attachments)
             {
-                // Check if length of the file in bytes is larger than 0
                 if (attachment.Length > 0)
                 {
-                    // Create a new memory stream and attach attachment to mail body
                     using (MemoryStream memoryStream = new())
                     {
-                        // Copy the attachment to the stream
                         attachment.CopyTo(memoryStream);
                         attachmentFileByteArray = memoryStream.ToArray();
                     }
-                    // Add the attachment from the byte array
+
                     body.Attachments.Add(attachment.FileName, attachmentFileByteArray, ContentType.Parse(attachment.ContentType));
                 }
             }
         }
         return body;        
     }
+
+    private 
+
 
     private async Task SendAsync(MimeMessage email, CancellationToken ct = default)
     {

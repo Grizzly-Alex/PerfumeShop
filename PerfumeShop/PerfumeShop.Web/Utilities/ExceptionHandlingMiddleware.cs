@@ -13,6 +13,12 @@ public class ExceptionHandlingMiddleware : IMiddleware
         {
             await next(context);
         }
+        catch (EmailException ex)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            _logger.LogError($"{context.GetEndpoint()} {ex.Message}");
+            await context.Response.WriteAsync(ex.Message);
+        }
         catch (OperationCanceledException ex)
         {
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;

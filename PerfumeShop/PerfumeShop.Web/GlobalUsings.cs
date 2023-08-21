@@ -44,3 +44,4 @@ global using PerfumeShop.Web.ViewModels.PhysicalShop;
 global using PerfumeShop.Web.UIModels;
 global using PerfumeShop.Web.ViewModels.Order;
 global using Microsoft.AspNetCore.Html;
+global using PerfumeShop.Core.Exceptions;
