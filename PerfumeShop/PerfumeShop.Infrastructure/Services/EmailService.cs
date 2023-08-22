@@ -29,8 +29,8 @@ public class EmailService : IEmailService
         string templateDir = Path.Combine(baseDir, "Views/EmailTemplates");
         string templatePath = Path.Combine(templateDir, $"{emailTemplate}.cshtml");
 
-        using FileStream fileStream = new FileStream(templatePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        using StreamReader streamReader = new StreamReader(fileStream, Encoding.Default);
+        using FileStream fileStream = new(templatePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        using StreamReader streamReader = new(fileStream, Encoding.Default);
 
         string mailTemplate = streamReader.ReadToEnd();
         streamReader.Close();

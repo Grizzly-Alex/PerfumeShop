@@ -23,12 +23,12 @@ public class EmailController : Controller
     }
 
     [HttpPost]
-    public async Task SendWelcomeEmail(WelcomeEmail welcomeEmail)
+    public async Task SendWelcomeEmail(ConfirmationEmailViewModel confirmationEmail)
     {
         var mailData = new EmailData(
             "Welcome to the Perfume Shop",
-            new List<string> { welcomeEmail.Email },
-            _emailService.GetEmailTemplate("welcome", welcomeEmail));
+            new List<string> { confirmationEmail.Email },
+            _emailService.GetEmailTemplate("confirmation", confirmationEmail));
 
         bool result = await _emailService.SendEmailAsync(mailData, new CancellationToken());
     }
