@@ -7,7 +7,7 @@ public static class EmailServiceExtensions
         var mailData = new EmailData(
             "Perfume Shop",
             new List<string> { confirmationEmail.Email },
-            emailService.GetEmailTemplate("confirmation", confirmationEmail));
+            emailService.GetEmailTemplate("Confirmation", confirmationEmail));
 
         return await emailService.SendEmailAsync(mailData, new CancellationToken());
     }

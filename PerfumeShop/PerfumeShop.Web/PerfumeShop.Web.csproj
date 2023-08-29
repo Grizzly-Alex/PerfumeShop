@@ -42,7 +42,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
-    <PackageReference Include="Stripe.net" Version="41.28.0" />
+    <PackageReference Include="Stripe.net" Version="42.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,5 +52,11 @@
   <ItemGroup>
     <Folder Include="Logs\" />
   </ItemGroup>
+
+    <ItemGroup>
+	    <Content Update="Views\EmailTemplates\Confirmation.cshtml">
+		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    </Content>
+    </ItemGroup>
 
 </Project>
