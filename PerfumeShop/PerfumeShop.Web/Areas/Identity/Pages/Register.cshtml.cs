@@ -6,25 +6,24 @@ public class RegisterModel : PageModel
     private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
     private readonly ILogger<RegisterModel> _logger;
-    private readonly IEmailSender _emailSender;
+    private readonly IEmailService _emailService;
 
     public RegisterModel(
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager,
         ILogger<RegisterModel> logger,
-        IEmailSender emailSender)
+        IEmailService emailService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _logger = logger;
-        _emailSender = emailSender;
+        _emailService = emailService;
     }
 
     [BindProperty]
     public InputModel? Input { get; set; }
 
     public string? ReturnUrl { get; set; }
-    public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
     public class InputModel
     {
@@ -75,10 +74,9 @@ public class RegisterModel : PageModel
         public string? ConfirmPassword { get; set; }
     }
 
-    public async Task OnGet(string? returnUrl = null)
+    public void OnGet(string? returnUrl = null)
     {
         ReturnUrl = returnUrl;
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     }
 
     public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
@@ -98,7 +96,7 @@ public class RegisterModel : PageModel
                 PhoneNumber = Input.PhoneNumber,
                 Email = Input.Email,               
             };
-            var result = await _userManager.CreateAsync(user, Input.Password);
+            var result = await _userManager.CreateAsync(user, Input.Password);            
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
@@ -112,8 +110,12 @@ public class RegisterModel : PageModel
                     values: new { userId = user.Id, code = code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await _emailService.SendEmailConfirmationAsync(
+                    new ConfirmationEmailViewModel
+                    {
+                        Email = Input.Email,
+                        ConfirmationLink = HtmlEncoder.Default.Encode(callbackUrl)
+                    });
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return LocalRedirect(returnUrl);

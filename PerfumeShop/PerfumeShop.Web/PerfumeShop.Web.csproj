@@ -25,23 +25,24 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="7.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="7.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="7.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
+    <PackageReference Include="MailKit" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.9">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.8" />
-    <PackageReference Include="Stripe.net" Version="41.27.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
+    <PackageReference Include="Stripe.net" Version="42.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,5 +52,11 @@
   <ItemGroup>
     <Folder Include="Logs\" />
   </ItemGroup>
+
+    <ItemGroup>
+	    <Content Update="Views\EmailTemplates\Confirmation.cshtml">
+		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    </Content>
+    </ItemGroup>
 
 </Project>

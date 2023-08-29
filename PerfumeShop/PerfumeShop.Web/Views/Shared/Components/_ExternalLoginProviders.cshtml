@@ -1,0 +1,21 @@
+﻿@inject SignInManager<AppUser> signInManager;
+
+@{
+    var externalLoginsProviders = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+    if (externalLoginsProviders.Any())
+    {
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+            @Html.GetExternalAuthProviders(externalLoginsProviders)
+        </form>
+    }
+    else
+    {
+        <div>
+            <p>
+                There are no external authentication services configured.
+            </p>
+        </div>
+
+    }
+}

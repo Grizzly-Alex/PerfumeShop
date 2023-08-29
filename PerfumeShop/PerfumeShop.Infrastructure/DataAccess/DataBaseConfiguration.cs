@@ -1,8 +1,8 @@
 ﻿namespace PerfumeShop.Infrastructure.DataAccess;
 
-public static class DataBaseInfrastructure
+public static class DataBaseConfiguration
 {
-    public static IServiceCollection AddDataBaseInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDataBaseSettings(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<CatalogDbContext>(options =>
         {
@@ -25,7 +25,7 @@ public static class DataBaseInfrastructure
 
         services.AddIdentity<AppUser, AppRole>(options =>
         {
-            options.SignIn.RequireConfirmedAccount = false;
+            options.SignIn.RequireConfirmedAccount = true;
             options.User.RequireUniqueEmail = true;
             options.Password.RequireNonAlphanumeric = true;   
             options.Password.RequireLowercase = true; 

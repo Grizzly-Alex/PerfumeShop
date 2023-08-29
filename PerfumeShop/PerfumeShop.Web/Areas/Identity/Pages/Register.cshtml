@@ -106,23 +106,7 @@
 
             <div class="text-center">
                 <section>
-                    @{
-                        if ((Model.ExternalLogins.Any()))
-                        {
-                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                                @Html.GetExternalAuthProviders(Model.ExternalLogins)
-                            </form>
-                        }
-                        else
-                        {
-                            <div>
-                                <p>
-                                    There are no external authentication services configured.
-                                </p>
-                            </div>
-
-                        }
-                    }
+                    <partial name="~/Views/Shared/Components/_ExternalLoginProviders.cshtml" />
                 </section>
             </div>
 

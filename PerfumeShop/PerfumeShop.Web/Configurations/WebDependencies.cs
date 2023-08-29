@@ -37,8 +37,9 @@ public static class WebDependencies
 
     public static void SetServices(IConfiguration configuration, IServiceCollection services)
     {
-        services.AddDataBaseInfrastructure(configuration);
-        services.AddStripeInfrastructure(configuration);
+        services.AddDataBaseSettings(configuration);
+        services.AddStripeSettings(configuration);
+        services.AddEmailSettings(configuration);
         services.AddCookieSettings();
         services.AddAuthenticationSettings(configuration);  
         services.AddUtilities();

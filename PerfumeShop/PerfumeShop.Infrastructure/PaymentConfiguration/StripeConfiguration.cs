@@ -1,10 +1,10 @@
 ﻿namespace PerfumeShop.Infrastructure.PaymentConfiguration;
 
-public static class StripeInfrastructure
+public static class StripeConfiguration
 {
-    public static IServiceCollection AddStripeInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddStripeSettings(this IServiceCollection services, IConfiguration configuration)
     {
-		StripeConfiguration.ApiKey = configuration.GetValue<string>("StripeSettings:SecretKey");
+        Stripe.StripeConfiguration.ApiKey = configuration.GetValue<string>("StripeSettings:SecretKey");
 
         return services
 			.Configure<StripeSettings>(configuration.GetSection(nameof(StripeSettings)))
