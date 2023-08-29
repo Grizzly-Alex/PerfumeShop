@@ -1,5 +1,4 @@
-﻿using PerfumeShop.Infrastructure.EmailConfiguration;
-using ILogger = Serilog.ILogger;
+﻿using ILogger = Serilog.ILogger;
 namespace PerfumeShop.Web.Configurations;
 
 public static class WebDependencies

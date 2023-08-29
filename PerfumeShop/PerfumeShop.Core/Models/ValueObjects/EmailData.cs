@@ -11,14 +11,14 @@ public class EmailData
 
     #region Receiver
     public List<string> To { get; }
-    public List<string> Bcc { get; }
-    public List<string> Cc { get; }
+    public List<string>? Bcc { get; }
+    public List<string>? Cc { get; }
     #endregion
 
     #region Content
     public string? Subject { get; }
     public string? Body { get; }
-    public IFormFileCollection Attachments { get; }
+    public IFormFileCollection? Attachments { get; }
     #endregion
 
     public EmailData(string subject, 
@@ -29,12 +29,12 @@ public class EmailData
         Subject = subject;
         To = to;
         Body = body;
-        Bcc = bcc ?? new List<string>();
-        Cc = cc ?? new List<string>();
+        Bcc = bcc;
+        Cc = cc;
         From = from;
         DisplayName = displayName;
         ReplyTo = replyTo;
         ReplyToName = replyToName;
-        Attachments = attachments ?? new FormFileCollection();
+        Attachments = attachments;
     }
 }

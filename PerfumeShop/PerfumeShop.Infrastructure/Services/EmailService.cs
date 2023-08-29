@@ -83,7 +83,7 @@ public class EmailService : IEmailService
         return email;
     } 
 
-    private BodyBuilder CreateBodyEmail(string html, IFormFileCollection attachments)
+    private BodyBuilder CreateBodyEmail(string html, IFormFileCollection? attachments)
     {
         var body = new BodyBuilder()
         {

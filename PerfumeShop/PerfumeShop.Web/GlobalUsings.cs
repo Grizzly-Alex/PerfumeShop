@@ -46,3 +46,4 @@ global using PerfumeShop.Web.ViewModels.Order;
 global using Microsoft.AspNetCore.Html;
 global using PerfumeShop.Core.Exceptions;
 global using PerfumeShop.Web.ViewModels.Email;
+global using PerfumeShop.Infrastructure.EmailConfiguration;
