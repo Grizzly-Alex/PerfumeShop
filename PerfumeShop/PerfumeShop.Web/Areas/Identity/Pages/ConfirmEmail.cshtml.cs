@@ -1,18 +1,26 @@
-﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+
+namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages;
 
 [AllowAnonymous]
 public class ConfirmEmailModel : PageModel
 {
     private readonly UserManager<AppUser> _userManager;
-    private readonly SignInManager<AppUser> _signInManager;
 
     public ConfirmEmailModel(
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager)
     {
         _userManager = userManager;
-        _signInManager = signInManager;
     }
+
+    //[TempData]
+    //public string StatusMessage { get; set; }
+
+    [BindProperty]
+    public ResultViewModel Result { get; set; }
+
 
     public async Task<IActionResult> OnGetAsync(string userId, string code)
     {
@@ -22,18 +30,22 @@ public class ConfirmEmailModel : PageModel
         }
 
         var user = await _userManager.FindByIdAsync(userId);
-        if (user == null)
+        if (user is null)
         {
             return NotFound($"Unable to load user with ID '{userId}'.");
         }
 
+        code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
         var result = await _userManager.ConfirmEmailAsync(user, code);
-        if (!result.Succeeded)
-        {
-            throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
-        }
 
-        await _signInManager.SignInAsync(user, isPersistent: false);
+        Result = new()
+        {
+            Success = result.Succeeded,
+            StatusMessage = result.Succeeded 
+                ? $"Thank you for confirming your email: {user.Email}. Now you can login to your account."
+                : $"Error confirming your email: {user.Email}"
+        };
+
         return Page();
     }
 }

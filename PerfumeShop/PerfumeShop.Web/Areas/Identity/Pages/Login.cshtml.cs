@@ -69,7 +69,7 @@ public class LoginModel : PageModel
             {
                 if (!await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    ModelState.AddModelError(string.Empty, "Email not confirmed.");
+                    ModelState.AddModelError(string.Empty, "Email wasn't confirmed.");
                     return Page();
                 }
             }

@@ -1,21 +1,21 @@
-﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+
+namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages;
 
 [AllowAnonymous]
 public class RegisterModel : PageModel
 {
-    private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
     private readonly ILogger<RegisterModel> _logger;
     private readonly IEmailService _emailService;
 
     public RegisterModel(
         UserManager<AppUser> userManager,
-        SignInManager<AppUser> signInManager,
         ILogger<RegisterModel> logger,
         IEmailService emailService)
     {
         _userManager = userManager;
-        _signInManager = signInManager;
         _logger = logger;
         _emailService = emailService;
     }
@@ -104,6 +104,8 @@ public class RegisterModel : PageModel
                 await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
                 var callbackUrl = Url.Page(
                     "./ConfirmEmail",
                     pageHandler: null,
@@ -117,7 +119,6 @@ public class RegisterModel : PageModel
                         ConfirmationLink = HtmlEncoder.Default.Encode(callbackUrl)
                     });
 
-                //await _signInManager.SignInAsync(user, isPersistent: false);
                 return LocalRedirect(returnUrl);
             }
             foreach (var error in result.Errors)
