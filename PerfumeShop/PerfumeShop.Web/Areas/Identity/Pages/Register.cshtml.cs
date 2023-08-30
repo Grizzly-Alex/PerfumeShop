@@ -117,7 +117,7 @@ public class RegisterModel : PageModel
                         ConfirmationLink = HtmlEncoder.Default.Encode(callbackUrl)
                     });
 
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                //await _signInManager.SignInAsync(user, isPersistent: false);
                 return LocalRedirect(returnUrl);
             }
             foreach (var error in result.Errors)

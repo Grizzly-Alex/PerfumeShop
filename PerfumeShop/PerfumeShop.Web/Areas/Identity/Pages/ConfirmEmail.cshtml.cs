@@ -4,10 +4,14 @@
 public class ConfirmEmailModel : PageModel
 {
     private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> _signInManager;
 
-    public ConfirmEmailModel(UserManager<AppUser> userManager)
+    public ConfirmEmailModel(
+        UserManager<AppUser> userManager,
+        SignInManager<AppUser> signInManager)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
     }
 
     public async Task<IActionResult> OnGetAsync(string userId, string code)
@@ -29,6 +33,7 @@ public class ConfirmEmailModel : PageModel
             throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
         }
 
+        await _signInManager.SignInAsync(user, isPersistent: false);
         return Page();
     }
 }
