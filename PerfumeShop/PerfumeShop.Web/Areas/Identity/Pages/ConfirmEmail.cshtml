@@ -1,7 +1,8 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Confirmation  success"] = "Email confirmation successful";
+    ViewData["Confirmation failed"] = "Email confirmation failed";
 }
 
 <body>
@@ -27,7 +28,18 @@
             }
 
             <div class="text-center">
-                <h1>@ViewData["Title"]</h1>
+                @if (Model.Result.Success)
+                {
+                    <h1>
+                        @ViewData["Confirmation  success"]
+                    </h1>
+                }
+                else
+                {
+                    <h1>
+                        @ViewData["Confirmation failed"]
+                    </h1>
+                }
                 <p class="p-3">
                     <partial name="~/Views/Shared/Components/_StatusMessage.cshtml" model="Model.Result.StatusMessage" />
                 </p>

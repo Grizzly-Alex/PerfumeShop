@@ -7,21 +7,26 @@ namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages;
 public class RegisterModel : PageModel
 {
     private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<IdentityUser> _signInManager;
     private readonly ILogger<RegisterModel> _logger;
     private readonly IEmailService _emailService;
 
     public RegisterModel(
         UserManager<AppUser> userManager,
+        SignInManager<IdentityUser> signInManager,
         ILogger<RegisterModel> logger,
         IEmailService emailService)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
         _logger = logger;
         _emailService = emailService;
     }
 
     [BindProperty]
     public InputModel? Input { get; set; }
+
+    public ResultViewModel Result { get; set; }
 
     public string? ReturnUrl { get; set; }
 
@@ -103,23 +108,17 @@ public class RegisterModel : PageModel
 
                 await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
 
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var isSended = await SendEmailAsync(user);
 
-                var callbackUrl = Url.Page(
-                    "./ConfirmEmail",
-                    pageHandler: null,
-                    values: new { userId = user.Id, code = code },
-                    protocol: Request.Scheme);
-
-                await _emailService.SendEmailConfirmationAsync(
-                    new ConfirmationEmailViewModel
-                    {
-                        Email = Input.Email,
-                        ConfirmationLink = HtmlEncoder.Default.Encode(callbackUrl)
-                    });
-
-                return LocalRedirect(returnUrl);
+                if (_userManager.Options.SignIn.RequireConfirmedEmail)
+                {
+                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, isSendedEmail = isSended });
+                }
+                else
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
             }
             foreach (var error in result.Errors)
             {
@@ -127,5 +126,25 @@ public class RegisterModel : PageModel
             }
         }
         return Page();
+    }
+
+
+    private async Task<bool> SendEmailAsync(AppUser user)
+    {
+        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+        var callbackUrl = Url.Page(
+            "./ConfirmEmail",
+            pageHandler: null,
+            values: new { area = "Identity", userId = user.Id, code = code },
+            protocol: Request.Scheme);
+
+        return await _emailService.SendEmailConfirmationAsync(
+            new ConfirmationEmailViewModel
+            {
+                Email = user.Email!,
+                ConfirmationLink = HtmlEncoder.Default.Encode(callbackUrl)
+            });
     }
 }

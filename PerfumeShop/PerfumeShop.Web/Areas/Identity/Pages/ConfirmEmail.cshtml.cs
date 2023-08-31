@@ -8,17 +8,11 @@ public class ConfirmEmailModel : PageModel
 {
     private readonly UserManager<AppUser> _userManager;
 
-    public ConfirmEmailModel(
-        UserManager<AppUser> userManager,
-        SignInManager<AppUser> signInManager)
+    public ConfirmEmailModel(UserManager<AppUser> userManager)
     {
         _userManager = userManager;
     }
 
-    //[TempData]
-    //public string StatusMessage { get; set; }
-
-    [BindProperty]
     public ResultViewModel Result { get; set; }
 
 
