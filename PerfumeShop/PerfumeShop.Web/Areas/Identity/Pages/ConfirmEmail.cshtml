@@ -1,7 +1,7 @@
 ﻿@page
 @model ConfirmEmailModel
 @{
-    ViewData["Confirmation  success"] = "Email confirmation successful";
+    ViewData["Confirmation success"] = "Email confirmation successful";
     ViewData["Confirmation failed"] = "Email confirmation failed";
 }
 
@@ -31,7 +31,7 @@
                 @if (Model.Result.Success)
                 {
                     <h1>
-                        @ViewData["Confirmation  success"]
+                        @ViewData["Confirmation success"]
                     </h1>
                 }
                 else
@@ -41,7 +41,7 @@
                     </h1>
                 }
                 <p class="p-3">
-                    <partial name="~/Views/Shared/Components/_StatusMessage.cshtml" model="Model.Result.StatusMessage" />
+                    <partial name="~/Views/Shared/Components/_StatusMessage.cshtml" model="Model.Result.Notifocation" />
                 </p>
             </div>
         </div>

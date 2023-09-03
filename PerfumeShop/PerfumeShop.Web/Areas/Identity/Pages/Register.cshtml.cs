@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
-using System.Text;
-
-namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages;
+﻿namespace Microsoft.eShopWeb.Web.Areas.Identity.Pages;
 
 [AllowAnonymous]
 public class RegisterModel : PageModel
@@ -9,25 +6,19 @@ public class RegisterModel : PageModel
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly ILogger<RegisterModel> _logger;
-    private readonly IEmailService _emailService;
 
     public RegisterModel(
         UserManager<AppUser> userManager,
         SignInManager<IdentityUser> signInManager,
-        ILogger<RegisterModel> logger,
-        IEmailService emailService)
+        ILogger<RegisterModel> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _logger = logger;
-        _emailService = emailService;
     }
 
     [BindProperty]
     public InputModel? Input { get; set; }
-
-    public ResultViewModel Result { get; set; }
-
     public string? ReturnUrl { get; set; }
 
     public class InputModel
@@ -106,13 +97,11 @@ public class RegisterModel : PageModel
             {
                 _logger.LogInformation("User created a new account with password.");
 
-                await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
-
-                var isSended = await SendEmailAsync(user);
+                await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());               
 
                 if (_userManager.Options.SignIn.RequireConfirmedEmail)
                 {
-                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, isSendedEmail = isSended });
+                    return RedirectToPage("./RegisterConfirmation", new { email = user.Email });
                 }
                 else
                 {
@@ -126,25 +115,5 @@ public class RegisterModel : PageModel
             }
         }
         return Page();
-    }
-
-
-    private async Task<bool> SendEmailAsync(AppUser user)
-    {
-        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-        var callbackUrl = Url.Page(
-            "./ConfirmEmail",
-            pageHandler: null,
-            values: new { area = "Identity", userId = user.Id, code = code },
-            protocol: Request.Scheme);
-
-        return await _emailService.SendEmailConfirmationAsync(
-            new ConfirmationEmailViewModel
-            {
-                Email = user.Email!,
-                ConfirmationLink = HtmlEncoder.Default.Encode(callbackUrl)
-            });
     }
 }

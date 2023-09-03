@@ -35,9 +35,15 @@ public class ConfirmEmailModel : PageModel
         Result = new()
         {
             Success = result.Succeeded,
-            StatusMessage = result.Succeeded 
-                ? $"Thank you for confirming your email: {user.Email}. Now you can login to your account."
-                : $"Error confirming your email: {user.Email}"
+            Notifocation = new()
+            {
+                Status = result.Succeeded
+                    ? NotificationStatus.Success
+                    : NotificationStatus.Error,
+                Text = result.Succeeded
+                    ? $"Thank you for confirming your email: {user.Email}. Now you can login to your account."
+                    : $"Error confirming your email: {user.Email}"
+            }
         };
 
         return Page();
