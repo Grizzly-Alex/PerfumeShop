@@ -4,12 +4,12 @@
 public class RegisterModel : PageModel
 {
     private readonly UserManager<AppUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly SignInManager<AppUser> _signInManager;
     private readonly ILogger<RegisterModel> _logger;
 
     public RegisterModel(
         UserManager<AppUser> userManager,
-        SignInManager<IdentityUser> signInManager,
+        SignInManager<AppUser> signInManager,
         ILogger<RegisterModel> logger)
     {
         _userManager = userManager;

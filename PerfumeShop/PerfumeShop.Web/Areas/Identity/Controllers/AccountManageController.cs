@@ -9,7 +9,7 @@ public class AccountManageController : Controller
     [TempData]
     public string? NotifText { get; set; }
     [TempData]
-    public NotificationStatus? NotifStatus { get; set; }
+    public NotificationStatus NotifStatus { get; set; }
 
     private readonly ILogger<AccountManageController> _logger;
     private readonly UserManager<AppUser> _userManager;
@@ -211,6 +211,8 @@ public class AccountManageController : Controller
 
         await _signInManager.SignInAsync(user, isPersistent: false);
         _logger.LogInformation("User changed their password successfully.");
+
+        NotifStatus = NotificationStatus.Success;
         NotifText = "Your password has been changed.";
 
         return RedirectToAction(nameof(ChangePassword));

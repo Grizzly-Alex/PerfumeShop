@@ -2,7 +2,7 @@
 
 public sealed class NotificationViewModel
 {
-    public NotificationStatus? Status { get; init; }    
+    public NotificationStatus Status { get; init; }    
     public string? Text { get; init; }
 
     public NotificationViewModel()
@@ -10,9 +10,9 @@ public sealed class NotificationViewModel
         
     }
 
-    public NotificationViewModel(NotificationStatus? status, string? text)
+    public NotificationViewModel(NotificationStatus status, string? text)
     {
-        Status = status ?? NotificationStatus.Info;
+        Status = status;
         Text = text ?? string.Empty;           
     }
 }

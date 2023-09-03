@@ -2,7 +2,7 @@
 
 public class IndexUserViewModel
 {
-    public NotificationViewModel Notification { get; set; }
+    public NotificationViewModel? Notification { get; set; }
     public bool IsEmailConfirmed { get; set; }
 
     [Display(Name = "User Name")]
