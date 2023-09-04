@@ -1,0 +1,58 @@
+﻿@page
+@model ProductDetailsModel
+
+<form method="post" asp-area="Shop" asp-controller="Basket" asp-action="AddToBasket" asp-route-productId="@Model.Product.Id">
+    <div class="row py-5">
+        <div class="col-7">
+            <div class="container text-center">
+                <img src="@Constants.CATALOG_IMAGE_PATH@Model.Product.PictureUri" class="img-thumbnail shadow-sm" style="max-width:60%" alt="...">
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="fs-3 fw-semibold">@Model.Product.Brand.Name</div>
+            <div class="fs-3 fw-normal text-muted">@Model.Product.Name</div>
+            <hr class="my-3">
+            <div class="py-4 fs-6">
+                <p><b>Volume: </b>@Model.Product.Volume ml.</p>
+                <p><b>Gender: </b>@Model.Product.Gender.Name</p>
+                <p><b>Aroma Type: </b>@Model.Product.AromaType.Name</p>
+            </div>
+            @if (Model.Product.Stock > 0)
+            {
+                <p class="fs-4"><b>Price: </b>@Model.Product.Price.ToString("c")</p>
+                <div class="py-0">
+                    <div class="col-3">
+                        <span class="text-muted">Available: @Model.Product.Stock</span>
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text text-bg-dark">qty.</span>
+                            <input type="number" min="1" max="@Model.Product.Stock"
+                                   step="1" value="1" name="quantity" class="form-control shadow-none">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-dark rounded-pill px-3 mb-3">
+                        <span class="">Add To Basket</span>
+                    </button>
+                </div>
+            }
+            else
+            {
+                <img src="@Constants.NOT_AVAILABLE_IMAGE" style="max-width:30%">
+            }              
+            <div class="accordion py-4">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Description
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <p class="fs-5 fw-light">@Html.Raw(Model.Product.Description)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

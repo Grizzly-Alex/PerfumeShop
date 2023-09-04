@@ -1,0 +1,38 @@
+﻿@if (Context.User.Identity.IsAuthenticated)
+{
+    <div class="btn-group dropdown-center">
+        <button type="button" class="btn btn-link shadow-none scale" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle text-white" style="font-size: 1.5rem;"></i>
+            <span class="position-absolute top-0 start-50 translate-middle">
+                <small class="text-white">Autorized</small>
+            </span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+            @if (User.IsInRole(Roles.Admin.GetDisplayName()))
+            {
+                <li><a class="dropdown-item" id="admin" asp-area="Admin" asp-controller="ManageProduct" asp-action="Index">Admin</a></li>
+            }
+            <li><a class="dropdown-item" id="manage" asp-area="Identity" asp-controller="AccountManage" asp-action="MyProfile">My Account</a></li>
+            <li><a class="dropdown-item" id="orders" asp-area="Identity" asp-controller="OrderHistory" asp-action="Index">Orders</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <form class="dropdown-item" id="logoutForm" asp-area="Identity" asp-page="/Logout" asp-route-returnUrl="/Home/Index">                  
+                    <button id="logout" type="submit" class="nav-link btn btn-link shadow-none">
+                        <i class="bi bi-box-arrow-left"></i>
+                        Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+}
+else
+{
+    <a asp-area="Identity" asp-page="/Login" class="btn btn-link text-white position-relative shadow-none scale text-decoration-none">
+        <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+        <span class="position-absolute top-0 start-50 translate-middle">
+            <small class="text-white">Guest</small>
+        </span>
+    </a>
+}
+

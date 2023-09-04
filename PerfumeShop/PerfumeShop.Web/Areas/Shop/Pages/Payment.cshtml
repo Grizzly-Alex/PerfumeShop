@@ -1,0 +1,122 @@
+﻿@page
+@model PaymentModel
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<div class="container h-100 py-5">
+    <div class="row g-5">
+        <h3 class="fw-bold mb-0 text-black">
+            <i class="bi bi-credit-card-2-front"></i>&nbsp;
+            @ViewData["Title"]
+        </h3>
+
+        <div class="col-lg-4 order-md-last">
+            <h5 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary">Order Summary</span>
+            </h5>
+
+            @if (Model.OrderItemList.Any())
+            {
+                <ul class="list-group mb-3">
+                    @foreach (var item in Model.OrderItemList)
+                    {
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div class="col-7">
+                                <h6 class="my-0">
+                                    @item.Brand
+                                </h6>
+                                <small class="text-muted">@item.Name</small>
+                            </div>
+                            <div class="col-2">
+                                <img src="@Constants.CATALOG_IMAGE_PATH@item.PictureUri" class="img-fluid" width="30">
+                            </div>
+                            <div class="col-3">
+                                <span class="text-muted">@item.Price.ToString("c") x @item.Quantity</span>
+                            </div>
+                        </li>
+                    }
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total Price</span>
+                        <strong>@Model.OrderInfoModel.TotalPrice</strong>
+                    </li>
+                </ul>
+            }         
+        </div>
+
+        <div class="col-lg-8">
+            <div class="my-0 p-0">
+                <h5 class="text-primary">Order Information</h5>
+
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td>Order Number</td>
+                            <td>@Model.OrderInfoModel.TrackingId</td>                            
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>@Model.OrderInfoModel.OrderDate</td>                            
+                        </tr>
+                        <tr>
+                            <td>Order Status</td>
+                            <td>@Model.OrderInfoModel.OrderStatus</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Status</td>
+                            <td>@Model.OrderInfoModel.PaymentStatus</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Method</td>
+                            <td>@Model.OrderInfoModel.PaymentMethod</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Method</td>
+                            <td>@Model.OrderInfoModel.DeliveryMethod</td>
+                        </tr>
+                        <tr>
+                            <td>Address Delivery</td>
+                            <td>@Model.OrderInfoModel.Address</td>
+                        </tr>
+                        <tr>
+                            <td>Customer Phone</td>
+                            <td>@Model.OrderInfoModel.CustomerPhone</td>
+                        </tr>
+                        <tr>
+                            <td>Customer Email</td>
+                            <td>@Model.OrderInfoModel.CustomerEmail</td>
+                        </tr>
+                        <tr>
+                            <td>Customer Name</td>
+                            <td>@Model.OrderInfoModel.CustomerName</td>
+                        </tr>
+                    </tbody>
+                </table>        
+            </div>
+            <form asp-page="Payment" method="post" class="needs-validation" novalidate>
+
+                <input asp-for="@Model.OrderInfoModel.Id" hidden />
+                <input asp-for="@Model.OrderInfoModel.TrackingId" hidden />
+                <input asp-for="@Model.OrderInfoModel.TotalPrice" hidden />
+                <input asp-for="@Model.OrderInfoModel.CustomerPhone" hidden />
+                <input asp-for="@Model.OrderInfoModel.CustomerEmail" hidden />
+                <input asp-for="@Model.OrderInfoModel.CustomerName" hidden />
+
+                <div class="py-4">
+                    <div class="tab-pane fade show active" id="pills-courier" role="tabpanel" aria-labelledby="pills-courier-tab" tabindex="0">
+                        <partial name="~/Views/Shared/Components/_PaymentCard.cshtml" model="@Model.PaymentCardModel" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Pay</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

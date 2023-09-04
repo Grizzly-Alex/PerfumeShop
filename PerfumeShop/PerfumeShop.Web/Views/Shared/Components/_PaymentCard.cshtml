@@ -1,0 +1,74 @@
+﻿@model PaymentCardViewModel
+
+<div class="card mb-3">
+    <div class="card-header">
+        <h4 class="mb-3">Payment card</h4>
+    </div>
+    <div class="card-body text-secondary">
+        <blockquote class="blockquote mb-0">
+            <div class="row gy-3">
+
+                <div class="col-md-12">
+                    <label asp-for="@Model.NameOwner"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>                                  
+                        <input asp-for="@Model.NameOwner" type="text" class="form-control" placeholder="Full name as displayed on card" required />
+                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                        <div class="invalid-feedback">
+                            Name on card is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label asp-for="@Model.CardNumber"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-credit-card-2-back"></i></span>
+                        <input asp-for="@Model.CardNumber" class="form-control" id="cc-number" placeholder="0000 0000 0000 0000" required="" />
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                        <div class="invalid-feedback">
+                            Credit card number is required
+                        </div>
+                    </div>
+                </div>
+
+                       
+                <div class="col-md-3">
+                    <label class="control-label">Expiration</label>
+                    <div class="input-group">
+                        <select asp-for="@Model.ExpirationMonth" class="form-control" placeholder="Month" required=""
+                                asp-items="Html.GetEnumSelectList<Month>()">
+                            <option selected disabled value="">Month</option>
+                        </select>
+                        <select asp-for="@Model.ExpirationYear" class="form-control" placeholder="Year" required=""
+                                asp-items="@new SelectList(Enumerable.Range(DateTime.Now.Year, 10))">
+                            <option selected disabled value="">Year</option>
+                        </select>
+                        <div class="valid-feedback">
+                            Valid
+                        </div>
+                        <div class="invalid-feedback">
+                            Expiration date required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="@Model.Cvc"></label>
+                    <input asp-for="@Model.Cvc" class="form-control" id="cc-expiration" placeholder="123" required="" />
+                    <div class="valid-feedback">
+                        Valid
+                    </div>
+                    <div class="invalid-feedback">
+                        Security code required
+                    </div>
+                </div>                                                        
+            </div>                           
+        </blockquote>
+    </div>
+</div>

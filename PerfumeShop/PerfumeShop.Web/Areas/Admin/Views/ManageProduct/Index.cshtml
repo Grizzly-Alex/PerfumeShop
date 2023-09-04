@@ -1,0 +1,31 @@
+﻿<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2 class="text-muted">Products</h2>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="text-end">
+            <a asp-controller="ManageProduct" asp-action="Create" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+                <span class="bi bi-pen">Add</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<table id="productData" class="table table-bordered table-striped table-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Volume</th>
+            <th>Stock</th>
+            <th>Brand</th>
+            <th>Gender</th>
+            <th>Aroma Type</th>
+            <th>Release Form</th>
+            <th>Date Delivery</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script src="~/js/tables/product-table.js"></script>
+}

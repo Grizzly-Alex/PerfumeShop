@@ -1,0 +1,48 @@
+﻿@model ProductViewModel
+
+<form method="get">
+
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h2 class="text-muted">Detail Product</h2>
+		<div class="btn-toolbar mb-2 mb-md-0">
+			<div class="text-end">
+				<a asp-controller="ManageProduct" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+					<span class="bi bi-wrench"> Edit</span>
+				</a>
+				<a asp-controller="ManageProduct" asp-action="index" class="btn btn-outline-secondary btn-sm shadow-none" style="width:80px">
+					<span class="bi bi-reply"> Back</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="d-flex position-relative">
+		<div class="col-md-4 px-0">
+			<img src="@Constants.CATALOG_IMAGE_PATH@Model.PictureUri" class="w-75" style="max-width:350px">
+		</div>
+		<div class="col-md-6 p-4 ps-md-0">
+			<div>
+				<p><b>Name: </b>@Model.Name</p>
+			</div>
+			<div class="col-4">
+				<p><b>Brand: </b>@Model.Brand?.Name</p>
+				<p><b>Gender: </b>@Model.Gender?.Name</p>
+				<p><b>Release Form: </b>@Model.ReleaseForm.Name</p>
+				<p><b>Aroma Type: </b>@Model.AromaType.Name</p>
+			</div>
+			<div>
+				<p><b>Price: </b>@Model.Price</p>
+				<p><b>Stock: </b>@Model.Stock</p>
+				<p><b>Date Delivery: </b>@Model.DateDelivery</p>
+			</div>
+			<div>
+				<b>Description:</b>
+				<div class="small">
+					<p>@Html.Raw(Model.Description)</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</form>
