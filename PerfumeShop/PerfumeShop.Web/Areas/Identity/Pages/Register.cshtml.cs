@@ -3,26 +3,22 @@
 [AllowAnonymous]
 public class RegisterModel : PageModel
 {
-    private readonly SignInManager<AppUser> _signInManager;
     private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> _signInManager;
     private readonly ILogger<RegisterModel> _logger;
-    private readonly IEmailService _emailService;
 
     public RegisterModel(
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager,
-        ILogger<RegisterModel> logger,
-        IEmailService emailService)
+        ILogger<RegisterModel> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _logger = logger;
-        _emailService = emailService;
     }
 
     [BindProperty]
     public InputModel? Input { get; set; }
-
     public string? ReturnUrl { get; set; }
 
     public class InputModel
@@ -101,24 +97,17 @@ public class RegisterModel : PageModel
             {
                 _logger.LogInformation("User created a new account with password.");
 
-                await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
+                await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());               
 
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callbackUrl = Url.Page(
-                    "./ConfirmEmail",
-                    pageHandler: null,
-                    values: new { userId = user.Id, code = code },
-                    protocol: Request.Scheme);
-
-                await _emailService.SendEmailConfirmationAsync(
-                    new ConfirmationEmailViewModel
-                    {
-                        Email = Input.Email,
-                        ConfirmationLink = HtmlEncoder.Default.Encode(callbackUrl)
-                    });
-
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return LocalRedirect(returnUrl);
+                if (_userManager.Options.SignIn.RequireConfirmedEmail)
+                {
+                    return RedirectToPage("./RegisterConfirmation", new { email = user.Email });
+                }
+                else
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
             }
             foreach (var error in result.Errors)
             {

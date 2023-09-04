@@ -21,6 +21,14 @@ public enum ItemsPerPage
     [Display(Name = "20")] Threety = 20,
 }
 
+public enum NotificationStatus
+{
+    [Display(Name = "Error")] Error = 1,
+    [Display(Name = "Success")] Success = 2,
+    [Display(Name = "Warning")] Warning = 3,
+    [Display(Name = "Information")] Info = 4,
+}
+
 public enum Month
 {
     [Display(Name = "1")] January = 1,

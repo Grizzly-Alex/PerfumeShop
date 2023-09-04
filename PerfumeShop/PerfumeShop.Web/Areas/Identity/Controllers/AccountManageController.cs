@@ -7,7 +7,9 @@
 public class AccountManageController : Controller
 {
     [TempData]
-    public string? StatusMessage { get; set; }
+    public string? NotifText { get; set; }
+    [TempData]
+    public NotificationStatus NotifStatus { get; set; }
 
     private readonly ILogger<AccountManageController> _logger;
     private readonly UserManager<AppUser> _userManager;
@@ -34,7 +36,7 @@ public class AccountManageController : Controller
             ?? throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
 
         var userViewModel = _mapper.Map<IndexUserViewModel>(user);
-        userViewModel.StatusMessage = StatusMessage;
+        userViewModel.Notification = new(NotifStatus, NotifText);
 
         return View(userViewModel);
     }
@@ -123,7 +125,11 @@ public class AccountManageController : Controller
         }
         #endregion
 
-        if (isUpdated) StatusMessage = "Your profile has been updated";
+        if (isUpdated)
+        {
+            NotifStatus = NotificationStatus.Success;
+            NotifText = "Your profile has been updated";
+        };
 
         return RedirectToAction(nameof(MyProfile));
     }
@@ -138,7 +144,10 @@ public class AccountManageController : Controller
 
         if (hasPassword) return RedirectToAction(nameof(ChangePassword));
 
-        var viewModel = new SetPasswordViewModel { StatusMessage = StatusMessage };
+        var viewModel = new SetPasswordViewModel 
+        {
+            Notification = new(NotifStatus, NotifText),
+        };
 
         return View(viewModel);
     }
@@ -160,7 +169,9 @@ public class AccountManageController : Controller
         }
 
         await _signInManager.SignInAsync(user, isPersistent: false);
-        StatusMessage = "Your password has been set.";
+
+        NotifStatus = NotificationStatus.Success;
+        NotifText = "Your password has been set.";
 
         return RedirectToAction(nameof(SetPassword));
     }
@@ -175,7 +186,10 @@ public class AccountManageController : Controller
 
         if (!hasPassword) return RedirectToAction(nameof(SetPassword));
 
-        var viewModel = new ChangePasswordViewModel { StatusMessage = StatusMessage };
+        var viewModel = new ChangePasswordViewModel
+        {
+            Notification = new(NotifStatus, NotifText)
+        };
         return View(viewModel);
     }
 
@@ -197,7 +211,9 @@ public class AccountManageController : Controller
 
         await _signInManager.SignInAsync(user, isPersistent: false);
         _logger.LogInformation("User changed their password successfully.");
-        StatusMessage = "Your password has been changed.";
+
+        NotifStatus = NotificationStatus.Success;
+        NotifText = "Your password has been changed.";
 
         return RedirectToAction(nameof(ChangePassword));
     }

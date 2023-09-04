@@ -1,11 +1,22 @@
-﻿@model string
+﻿@model NotificationViewModel
+@{
+    if (Model is not null)
+    {
+        string statusMessage = Model.Status switch
+        {
+            NotificationStatus.Success => "success",
+            NotificationStatus.Error => "danger",
+            NotificationStatus.Warning => "warning",
+            NotificationStatus.Info => "info",
+            _=> string.Empty
+        };
 
-
-@if (!String.IsNullOrEmpty(Model))
-{
-    var statusMessage = Model.StartsWith("Error") ? "danger" : "success";
-    <div class="alert alert-@statusMessage alert-dismissible fade show" role="alert">
-        @Model
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+        if (!String.IsNullOrEmpty(Model.Text))
+        {
+            <div class="alert alert-@statusMessage alert-dismissible fade show" role="alert">
+                @Model.Text
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>       
+        }       
+    }
 }

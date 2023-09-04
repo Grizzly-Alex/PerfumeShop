@@ -4,15 +4,18 @@
 public class LoginModel : PageModel
 {
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly UserManager<AppUser> _userManager;
     private readonly IBasketService _basketService;
     private readonly ILogger<LoginModel> _logger;
 
     public LoginModel(
         SignInManager<AppUser> signInManager,
+        UserManager<AppUser> userManager,
         IBasketService basketService,
         ILogger<LoginModel> logger)
     {
         _signInManager = signInManager;
+        _userManager = userManager;
         _basketService = basketService;
         _logger = logger;
     }
@@ -60,7 +63,19 @@ public class LoginModel : PageModel
 
         if (ModelState.IsValid)
         {
+            var user = await _userManager.FindByEmailAsync(Input.Email);
+
+            if (user is not null)
+            {
+                if (!await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    ModelState.AddModelError(string.Empty, "Email wasn't confirmed.");
+                    return Page();
+                }
+            }
+
             var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
             if (result.Succeeded)
             {
                 await TransferAnonymousBasketToUserAsync(Input.Email);

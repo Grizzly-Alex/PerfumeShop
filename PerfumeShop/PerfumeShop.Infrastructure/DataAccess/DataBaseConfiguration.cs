@@ -25,7 +25,7 @@ public static class DataBaseConfiguration
 
         services.AddIdentity<AppUser, AppRole>(options =>
         {
-            options.SignIn.RequireConfirmedAccount = true;
+            options.SignIn.RequireConfirmedEmail = true;
             options.User.RequireUniqueEmail = true;
             options.Password.RequireNonAlphanumeric = true;   
             options.Password.RequireLowercase = true; 

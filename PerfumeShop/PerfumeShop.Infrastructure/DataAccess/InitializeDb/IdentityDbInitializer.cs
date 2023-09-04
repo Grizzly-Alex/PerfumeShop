@@ -44,6 +44,7 @@ public sealed class IdentityDbInitializer : IDbInitializer
 				StreetAddress = "Rosenthaler Str. 12 - 45",
 				PhoneNumber = "43098605010",
 				PostalCode = "10115",
+				EmailConfirmed = true,
 			};
 			await _userManager.CreateAsync(demoAdmin, AuthorizationConstants.DefaultPassword);
 			demoAdmin = await _userManager.FindByNameAsync(demoAdminName);
@@ -61,7 +62,8 @@ public sealed class IdentityDbInitializer : IDbInitializer
 				StreetAddress = "Wiener Str. 84 - 11",
 				PhoneNumber = "43092367744",
 				PostalCode = "1099",
-			};
+                EmailConfirmed = true,
+            };
 			await _userManager.CreateAsync(demoEmployee, AuthorizationConstants.DefaultPassword);
 			demoEmployee = await _userManager.FindByNameAsync(demoEmployeeName);
 			await _userManager.AddToRoleAsync(demoEmployee, Roles.Employee.GetDisplayName());
@@ -78,7 +80,8 @@ public sealed class IdentityDbInitializer : IDbInitializer
 				StreetAddress = "Ludwig Str. 9 - 32",
 				PhoneNumber = "43093344561",
 				PostalCode = "20535",
-			};
+                EmailConfirmed = true,
+            };
 			await _userManager.CreateAsync(demoCustomer, AuthorizationConstants.DefaultPassword);
 			demoCustomer = await _userManager.FindByNameAsync(demoCustomerName);
 			await _userManager.AddToRoleAsync(demoCustomer, Roles.Customer.GetDisplayName());
