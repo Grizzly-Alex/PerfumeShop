@@ -30,8 +30,12 @@
                 <p class="p-4">
                     We have sent a cash voucher to your email:
                     <a href="mailto:@Model.EmailModel">@Model.EmailModel</a>
-                </p>              
-                <a asp-page="#" class="btn btn-primary">Order Details</a>
+                </p> 
+                
+                <form asp-page-handler="OrderId" asp-route-trackingId="@Model.OrderTrackingId" method="post">
+                    <button class="btn btn-primary">Order Details</button>
+                </form>
+
                 <a asp-area="Shop" asp-page="/Catalog" class="btn btn-primary">Continue Shopping...</a>
             </div>
         </div>

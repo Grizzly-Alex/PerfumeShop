@@ -26,8 +26,15 @@ public class OrderHistoryController : Controller
     [HttpGet]
     public async Task<IActionResult> Details(int id)
     {
-        var order = await _orderViewModelService.GetOrderViewModelAsync(id);
-        return View(order);
+        if(id == 0)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        else
+        {
+            var order = await _orderViewModelService.GetOrderViewModelAsync(id);
+            return View(order);
+        }
     }
 
     #region API CALLS
