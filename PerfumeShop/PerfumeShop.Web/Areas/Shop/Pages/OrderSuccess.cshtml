@@ -31,12 +31,14 @@
                     We have sent a cash voucher to your email:
                     <a href="mailto:@Model.EmailModel">@Model.EmailModel</a>
                 </p> 
-                
-                <form asp-page-handler="OrderId" asp-route-trackingId="@Model.OrderTrackingId" method="post">
-                    <button class="btn btn-primary">Order Details</button>
-                </form>
 
-                <a asp-area="Shop" asp-page="/Catalog" class="btn btn-primary">Continue Shopping...</a>
+                <div class="d-inline-flex gap-2 mb-5">
+                    <form asp-page-handler="OrderId" asp-route-trackingId="@Model.OrderTrackingId" method="post">
+                        <button class="btn btn-primary">Order Details</button>
+                    </form>
+
+                    <a asp-area="Shop" asp-page="/Catalog" class="btn btn-primary">Continue Shopping...</a>
+                </div>               
             </div>
         </div>
     </div>

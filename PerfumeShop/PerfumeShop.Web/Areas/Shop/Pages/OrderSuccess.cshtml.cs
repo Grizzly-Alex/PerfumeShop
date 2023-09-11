@@ -1,3 +1,4 @@
+using Microsoft.IdentityModel.Tokens;
 namespace PerfumeShop.Web.Areas.Shop.Pages;
 
 [Area("Shop")]
@@ -37,7 +38,14 @@ public class OrderSuccessModel : PageModel
 
     public async Task<IActionResult> OnPostOrderIdAsync(string trackingId)
     {
-        var orderId = await _orderQueryService.GetOrderIdAsync(trackingId);
-        return Redirect($"/OrderHistory/Details?id={orderId}");
+        if (trackingId.IsNullOrEmpty())
+        {
+            return Page();
+        }
+        else
+        {
+            var orderId = await _orderQueryService.GetOrderIdAsync(trackingId);
+            return Redirect($"/OrderHistory/Details?id={orderId}");
+        }
     }
 }
