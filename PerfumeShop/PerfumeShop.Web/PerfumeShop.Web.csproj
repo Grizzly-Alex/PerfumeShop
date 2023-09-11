@@ -54,6 +54,9 @@
   </ItemGroup>
 
     <ItemGroup>
+	    <Content Update="Views\EmailTemplates\Order.cshtml">
+	      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    </Content>
 	    <Content Update="Views\EmailTemplates\Confirmation.cshtml">
 		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	    </Content>
