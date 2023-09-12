@@ -12,11 +12,11 @@ public static class EmailServiceExtensions
         return await emailService.SendEmailAsync(mailData, new CancellationToken());
     }
 
-    public static async Task<bool> SendEmailOrderAsync(this IEmailService emailService, OrderViewModel order)
+    public static async Task<bool> SendEmailOrderAsync(this IEmailService emailService, OrderEmailViewModel order)
     {
         var mailData = new EmailData(
             subject: "Perfume Shop",
-            to: new List<string> { order.OrderInfo.CustomerEmail },
+            to: new List<string> { order.Email },
             body: emailService.GetEmailTemplate("Order", order));
 
         return await emailService.SendEmailAsync(mailData, new CancellationToken());

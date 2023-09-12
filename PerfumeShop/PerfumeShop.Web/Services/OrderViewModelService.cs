@@ -73,6 +73,30 @@ public sealed class OrderViewModelService : IOrderViewModelService
         };
     }
 
+    public async Task<OrderEmailViewModel> GetOrderEmailViewModelAsync(int orderId)
+    {
+        var orderHeader = await _sale.GetRepository<OrderHeader>()
+            .GetFirstOrDefaultAsync(
+                predicate: order => order.Id == orderId,
+                include: query => query
+                    .Include(order => order.PaymentDetail)
+                    .ThenInclude(payment => payment.PaymentMethod)
+                    .Include(order => order.PaymentDetail)
+                    .ThenInclude(payment => payment.PaymentStatus)
+                    .Include(order => order.DeliveryDetail)
+                    .ThenInclude(delivery => delivery.DeliveryMethod),
+                isTracking: false) ?? throw new NullReferenceException($"OrderHeader not found in database with ID: '{orderId}'.");
+
+        var orderEmail = new OrderEmailViewModel()
+        {           
+            OrderItems = await GetOrderItemModelCollectionAsync(orderId)
+        };
+
+        var result = _mapper.Map<OrderEmailViewModel>(orderHeader);
+
+        return result;
+    }
+
     public async Task<OrderInfoViewModel> GetOrderInfoModelAsync(int orderId)
     {
         var orderHeader = await _sale.GetRepository<OrderHeader>()
@@ -150,5 +174,4 @@ public sealed class OrderViewModelService : IOrderViewModelService
 
         return orderItemViewModel;
     }
-
 }
