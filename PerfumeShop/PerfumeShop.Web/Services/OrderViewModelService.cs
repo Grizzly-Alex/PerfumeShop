@@ -86,15 +86,11 @@ public sealed class OrderViewModelService : IOrderViewModelService
                     .Include(order => order.DeliveryDetail)
                     .ThenInclude(delivery => delivery.DeliveryMethod),
                 isTracking: false) ?? throw new NullReferenceException($"OrderHeader not found in database with ID: '{orderId}'.");
+             
+        var orderEmail = _mapper.Map<OrderEmailViewModel>(orderHeader);
+        orderEmail.OrderItems = await GetOrderItemModelCollectionAsync(orderId);
 
-        var orderEmail = new OrderEmailViewModel()
-        {           
-            OrderItems = await GetOrderItemModelCollectionAsync(orderId)
-        };
-
-        var result = _mapper.Map<OrderEmailViewModel>(orderHeader);
-
-        return result;
+        return orderEmail;
     }
 
     public async Task<OrderInfoViewModel> GetOrderInfoModelAsync(int orderId)

@@ -63,7 +63,6 @@ public class OrderSuccessModel : PageModel
         var orderId = await _orderQueryService.GetOrderIdAsync(trackingId);
         var orderEmail = await _orderViewModelService.GetOrderEmailViewModelAsync(orderId);
 
-
         return await _emailService.SendEmailOrderAsync(orderEmail);
     }
 }

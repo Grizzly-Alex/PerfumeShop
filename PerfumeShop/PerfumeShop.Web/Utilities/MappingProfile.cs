@@ -74,8 +74,6 @@ public sealed class MappingProfile : Profile
             .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus.Name))
             .ForMember(view => view.PaymentMethod, opt => opt.MapFrom(model => model.PaymentDetail.PaymentMethod.Name))
             .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryMethod.Name));
-
-
         #endregion
     }
 }
