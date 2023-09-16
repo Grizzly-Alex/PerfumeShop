@@ -1,6 +1,4 @@
-﻿using PerfumeShop.Web.ViewModels.Order;
-
-namespace PerfumeShop.Web.Utilities;
+﻿namespace PerfumeShop.Web.Utilities;
 
 public sealed class MappingProfile : Profile
 {
@@ -50,7 +48,7 @@ public sealed class MappingProfile : Profile
         CreateMap<Basket, BasketViewModel>()
             .ForMember(model => model.Items, opt => opt.Ignore());
 
-        CreateMap<OrderInfoViewModel, OrderHeader>().ReverseMap()
+        CreateMap<OrderInfoViewModel, OrderHeader>().ReverseMap()           
             .ForMember(view => view.OrderStatus, opt => opt.MapFrom(model => model.OrderStatus.Name))
             .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus.Name))
             .ForMember(view => view.PaymentMethod, opt => opt.MapFrom(model => model.PaymentDetail.PaymentMethod.Name))
@@ -66,6 +64,16 @@ public sealed class MappingProfile : Profile
 
         CreateMap<PaymentMethod, ItemViewModel>().ReverseMap();
 
+        CreateMap<OrderEmailViewModel, OrderHeader>().ReverseMap()
+            .ForMember(view => view.OrderItems, opt => opt.Ignore())
+            .ForMember(view => view.OrderDate, opt => opt.MapFrom(model => model.OrderDate))
+            .ForMember(view => view.TrackingId, opt => opt.MapFrom(model => model.TrackingId))
+            .ForMember(view => view.Email, opt => opt.MapFrom(model => model.Customer.ReceiptEmail))
+            .ForMember(view => view.Address, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryAddress.GetFullAddress()))
+            .ForMember(view => view.TotalPrice, opt => opt.MapFrom(model => model.Cost.TotalCost))
+            .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus.Name))
+            .ForMember(view => view.PaymentMethod, opt => opt.MapFrom(model => model.PaymentDetail.PaymentMethod.Name))
+            .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryMethod.Name));
         #endregion
     }
 }

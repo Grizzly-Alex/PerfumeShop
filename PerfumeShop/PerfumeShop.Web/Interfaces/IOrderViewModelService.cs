@@ -3,6 +3,7 @@
 public interface IOrderViewModelService
 {
     Task<OrderViewModel> GetOrderViewModelAsync(int orderId);
+    Task<OrderEmailViewModel> GetOrderEmailViewModelAsync(int orderId);
     Task<IList<OrderItemViewModel>> GetOrderItemModelCollectionAsync(int orderId);
     Task<OrderInfoViewModel> GetOrderInfoModelAsync(int orderId);
     Task<IList<OrderInfoViewModel>> GetOrderInfoModelCollectionAsync(string userId);
