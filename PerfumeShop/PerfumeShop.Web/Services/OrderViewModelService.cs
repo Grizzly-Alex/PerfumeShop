@@ -107,7 +107,7 @@ public sealed class OrderViewModelService : IOrderViewModelService
                     .Include(order => order.DeliveryDetail)
 					.ThenInclude(delivery => delivery.DeliveryMethod), 
 				isTracking: false) ?? throw new NullReferenceException($"OrderHeader not found in database with ID: '{orderId}'.");
-
+       
         _logger.LogInformation($"Getting Order Header with ID:'{orderId}' successfully.");
 
         return _mapper.Map<OrderInfoViewModel>(orderHeader);
