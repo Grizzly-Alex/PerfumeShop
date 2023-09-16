@@ -65,7 +65,7 @@ public class OrderController : Controller
                 customer,
                 model.Basket.Id);
 
-            HttpContext.Session.Set<String>(Constants.SESSION_ORDER_TRACKING_ID, order.TrackingId);
+            SaveTrackingIdToSession(order.TrackingId);
 
             await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 			await _basketService.ClearBasketAsync(model.Basket.Id);
@@ -94,7 +94,7 @@ public class OrderController : Controller
 				customer,
 				model.Basket.Id);
 
-			HttpContext.Session.Set<String>(Constants.SESSION_ORDER_TRACKING_ID, order.TrackingId);
+			SaveTrackingIdToSession(order.TrackingId);
 
             await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
 			await _basketService.ClearBasketAsync(model.Basket.Id);
@@ -105,6 +105,15 @@ public class OrderController : Controller
 		}
 
         return RedirectToAction(nameof(Index));
+    }
+
+	private void SaveTrackingIdToSession(string trackingId)
+	{
+        if (HttpContext.Session.Keys.Contains(Constants.SESSION_ORDER_TRACKING_ID))
+        {
+            HttpContext.Session.Remove(Constants.SESSION_ORDER_TRACKING_ID);
+        }
+        HttpContext.Session.Set<String>(Constants.SESSION_ORDER_TRACKING_ID, trackingId);
     }
 
 	private string GetRedirectionPageName(PaymentMethods method) => method switch
