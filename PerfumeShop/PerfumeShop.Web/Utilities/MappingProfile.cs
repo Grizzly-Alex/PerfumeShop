@@ -5,7 +5,8 @@ public sealed class MappingProfile : Profile
     public MappingProfile()
     {
         #region Identity       
-        CreateMap<AppUser, RegisterUserViewModel>().ReverseMap();
+        CreateMap<AppUser, CreateUserViewModel>().ReverseMap();
+        CreateMap<AppUser, AssociateExternalProviderViewModel>().ReverseMap();
 
         CreateMap<AppUser, EditUserViewModel>().ReverseMap();
 
