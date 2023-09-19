@@ -36,7 +36,7 @@ public class ManageUserController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        var user = new RegisterUserViewModel
+        var user = new CreateUserViewModel
         {
             RoleList = GetRoleNames().ToSelectListItems()
         };
@@ -45,7 +45,7 @@ public class ManageUserController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(RegisterUserViewModel userView)
+    public async Task<IActionResult> Create(CreateUserViewModel userView)
     {
         if (ModelState.IsValid)
         {

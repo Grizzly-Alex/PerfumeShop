@@ -1,22 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using System.Text;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
+
 
 namespace PerfumeShop.Web.Areas.Identity.Pages
 {
@@ -27,22 +11,25 @@ namespace PerfumeShop.Web.Areas.Identity.Pages
         private readonly UserManager<AppUser> _userManager;
         private readonly IUserStore<AppUser> _userStore;
         private readonly IUserEmailStore<AppUser> _emailStore;
-        private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly IBasketService _basketService;
+        private readonly IMapper _mapper;
 
         public ExternalLoginModel(
             SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
             IUserStore<AppUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IBasketService basketService,
+            IMapper mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _logger = logger;
-            _emailSender = emailSender;
+            _basketService = basketService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -50,7 +37,7 @@ namespace PerfumeShop.Web.Areas.Identity.Pages
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [BindProperty]
-        public InputModel Input { get; set; }
+        public AssociateExternalProviderViewModel? Input { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -75,16 +62,7 @@ namespace PerfumeShop.Web.Areas.Identity.Pages
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public class InputModel
-        {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-        }
+
 
         public IActionResult OnGet() => RedirectToPage("./Login");
 
@@ -116,6 +94,8 @@ namespace PerfumeShop.Web.Areas.Identity.Pages
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
+
+                await TransferAnonymousBasketToUserAsync(info.Principal.FindFirstValue(ClaimTypes.Email));
                 return LocalRedirect(returnUrl);
             }
             if (result.IsLockedOut)
@@ -127,13 +107,9 @@ namespace PerfumeShop.Web.Areas.Identity.Pages
                 // If the user does not have an account, then ask the user to create an account.
                 ReturnUrl = returnUrl;
                 ProviderDisplayName = info.ProviderDisplayName;
-                if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
-                {
-                    Input = new InputModel
-                    {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
-                }
+
+                CreateInputModel(info);
+
                 return Page();
             }
         }
@@ -151,7 +127,7 @@ namespace PerfumeShop.Web.Areas.Identity.Pages
 
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = _mapper.Map<AppUser>(Input);
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -166,20 +142,7 @@ namespace PerfumeShop.Web.Areas.Identity.Pages
                     {
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
 
-                        var userId = await _userManager.GetUserIdAsync(user);
-                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                        var callbackUrl = Url.Page(
-                            "/ConfirmEmail",
-                            pageHandler: null,
-                            values: new { area = "Identity", userId, code },
-                            protocol: Request.Scheme);
-
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                        // If account confirmation is required, we need to show the link if we don't have a real email sender
-                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                        if (_userManager.Options.SignIn.RequireConfirmedEmail)
                         {
                             return RedirectToPage("./RegisterConfirmation", new { Input.Email });
                         }
@@ -199,17 +162,37 @@ namespace PerfumeShop.Web.Areas.Identity.Pages
             return Page();
         }
 
-        private AppUser CreateUser()
+        private void CreateInputModel(ExternalLoginInfo info)
         {
-            try
+            Input = new AssociateExternalProviderViewModel();
+
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
             {
-                return Activator.CreateInstance<AppUser>();
+                Input.Email = info.Principal.FindFirstValue(ClaimTypes.Email);
             }
-            catch
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Country))
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(AppUser)}'. " +
-                    $"Ensure that '{nameof(AppUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the external login page in /Areas/Identity/Pages/ExternalLogin.cshtml");
+                Input.State = info.Principal.FindFirstValue(ClaimTypes.Country);
+            }
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.GivenName))
+            {
+                Input.FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
+            }
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Surname))
+            {
+                Input.LastName = info.Principal.FindFirstValue(ClaimTypes.Surname);
+            }
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.PostalCode))
+            {
+                Input.PostalCode = info.Principal.FindFirstValue(ClaimTypes.PostalCode);
+            }
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.MobilePhone))
+            {
+                Input.PhoneNumber = info.Principal.FindFirstValue(ClaimTypes.MobilePhone);
+            }
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.StreetAddress))
+            {
+                Input.StreetAddress = info.Principal.FindFirstValue(ClaimTypes.StreetAddress);
             }
         }
 
@@ -220,6 +203,22 @@ namespace PerfumeShop.Web.Areas.Identity.Pages
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<AppUser>)_userStore;
+        }
+
+        private async Task TransferAnonymousBasketToUserAsync(string? userName)
+        {
+            if (Request.Cookies.ContainsKey(Constants.BASKET_COOKIE))
+            {
+                var anonymousId = Request.Cookies[Constants.BASKET_COOKIE];
+
+                if (Guid.TryParse(anonymousId, out var _))
+                {
+                    await _basketService.TransferBasketAsync(anonymousId, userName);
+                }
+
+                Response.Cookies.Delete(Constants.BASKET_COOKIE);
+            }
+            HttpContext.Session.Remove(Constants.BASKET_ITEMS_QTY);
         }
     }
 }
