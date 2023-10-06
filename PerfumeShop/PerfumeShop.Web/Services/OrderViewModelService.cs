@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Web.Services;
+﻿using MailKit.Search;
+
+namespace PerfumeShop.Web.Services;
 
 public sealed class OrderViewModelService : IOrderViewModelService
 {
@@ -169,5 +171,25 @@ public sealed class OrderViewModelService : IOrderViewModelService
         }).ToList();
 
         return orderItemViewModel;
+    }
+
+    public async Task<IList<OrderInfoViewModel>> GetAllOrderInfoModelAsync()
+    {
+        var orderHeaders = await _sale.GetRepository<OrderHeader>().GetAllAsync(
+            include: query => query
+                .Include(order => order.OrderStatus)
+                .Include(order => order.Cost)
+                .Include(order => order.Customer)
+                .Include(order => order.PaymentDetail)
+                .ThenInclude(payment => payment.PaymentMethod)
+                .Include(order => order.PaymentDetail)
+                .ThenInclude(payment => payment.PaymentStatus)
+                .Include(order => order.DeliveryDetail)
+                .ThenInclude(delivery => delivery.DeliveryMethod),
+        isTracking: false);
+
+        orderHeaders.ToList().ForEach(orderHeader => _logger.LogInformation($"Getting Order Header with ID:'{orderHeader.Id}' successfully."));
+
+        return _mapper.Map<IList<OrderInfoViewModel>>(orderHeaders.ToList());
     }
 }
