@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#orderManageData').DataTable({
         "ajax": {
-            "url": "/ManageOrder/GetAll"
+            "url": "/Admin/ManageOrder/GetAll"
         },
         "columns": [
             { data: "trackingId", "width": "9%" },
@@ -25,7 +25,7 @@ function loadDataTable() {
                 data: "id",
                 "render": function (data) {
                     return `<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <a href="/OrderHistory/Details?id=${data}" class="btn btn-outline-success btn-sm shadow-none">
+                    <a href="/Admin/ManageOrder/Details?id=${data}" class="btn btn-outline-success btn-sm shadow-none">
                     <i class="bi bi-info-lg"></i> </a>
 					</div>`
                 },

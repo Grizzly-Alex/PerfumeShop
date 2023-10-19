@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace PerfumeShop.Web.Areas.Admin.Controllers;
+﻿namespace PerfumeShop.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
@@ -19,6 +17,20 @@ public class ManageOrderController : Controller
 
     [HttpGet]
     public IActionResult Index() => View();
+
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        if (id == 0)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        else
+        {
+            var order = await _orderViewModelService.GetOrderViewModelAsync(id);
+            return View(order);
+        }
+    }
 
     #region API CALLS
     [HttpGet]
