@@ -22,11 +22,11 @@ public class ManageOrderController : Controller
 
     #region API CALLS
     [HttpGet]
-    //public async Task<IActionResult> GetAll()
-    //{
-    //    var ordersInfo = await _orderViewModelService.
-    //    return Json(new { data = ordersInfo });
-    //}
+    public async Task<IActionResult> GetAll()
+    {
+        var ordersInfo = await _orderViewModelService.GetAllOrderInfoModelAsync();
+        return Json(new { data = ordersInfo });
+    }
     #endregion
 
 
