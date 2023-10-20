@@ -36,7 +36,7 @@
 					  required placeholder="Text area must be required"></textarea>
 			<span asp-validation-for="Product!.Description" class="text-danger"></span>
 		</div>
-		<div class="mb-3 col-4">
+		<div class="mb-3 col-3">
 			<label asp-for="Product!.Price"></label>
 			<div class="input-group">
 				<span class="input-group-text">$</span>
@@ -48,7 +48,19 @@
 				</div>
 			</div>
 		</div>
-		<div class="mb-3 col-4">
+		<div class="mb-3 col-3">
+			<label asp-for="Product!.DiscountPercent"></label>
+			<div class="input-group">
+				<span class="input-group-text">%</span>
+				<input asp-for="Product!.DiscountPercent" type="number"
+					   class="form-control" placeholder="0" step="1" min="0" max="100" required>
+				<span asp-validation-for="Product!.DiscountPercent" class="text-danger"></span>
+				<div class="valid-feedback">
+					Valid
+				</div>
+			</div>
+		</div>
+		<div class="mb-3 col-3">
 			<label asp-for="Product!.Stock"></label>
 			<div class="input-group">
 				<span class="input-group-text">qty.</span>
@@ -59,7 +71,7 @@
 				Valid
 			</div>
 		</div>
-		<div class="mb-3 col-4">
+		<div class="mb-3 col-3">
 			<label asp-for="Product!.Volume"></label>
 			<div class="input-group">
 				<span class="input-group-text">ml.</span>

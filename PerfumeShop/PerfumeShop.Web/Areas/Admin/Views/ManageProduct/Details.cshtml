@@ -32,7 +32,8 @@
 				<p><b>Aroma Type: </b>@Model.AromaType.Name</p>
 			</div>
 			<div>
-				<p><b>Price: </b>@Model.Price</p>
+				<p><b>Price: </b>@Model.Price.ToString("c")</p>
+				<p><b>Discount Percent: </b>@string.Concat(Model.DiscountPercent, "%")</p>
 				<p><b>Stock: </b>@Model.Stock</p>
 				<p><b>Date Delivery: </b>@Model.DateDelivery</p>
 			</div>

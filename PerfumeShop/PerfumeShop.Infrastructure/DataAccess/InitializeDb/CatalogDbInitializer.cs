@@ -81,7 +81,7 @@ public sealed class CatalogDbInitializer : IDbInitializer
 			new(DateTime.UtcNow, 5, 1, 4, 1, "Sale Gosse", 120.00m, 3, 100, "728a479d-ae36-420f-9788-0936b98917e8.png","" +
 			"<p>Aroma-fidget Sale Gosse plays with notes of petitgrain, neroli, bergamot and rosemary. The daring grin of violets and" +
 			" strawberries will remind you of the familiar taste of chewing gum from childhood. Sale Gosse is doodles on the blackboard," +
-			" ingenious tricks and pranks and a delightful sense of impunity. These are the little things in life that were extremely important in childhood.</p>"),
+			" ingenious tricks and pranks and a delightful sense of impunity. These are the little things in life that were extremely important in childhood.</p>", 3),
 
 			new(DateTime.UtcNow, 5, 1, 1, 1, "Angéliques sous la Pluie", 120.00m, 13, 100, "a7c78a99-d9ab-4f6e-8739-4300ee447171.png",
 			"<p>Watercolor sketch by Jean-Claude Ellen, inspired by the angelica twig he picked after the rain in his friends garden." +
@@ -105,7 +105,7 @@ public sealed class CatalogDbInitializer : IDbInitializer
 
 			new(DateTime.UtcNow, 2, 3, 3, 2, "Reflection Woman", 80.70m, 4 ,100, "6d8fe8d4-8576-431b-a933-1535ebff03ed.png",
 			"<p>The juicy green notes of Reflection are reminiscent of the freshness of a spring morning. Chords of flowers give" +
-			" the composition depth and volume. Musk, woody notes and warm amber tones gently envelop the skin.</p>"),
+			" the composition depth and volume. Musk, woody notes and warm amber tones gently envelop the skin.</p>", 5),
 
 			new(DateTime.UtcNow, 2, 2, 5, 2, "Lyric Man", 100.99m, 3, 100, "61e09ea0-db95-495a-8570-2ec176e007e1.png",
 			"<p>A spicy oriental fragrance with hints of angelica and rose, which contains the mysterious call of eternity." +
@@ -131,7 +131,7 @@ public sealed class CatalogDbInitializer : IDbInitializer
 			" faced with castes of priests and soldiers. Etat Libre d'Orange pays homage to the sons and daughters of the Renaissance and" +
 			" dedicates to them an illuminating fragrance. As well as the luminous Lucifer - from the Latin lux 'light' and ferre 'to carry'" +
 			" - the personification of the morning star Venus.</p>\r\n<p>A half-millennium lasting fragrance keeps memories of a beautiful rose," +
-			" rich spices and something precious. The history of humanity in fragrance.</p>"),
+			" rich spices and something precious. The history of humanity in fragrance.</p>", 6),
 
 			new(DateTime.UtcNow, 1, 1, 4, 2, "La Fin du Monde", 55.99m, 7, 100, "1ffe4213-b844-45be-9965-e072624128ef.png", 
 			"<p>\"OK. We know what you're thinking. You have heard all this more than once and even bought yourself an appropriate T-shirt." +

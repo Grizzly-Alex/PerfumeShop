@@ -16,6 +16,9 @@ public sealed class ProductConfig : IEntityTypeConfiguration<CatalogProduct>
             .HasColumnType("decimal")
             .HasPrecision(10, 2);
 
+        builder.Property(p => p.DiscountPercent)
+            .IsRequired(true);
+            
         builder.Property(p => p.Stock)
             .IsRequired(true);
 

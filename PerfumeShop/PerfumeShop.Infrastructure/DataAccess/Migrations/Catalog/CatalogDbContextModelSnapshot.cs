@@ -17,7 +17,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -112,6 +112,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DiscountPercent")
+                        .HasColumnType("int");
+
                     b.Property<int>("GenderId")
                         .HasColumnType("int");
 
@@ -172,25 +175,25 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                     b.HasOne("PerfumeShop.Core.Models.Entities.CatalogAromaType", "AromaType")
                         .WithMany()
                         .HasForeignKey("AromaTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("PerfumeShop.Core.Models.Entities.CatalogBrand", "Brand")
                         .WithMany()
                         .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("PerfumeShop.Core.Models.Entities.CatalogGender", "Gender")
                         .WithMany()
                         .HasForeignKey("GenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("PerfumeShop.Core.Models.Entities.CatalogReleaseForm", "ReleaseForm")
                         .WithMany()
                         .HasForeignKey("ReleaseFormId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("AromaType");
