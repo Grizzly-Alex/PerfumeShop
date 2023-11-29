@@ -12,8 +12,8 @@ using PerfumeShop.Infrastructure.DataAccess.DbContexts;
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20231019145919_DiscountPercent")]
-    partial class DiscountPercent
+    [Migration("20231023081418_DiscountPrice")]
+    partial class DiscountPrice
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,8 +115,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DiscountPercent")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("DiscountPrice")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal");
 
                     b.Property<int>("GenderId")
                         .HasColumnType("int");

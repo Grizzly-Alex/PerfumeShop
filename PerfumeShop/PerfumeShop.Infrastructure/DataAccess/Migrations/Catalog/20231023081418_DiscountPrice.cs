@@ -5,7 +5,7 @@
 namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
 {
     /// <inheritdoc />
-    public partial class DiscountPercent : Migration
+    public partial class DiscountPrice : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,12 +26,13 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 name: "FK_Products_ReleaseForms_ReleaseFormId",
                 table: "Products");
 
-            migrationBuilder.AddColumn<int>(
-                name: "DiscountPercent",
+            migrationBuilder.AddColumn<decimal>(
+                name: "DiscountPrice",
                 table: "Products",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+                type: "decimal(10,2)",
+                precision: 10,
+                scale: 2,
+                nullable: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Products_AromaTypes_AromaTypeId",
@@ -86,7 +87,7 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "DiscountPercent",
+                name: "DiscountPrice",
                 table: "Products");
 
             migrationBuilder.AddForeignKey(

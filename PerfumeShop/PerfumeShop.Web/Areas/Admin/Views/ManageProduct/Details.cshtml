@@ -33,7 +33,10 @@
 			</div>
 			<div>
 				<p><b>Price: </b>@Model.Price.ToString("c")</p>
-				<p><b>Discount Percent: </b>@string.Concat(Model.DiscountPercent, "%")</p>
+				@if (Model.DiscountPrice is not null)
+				{
+					<p><b>Discount Price: </b>@Model.DiscountPrice?.ToString("c")</p>				
+				}
 				<p><b>Stock: </b>@Model.Stock</p>
 				<p><b>Date Delivery: </b>@Model.DateDelivery</p>
 			</div>

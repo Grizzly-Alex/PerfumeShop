@@ -49,12 +49,12 @@
 			</div>
 		</div>
 		<div class="mb-3 col-3">
-			<label asp-for="Product!.DiscountPercent"></label>
+			<label asp-for="Product.DiscountPrice"></label>
 			<div class="input-group">
-				<span class="input-group-text">%</span>
-				<input asp-for="Product!.DiscountPercent" type="number"
-					   class="form-control" placeholder="0" step="1" min="0" max="100" required>
-				<span asp-validation-for="Product!.DiscountPercent" class="text-danger"></span>
+				<span class="input-group-text">$</span>
+				<input asp-for="Product.DiscountPrice" type="number"
+					   class="form-control" placeholder="0.00" step="0.01" min="0" max="999999" required>
+				<span asp-validation-for="Product.DiscountPrice" class="text-danger"></span>
 				<div class="valid-feedback">
 					Valid
 				</div>

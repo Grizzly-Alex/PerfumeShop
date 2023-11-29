@@ -9,6 +9,18 @@
             </div>
         </div>
         <div class="col-5">
+            @if(Model.Product.Stock > 0)
+            {
+                if (Model.Product.DiscountPrice is not null)
+                {
+                    <img src="@Constants.SALE_IMAGE" class="float-end" style="max-inline-size:25%">
+                }               
+            }
+            else
+            {
+                <img src="@Constants.SOLD_OUT_IMAGE" class="float-end" style="max-width:25%">
+            }
+
             <div class="fs-3 fw-semibold">@Model.Product.Brand.Name</div>
             <div class="fs-3 fw-normal text-muted">@Model.Product.Name</div>
             <hr class="my-3">

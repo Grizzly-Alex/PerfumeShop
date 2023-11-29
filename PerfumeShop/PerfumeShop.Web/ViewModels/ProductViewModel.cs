@@ -17,10 +17,10 @@ public sealed class ProductViewModel : EntityViewModel
     [Required(ErrorMessage = "Value {0} must not be empty!")]
     public decimal Price { get; set; }
 
-    [Range(0, 100, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
-    [Required(ErrorMessage = "Value {0} must not be empty!")]
-	[DisplayName("Discount Percent")]
-	public int DiscountPercent { get; set; }
+	[Precision(10, 2)]
+	[Range(0, 99999999, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+	[DisplayName("Discount Price")]
+	public decimal? DiscountPrice { get; set; }
 
     [Range(0, int.MaxValue, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
     [Required(ErrorMessage = "Value {0} must not be empty!")]

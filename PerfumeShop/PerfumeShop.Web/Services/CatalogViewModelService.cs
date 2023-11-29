@@ -51,7 +51,8 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
                 Name = i.Name,
                 Brand = i.Brand.Name,
                 Price = i.Price,
-                isAvailable = i.Stock > 0,    
+                DiscountPrice = i.DiscountPrice,
+                IsAvailable = i.Stock > 0,    
                 PictureUri = i.PictureUri,
             });
 

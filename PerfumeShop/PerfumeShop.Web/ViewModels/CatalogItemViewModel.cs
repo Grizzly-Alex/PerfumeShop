@@ -5,6 +5,7 @@ public sealed class CatalogItemViewModel : EntityViewModel
     public string Name { get; set; }
     public string Brand { get; set; }   
     public decimal Price { get; set; }
-    public bool isAvailable { get; set; }
+	public decimal? DiscountPrice { get; set; }
+	public bool IsAvailable { get; set; }
     public string? PictureUri { get; set; }
 }

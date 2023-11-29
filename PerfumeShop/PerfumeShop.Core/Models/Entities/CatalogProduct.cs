@@ -1,4 +1,6 @@
-﻿namespace PerfumeShop.Core.Models.Entities;
+﻿using Ardalis.GuardClauses;
+
+namespace PerfumeShop.Core.Models.Entities;
 
 
 public sealed class CatalogProduct : Entity
@@ -7,7 +9,7 @@ public sealed class CatalogProduct : Entity
     public string Description { get; private set; }
     public string PictureUri { get; private set; }
     public decimal Price { get; private set; }
-    public int DiscountPercent { get; private set; }
+    public decimal? DiscountPrice { get; private set; }
     public int Stock { get; private set; }
     public int Volume { get; private set; }
     public DateTime DateDelivery { get; private set; }
@@ -22,7 +24,7 @@ public sealed class CatalogProduct : Entity
 
     public CatalogProduct(
         DateTime dateDelivery, int brandId, int genderId, int aromaTypeId, int releaseFormId,
-        string name, decimal price, int stock, int volume, string pictureUri, string description, int discountPercent = 0)
+        string name, decimal price, int stock, int volume, string pictureUri, string description, decimal? discountPrice = null)
     {
 		DateDelivery = dateDelivery;
 		BrandId = Guard.Against.NegativeOrZero(brandId, nameof(brandId));
@@ -35,8 +37,11 @@ public sealed class CatalogProduct : Entity
         Volume = Guard.Against.NegativeOrZero(volume, nameof(volume));
         Stock = Guard.Against.Negative(stock, nameof(stock));
         PictureUri = Guard.Against.NullOrEmpty(pictureUri, nameof(pictureUri));
-        DiscountPercent = Guard.Against.Negative(discountPercent, nameof(discountPercent));
-    }
+        if (discountPrice is not null)
+        {
+		    DiscountPrice = Guard.Against.Negative((decimal)discountPrice, nameof(discountPrice));		
+        }
+	}
 
 	public void SetStock(int quantity)
 	{

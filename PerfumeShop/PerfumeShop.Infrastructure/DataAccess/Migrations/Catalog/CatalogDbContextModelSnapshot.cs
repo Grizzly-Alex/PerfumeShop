@@ -112,8 +112,9 @@ namespace PerfumeShop.Infrastructure.DataAccess.Migrations.Catalog
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DiscountPercent")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("DiscountPrice")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal");
 
                     b.Property<int>("GenderId")
                         .HasColumnType("int");
