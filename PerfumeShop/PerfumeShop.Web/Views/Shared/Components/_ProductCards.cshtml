@@ -13,23 +13,25 @@
                         <div class="card-body p-sm-1">
                             @if (obj.IsAvailable)
                             {
-                                if(obj.DiscountPrice is null)
+                                @if (obj.OldPrice != null)
                                 {
-                                    <h6 class="card-title float-sm-end text-secondary">
-                                        @obj.Price.ToString("c")
+                                    <img src="@Constants.SALE_IMAGE" class="float-start" style="max-inline-size:25%">
+                                    <h6 class="card-title float-sm-end">   
+                                        <small>
+                                            <div class="text-decoration-line-through">
+                                                @obj.OldPrice?.ToString("c")
+                                            </div>
+                                        </small>
+                                        <div>
+                                            @obj.ActualPrice.ToString("c")
+                                        </div>
                                     </h6>
                                 }
                                 else
                                 {
-                                    <img src="@Constants.SALE_IMAGE" class="float-start" style="max-inline-size:25%">
                                     <h6 class="card-title float-sm-end">
-                                        <small>
-                                            <div class="text-decoration-line-through">
-                                                @obj.Price.ToString("c")
-                                            </div> 
-                                        </small>
                                         <div>
-                                            @obj.DiscountPrice?.ToString("c")
+                                            @obj.ActualPrice.ToString("c")
                                         </div>
                                     </h6>
                                 }

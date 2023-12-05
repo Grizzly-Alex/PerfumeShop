@@ -31,7 +31,19 @@
             </div>
             @if (Model.Product.Stock > 0)
             {
-                <p class="fs-4"><b>Price: </b>@Model.Product.Price.ToString("c")</p>
+                if (Model.Product.DiscountPrice is not null)
+                {
+                    <div class="fs-6">
+                        <b>Old Price: </b>@Model.Product.Price.ToString("c")
+                    </div>
+                    <div class="fs-4">
+                        <p class="fs-4"><b>Price: </b>@Model.Product.DiscountPrice?.ToString("c")</p>
+                    </div>
+                }
+                else
+                {
+                    <p class="fs-4"><b>Price: </b>@Model.Product.Price.ToString("c")</p>                   
+                }
                 <div class="py-0">
                     <div class="col-3">
                         <span class="text-muted">Available: @Model.Product.Stock</span>

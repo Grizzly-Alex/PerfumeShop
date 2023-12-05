@@ -22,7 +22,7 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
 
         if (price is not null) return price;
         return await _unitOfWork.GetRepository<CatalogProduct>()
-            .MaxAsync(selector: i => i.Price);
+            .MaxAsync(selector: i => i.DiscountPrice == null ? i.Price : i.DiscountPrice);
     }
 
     public async Task<PagedListViewModel> GetCatalogPagedListAsync(
@@ -38,8 +38,8 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
             .GetPagedListAsync(
             pageIndex: pageIndex,
             itemsPerPage: itemsPerPage,
-            predicate: i => (!minPrice.HasValue || i.Price >= minPrice)
-                && (!maxPrice.HasValue || i.Price <= maxPrice)
+            predicate: i => (!minPrice.HasValue || i.DiscountPrice == null ? i.Price >= minPrice : i.DiscountPrice >= minPrice)
+                && (!maxPrice.HasValue || i.DiscountPrice == null ? i.Price <= maxPrice : i.DiscountPrice <= maxPrice)
                 && (!brandId.HasValue || i.BrandId == brandId)
                 && (!genderId.HasValue || i.GenderId == genderId)
                 && (!aromaTypeId.HasValue || i.AromaTypeId == aromaTypeId)
@@ -49,9 +49,9 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
             {
                 Id = i.Id,
                 Name = i.Name,
-                Brand = i.Brand.Name,
-                Price = i.Price,
-                DiscountPrice = i.DiscountPrice,
+                Brand = i.Brand.Name,               
+                ActualPrice = i.DiscountPrice ?? i.Price,              
+                OldPrice = i.DiscountPrice != null ? i.Price : null,
                 IsAvailable = i.Stock > 0,    
                 PictureUri = i.PictureUri,
             });
