@@ -11,7 +11,8 @@ function loadDataTable() {
         },
         "columns": [
             { data: "name", "width": "15%" },
-            { data: "price", "width": "10%" },
+            { data: "price", "width": "5%" },
+            { data: "discountPrice", "width": "5%" },
             { data: "volume", "width": "10%" },
             { data: "stock", "width": "10%" },      
             { data: "brand.name", "width": "10%" },

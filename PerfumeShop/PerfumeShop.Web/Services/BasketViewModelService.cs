@@ -64,7 +64,7 @@ public sealed class BasketViewModelService : IBasketViewModelService
                 Name = product.Name,
                 Volume = product.Volume,
                 PictureUri = product.PictureUri,
-                UnitPrice = product.Price,
+                UnitPrice = product.GetActualPrice(),
 				Quantity = basketItem.Quantity,
                 Stock = product.Stock,
             };

@@ -13,7 +13,6 @@ public sealed class CatalogProductService : ICatalogProductService
 		_logger = logger;
     }
 
-
     public async Task<CatalogProduct> UpdateProductStockAsync(int productId, int newQuantity)
 	{
 		var productRepository = _unitOfWork.GetRepository<CatalogProduct>();

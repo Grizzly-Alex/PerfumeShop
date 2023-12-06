@@ -78,6 +78,7 @@ Layers of architecture:
      
 - Payment through external API (Stripe)
 - Sending messages to email
+- Discount system
 
 
 

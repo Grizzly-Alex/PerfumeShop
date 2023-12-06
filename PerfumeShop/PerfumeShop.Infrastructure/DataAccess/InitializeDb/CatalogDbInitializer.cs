@@ -51,7 +51,7 @@ public sealed class CatalogDbInitializer : IDbInitializer
 			" pleasantly tickles the nose, and incense sets you up for a new spiritual discovery.<br>Smoky, thunderous" +
 			" vetiver is combined with tobacco accents of rose and earthy papyrus. Silky sandalwood and akigalawood wrap " +
 			"the composition in a pleasantly moist mist. Purpose is the destination, the end of the road and the place where" +
-			" the sun is always at its zenith and the aldehyde rays of mystical softly shine through the saffron-suede clouds</p>"),
+			" the sun is always at its zenith and the aldehyde rays of mystical softly shine through the saffron-suede clouds</p>", 59.99m),
 
 			new(DateTime.UtcNow, 3, 1, 2, 2, "Ego Stratis", 65.00m, 3, 100, "679b7b19-968d-484c-9efa-00129a46f10b.png",
 			"<p>The Ego Stratis girl is open and boundless, like the ocean. Her angels and demons chat peacefully over tea," +
@@ -76,12 +76,12 @@ public sealed class CatalogDbInitializer : IDbInitializer
 			new(DateTime.UtcNow, 3, 3, 3, 2, "Lipstick Fever", 87.00m, 12, 100, "ff8334df-9423-4979-a93a-053cb4f2d932.png",
 			"<p>The composition of Lipstick Fever contains notes that have historically been used in lipstick: iris, violet absolute and" +
 			" raspberry. Woody shades of patchouli and cedar wood and reproduce the scent of a leather handbag.</p>\r\n<p>Lipstick Fever is" +
-			" a modern gourmand composition with an expressive feminine character.</p>"),
+			" a modern gourmand composition with an expressive feminine character.</p>", 69.99m),
 
 			new(DateTime.UtcNow, 5, 1, 4, 1, "Sale Gosse", 120.00m, 3, 100, "728a479d-ae36-420f-9788-0936b98917e8.png","" +
 			"<p>Aroma-fidget Sale Gosse plays with notes of petitgrain, neroli, bergamot and rosemary. The daring grin of violets and" +
 			" strawberries will remind you of the familiar taste of chewing gum from childhood. Sale Gosse is doodles on the blackboard," +
-			" ingenious tricks and pranks and a delightful sense of impunity. These are the little things in life that were extremely important in childhood.</p>"),
+			" ingenious tricks and pranks and a delightful sense of impunity. These are the little things in life that were extremely important in childhood.</p>", 3),
 
 			new(DateTime.UtcNow, 5, 1, 1, 1, "Angéliques sous la Pluie", 120.00m, 13, 100, "a7c78a99-d9ab-4f6e-8739-4300ee447171.png",
 			"<p>Watercolor sketch by Jean-Claude Ellen, inspired by the angelica twig he picked after the rain in his friends garden." +
@@ -89,7 +89,7 @@ public sealed class CatalogDbInitializer : IDbInitializer
 			" tonic notes of angelica, juniper berries, pink pepper and coriander. The warming base of white musk and cedarwood prolongs the" +
 			" life of the fragrance, keeping it pure and transparent.</p>"),
 
-			new(DateTime.UtcNow, 6, 2, 1, 1, "Masculin Pluriel", 90.00m, 1, 70, "36544cad-535f-4f4e-b193-eaec13e742bc.png",
+			new(DateTime.UtcNow, 6, 2, 1, 1, "Masculin Pluriel", 90.00m, 0, 70, "36544cad-535f-4f4e-b193-eaec13e742bc.png",
 			"<p>masculin Pluriel is the result of a search for absolute masculinity. The composition is based on a modern fougere chord." +
 			" A new interpretation of perfume classics for men. The fragrance is timeless, out of fashion and limitations.</p>"),
 
@@ -109,7 +109,7 @@ public sealed class CatalogDbInitializer : IDbInitializer
 
 			new(DateTime.UtcNow, 2, 2, 5, 2, "Lyric Man", 100.99m, 3, 100, "61e09ea0-db95-495a-8570-2ec176e007e1.png",
 			"<p>A spicy oriental fragrance with hints of angelica and rose, which contains the mysterious call of eternity." +
-			" The choice of self-confident gentlemen who are not afraid of their desires.</p>"),
+			" The choice of self-confident gentlemen who are not afraid of their desires.</p>", 89.99m),
 
 			new(DateTime.UtcNow, 2, 2, 6, 2, "Epic Man", 110.99m, 7, 100, "db98f5b5-ad89-49f6-aaae-abb7e0389a7f.png",
 			"<p>The woody oriental fragrance Epic resurrects the legends of the Great Silk Road that connected China and Arabia." +
