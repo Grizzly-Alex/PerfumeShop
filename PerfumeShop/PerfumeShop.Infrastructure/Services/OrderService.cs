@@ -90,7 +90,10 @@ public sealed class OrderService : IOrderService
         var items = basketItems.Select(i =>
         {
             var product = products.First(c => c.Id == i.ProductId);
-            var orderItem = new OrderItem(i.Quantity, product.Price, i.ProductId);
+            var orderItem = new OrderItem(
+                i.Quantity, 
+                product.GetActualPrice(), 
+                i.ProductId);
 
             _logger.LogInformation($"Order item with product ID: '{product.Id}' Name: '{product.Name}' has been created.");
 

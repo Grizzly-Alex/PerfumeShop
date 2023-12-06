@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace PerfumeShop.Core.Models.Entities;
+﻿namespace PerfumeShop.Core.Models.Entities;
 
 
 public sealed class CatalogProduct : Entity
@@ -21,6 +19,7 @@ public sealed class CatalogProduct : Entity
 	public CatalogAromaType AromaType { get; private set; }
     public int ReleaseFormId { get; private set; }
 	public CatalogReleaseForm ReleaseForm { get; private set; }
+
 
     public CatalogProduct(
         DateTime dateDelivery, int brandId, int genderId, int aromaTypeId, int releaseFormId,
@@ -47,4 +46,8 @@ public sealed class CatalogProduct : Entity
 	{
         Stock = Guard.Against.Negative(quantity, nameof(quantity)); ;
 	}
+
+    public decimal GetActualPrice() => DiscountPrice == null 
+        ? Price 
+        : DiscountPrice.Value;
 }

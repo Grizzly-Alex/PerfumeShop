@@ -50,7 +50,7 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
                 Id = i.Id,
                 Name = i.Name,
                 Brand = i.Brand.Name,               
-                ActualPrice = i.DiscountPrice ?? i.Price,              
+                ActualPrice = i.GetActualPrice(),              
                 OldPrice = i.DiscountPrice != null ? i.Price : null,
                 IsAvailable = i.Stock > 0,    
                 PictureUri = i.PictureUri,
