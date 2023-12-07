@@ -12,4 +12,6 @@ public sealed class CatalogReleaseForm : Entity
     {
         Name = name;
     }
+
+    public override string ToString() => Name;
 }

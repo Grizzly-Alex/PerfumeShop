@@ -76,4 +76,19 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
             aromaTypes: _mapper.Map<IEnumerable<ItemViewModel>>(aromaTypesFromDb).ToSelectListItems(allSelect),
             releaseForms: _mapper.Map<IEnumerable<ItemViewModel>>(releaseFormsFromDb).ToSelectListItems(allSelect));
     }
+
+    public async Task<List<CatalogItemViewModel>> GetAllDiscountedProducts(bool onlyAvailable)
+    {
+        _logger.LogInformation("Get all discounted products.");
+
+        var products = await _unitOfWork.GetRepository<CatalogProduct>()
+            .GetAllAsync(
+                predicate: onlyAvailable 
+                    ? p => p.DiscountPrice != null && p.Stock > 0 
+                    : p => p.DiscountPrice != null,
+                include: query => query.Include(product => product.Brand),
+                isTracking: false);
+
+        return _mapper.Map<List<CatalogItemViewModel>>(products.ToList());
+    }
 }

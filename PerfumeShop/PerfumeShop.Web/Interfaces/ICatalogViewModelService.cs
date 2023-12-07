@@ -8,4 +8,5 @@ public interface ICatalogViewModelService
         decimal? minPrice, decimal? maxPrice,
         int? brandId, int? genderId, int? aromaTypeId, int? releaseFormId);
     Task<CatalogIndexViewModel> GetCatalogIndexAsync(PagedListViewModel pagedList, decimal? minPrice, decimal? maxPrice);
+    Task<List<CatalogItemViewModel>> GetAllDiscountedProducts(bool onlyAvailable);
 }

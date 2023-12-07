@@ -17,4 +17,6 @@ public sealed class CatalogGender : Entity
 
     public static implicit operator CatalogGender(Gender enumGender) => new CatalogGender(enumGender);
     public static implicit operator Gender(CatalogGender classGender) => (Gender)classGender.Id;
+
+    public override string ToString() => Name;
 }

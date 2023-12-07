@@ -31,6 +31,15 @@ public sealed class MappingProfile : Profile
         CreateMap<CatalogProduct, ProductViewModel>().ReverseMap();
 
         CreateMap(typeof(PagedList<>), typeof(PagedListViewModel));
+
+        CreateMap<CatalogItemViewModel, CatalogProduct>().ReverseMap()
+            .ForMember(view => view.Id, opt => opt.MapFrom(model => model.Id))
+            .ForMember(view => view.Name, opt => opt.MapFrom(model => model.Name))
+            .ForMember(view => view.Brand, opt => opt.MapFrom(model => model.Brand))
+            .ForMember(view => view.ActualPrice, opt => opt.MapFrom(model => model.GetActualPrice()))
+            .ForMember(view => view.OldPrice, opt => opt.MapFrom(model => (decimal?)(model.DiscountPrice != null ? model.Price : null)))
+            .ForMember(view => view.IsAvailable, opt => opt.MapFrom(model => model.Stock > 0))
+            .ForMember(view => view.PictureUri, opt => opt.MapFrom(model => model.PictureUri));
         #endregion
 
         #region Sale
@@ -50,10 +59,10 @@ public sealed class MappingProfile : Profile
             .ForMember(model => model.Items, opt => opt.Ignore());
 
         CreateMap<OrderInfoViewModel, OrderHeader>().ReverseMap()           
-            .ForMember(view => view.OrderStatus, opt => opt.MapFrom(model => model.OrderStatus.Name))
-            .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus.Name))
-            .ForMember(view => view.PaymentMethod, opt => opt.MapFrom(model => model.PaymentDetail.PaymentMethod.Name))
-            .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryMethod.Name))
+            .ForMember(view => view.OrderStatus, opt => opt.MapFrom(model => model.OrderStatus))
+            .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus))
+            .ForMember(view => view.PaymentMethod, opt => opt.MapFrom(model => model.PaymentDetail.PaymentMethod))
+            .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryMethod))
             .ForMember(view => view.ItemsCost, opt => opt.MapFrom(model => model.Cost.ItemsCost))
             .ForMember(view => view.TotalPrice, opt => opt.MapFrom(model => model.Cost.TotalCost))
             .ForMember(view => view.CustomerName, opt => opt.MapFrom(model => model.Customer.GetFullName()))
@@ -72,9 +81,9 @@ public sealed class MappingProfile : Profile
             .ForMember(view => view.Email, opt => opt.MapFrom(model => model.Customer.ReceiptEmail))
             .ForMember(view => view.Address, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryAddress.GetFullAddress()))
             .ForMember(view => view.TotalPrice, opt => opt.MapFrom(model => model.Cost.TotalCost))
-            .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus.Name))
-            .ForMember(view => view.PaymentMethod, opt => opt.MapFrom(model => model.PaymentDetail.PaymentMethod.Name))
-            .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryMethod.Name));
+            .ForMember(view => view.PaymentStatus, opt => opt.MapFrom(model => model.PaymentDetail.PaymentStatus))
+            .ForMember(view => view.PaymentMethod, opt => opt.MapFrom(model => model.PaymentDetail.PaymentMethod))
+            .ForMember(view => view.DeliveryMethod, opt => opt.MapFrom(model => model.DeliveryDetail.DeliveryMethod));
         #endregion
     }
 }
