@@ -17,4 +17,6 @@ public sealed class OrderStatus : Entity
 
 	public static implicit operator OrderStatus(OrderStatuses enumStatus) => new OrderStatus(enumStatus);
 	public static implicit operator OrderStatuses(OrderStatus classStatus) => (OrderStatuses)classStatus.Id;
+
+    public override string ToString() => Name;
 }

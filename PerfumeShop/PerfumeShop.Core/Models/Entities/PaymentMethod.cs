@@ -17,4 +17,6 @@ public sealed class PaymentMethod : Entity
 
 	public static implicit operator PaymentMethod(PaymentMethods enumMethods) => new PaymentMethod(enumMethods);
 	public static implicit operator PaymentMethods(PaymentMethod classMethod) => (PaymentMethods)classMethod.Id;
+
+    public override string ToString() => Name;
 }

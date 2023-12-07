@@ -13,4 +13,6 @@ public sealed class CatalogBrand : Entity
     {
         Name = name;
     }
+
+    public override string ToString() => Name;
 }

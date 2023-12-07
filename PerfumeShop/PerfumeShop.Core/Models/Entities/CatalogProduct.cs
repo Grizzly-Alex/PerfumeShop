@@ -50,4 +50,6 @@ public sealed class CatalogProduct : Entity
     public decimal GetActualPrice() => DiscountPrice == null 
         ? Price 
         : DiscountPrice.Value;
+
+    public override string ToString() => Name;
 }

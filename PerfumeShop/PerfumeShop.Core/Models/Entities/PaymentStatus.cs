@@ -17,4 +17,6 @@ public sealed class PaymentStatus : Entity
 
 	public static implicit operator PaymentStatus(PaymentStatuses enumStatus) => new PaymentStatus(enumStatus);
 	public static implicit operator PaymentStatuses(PaymentStatus classStatus) => (PaymentStatuses)classStatus.Id;
+
+    public override string ToString() => Name;
 }
