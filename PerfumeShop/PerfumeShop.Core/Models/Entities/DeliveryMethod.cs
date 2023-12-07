@@ -17,4 +17,6 @@ public sealed class DeliveryMethod : Entity
 
 	public static implicit operator DeliveryMethod(DeliveryMethods enumMethods) => new DeliveryMethod(enumMethods);
 	public static implicit operator DeliveryMethods(DeliveryMethod classMethod) => (DeliveryMethods)classMethod.Id;
+
+	public override string ToString() => Name;
 }

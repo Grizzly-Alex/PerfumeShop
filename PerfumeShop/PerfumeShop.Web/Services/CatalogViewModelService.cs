@@ -22,7 +22,7 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
 
         if (price is not null) return price;
         return await _unitOfWork.GetRepository<CatalogProduct>()
-            .MaxAsync(selector: i => i.Price);
+            .MaxAsync(selector: i => i.DiscountPrice == null ? i.Price : i.DiscountPrice);
     }
 
     public async Task<PagedListViewModel> GetCatalogPagedListAsync(
@@ -38,8 +38,8 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
             .GetPagedListAsync(
             pageIndex: pageIndex,
             itemsPerPage: itemsPerPage,
-            predicate: i => (!minPrice.HasValue || i.Price >= minPrice)
-                && (!maxPrice.HasValue || i.Price <= maxPrice)
+            predicate: i => (!minPrice.HasValue || i.DiscountPrice == null ? i.Price >= minPrice : i.DiscountPrice >= minPrice)
+                && (!maxPrice.HasValue || i.DiscountPrice == null ? i.Price <= maxPrice : i.DiscountPrice <= maxPrice)
                 && (!brandId.HasValue || i.BrandId == brandId)
                 && (!genderId.HasValue || i.GenderId == genderId)
                 && (!aromaTypeId.HasValue || i.AromaTypeId == aromaTypeId)
@@ -49,9 +49,10 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
             {
                 Id = i.Id,
                 Name = i.Name,
-                Brand = i.Brand.Name,
-                Price = i.Price,
-                isAvailable = i.Stock > 0,    
+                Brand = i.Brand.Name,               
+                ActualPrice = i.GetActualPrice(),              
+                OldPrice = i.DiscountPrice != null ? i.Price : null,
+                IsAvailable = i.Stock > 0,    
                 PictureUri = i.PictureUri,
             });
 
@@ -74,5 +75,20 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
             genders :_mapper.Map<IEnumerable<ItemViewModel>>(gendersFromDb).ToSelectListItems(allSelect),
             aromaTypes: _mapper.Map<IEnumerable<ItemViewModel>>(aromaTypesFromDb).ToSelectListItems(allSelect),
             releaseForms: _mapper.Map<IEnumerable<ItemViewModel>>(releaseFormsFromDb).ToSelectListItems(allSelect));
+    }
+
+    public async Task<List<CatalogItemViewModel>> GetAllDiscountedProducts(bool onlyAvailable)
+    {
+        _logger.LogInformation("Get all discounted products.");
+
+        var products = await _unitOfWork.GetRepository<CatalogProduct>()
+            .GetAllAsync(
+                predicate: onlyAvailable 
+                    ? p => p.DiscountPrice != null && p.Stock > 0 
+                    : p => p.DiscountPrice != null,
+                include: query => query.Include(product => product.Brand),
+                isTracking: false);
+
+        return _mapper.Map<List<CatalogItemViewModel>>(products.ToList());
     }
 }

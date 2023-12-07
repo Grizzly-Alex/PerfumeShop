@@ -17,6 +17,11 @@ public sealed class ProductViewModel : EntityViewModel
     [Required(ErrorMessage = "Value {0} must not be empty!")]
     public decimal Price { get; set; }
 
+	[Precision(10, 2)]
+	[Range(0, 99999999, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+	[DisplayName("Discount Price")]
+	public decimal? DiscountPrice { get; set; }
+
     [Range(0, int.MaxValue, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
     [Required(ErrorMessage = "Value {0} must not be empty!")]
     public int Stock { get; set; }
@@ -40,10 +45,12 @@ public sealed class ProductViewModel : EntityViewModel
     [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     public int AromaTypeId { get; set; }
     [ValidateNever]
-    public CatalogAromaType AromaType { get; set; }
+	[DisplayName("Aroma Type")]
+	public CatalogAromaType AromaType { get; set; }
 
     [Required(ErrorMessage = "Value {0} from the list must be selected!")]
     public int ReleaseFormId { get; set; }
     [ValidateNever]
-    public CatalogReleaseForm ReleaseForm { get; set; }
+	[DisplayName("Release Form")]
+	public CatalogReleaseForm ReleaseForm { get; set; }
 }

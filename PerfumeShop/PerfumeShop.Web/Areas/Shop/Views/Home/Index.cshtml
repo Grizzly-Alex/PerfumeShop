@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model List<CatalogItemViewModel>
+
+<form method="get" asp-area="Shop" asp-controller="Home" asp-action="Index" />
 
 <div class="container-ignore shadow">
     <div id="carouselExample" class="carousel slide">
@@ -26,3 +29,13 @@
     </div>
 </div>
 
+@if (Model.Any())
+{
+    <div class="py-4">
+        <div class="fs-3 fw-normal text-muted">
+            Sale
+        </div>
+        <hr class="my-3">
+        <partial name="~/Views/Shared/Components/_ProductCards.cshtml" model="Model">
+    </div>   
+}
