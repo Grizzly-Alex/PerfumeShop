@@ -107,7 +107,7 @@ If a product is on discount price, it is marked with the "Sale" tag.
 This page show detailed product information.
 The user can add the required number of products to the cart, but the quantity is limited by the number of products available in the stock.
 
-![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/c8fe828f-9f7f-424a-9830-0846bafca41f)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/0a1b4ff9-39d0-4dba-804d-1122566016e9)
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/4dd30e56-31aa-4b67-9e16-12a6c56692f2)
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/9f6123f3-f30e-4b3d-bb23-a5326567a902)
 
@@ -122,6 +122,19 @@ Shopping cart will be saved in cookie for anonymous user but for authorized user
 Clicking on a product icon will take you to the product details page.
 
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/a6d2d0df-92d6-445e-b317-440d43fb9ca4)
+
+### Login page
+The user can log in using his name and password if he was previously registered or used external authentication.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/c9d43669-6c11-4d9c-9a80-87e2cc69e99d)
+
+### Register page
+The user can register on the site or use external services.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8a3dfce0-5f9e-4721-9ed9-847168413908)
+
+
+
 
 
 
