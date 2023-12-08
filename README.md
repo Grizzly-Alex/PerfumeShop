@@ -80,6 +80,57 @@ Layers of architecture:
 - Sending messages to email
 - Discount system
 
+## Application functionality and operating principle
+
+### Home page
+The home page displays discounted products. An anonymous user can add a product to the cart and view product details.
+Navbar have catalog link, brands link (in developing), login and basket.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/64b59bb1-3c70-4ae6-9a0f-d0fe5f0dc204)
+
+### Catalog page
+The user can change the number of products on the catalog page.
+You can add a product to your cart and view a detailed product description.
+Some product cards have a label. If a product is out of stock, it is marked as "Sold out".
+If a product is on discount price, it is marked with the "Sale" tag.
+
+- Filter functionality:
+  - Automatic determination of minimum and maximum prices.
+  - Show products which have discounted only.
+  - Reset filter
+  - Filter by brand, gender, aroma type, release form
+    
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/3feefab0-0683-4eb8-9bf8-ed0fa3df33c1)
+
+
+### Product detail page
+This page show detailed product information.
+The user can add the required number of products to the cart, but the quantity is limited by the number of products available in the stock.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/c8fe828f-9f7f-424a-9830-0846bafca41f)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/4dd30e56-31aa-4b67-9e16-12a6c56692f2)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/9f6123f3-f30e-4b3d-bb23-a5326567a902)
+
+
+### Basket page
+- Basket functionality:
+  - Updating product quantity.
+  - Deleting product.
+  - Clear basket
+
+Shopping cart will be saved in cookie for anonymous user but for authorized users shopping cart will be saved in data base.
+Clicking on a product icon will take you to the product details page.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/a6d2d0df-92d6-445e-b317-440d43fb9ca4)
+
+
+
+
+
+
+
+
+
 
 
 
