@@ -28,7 +28,7 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
     public async Task<PagedListViewModel> GetCatalogPagedListAsync(
         int itemsPerPage, int pageIndex,
         decimal? minPrice, decimal? maxPrice,
-        int? brandId, int? genderId, int? aromaTypeId, int? releaseFormId)
+        int? brandId, int? genderId, int? aromaTypeId, int? releaseFormId, bool onlyDiscount)
     {
         _logger.LogInformation("GetCatalogPagedList called.");
 
@@ -43,7 +43,8 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
                 && (!brandId.HasValue || i.BrandId == brandId)
                 && (!genderId.HasValue || i.GenderId == genderId)
                 && (!aromaTypeId.HasValue || i.AromaTypeId == aromaTypeId)
-                && (!releaseFormId.HasValue || i.ReleaseFormId == releaseFormId),
+                && (!releaseFormId.HasValue || i.ReleaseFormId == releaseFormId)
+                && (!onlyDiscount || i.DiscountPrice != null),
             include: i => i.Include(i => i.Brand),
             selector: i => new CatalogItemViewModel
             {
@@ -59,7 +60,7 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
         return _mapper.Map<PagedListViewModel>(pagedList);
     }
 
-    public async Task<CatalogIndexViewModel> GetCatalogIndexAsync(PagedListViewModel pagedList, decimal? minPrice, decimal? maxPrice)
+    public async Task<CatalogIndexViewModel> GetCatalogIndexAsync(PagedListViewModel pagedList, decimal? minPrice, decimal? maxPrice, bool onlyDiscount)
     {
         _logger.LogInformation("GetCatalogIndex called.");
 
@@ -70,7 +71,7 @@ public sealed class CatalogViewModelService : ICatalogViewModelService
 
         var allSelect = new SelectListItem { Text = "All" };
 
-        return new CatalogIndexViewModel(pagedList, minPrice ?? (decimal)0.00, maxPrice,
+        return new CatalogIndexViewModel(pagedList, onlyDiscount, minPrice ?? (decimal)0.00, maxPrice,
             brands : _mapper.Map<IEnumerable<ItemViewModel>>(brandsFromDb).ToSelectListItems(allSelect),
             genders :_mapper.Map<IEnumerable<ItemViewModel>>(gendersFromDb).ToSelectListItems(allSelect),
             aromaTypes: _mapper.Map<IEnumerable<ItemViewModel>>(aromaTypesFromDb).ToSelectListItems(allSelect),

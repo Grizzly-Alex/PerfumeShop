@@ -17,6 +17,7 @@ public class CatalogModel : PageModel
         catalogIndex.MaxPrice = await _catalogService.DefineMaxPrice(catalogIndex.MaxPrice);
 
         var pagedList = await _catalogService.GetCatalogPagedListAsync(
+                onlyDiscount: catalogIndex.OnlyDiscount,
                 minPrice: catalogIndex.MinPrice,
                 maxPrice: catalogIndex.MaxPrice,
                 brandId: catalogIndex.BrandId,
@@ -29,6 +30,6 @@ public class CatalogModel : PageModel
                     : pagedInfo.ItemsPerPage);
 
         CatalogIndex = await _catalogService.GetCatalogIndexAsync(
-            pagedList, catalogIndex.MinPrice, catalogIndex.MaxPrice);
+            pagedList, catalogIndex.MinPrice, catalogIndex.MaxPrice, catalogIndex.OnlyDiscount);
     }
 }
