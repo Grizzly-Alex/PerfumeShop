@@ -3,12 +3,17 @@
 public sealed class CatalogIndexViewModel
 {
     public PagedListViewModel PagedList { get; set; }
-    public decimal? MinPrice { get; set; }
-    public decimal? MaxPrice { get; set; }
+
     public int? BrandId { get; set; }
     public int? GenderId { get; set; }
     public int? AromaTypeId { get; set; }
     public int? ReleaseFormId { get; set; }
+
+    public decimal? MinPrice { get; set; }
+    public decimal? MaxPrice { get; set; }
+
+    [Display(Name = "Only Discount")]
+    public bool OnlyDiscount { get; set; }
 
     [Display(Name = "Brand")]
     public IEnumerable<SelectListItem>? Brands { get; set; }
@@ -29,6 +34,7 @@ public sealed class CatalogIndexViewModel
 
     public CatalogIndexViewModel(
         PagedListViewModel pagedList,
+        bool onlyDiscount,
         decimal? minPrice,
         decimal? maxPrice,
         IEnumerable<SelectListItem>? brands,
@@ -37,6 +43,7 @@ public sealed class CatalogIndexViewModel
         IEnumerable<SelectListItem>? releaseForms)
     {
         PagedList = pagedList;
+        OnlyDiscount = onlyDiscount;
         MinPrice = minPrice;
         MaxPrice = maxPrice;
         Brands = brands;
