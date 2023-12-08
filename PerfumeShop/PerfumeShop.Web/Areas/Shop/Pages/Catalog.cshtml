@@ -53,6 +53,12 @@
                     <label asp-for="CatalogIndex.ReleaseForms"></label>
                     <select asp-for="CatalogIndex.ReleaseFormId" asp-items="@Model.CatalogIndex.ReleaseForms" class="form-select shadow-none"></select>
                 </div>
+                <div class="checkbox mb-3 text-start">
+                    <label asp-for="CatalogIndex.OnlyDiscount" class="form-label">
+                        <input class="form-check-input" asp-for="CatalogIndex.OnlyDiscount" />
+                        @Html.DisplayNameFor(m => m.CatalogIndex.OnlyDiscount)
+                    </label>
+                </div>
                 <hr class="featurette-divider">
             
                 <div class="d-grid gap-2">
