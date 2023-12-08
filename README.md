@@ -133,8 +133,15 @@ The user can register on the site or use external services.
 
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8a3dfce0-5f9e-4721-9ed9-847168413908)
 
+### External registration
 
-
+![external1](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/374acf84-0cc0-4955-8b5c-5d55acb10b91)
+![external2](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/10b67915-dfca-4fa2-9d86-84f98da87b3d)
+![external3](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/a0fc392c-8a1d-48cf-ab7b-d3fe7ef9a375)
+![external4](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8f0a33a5-c4fd-4fda-a66f-9db063510c47)
+![external5](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/ca39a803-c402-4d5a-9263-540c9440167e)
+![external6](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/7601bbd2-0e79-4074-aa47-f50e1b6b966f)
+![external7](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/2f90e8d3-b90b-437f-a7d2-bef38f1ffae0)
 
 
 
