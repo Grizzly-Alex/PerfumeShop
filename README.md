@@ -80,6 +80,75 @@ Layers of architecture:
 - Sending messages to email
 - Discount system
 
+## Application functionality and operating principle
+
+### Home page
+The home page displays discounted products. An anonymous user can add a product to the cart and view product details.
+Navbar have catalog link, brands link (in developing), login and basket.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/64b59bb1-3c70-4ae6-9a0f-d0fe5f0dc204)
+
+### Catalog page
+The user can change the number of products on the catalog page.
+You can add a product to your cart and view a detailed product description.
+Some product cards have a label. If a product is out of stock, it is marked as "Sold out".
+If a product is on discount price, it is marked with the "Sale" tag.
+
+- Filter functionality:
+  - Automatic determination of minimum and maximum prices.
+  - Show products which have discounted only.
+  - Reset filter
+  - Filter by brand, gender, aroma type, release form
+    
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/3feefab0-0683-4eb8-9bf8-ed0fa3df33c1)
+
+
+### Product detail page
+This page show detailed product information.
+The user can add the required number of products to the cart, but the quantity is limited by the number of products available in the stock.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/0a1b4ff9-39d0-4dba-804d-1122566016e9)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/4dd30e56-31aa-4b67-9e16-12a6c56692f2)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/9f6123f3-f30e-4b3d-bb23-a5326567a902)
+
+
+### Basket page
+- Basket functionality:
+  - Updating product quantity.
+  - Deleting product.
+  - Clear basket
+
+Shopping cart will be saved in cookie for anonymous user but for authorized users shopping cart will be saved in data base.
+Clicking on a product icon will take you to the product details page.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/a6d2d0df-92d6-445e-b317-440d43fb9ca4)
+
+### Login page
+The user can log in using his name and password if he was previously registered or used external authentication.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/c9d43669-6c11-4d9c-9a80-87e2cc69e99d)
+
+### Register page
+The user can register on the site or use external services.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8a3dfce0-5f9e-4721-9ed9-847168413908)
+
+### External registration
+
+![1](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8590e07b-4cab-4894-8e7c-8958fc5ef2dd)
+![external4](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8f0a33a5-c4fd-4fda-a66f-9db063510c47)
+![external5](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/ca39a803-c402-4d5a-9263-540c9440167e)
+![external6](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/7601bbd2-0e79-4074-aa47-f50e1b6b966f)
+![external7](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/2f90e8d3-b90b-437f-a7d2-bef38f1ffae0)
+
+
+
+
+
+
+
+
+
 
 
 
