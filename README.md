@@ -138,7 +138,7 @@ Demonstration of registration using Google but you can use Microsoft, Twitter or
 
 ![1](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8590e07b-4cab-4894-8e7c-8958fc5ef2dd)
 
-After successful authentication through an external service, the user must associate his mailbox in the application.
+After successful authentication via an external service, the user must associate his mailbox in the application.
 If the email has not previously been registered on the site, the association will be successful.
 
 ![external4](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8f0a33a5-c4fd-4fda-a66f-9db063510c47)
@@ -173,6 +173,7 @@ Demonstration of a paid order via stripe:
 ### Orders success page
 After placing an order, the application will send the user an email with order details.
 User can view the order details in their account.
+The number of products in stock will be reduced.
 
 ![ordersuccess](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/16fdd623-487f-4be9-ad86-0ef9e0c95b9e)
 ![mail](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/a2d1e525-af4c-43a2-9087-77499b683438)
