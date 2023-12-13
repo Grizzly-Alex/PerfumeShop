@@ -154,6 +154,11 @@ The user can pay immediately or after delivery in cash. In this case, the order 
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/895662a3-7e5a-4d9e-8716-2d590a77c776)
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/ae854850-0a24-46bd-a74e-e6f09eb72222)
 
+### Payment page
+The user can pay for the order via application. For Payments the application uses stripe API.
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/33cdc214-f474-4964-945b-3e5b61ca4232)
+
+
 
 
 
