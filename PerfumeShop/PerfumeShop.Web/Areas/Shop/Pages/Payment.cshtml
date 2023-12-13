@@ -93,14 +93,16 @@
                     </tbody>
                 </table>        
             </div>
-            <form asp-page="Payment" method="post" class="needs-validation" novalidate>
 
+
+            <form asp-page="Payment" method="post" class="needs-validation" novalidate>
                 <input asp-for="@Model.OrderInfoModel.Id" hidden />
                 <input asp-for="@Model.OrderInfoModel.TrackingId" hidden />
                 <input asp-for="@Model.OrderInfoModel.TotalPrice" hidden />
                 <input asp-for="@Model.OrderInfoModel.CustomerPhone" hidden />
                 <input asp-for="@Model.OrderInfoModel.CustomerEmail" hidden />
                 <input asp-for="@Model.OrderInfoModel.CustomerName" hidden />
+
 
                 <div class="py-4">
                     <div class="tab-pane fade show active" id="pills-courier" role="tabpanel" aria-labelledby="pills-courier-tab" tabindex="0">
