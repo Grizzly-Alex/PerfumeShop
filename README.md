@@ -134,9 +134,14 @@ The user can register on the site or use external services.
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8a3dfce0-5f9e-4721-9ed9-847168413908)
 
 ### External registration
-
+Demonstration of registration using Google but you can use Microsoft, Twitter or Facebook services. 
 ![1](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8590e07b-4cab-4894-8e7c-8958fc5ef2dd)
+
+After successful authentication through an external service, the user must associate his mailbox in the application.
+If the email has not previously been registered on the site, the association will be successful.
 ![external4](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8f0a33a5-c4fd-4fda-a66f-9db063510c47)
+
+After successful registration, the user will be sent an email to confirm the account.
 ![external5](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/ca39a803-c402-4d5a-9263-540c9440167e)
 ![external6](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/7601bbd2-0e79-4074-aa47-f50e1b6b966f)
 ![external7](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/2f90e8d3-b90b-437f-a7d2-bef38f1ffae0)
