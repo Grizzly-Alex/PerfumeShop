@@ -67,11 +67,6 @@ public class OrderController : Controller
 
             SaveTrackingIdToSession(order.TrackingId);
 
-            await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
-			await _basketService.ClearBasketAsync(model.Basket.Id);
-
-            HttpContext.Session.Remove(Constants.BASKET_ITEMS_QTY);
-
             return RedirectToPage(GetRedirectionPageName(paymentMethod));
         }
 
@@ -95,11 +90,6 @@ public class OrderController : Controller
 				model.Basket.Id);
 
 			SaveTrackingIdToSession(order.TrackingId);
-
-            await _catalogProductService.UpdateStockAfterOrderAsync(order.OrderItems);
-			await _basketService.ClearBasketAsync(model.Basket.Id);
-
-            HttpContext.Session.Remove(Constants.BASKET_ITEMS_QTY);
 
             return RedirectToPage(GetRedirectionPageName(paymentMethod));
 		}

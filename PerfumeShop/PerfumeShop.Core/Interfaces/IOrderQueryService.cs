@@ -6,4 +6,5 @@ public interface IOrderQueryService
     Task<int> GetOrderIdAsync(string trackingId);
     Task<decimal> GetTotalCostAsync(int orderId);
     Task<Customer> GetCustomerAsync(int orderId);
+    Task<IEnumerable<OrderItem>> GetOrderItemsAsync(int orderId);
 }
