@@ -146,6 +146,13 @@ After successful registration, the user will be sent an email to confirm the acc
 ![external6](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/7601bbd2-0e79-4074-aa47-f50e1b6b966f)
 ![external7](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/2f90e8d3-b90b-437f-a7d2-bef38f1ffae0)
 
+### Checkout page
+Demonstration of purchasing a product on the website. The user can select the payment method and delivery method.
+If the user chooses delivery by courier, then the user needs to give his address, but if the delivery method is pickup,
+then the user needs to select the store to which the order will be delivered.
+The user can pay immediately or after delivery in cash. In this case, the order will be marked as unpaid.
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/895662a3-7e5a-4d9e-8716-2d590a77c776)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/ae854850-0a24-46bd-a74e-e6f09eb72222)
 
 
 
