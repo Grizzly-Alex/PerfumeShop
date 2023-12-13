@@ -24,7 +24,7 @@ public class PaymentModel : PageModel
     [BindProperty]
     public PaymentCardViewModel PaymentCardModel { get; set; } = new ();
     [BindProperty]
-    public OrderInfoViewModel OrderInfoModel { get; set; } = new();
+    public OrderInfoViewModel OrderInfoModel { get; set; }
     public IList<OrderItemViewModel> OrderItemList { get; set; } = new List<OrderItemViewModel>();
 
 
@@ -38,7 +38,6 @@ public class PaymentModel : PageModel
             OrderItemList = await _orderViewModelService.GetOrderItemModelCollectionAsync(orderId);
         }
     }
-
 
     public async Task<IActionResult> OnPost(CancellationToken ct)
     {

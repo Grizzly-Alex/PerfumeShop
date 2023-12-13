@@ -134,12 +134,29 @@ The user can register on the site or use external services.
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8a3dfce0-5f9e-4721-9ed9-847168413908)
 
 ### External registration
-
+Demonstration of registration using Google but you can use Microsoft, Twitter or Facebook services. 
 ![1](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8590e07b-4cab-4894-8e7c-8958fc5ef2dd)
+
+After successful authentication through an external service, the user must associate his mailbox in the application.
+If the email has not previously been registered on the site, the association will be successful.
 ![external4](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8f0a33a5-c4fd-4fda-a66f-9db063510c47)
+
+After successful registration, the user will be sent an email to confirm the account.
 ![external5](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/ca39a803-c402-4d5a-9263-540c9440167e)
 ![external6](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/7601bbd2-0e79-4074-aa47-f50e1b6b966f)
 ![external7](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/2f90e8d3-b90b-437f-a7d2-bef38f1ffae0)
+
+### Checkout page
+Demonstration of purchasing a product on the website. The user can select the payment method and delivery method.
+If the user chooses delivery by courier, then the user needs to give his address, but if the delivery method is pickup,
+then the user needs to select the store to which the order will be delivered.
+The user can pay immediately or after delivery in cash. In this case, the order will be marked as unpaid.
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/895662a3-7e5a-4d9e-8716-2d590a77c776)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/ae854850-0a24-46bd-a74e-e6f09eb72222)
+
+### Payment page
+The user can pay for the order via application. For Payments the application uses stripe API.
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/33cdc214-f474-4964-945b-3e5b61ca4232)
 
 
 
