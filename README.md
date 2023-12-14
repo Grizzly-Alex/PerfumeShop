@@ -199,6 +199,38 @@ In the future I will add the ability to re-order.
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/c8eabe11-480c-4b27-bb60-72e932f1e172)
 ![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/60fca43f-cbd9-4011-97f7-bea76a8cb4d3)
 
+### Admin area
+If the user is logged in as an administrator, then in the drop-down menu the user can select the administrator area.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/11dfcf91-7af4-41b7-8bcd-d668ce13506c)
+
+The administrator has the ability to edit and delete all catalog items,
+view all orders in the store, view all registered users, delete and edit them, edit information of physical stores.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/82b92c8d-4b4b-4eb3-9376-9a64d0bd4467)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/2322bc7c-d5e8-44e1-9c65-e5d67ce6b9be)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/c9adcb92-af20-40c4-975e-a0409137410e)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/4a0cb3dc-daf1-4f57-92c1-376cb7e61c79)
+
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/3c1ff964-5df2-48d8-b18b-e4efac78f9d2)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/e949e685-d0d4-4173-8ebf-ac10c249e661)
+
+The administrator has the right to change user roles, but for security reasons does not have the right to change his role.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/dcd9cb5b-3e26-4c65-b924-664ca89dc0a5)
+
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/cf9e2694-6436-43a4-af51-141188ff6a7a)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/fe7386da-18df-4135-9185-0b871e15c02d)
+
+
+
+
+
+
+
+
 
 
 
