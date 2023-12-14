@@ -179,6 +179,29 @@ The number of products in stock will be reduced.
 ![mail](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/a2d1e525-af4c-43a2-9087-77499b683438)
 
 
+### User account
+After successful authentication, the icon in the upper right corner changes the tag from guest to authorized.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/7e1d1b36-aa2b-4b03-8a7e-6bc121b9b721)
+
+Now the user can sign in his account. 
+In the profile tab, the user can change his personal information. Information required for order delivery and sending email notifications.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/090567b6-6293-4d4d-9239-009f4acd51e3)
+
+The user can change the password to log into their account.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/8631f7b0-1242-4dde-b204-f7d3e7384957)
+
+Ability to view order history and a detailed description of each order.
+In the future I will add the ability to re-order.
+
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/c8eabe11-480c-4b27-bb60-72e932f1e172)
+![image](https://github.com/Grizzly-pride/PerfumeShop/assets/35379801/60fca43f-cbd9-4011-97f7-bea76a8cb4d3)
+
+
+
+
 
 
 
